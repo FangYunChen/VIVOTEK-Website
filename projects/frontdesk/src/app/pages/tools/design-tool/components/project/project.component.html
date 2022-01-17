@@ -1,0 +1,130 @@
+<div class="section-content">
+  <div class="project-name">
+    <label>
+      <span>{{ "Project Name" | i18n }}</span>
+      <input matInput [(ngModel)]="designToolService.projectName" />
+    </label>
+  </div>
+  <table
+    mat-table
+    [dataSource]="productList"
+    class="mat-elevation-z4 font-gothic"
+  >
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{ "Model" | i18n }}</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.modelName | nullToDash }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>{{ "Total" | i18n }}</td>
+    </ng-container>
+
+    <!-- qty Column -->
+    <ng-container matColumnDef="qty">
+      <th mat-header-cell *matHeaderCellDef>{{ "Qty" | i18n }}</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.q | nullToDash }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>{{ totalQty | nullToDash }}</td>
+    </ng-container>
+
+    <!-- scenario Column -->
+    <ng-container matColumnDef="scenario">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "Scenario" | i18n }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.scenario | nullToDash | dashtonbsp}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- bandWidth Column -->
+    <ng-container matColumnDef="bandWidth">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "RecordingBandWidth" | i18n }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{
+          row.recordingBandwidth * row.qty
+            | number: "1.0-2"
+            | nullToDash: " Mbps"
+        }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{ totalBandWidth | number: "1.0-2" | nullToDash: " Mbps" }}
+      </td>
+    </ng-container>
+
+    <!-- liveviewBandWidth Column -->
+    <ng-container matColumnDef="liveviewBandWidth">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "LiveviewBandWidth" | i18n }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{
+          row.liveviewBandwidth * row.qty
+            | number: "1.0-2"
+            | nullToDash: " Mbps"
+        }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{ totalLiveviewBandWidth | number: "1.0-2" | nullToDash: " Mbps" }}
+      </td>
+    </ng-container>
+
+    <!-- storage Column -->
+    <ng-container matColumnDef="storage">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "Storages" | i18n }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{
+          row.storage * row.qty | mbToGb | number: "1.0-2" | nullToDash: " GB"
+        }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{ totalStorage | mbToGb | number: "1.0-2" | nullToDash: " GB" }}
+      </td>
+    </ng-container>
+
+    <!-- streaming Column -->
+    <ng-container matColumnDef="streaming">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "Streaming" | i18n }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ getStreaming(row.isRecording, row.isLiveview) | nullToDash }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let idx = index" class="actions">
+        <ng-container *ngIf="stepper.selectedIndex === 0">
+          <button mat-mini-fab class="edit-button" (click)="edit(idx)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            class="delete-button"
+            (click)="delete(idx)"
+            [disabled]="!canDelete"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-mini-fab class="add-button" (click)="add(idx)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </ng-container>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="productDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: productDisplayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="productDisplayedColumns"></tr>
+  </table>
+</div>

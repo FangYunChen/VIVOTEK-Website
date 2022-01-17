@@ -1,0 +1,201 @@
+@import '_var.scss';
+
+#whereBuy {
+  h2 {
+    font-size: $sizeLger;
+    margin-bottom: 10px;
+    color: $colorB1;
+  }
+  h3 {
+    letter-spacing: normal;
+    padding-left: 1%;
+    margin-bottom: 10px;
+    font-size: $sizeNl;
+  }
+  .list-row {
+    .text {
+      position: relative;
+      .item {
+        padding-right: 20px;
+        margin-bottom: 3px;
+        i {
+          width: 20px;
+        }
+        p {
+          display: inline-block;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: top;
+        }
+        .link,
+        span {
+          display: inline-block;
+          &:nth-child(2) {
+            &:before {
+              display: none;
+            }
+          }
+          &:before {
+            content: ',';
+            display: inline;
+            margin-right: 5px;
+          }
+          &.hide {
+            display: none;
+          }
+        }
+      }
+      .ex {
+        display: none;
+        position: absolute;
+        bottom: 3px;
+        right: -8px;
+        span {
+          width: 5px;
+          height: 5px;
+          display: inline-block;
+          vertical-align: middle;
+          @include border-radius(100%);
+          background-color: $colorGy3;
+        }
+        &:hover {
+          text-decoration: none;
+          span {
+            background-color: $colorB1;
+          }
+        }
+        &.show {
+          display: block;
+        }
+      }
+      .btn {
+        margin-top: 5px;
+        width: 100%;
+      }
+    }
+  }
+  .model {
+    padding: 0;
+  }
+}
+
+#vivotekusa {
+  .popup {
+    height: 80vh;
+    overflow-y: auto;
+    font-size: $sizeSler;
+    background-color: $colorW;
+    width: 100%;
+    padding: 15px 30px;
+    text-align: left;
+  }
+  h3 {
+    color: $colorB1;
+    font-weight: normal;
+    font-size: $sizeNler;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    background: url(/assets/img/title-line.png) repeat-x center bottom;
+  }
+  p {
+    margin: 10px 0;
+  }
+  .block {
+    margin-bottom: 30px;
+  }
+  .list-row {
+    .list-col {
+      margin-bottom: 30px;
+      a {
+        display: block;
+        padding: 0 10px;
+        text-align: center;
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthWebTable) {
+  #usaPopup {
+    width: 1000px;
+    margin-left: -500px;
+  }
+}
+@media screen and (max-width: $widthTable) {
+  #whereBuy {
+    .list-row {
+      .text {
+        p {
+          width: 100%;
+        }
+      }
+    }
+  }
+  #usaPopup {
+    width: 700px;
+    margin-left: -350px;
+    .btn-close {
+      background-color: $colorBk;
+      @include border-radius(100%);
+      color: $colorW;
+      width: 27px;
+      height: 27px;
+      position: absolute;
+      border: 2px solid $colorW;
+      padding-top: 3px;
+      right: 0;
+      top: -6px;
+      z-index: 10;
+      @include box-shadow(3px, 3px, 5px, rgba($colorBk, 0.8));
+      &:hover {
+        background-color: $colorB1;
+      }
+    }
+    .popup {
+      height: 80vh;
+      overflow-y: auto;
+    }
+  }
+}
+@media screen and (max-width: $widthTableApp) {
+  #whereBuy {
+    h2 {
+      font-size: $sizeLger;
+    }
+  }
+  #usaPopup {
+    width: 400px;
+    margin-left: -200px;
+  }
+}
+@media screen and (max-width: $widthApp) {
+  #whereBuy {
+    h2 {
+      font-size: $sizeNler;
+    }
+    .list-row {
+      .text {
+        p {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  #cardPopup {
+    width: 300px;
+    margin-left: -150px;
+  }
+  #usaPopup {
+    width: 300px;
+    margin-left: -150px;
+  }
+}
+
+.item .link {
+  display: inline !important;
+}

@@ -1,0 +1,221 @@
+@import '_var.scss';
+
+#whereBuy {
+  padding-top: 120px;
+  min-height: 700px;
+  background: $colorW url(/assets/img/where/bg.jpg) no-repeat center top;
+  background-size: cover;
+  padding-bottom: 1px;
+  .where-model {
+    max-width: 1120px;
+    margin: 0 auto 40px;
+    padding-bottom: 10px;
+    background-color: rgba($colorW, 1);
+    position: relative;
+    h2 {
+      font-size: $sizeLger;
+      margin-bottom: 10px;
+    }
+    .tabs-slider-nav {
+      padding-left: 0;
+      padding-right: 0;
+      a {
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: $sizeNl;
+        color: $colorFont;
+        &:hover,
+        &.active {
+          color: $colorB1;
+          text-decoration: none;
+        }
+      }
+    }
+    .tabs-slider-block {
+      letter-spacing: -8px;
+      text-align: left;
+      a {
+        width: 33.33%;
+        padding: 5px 15px;
+        display: inline-block;
+        border-bottom: 1px solid $colorGy2;
+        position: relative;
+        letter-spacing: normal;
+        color: $colorFont;
+        &:hover {
+          color: $colorB1;
+        }
+        &:before {
+          font-family: FontAwesome;
+          content: '\f0da';
+          position: absolute;
+          left: 0;
+          top: 5px;
+          color: $colorB1;
+          @include opacity(0);
+          @include transition(all 0.3s);
+        }
+        &:hover {
+          text-decoration: none;
+          &:before {
+            left: 4px;
+            @include opacity(1);
+            @include transition(all 0.3s);
+          }
+        }
+      }
+    }
+    .filter {
+      position: absolute;
+      right: 35px;
+      top: 35px;
+      z-index: 900;
+      .btn-filter {
+        position: absolute;
+        right: 0;
+        top: 6px;
+        font-size: $sizeLg;
+        color: $colorGy3;
+        .icon {
+          width: 25px;
+          height: 25px;
+          background: url(/assets/img/where/icon_search.png) no-repeat left
+            center;
+          background-size: cover;
+        }
+        &:hover {
+          .icon {
+            background-position: right center;
+          }
+        }
+      }
+      .filter-box {
+        width: 0;
+        height: 38px;
+        overflow: hidden;
+        @include opacity(0);
+        @include transition(all 0.5s);
+        &.open {
+          //width: 300px;
+          width: 220px;
+          overflow: visible;
+          @include opacity(1);
+          @include transition(all 0.5s);
+        }
+        .list-col {
+          padding: 0 2px;
+          position: relative;
+          select,
+          input {
+            width: 100%;
+          }
+          input {
+            padding-right: 30px;
+            padding-left: 5px;
+          }
+          .btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 8px 9px;
+            font-size: $sizeNl;
+            background: none;
+            color: $colorB1;
+            .icon {
+              width: 18px;
+              height: 18px;
+              background: url(/assets/img/where/icon_search.png) no-repeat right
+                center;
+              background-size: cover;
+            }
+          }
+        }
+      }
+      .search-select {
+        .search-select-box {
+          text-align: left;
+          p {
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
+  .mask {
+    z-index: 800;
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+  #whereBuy {
+    .where-model {
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+  }
+}
+@media screen and (max-width: $widthTable) {
+  #whereBuy {
+    .where-model {
+      .tabs-slider-nav {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+      .filter {
+        position: relative;
+        margin-bottom: 20px;
+        right: 0;
+        top: 0;
+        .btn-filter {
+          right: 0;
+          top: -38px;
+        }
+        .filter-box {
+          width: 100%;
+          height: auto;
+          overflow: visible;
+          display: none;
+          &.open {
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthTableApp) {
+  #whereBuy {
+    min-height: 850px;
+    .where-model {
+      margin-left: 20px;
+      margin-right: 20px;
+      h2 {
+        font-size: $sizeLger;
+      }
+      .tabs-slider-block {
+        a {
+          width: 50%;
+        }
+      }
+      .list-col7 {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthApp) {
+  #whereBuy {
+    .where-model {
+      h2 {
+        font-size: $sizeNler;
+      }
+      .tabs-slider-block {
+        a {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}

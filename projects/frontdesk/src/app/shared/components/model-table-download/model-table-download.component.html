@@ -1,0 +1,4 @@
+<h3 class="title-text text-center" *ngIf="data?.title">{{ data?.title|i18n }}</h3>
+<vvtk-language-selector class="language-selector" (selectionChange)="selectedLang$.next($event)">
+</vvtk-language-selector>
+<vvtk-dynamic-table class="mat-elevation-z2" [dynamicColumns]="data.dynamicColumns" [dataSource]="data.dataSource"></vvtk-dynamic-table>

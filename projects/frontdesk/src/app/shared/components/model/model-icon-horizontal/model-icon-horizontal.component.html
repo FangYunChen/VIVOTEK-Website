@@ -1,0 +1,26 @@
+<section class="model-icon-horizontal model section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title}}</h3>
+    <h4 class="subtitle-text text-center" *ngIf="template.subtitle">{{template.subtitle}}</h4>
+
+    <div class="icon-container">
+      <div class="icon-content" *ngFor="let icon of template.icons">
+        <img class="icon-img" [src]="icon.image?.src" [alt]="icon.image?.alt" [title]="icon.image?.title">
+        <h4 *ngIf="icon.title" class="icon-name">
+          <ng-container *ngIf="!icon.url">{{icon.title}}</ng-container>
+          <a *ngIf="icon.url" [href]="icon.url">{{icon.title}}</a>
+        </h4>
+        <div class="model-html-content p-medium" [innerHTML]="icon.htmlContent | safe:'html'"> </div>
+      </div>
+    </div>
+
+    <div *ngIf="template.urlEnabled" class="more">
+      <vvtk-a [url]="template.urlEnabled?template.url:''" [cName]="'btn btn-b'">
+        <ng-container HtmlContent>
+          {{'More'|i18n}}
+        </ng-container>
+      </vvtk-a>
+    </div>
+  </div>
+
+</section>

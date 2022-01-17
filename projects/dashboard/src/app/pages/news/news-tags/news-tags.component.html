@@ -1,0 +1,58 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>News Tag List</span>
+      <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" (click)="edit(0)" *ngIf="pageIsEditable">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <div fxLayout="column" fxFlex="100%" class="tableBoxOuter">
+            <div fxLayout="column" class="tableBoxInner" style="min-width:400px;">
+              <mat-form-field>
+                <input matInput #filter placeholder="Filter">
+              </mat-form-field>
+
+              <mat-table #table [dataSource]="dataSource" matSort class="table table-hover table-striped table-bordered table-condensed">
+                <ng-container cdkColumnDef="id">
+                  <mat-header-cell *cdkHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="name">
+                  <mat-header-cell *cdkHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="action">
+                  <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxLayoutAlign="center center"> Action </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row" fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" (click)="edit(row.id)"
+                      [disabled]="lockEdit" *ngIf="pageIsEditable">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" (click)="delete(row.id, row.name)"
+                      [disabled]="lockDelete" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+              <mat-paginator #paginator [length]="dataSource.dataLength" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 100]">
+              </mat-paginator>
+              <vvtk-loader *ngIf="database.isLoading"></vvtk-loader>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

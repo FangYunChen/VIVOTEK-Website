@@ -1,0 +1,13 @@
+@import '_var.scss';
+
+:host mat-header-cell.p-medium {
+  font-weight: bold;
+}
+
+.p-medium {
+  letter-spacing: 0.25px;
+}
+
+.material-icons{
+  color: $colorB4;
+}

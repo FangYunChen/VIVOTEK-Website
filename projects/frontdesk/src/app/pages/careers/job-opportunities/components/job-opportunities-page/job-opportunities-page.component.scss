@@ -1,0 +1,183 @@
+@import '_var.scss';
+.page-content {
+  h2 {
+    color: $colorB1;
+  }
+  .img {
+    margin-bottom: 15px;
+  }
+}
+.page-info {
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  .table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .row {
+    display: table-row;
+  }
+  .col {
+    display: table-cell;
+    vertical-align: middle;
+    border-left: 10px solid $colorW;
+    border-right: 10px solid $colorW;
+  }
+  .col2 {
+    width: 40%;
+  }
+  .name {
+    padding: 5px 10px;
+    color: $colorB1;
+    font-size: $sizeNl;
+    font-weight: bold;
+    border-bottom: 2px solid $colorB1;
+    width: 20%;
+  }
+  .text {
+    font-size: $sizeSler;
+    padding: 6px 10px;
+    line-height: 1.4;
+  }
+}
+h2 {
+  font-size: $sizeLger;
+  margin-bottom: 10px;
+}
+.page-agree,
+.page-apply {
+  height: 70vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-right: -20px;
+  padding-right: 10px;
+}
+#agreePopup {
+  width: 700px;
+  margin-left: -350px;
+  h2 {
+    color: $colorB1;
+    font-size: $sizeLg;
+  }
+  ol {
+    margin: 5px 0 10px;
+    padding-left: 18px;
+    > li {
+      list-style-type: decimal;
+      margin-bottom: 8px;
+    }
+  }
+  ul {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    > li {
+      padding: 0;
+      list-style: none;
+      margin-bottom: 8px;
+    }
+    ol {
+      margin-left: 28px;
+    }
+  }
+  .ex {
+    .en {
+      display: block;
+    }
+    span {
+      color: $colorGy3;
+    }
+    label {
+      line-height: 38px;
+      display: inline-block;
+      margin-right: 10px;
+      input[type='radio'] {
+        height: 38px;
+        margin-right: 2px;
+      }
+    }
+    input[type='text'] {
+      width: 230px;
+      @include transition(all 0.5s);
+      &[disabled] {
+        padding-left: 10px;
+        padding-right: 10px;
+        color: $colorFont;
+        background: url(/assets/img/disabled.jpg) repeat center center;
+        @include transition(all 0.5s);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  h2 {
+    font-size: $sizeLger;
+  }
+  .page-info {
+    padding: 0;
+    text-align: left;
+    .name {
+      display: none;
+    }
+    .col {
+      width: 100% !important;
+      border: none;
+      margin-bottom: 0;
+    }
+    .text {
+      display: block;
+      position: relative;
+      text-align: left;
+      padding-left: 100px;
+      overflow: hidden;
+      min-height: 33px;
+      margin-bottom: 1px;
+      border-top: 1px solid $colorW;
+      border-bottom: 1px solid $colorW;
+      &:before {
+        position: absolute;
+        height: 100%;
+        content: attr(data-name);
+        left: 0;
+        top: 0;
+        width: 70px;
+        display: block;
+        padding: 6px 10px;
+        background-color: $colorB1;
+        color: $colorW;
+      }
+    }
+  }
+  .page-box {
+    .img {
+      width: 100%;
+      padding-right: 0;
+      float: none;
+      margin-bottom: 10px;
+    }
+    .text {
+      width: 100%;
+      padding-left: 0;
+      float: none;
+    }
+  }
+  #applyPopup {
+    width: 450px;
+    margin-left: -225px;
+    .lg {
+      font-size: $sizeNl;
+    }
+  }
+}
+@media screen and (max-width: $widthApp) {
+  h2 {
+    font-size: $sizeNler;
+  }
+  #applyPopup {
+    width: 300px;
+    margin-left: -150px;
+  }
+}

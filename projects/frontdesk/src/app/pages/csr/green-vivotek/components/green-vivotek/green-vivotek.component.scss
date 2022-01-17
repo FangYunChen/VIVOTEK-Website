@@ -1,0 +1,142 @@
+@import '_var.scss';
+.green-vivotek-wrap {
+  width: 100%;
+  max-width: 1240px;
+  padding: 0 40px;
+  margin: 0 auto;
+  &:after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+  }
+}
+.model-nav {
+  float: left;
+  width: 200px;
+  z-index: 5;
+  .wrap {
+    padding: 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      a {
+        display: block;
+        padding: 6px 5px;
+        color: $colorFont;
+        word-wrap: break-word;
+        &:hover {
+          color: $colorB1;
+          text-decoration: none;
+        }
+      }
+      &.btn-list {
+        display: none;
+      }
+      &:hover {
+        a {
+          color: $colorB1;
+          text-decoration: none;
+        }
+      }
+    }
+    &.sub {
+      display: none;
+      li {
+        display: block;
+        a {
+          padding-left: 30px;
+          color: $colorFont;
+          &:hover {
+            color: $colorB1;
+          }
+        }
+      }
+      &.open {
+        display: block;
+      }
+    }
+  }
+}
+.green-vivotek-main {
+  overflow: hidden;
+}
+@media screen and (max-width: $widthWebTable) {
+  .green-vivotek-wrap {
+    padding: 0;
+  }
+  .model-nav {
+    padding: 0;
+    width: 100%;
+    height: auto;
+    background-color: $colorB2;
+    float: none;
+    .wrap {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    ul {
+      li {
+        position: relative;
+        display: none;
+        a {
+          display: block;
+          padding: 10px 15px;
+          color: $colorFont;
+        }
+        &:hover {
+          a {
+            color: $colorB1;
+            text-decoration: none;
+          }
+        }
+        &.btn-list {
+          display: block;
+        }
+      }
+      &.open {
+        position: relative;
+        z-index: 1000;
+        > li {
+          display: block;
+        }
+      }
+      &.sub {
+        letter-spacing: normal;
+        display: none;
+        min-width: 100%;
+        border-top: 1px solid $colorW;
+        li {
+          display: block;
+          white-space: nowrap;
+          border-bottom: 1px solid $colorW;
+          white-space: normal;
+          padding-left: 10px;
+          a {
+            color: $colorFont;
+            &:hover {
+              color: $colorB1;
+            }
+          }
+        }
+      }
+    }
+  }
+  .mask {
+    z-index: 5;
+  }
+}
+@media screen and (max-width: $widthApp) {
+  .model-nav {
+    .wrap {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

@@ -1,0 +1,293 @@
+<h2 class="line text-center">
+  {{ "Apply authority for download center" | i18n }}
+</h2>
+<section class="model-form section text-center">
+  <form
+    #form="ngForm"
+    fxLayout="column"
+    fxLayoutGap="30px"
+    (ngSubmit)="applyAuthority()"
+  >
+    <mat-table #table [dataSource]="downloadCenterAuth" class="table-striped">
+      <ng-container cdkColumnDef="checked">
+        <mat-header-cell *cdkHeaderCellDef fxFlex="80px">{{
+          "Apply" | i18n
+        }}</mat-header-cell>
+        <mat-cell *cdkCellDef="let row" fxFlex="80px" fxFlexAlign="center">
+          <mat-checkbox
+            name="selected_option_{{ row.value }}"
+            [(ngModel)]="row.checked"
+            [disabled]="row.disabled"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="statusText">
+        <mat-header-cell *cdkHeaderCellDef>{{
+          "Apply status" | i18n
+        }}</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{ row.statusText | i18n }} </mat-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="documentTypeName">
+        <mat-header-cell *cdkHeaderCellDef>{{
+          "Apply authority" | i18n
+        }}</mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{ row.optionText | i18n }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <div class="list-row">
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[0].checked || this.downloadCenterAuth[0].disabled">
+        <div class="input-box form-label">
+          <select
+            name="country"
+            id="country"
+            (change)="countriesChanged($event)"
+            required
+            [(ngModel)]="this.accountdata.countryId"
+            [disabled]="this.downloadCenterAuth[0].disabled"
+          >
+            <option value="">{{ "Please select" | i18n }}</option>
+            <option
+              *ngFor="let country of countries"
+              value="{{ country.id }}"
+              >{{ country.name }}</option
+            >
+          </select>
+          <label for=""
+            ><span class="colorR">*</span>{{ "Country" | i18n }}</label
+          >
+        </div>
+      </div>
+      <div *ngIf="this.accountdata.countryId == '9'" class="list-col list-col12">
+        <label>
+        「如果您是向 VIVOTEK台灣授權經銷商或代理商購買裝置，請先與他們取得聯繫，他們會協助了解並提供必要的服務。」尋找廠商: <a href="https://www.vivotek.com/zh-Hant/where-to-buy" target="blank">https://www.vivotek.com/zh-Hant/where-to-buy</a>
+        「如果您是合作廠商洽談，請先至<a href="https://vivotek.futuresimple.com/" target="blank">https://vivotek.futuresimple.com/</a>" 填寫完整需求，我們的VIVOTEK Taiwan團隊於週一至週五上午 9 時至晚上 6 時會盡快回覆聯繫並提供所需服務。」
+        </label>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[0].checked || this.downloadCenterAuth[0].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="applications"
+            [(ngModel)]="this.accountdata.applications"
+            maxlength="50"
+            #f1="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[0].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Target applications to be working with VIVOTEK products" | i18n
+            }}</label
+          >
+          <div *ngIf="f1.touched && accountdata.applications.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[0].checked || this.downloadCenterAuth[0].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="devices"
+            [(ngModel)]="this.accountdata.devices"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[0].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Any projects ongoing / anticipated volume using VIVOTEK devices"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.devices.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[1].checked || this.downloadCenterAuth[1].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="cameraModel"
+            [(ngModel)]="this.accountdata.cameraModel"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[1].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "What is your VIVOTEK LPR Camera model?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.cameraModel.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[1].checked || this.downloadCenterAuth[1].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="distributorChannel"
+            [(ngModel)]="this.accountdata.distributorChannel"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[1].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Which distributor/channel did you purchase VIVOTEK LPR Camera from?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.distributorChannel.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[1].checked || this.downloadCenterAuth[1].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="cameraMAC"
+            [(ngModel)]="this.accountdata.cameraMAC"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[1].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Please provide one VIVOTEK LPR camera MAC address for validation."
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.cameraMAC.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[1].checked || this.downloadCenterAuth[1].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="useCases"
+            [(ngModel)]="this.accountdata.useCases"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[1].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "What’s your use case on VIVOTEL LPR camera?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.useCases.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[2].checked || this.downloadCenterAuth[2].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="purchase"
+            [(ngModel)]="this.accountdata.purchase"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[2].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Which distributor/channel did you purchase VIVOTEK counting camera?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.purchase.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[2].checked || this.downloadCenterAuth[2].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="macAddress"
+            [(ngModel)]="this.accountdata.macAddress"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[2].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Could you please provide one camera MAC address with us?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.macAddress.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+      <div class="list-col list-col12" *ngIf="this.downloadCenterAuth[2].checked || this.downloadCenterAuth[2].disabled">
+        <div class="input-box form-label">
+          <input
+            type="text"
+            name="CountingUseCase"
+            [(ngModel)]="this.accountdata.countingUseCase"
+            maxlength="50"
+            #f2="ngModel"
+            required
+            [disabled]="this.downloadCenterAuth[2].disabled"
+          />
+          <label for=""
+            ><span class="colorR">*</span
+            >{{
+              "Could you please share a bit more about your use case?"
+                | i18n
+            }}</label
+          >
+          <div *ngIf="f2.touched && accountdata.countingUseCase.trim() == ''" class="alert alert-danger">
+            {{ "Required" | i18n }}
+          </div>
+        </div>
+      </div>
+    </div>
+    Lack of complete information may result in rejection of the application
+    <button *ngIf="!isLoading"
+      fxFlexAlign="center"
+      type="submit"
+      class="btn btn-b"
+      [disabled]="ApplyDisable()"
+      >
+      {{ "Apply" | i18n }}
+    </button>
+    <div fxFlexAlign="center" class="btn-loading" *ngIf="isLoading">
+      <i class="fa fa-spinner fa-spin fa-fw"></i>
+      <span class="sr-only">{{ "Loading..." | i18n }}</span>
+    </div>
+  </form>
+</section>

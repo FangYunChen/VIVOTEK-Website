@@ -1,0 +1,17 @@
+<section class="model-three-panel section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="title">{{title}}</h3>
+    <div class="panel-container">
+      <div class="panel-content" *ngFor="let panel of panels">
+        <img class="panel-img" [src]="panel.image?.src" [alt]="panel.image?.alt" [title]="panel.image?.title">
+        <h4 *ngIf="panel.title" class="panel-title">
+          {{panel.title}}
+        </h4>
+        <h5 *ngIf="panel.subtitle" class="panel-subtitle">
+          {{panel.subtitle}}
+        </h5>
+        <div class="model-html-content p-medium" [innerHTML]="panel.htmlContent | safe:'html'"> </div>
+      </div>
+    </div>
+  </div>
+</section>

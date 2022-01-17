@@ -1,0 +1,46 @@
+<ng-container *ngIf="needDisplaySelectedProduct">
+  <mat-card-content *ngIf="multiple; else singleSelector">
+    <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="selectedProducts && selectedProducts.length > 0; else noProduct">
+      <div fxLayout="column" fxLayoutAlign="center center" *ngFor="let product of selectedProducts">
+        <img style="cursor: pointer" [src]="(product.imagePath || '/assets/images/default/default-product.png') | safeUrl"
+          (click)="removeProduct(product)">
+        <span>{{product.name}}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <ng-template #singleSelector>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutAlign="center center" *ngIf="selectedProducts && selectedProducts.length > 0; else noProduct">
+        <img style="cursor: pointer" [src]="(selectedProducts[0].imagePath || '/assets/images/default/default-product.png') | safeUrl"
+          (click)="removeProduct(selectedProducts[0])">
+        <span>{{selectedProducts[0].name}}</span>
+      </div>
+    </mat-card-content>
+  </ng-template>
+
+  <ng-template #noProduct>
+    <p class="text-center">No product</p>
+  </ng-template>
+</ng-container>
+
+<mat-card-title>
+  <h4>{{selectProductCardText}}</h4>
+</mat-card-title>
+
+<mat-card-content fxLayout="column">
+  <mat-form-field>
+    <mat-select placeholder="Product Category" name="selectedProductCategory" [(ngModel)]="selectedProductCategory"
+      [disabled]="!pageIsEditable" (selectionChange)="productCategoryChange($event.value)">
+      <mat-option *ngFor="let option of productCategoryOptions" [value]="option.value">{{option.optionText}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="canSelectProducts">
+    <div fxLayout="column" fxLayoutAlign="start center" *ngFor="let product of canSelectProducts">
+      <img style="cursor: pointer" [src]="(product.imagePath || '/assets/images/default/default-product.png') | safeUrl"
+        (click)="addProduct(product)">
+      <span>{{product.name}}</span>
+    </div>
+  </div>
+</mat-card-content>
+<vvtk-loader *ngIf="isLoading"></vvtk-loader>

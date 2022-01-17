@@ -1,0 +1,23 @@
+<div class="anchor-bar">
+  <div class="anchor-bar__line"></div>
+  <div class="anchor-bar__list-outer" #scrollContainer>
+    <ul class="anchor-bar__list" #list>
+      <li class="anchor-bar__item-outer" *ngFor="let item of data" #itemEle>
+        <vvtk-link class="anchor-bar__item" [href]="routerUrl" [fragment]="item.anchor" [replaceUrl]="true"
+          [class.active]="item.anchor === selectedItem?.anchor" (click)="selectItem(item, scrollContainer, itemEle)">{{
+          item.name }}</vvtk-link>
+      </li>
+    </ul>
+    <div class="anchor-bar__ink-bar" [class.visible]="selectedItem" #inkBar></div>
+  </div>
+  <div class="anchor-bar__arrow-btn anchor-bar__arrow-btn--left" [class.show]="isTabOverflow(scrollContainer)">
+    <div class="anchor-bar__arrow-btn-inner" (click)="scrollLeft(scrollContainer)">
+      <i class="fa fa-chevron-left"></i>
+    </div>
+  </div>
+  <div class="anchor-bar__arrow-btn anchor-bar__arrow-btn--right" [class.show]="isTabOverflow(scrollContainer)">
+    <div class="anchor-bar__arrow-btn-inner" (click)="scrollRight(scrollContainer)">
+      <i class="fa fa-chevron-right"></i>
+    </div>
+  </div>
+</div>

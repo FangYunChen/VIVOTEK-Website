@@ -1,0 +1,45 @@
+@import '../../../../../../styles/var';
+$contentMaxWidth: 1200px;
+
+::ng-deep {
+  .mat-tooltip.tooltip-for-design-tool {
+    padding: 6px 12px;
+    border: 1px solid $colorGy1;
+    border-radius: 0;
+    font-size: 14px;
+    color: $colorFont;
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
+:host ::ng-deep {
+  .mat-radio-label-content {
+    display: flex;
+    align-items: center;
+    .mat-icon {
+      margin-left: 10px;
+    }
+  }
+  .mat-radio-button {
+    & + .mat-radio-button {
+      margin-left: 20px;
+    }
+  }
+}
+
+:host {
+  min-width: 320px;
+}
+
+.expandable-content {
+  padding: 50px 0 10px;
+  background-color: $colorGy2;
+  overflow: auto;
+}
+
+.calculation-settings {
+  display: flex;
+  flex-direction: column;
+  min-width: $contentMaxWidth;
+}

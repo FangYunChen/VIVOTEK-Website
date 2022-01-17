@@ -1,0 +1,55 @@
+@import '_var.scss';
+.ossAnnounce {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 10px;
+  margin-top:1em;
+  h5 {
+      flex-basis: 100%;
+      font-weight: 500;
+      text-align: center;
+  }
+  &__content {
+    margin-top:3em;
+    ::before {
+      // force the previous and next elements go in to new line
+      content: '';
+      flex-basis: 100%;
+    }
+    p {
+      margin: auto;
+      width: 60%;
+      font-size: 1.3em;
+      margin-bottom: 2em;
+      display: block;
+    }
+  }
+  button.mat-primary {
+    background-color: $colorB1;
+    margin: 3em 0;
+  }
+}
+.OssDialog {
+  .mat-dialog-content {
+    font-weight: 500;
+    color: $colorGy3;
+  }
+  .mat-dialog-actions {
+    margin-top: 1em;
+    display: flex;
+    justify-content: flex-end;
+    button.mat-primary {
+      background-color: $colorB1;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .ossAnnounce {
+    &__content {
+      p {
+        width: 80%;
+      }
+    }
+  }
+}

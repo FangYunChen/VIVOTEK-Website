@@ -1,0 +1,51 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Specification - Display Setting</span>
+    </mat-card-title>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <mat-select name="productCategory" placeholder="Product Category" [(ngModel)]="productCategoryId"
+          (ngModelChange)="changeCategory()" [disabled]="!pageIsEditable">
+          <mat-option *ngFor="let productCategory of productCategoryOptions" [value]="productCategory.value">
+            {{ productCategory.optionText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+
+        <mat-table #table [dataSource]="displaySettings" class="table table-hover table-striped table-bordered table-condensed"
+          [trackBy]="rowTrackBy">
+          <ng-container cdkColumnDef="spec">
+            <mat-header-cell *cdkHeaderCellDef>Specification</mat-header-cell>
+            <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let purposeColumn of purposeColumns; trackBy: columnTrackBy">
+            <ng-container [cdkColumnDef]="purposeColumn.key">
+              <mat-header-cell *cdkHeaderCellDef>{{purposeColumn.headerText}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let row">
+                <input #purposeCheckInput type="checkbox" [(ngModel)]="row.purposeTypeChecks[purposeColumn.purposeTypeIndex].checked"
+                  [disabled]="!pageIsEditable" name="check_{{row.id}}_{{purposeColumn.purposeTypeIndex}}" (change)="checkChange(row.id,purposeColumn.purposeTypeIndex,purposeCheckInput.checked)">
+                <!-- 因為效能問題所以先改用原生html處理 -->
+                <!-- <mat-checkbox [(ngModel)]="row.purposeTypeChecks[purposeColumn.purposeTypeIndex].checked" [disabled]="!pageIsEditable"
+                  (change)="checkChange(row.id,purposeColumn.purposeTypeIndex,$event.checked)">
+                </mat-checkbox> -->
+              </mat-cell>
+            </ng-container>
+          </ng-container>
+
+          <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!pageIsEditable || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

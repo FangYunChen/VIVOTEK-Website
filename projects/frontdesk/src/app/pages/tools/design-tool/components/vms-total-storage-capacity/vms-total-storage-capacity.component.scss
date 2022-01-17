@@ -1,0 +1,38 @@
+@import '../../../../../../styles/var';
+
+.disk-capacity {
+  display: flex;
+  align-items: center;
+  .disk-capacity__title {
+    width: 50%;
+  }
+  input[type='number'] {
+    margin-left: 20px;
+    min-width: 0;
+    width: 25%;
+    text-align: center;
+  }
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 100px;
+}
+
+.result__title {
+  flex: none;
+  width: 50%;
+}
+
+.result__content {
+  flex-grow: 1;
+  margin-left: 15px;
+  color: $colorY;
+
+  span {
+    margin-left: 15px;
+    font-weight: 100;
+    color: $colorFont;
+  }
+}

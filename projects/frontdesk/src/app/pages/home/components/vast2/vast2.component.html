@@ -1,0 +1,16 @@
+<div id="vast2" class="container">
+  <vvtk-top-banner [rootPath]="routerUrl"></vvtk-top-banner>
+  <mat-tab-group mat-stretch-tabs *ngIf="contents !== null && contents.length > 0" [selectedIndex]="selectedTabIndex"
+    (selectedIndexChange)="selectedTabIndex = $event">
+    <mat-tab *ngFor="let content of contents">
+      <ng-template mat-tab-label>
+        <a class="p-medium" [routerLink]="[routerUrl]" [fragment]="content['anchorUrl']">
+          <span class="link-text">{{content['tabName']}}</span>
+        </a>
+      </ng-template>
+      <ng-template matTabContent>
+        <vvtk-model-selector #f [templates]="f.setTemplates(content.templates)"></vvtk-model-selector>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

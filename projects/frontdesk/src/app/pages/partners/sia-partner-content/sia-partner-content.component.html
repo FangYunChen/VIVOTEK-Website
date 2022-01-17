@@ -1,0 +1,46 @@
+<div id="sia-partner-content">
+  <vvtk-top-banner *ngIf="rootPath" [rootPath]="rootPath | customPath" [contentPageTitle]="title"></vvtk-top-banner>
+  <section *ngIf="partnerContent" class="section">
+    <div class="wrap">
+      <div class="partner-information">
+        <div class="logo-container">
+          <h3 class="title-text">{{partnerContent.companyName}}</h3>
+          <img class="logo-image" [src]="partnerContent.logoSrc" [alt]="partnerContent.logoAlt" [title]="partnerContent.logoTitle">
+          <div class="button-container">
+            <button class="general-button" *ngIf="partnerContent.reference">
+              <a [href]="partnerContent.reference" target="_blank">Reference</a>
+            </button>
+            <button class="general-button" *ngIf="partnerContent.cameraIntegration">
+              <a [href]="partnerContent.cameraIntegration" target="_blank">Device Support List</a>
+            </button>
+          </div>
+        </div>
+        <div class="contact-container">
+          <a *ngIf="partnerContent.address" href="javascript:;" class="link" (click)="mapOpen(partnerContent.address)"><i
+              class="fa fa-map-marker"></i>
+            {{ partnerContent.address }}</a>
+          <a *ngIf="partnerContent.address_TC" href="javascript:;" class="link" (click)="mapOpen(partnerContent.address)"><i
+              class="fa fa-map-marker"></i>
+            {{ partnerContent.address_TC }}</a>
+          <a *ngIf="partnerContent.telephone" class="link" [href]="'tel:'+partnerContent.telephone"><i class="fa fa-phone"></i>
+            {{partnerContent.telephone}}</a>
+          <p *ngIf="partnerContent.fax"><i class="fa fa-fax"></i> {{partnerContent.fax}} </p>
+          <a *ngIf="partnerContent.webSite" class="link" target="_blank" [href]="partnerContent.webSite"><i class="fa fa-external-link"></i>
+            {{partnerContent.webSite}}</a>
+          <a *ngIf="partnerContent.email" class="link" [href]="'mailto:'+partnerContent.email"><i class="fa fa-envelope"></i>
+            {{partnerContent.email}}</a>
+          <a *ngIf="partnerContent.supportEmail" class="link" [href]="'mailto:'+partnerContent.supportEmail"><i class="fa fa-envelope"></i>
+            {{partnerContent.supportEmail}}</a>
+        </div>
+      </div>
+      <vvtk-model-selector #f [templates]="f.setTemplates(partnerContent.templates)"></vvtk-model-selector>
+      <vvtk-model-rich-text [content]="partnerProfile"></vvtk-model-rich-text>
+    </div>
+    <vvtk-popup *ngIf="mapMask" [id]="'mapPopup'" [popupStyle]="'mapStyle'" (windowPopup)="mapPopup($event)">
+      <div class="map-wrap" vvtkPopup>
+        <iframe [src]="mapUrl" frameborder="0" width="600" height="450" allowfullscreen></iframe>
+      </div>
+    </vvtk-popup>
+
+  </section>
+</div>

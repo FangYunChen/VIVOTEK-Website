@@ -1,0 +1,24 @@
+<form #form="ngForm" fxLayout="column">
+  <mat-list [sortablejs]="album" [sortablejsOptions]="groupOptions">
+    <mat-list-item class="small-list-item" *ngFor="let list of album;let idx = index">
+      <h3 class="middle" mat-line fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="drag-handle" *ngIf="!readOnly">drag_handle</mat-icon>
+        <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" (click)="delete(idx)"
+          *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="imgBox" [style.background-image]="'url('+list.src+')'"></div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100%">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Alt" [name]="'albumAlt'+idx" [(ngModel)]="list.alt" [readOnly]="readOnly" required>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Title" [name]="'albumTitle'+idx" [(ngModel)]="list.title" [readOnly]="readOnly" required>
+          </mat-form-field>
+        </div>
+      </h3>
+    </mat-list-item>
+  </mat-list>
+  <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload some image (Recommended size: 4:3)</button>
+  <input hidden type="file" #imgFileInput accept="image/*" multiple (change)="imgFileSelect($event)" />
+</form>

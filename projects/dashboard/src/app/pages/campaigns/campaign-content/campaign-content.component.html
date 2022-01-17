@@ -1,0 +1,116 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Campaigns</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="campaign.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Area" name="area" [(ngModel)]="campaign.area" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Address" name="address" [(ngModel)]="campaign.address" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Description" name="description" [(ngModel)]="campaign.description" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Email content" name="emailContent" [(ngModel)]="campaign.emailContent" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="pickerStart" *ngIf="pageIsEditable"></mat-datepicker-toggle>
+              <input matInput [max]="maxDate()" [matDatepicker]="pickerStart" placeholder="Start at (Applied to All)" name="startAt" [(ngModel)]="startAt"
+                required readonly>
+            </mat-form-field>
+            <mat-datepicker #pickerStart></mat-datepicker>
+            <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="pickerEnd" *ngIf="pageIsEditable"></mat-datepicker-toggle>
+              <input matInput [min]="minDate()" [matDatepicker]="pickerEnd" placeholder="End at (Applied to All)" name="endAt" [(ngModel)]="endAt"
+                required readonly>
+            </mat-form-field>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Image</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="campaign.image.src">
+              <div class="text-center">
+                <img [src]="campaign.image.src | safeUrl" [alt]="campaign.image.alt" [title]="campaign.image.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 460*230)</button>
+            <input hidden type="file" #imgFileInput accept="image/*" (change)="imgFileSelect($event)" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imageSrc" [(ngModel)]="campaign.image.src" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="campaign.image.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="campaign.image.alt" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="campaign.content | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group (selectChange)="updateEditorHtml()" [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg #editor path="Campaign"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="campaign.content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <vvtk-input-container>
+              <mat-slide-toggle color="primary" name="status" [(ngModel)]="status" [disabled]="!pageIsEditable" vvtkhtml>
+                {{status?'Online':'Offline'}} (Applied to All)
+              </mat-slide-toggle>
+            </vvtk-input-container>
+            <vvtk-input-container>
+              <mat-slide-toggle color="warn" name="stickTop" [(ngModel)]="campaign.stickTop" [disabled]="!pageIsEditable" vvtkhtml>
+                {{campaign.stickTop?'Pin':'Unpin'}} (Applied to All)
+              </mat-slide-toggle>
+            </vvtk-input-container>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/campaigns/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,41 @@
+@import '_var.scss';
+.inner {
+  p {
+    padding: 10px 15px;
+    background-color: #d3eefb;
+  }
+}
+.download-list-link {
+  padding-left: 0;
+  margin-left: 0;
+  margin-top: 20px;
+  li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    a {
+      display: block;
+      position: relative;
+      color: $colorGy3;
+      @include border-radius(5px);
+      border: 1px solid $colorGy3;
+      padding: 5px 15px 3px 38px;
+      &:before {
+        position: absolute;
+        font-family: FontAwesome;
+        left: 15px;
+        top: 5px;
+        content: '\f0ed';
+        color: $colorGy3;
+      }
+      &:hover {
+        text-decoration: none;
+        color: $colorB1;
+        border-color: $colorB1;
+        &:before {
+          color: $colorB1;
+        }
+      }
+    }
+  }
+}

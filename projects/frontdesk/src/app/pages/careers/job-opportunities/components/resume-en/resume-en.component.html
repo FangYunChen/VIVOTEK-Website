@@ -1,0 +1,576 @@
+<div id="careers" class="container">
+  <vvtk-top-banner [rootPath]="'/careers/job-opportunities' | customPath" [contentPageTitle]="('Careers Resume' | i18n)"></vvtk-top-banner>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Application'|i18n}}</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="block">
+          <h3>{{'Personal Information'|i18n}}</h3>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" [value]="vacancyTitle" disabled>
+                <label for="">{{'Applied Position'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['name']">
+                <label for="">{{'Name'|i18n}}</label>
+                <div *ngIf="form.controls['name'].hasError('required') && (form.controls['name'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select name="" id="" [formControl]="form.controls['sex']">
+                  <option value=""></option>
+                  <option value="0">{{'Male'|i18n}}</option>
+                  <option value="1">{{'Female'|i18n}}</option>
+                </select>
+                <label for="">{{'Sex'|i18n}}</label>
+                <div *ngIf="form.controls['sex'].hasError('required') && (form.controls['sex'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="date" class="form-control" maxlength="256" [formControl]="form.controls['birthday']" [value]="form.controls['birthday'].value|date:'yyyy-MM-dd'">
+                <label for="">{{'Date of Birth'|i18n}}</label>
+                <div *ngIf="form.controls['birthday'].hasError('required') && (form.controls['birthday'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['idNo']">
+                <label for="">{{'ID Card No.'|i18n}}</label>
+                <div *ngIf="form.controls['idNo'].hasError('required') && (form.controls['idNo'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select name="" id="" [formControl]="form.controls['maritalStatus']">
+                  <option value="0">{{'Single'|i18n}}</option>
+                  <option value="1">{{'Married'|i18n}}</option>
+                </select>
+                <label for="">{{'Marital Status'|i18n}}</label>
+                <div *ngIf="form.controls['maritalStatus'].hasError('required') && (form.controls['maritalStatus'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select name="" id="" [formControl]="form.controls['militaryService']">
+                  <option value="0">{{'Retired'|i18n}}</option>
+                  <option value="1">{{'Exempt from service'|i18n}}</option>
+                  <option value="2">{{'Not served'|i18n}}</option>
+                </select>
+                <label for="">{{'Military Service'|i18n}}</label>
+                <div *ngIf="form.controls['militaryService'].hasError('required') && (form.controls['militaryService'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="number" class="form-control" min="0" maxlength="256" [formControl]="form.controls['childrenNumber']">
+                <label for="">{{'Number of Children'|i18n}}</label>
+                <div *ngIf="form.controls['childrenNumber'].hasError('required') && (form.controls['childrenNumber'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['email']">
+                <label for="">{{'Email'|i18n}}</label>
+                <div *ngIf="form.controls['email'].hasError('required') && (form.controls['email'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+                <div *ngIf="form.controls['email'].hasError('pattern') && (form.controls['email'].touched)" class="alert alert-danger">{{'Incorrect email format'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="tel" class="form-control" maxlength="256" [formControl]="form.controls['cellphone']">
+                <label for="">{{'Mobile Phone Number'|i18n}}</label>
+                <div *ngIf="form.controls['cellphone'].hasError('required') && (form.controls['cellphone'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['permanentAddress']">
+                <label for="">{{'Permanent Address'|i18n}}</label>
+                <div *ngIf="form.controls['permanentAddress'].hasError('required') && (form.controls['permanentAddress'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="tel" class="form-control" maxlength="256" [formControl]="form.controls['permanentPhone']">
+                <label for="">{{'Phone Number'|i18n}}</label>
+                <div *ngIf="form.controls['permanentPhone'].hasError('required') && (form.controls['permanentPhone'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['presentAddress']">
+                <label for="">{{'Present Address'|i18n}}</label>
+                <div *ngIf="form.controls['presentAddress'].hasError('required') && (form.controls['presentAddress'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="tel" class="form-control" maxlength="256" [formControl]="form.controls['presentPhone']">
+                <label for="">{{'Phone Number'|i18n}}</label>
+                <div *ngIf="form.controls['presentPhone'].hasError('required') && (form.controls['presentPhone'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <h3>Education</h3>
+          <div class="tabs">
+            <div class="tabs-nav" [class.no-del]="eduDelHide">
+              <a [href]="('javascript:;' | safe:'url')" class="tabs-nav-item" *ngFor="let tab of eduIndex" [class.open]="'edu'+tab === eduActive"
+                (click)="tabsOpen('edu','edu'+tab)">{{'Education'|i18n}} {{ tab+1 }}
+                <span class="btn-del" (click)="delTabs('edu', tab)">
+                  <i class="fa fa-times-circle"></i>
+                </span>
+              </a>
+              <a [href]="('javascript:;' | safe:'url')" class="btn-add" (click)="addTabs('edu')" [class.hide]="eduIndex.length >= 3">
+                <i class="fa fa-plus-circle"></i>
+              </a>
+            </div>
+            <div class="tabs-content" formArrayName="education">
+              <div class="tabs-block" *ngFor="let tab of eduIndex; let i = index;" [class.open]="'edu'+tab === eduActive" [formGroupName]="i">
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="schoolName">
+                      <label for="">{{'Name of School'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['schoolName'].hasError('required') && (form.controls['education'].controls[i].controls['schoolName'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="major">
+                      <label for="">{{'Major in'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['major'].hasError('required') && (form.controls['education'].controls[i].controls['major'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <select name="" id="" formControlName="division">
+                        <option value="0">{{'Day Division'|i18n}}</option>
+                        <option value="1">{{'Evening Division'|i18n}}</option>
+                      </select>
+                      <label for="">{{'Day/Evening Division'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['division'].hasError('required') && (form.controls['education'].controls[i].controls['division'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="degree">
+                      <label for="">{{'Degree'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['degree'].hasError('required') && (form.controls['education'].controls[i].controls['degree'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="month" class="form-control" maxlength="256" formControlName="fromDate" [value]="form.controls['education'].controls[i].controls['fromDate'].value|date:'yyyy-MM'">
+                      <label for="">{{'From-To (Y/M)'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['fromDate'].hasError('required') && (form.controls['education'].controls[i].controls['fromDate'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="month" class="form-control" maxlength="256" formControlName="toDate" [value]="form.controls['education'].controls[i].controls['toDate'].value|date:'yyyy-MM'">
+                      <div *ngIf="form.controls['education'].controls[i].controls['toDate'].hasError('required') && (form.controls['education'].controls[i].controls['toDate'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <select name="" id="" formControlName="gradute">
+                        <option value="0">{{'Graduated'|i18n}}</option>
+                        <option value="1">{{'No graduated'|i18n}}</option>
+                      </select>
+                      <label for="">{{'Graduated (Yes/No)'|i18n}}</label>
+                      <div *ngIf="form.controls['education'].controls[i].controls['gradute'].hasError('required') && (form.controls['education'].controls[i].controls['gradute'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <h3>{{'Employment Record'|i18n}}</h3>
+          <div class="tabs">
+            <div class="tabs-nav" [class.no-del]="empDelHide">
+              <a [href]="('javascript:;' | safe:'url')" class="tabs-nav-item" *ngFor="let i of empIndex" [class.open]="'emp'+i === empActive"
+                (click)="tabsOpen('emp','emp'+i)">{{'Employment'|i18n}} {{ i+1 }}
+                <span class="btn-del" (click)="delTabs('emp', i)">
+                  <i class="fa fa-times-circle"></i>
+                </span>
+              </a>
+              <a [href]="('javascript:;' | safe:'url')" class="btn-add" (click)="addTabs('emp')" [class.hide]="empIndex.length >= 3">
+                <i class="fa fa-plus-circle"></i>
+              </a>
+            </div>
+            <div class="tabs-content" formArrayName="employmentRecord">
+              <div class="tabs-block" *ngFor="let tab of empIndex; let i = index" [class.open]="'emp'+tab === empActive" [formGroupName]="i">
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="companyName">
+                      <label for="">{{'Name of Company'|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['companyName'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['companyName'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="department">
+                      <label for="">{{'Department'|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['department'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['department'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="title">
+                      <label for="">{{'Job Title'|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['title'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['title'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="reasonForLeaving">
+                      <label for="">{{'Reason for Leaving'|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['reasonForLeaving'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['reasonForLeaving'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="month" class="form-control" maxlength="256" formControlName="fromDate" [value]="form.controls['employmentRecord'].controls[i].controls['fromDate'].value|date:'yyyy-MM'">
+                      <label for="">{{'From-To (Y/M)'|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['fromDate'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['fromDate'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="month" class="form-control" maxlength="256" formControlName="toDate" [value]="form.controls['employmentRecord'].controls[i].controls['toDate'].value|date:'yyyy-MM'">
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['toDate'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['toDate'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row" formGroupName="supervisor">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="name">
+                      <label for="">{{"Supervisor's Name"|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['supervisor'].controls['name'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['supervisor'].controls['name'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="title">
+                      <label for="">{{"Supervisor's Title"|i18n}}</label>
+                      <div *ngIf="form.controls['employmentRecord'].controls[i].controls['supervisor'].controls['title'].hasError('required') && (form.controls['employmentRecord'].controls[i].controls['supervisor'].controls['title'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <h3>{{'Family Information'|i18n}}</h3>
+          <div class="tabs">
+            <div class="tabs-nav" [class.no-del]="famDelHide">
+              <a [href]="('javascript:;' | safe:'url')" class="tabs-nav-item" *ngFor="let i of famIndex" [class.open]="'fam'+i === famActive"
+                (click)="tabsOpen('fam','fam'+i)">{{'Family'|i18n}} {{ i+1 }}
+                <span class="btn-del" (click)="delTabs('fam', i)">
+                  <i class="fa fa-times-circle"></i>
+                </span>
+              </a>
+              <a [href]="('javascript:;' | safe:'url')" class="btn-add" (click)="addTabs('fam')" [class.hide]="famIndex.length >= 4">
+                <i class="fa fa-plus-circle"></i>
+              </a>
+            </div>
+            <div class="tabs-content" formArrayName="familyInformation">
+              <div class="tabs-block" *ngFor="let tab of famIndex; let i = index" [class.open]="'fam'+tab === famActive" [formGroupName]="i">
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="relation">
+                      <label for="">{{'Relation'|i18n}}</label>
+                      <div *ngIf="form.controls['familyInformation'].controls[i].controls['relation'].hasError('required') && (form.controls['familyInformation'].controls[i].controls['relation'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="name">
+                      <label for="">{{'Name'|i18n}}</label>
+                      <div *ngIf="form.controls['familyInformation'].controls[i].controls['name'].hasError('required') && (form.controls['familyInformation'].controls[i].controls['name'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row" formGroupName="job">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="company">
+                      <label for="">{{'Company'|i18n}}</label>
+                      <div *ngIf="form.controls['familyInformation'].controls[i].controls['job'].controls['company'].hasError('required') && (form.controls['familyInformation'].controls[i].controls['job'].controls['company'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="title">
+                      <label for="">{{'Job Title'|i18n}}</label>
+                      <div *ngIf="form.controls['familyInformation'].controls[i].controls['job'].controls['title'].hasError('required') && (form.controls['familyInformation'].controls[i].controls['job'].controls['title'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div formGroupName="emergencyContact">
+            <div class="list-row">
+              <div class="list-col list-col6">
+                <div class="input-box form-label">
+                  <input type="text" class="form-control" maxlength="256" formControlName="name">
+                  <label for="">{{'Emergency Contact'|i18n}}</label>
+                  <div *ngIf="isInvalid('emergencyContact.phone')" class="alert alert-danger">{{'Required'|i18n}}</div>
+                </div>
+              </div>
+              <div class="list-col list-col6">
+                <div class="input-box form-label">
+                  <input type="text" class="form-control" maxlength="256" formControlName="relation">
+                  <label for="">{{'Relation'|i18n}}</label>
+                  <div *ngIf="isInvalid('emergencyContact.phone')" class="alert alert-danger">{{'Required'|i18n}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="list-row">
+              <div class="list-col list-col6">
+                <div class="input-box form-label">
+                  <input type="tel" class="form-control" maxlength="256" formControlName="phone">
+                  <label for="">{{'Phone Number'|i18n}}</label>
+                  <div *ngIf="isInvalid('emergencyContact.phone')" class="alert alert-danger">{{'Required'|i18n}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['interests']">
+                <label for="">{{'Interests'|i18n}}</label>
+                <div *ngIf="form.controls['interests'].hasError('required') && (form.controls['interests'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['skills']">
+                <label for="">{{'Skills'|i18n}}</label>
+                <div *ngIf="form.controls['skills'].hasError('required') && (form.controls['skills'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" [formControl]="form.controls['workExpectation']"></textarea>
+                <label for="">{{'Work Expectations'|i18n}}</label>
+                <div *ngIf="form.controls['workExpectation'].hasError('required') && (form.controls['workExpectation'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" [formControl]="form.controls['futureAspiration']"></textarea>
+                <label for="">{{'Future Aspirations'|i18n}}</label>
+                <div *ngIf="form.controls['futureAspiration'].hasError('required') && (form.controls['futureAspiration'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" [formControl]="form.controls['strengthAndWeakness']"></textarea>
+                <label for="">{{'Strength & Weakness'|i18n}}</label>
+                <div *ngIf="form.controls['strengthAndWeakness'].hasError('required') && (form.controls['strengthAndWeakness'].touched)"
+                  class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['expectedSalary']">
+                <label for="">{{'Expected Salary'|i18n}}</label>
+                <div *ngIf="form.controls['expectedSalary'].hasError('required') && (form.controls['expectedSalary'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="date" class="form-control" maxlength="256" [formControl]="form.controls['availabilityDate']" [value]="form.controls['availabilityDate'].value|date:'yyyy-MM-dd'">
+                <label for="">{{'Date of Availability'|i18n}}</label>
+                <div *ngIf="form.controls['availabilityDate'].hasError('required') && (form.controls['availabilityDate'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['whereCatchVacancy']">
+                <label for="">{{'Where did you know about this job opportunity？ (Job Bank Website/Friends/Relatives/Others)'|i18n}}</label>
+                <div *ngIf="form.controls['whereCatchVacancy'].hasError('required') && (form.controls['whereCatchVacancy'].touched)" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <h3>{{'References'|i18n}}</h3>
+          <div class="tabs">
+            <div class="tabs-nav" [class.no-del]="recDelHide">
+              <a [href]="('javascript:;' | safe:'url')" class="tabs-nav-item" *ngFor="let i of recIndex" [class.open]="'rec'+i === recActive"
+                (click)="tabsOpen('rec','rec'+i)">{{'Reference'|i18n}} {{ i+1 }}
+                <span class="btn-del" (click)="delTabs('rec', i)">
+                  <i class="fa fa-times-circle"></i>
+                </span>
+              </a>
+              <a [href]="('javascript:;' | safe:'url')" class="btn-add" (click)="addTabs('rec')" [class.hide]="recIndex.length >= 2">
+                <i class="fa fa-plus-circle"></i>
+              </a>
+            </div>
+            <div class="tabs-content" formArrayName="reference">
+              <div class="tabs-block" *ngFor="let tab of recIndex; let i = index;" [class.open]="'rec'+tab === recActive" [formGroupName]="i">
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="name">
+                      <label for="">{{'Name'|i18n}}</label>
+                      <div *ngIf="form.controls['reference'].controls[i].controls['name'].hasError('required') && (form.controls['reference'].controls[i].controls['name'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="company">
+                      <label for="">{{'Name of Company'|i18n}}</label>
+                      <div *ngIf="form.controls['reference'].controls[i].controls['company'].hasError('required') && (form.controls['reference'].controls[i].controls['company'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="title">
+                      <label for="">{{'Job Title'|i18n}}</label>
+                      <div *ngIf="form.controls['reference'].controls[i].controls['title'].hasError('required') && (form.controls['reference'].controls[i].controls['title'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="tel" class="form-control" maxlength="256" formControlName="phone">
+                      <label for="">{{'Phone Number'|i18n}}</label>
+                      <div *ngIf="form.controls['reference'].controls[i].controls['phone'].hasError('required') && (form.controls['reference'].controls[i].controls['phone'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label">
+                      <input type="text" class="form-control" maxlength="256" formControlName="relation">
+                      <label for="">{{'Relation'|i18n}}</label>
+                      <div *ngIf="form.controls['reference'].controls[i].controls['relation'].hasError('required') && (form.controls['reference'].controls[i].controls['relation'].touched)"
+                        class="alert alert-danger">{{'Required'|i18n}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea maxlength="4000" [formControl]="form.controls['note']"></textarea>
+                <label for="">{{'Note'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label file-box">
+                <input type="file" class="form-control upl" [disabled]="isLoading" multiple (change)="imgFileSelect($event)" />
+                <label for="">{{'Multi-file upload (Word, Excel, PDF, picture) (single file upload limit 20 MB or less)'|i18n}}</label>
+                <div class="preview">
+                  <ng-container *ngFor="let file of form.get('files').value; let idx = index;">
+                    <ng-container *ngIf="file.size && file.size > limitSize; else elseTemplate">
+                      <div class="preview-item limit-size" (click)="removeFile(idx)">
+                        <div class="preview-img">
+                          <img [src]="file.url | safe:'url'" alt="">
+                        </div>
+                        <div class="preview-size">{{'File size exceeds limit'|i18n}}</div>
+                      </div>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      <div class="preview-item" (click)="removeFile(idx)">
+                        <div class="preview-img">
+                          <img [src]="file.url | safe:'url'" alt="">
+                        </div>
+                        <div class="preview-size">{{ file.name }}</div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-box btn-box text-center">
+          <a [routerLink]="[('/careers/job-opportunities' | customPath), vacancyId]" class="btn btn-gy">{{'Back'|i18n}}</a>
+          <button type="submit" class="btn btn-b" [disabled]="form.invalid">{{'Send'|i18n}}</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

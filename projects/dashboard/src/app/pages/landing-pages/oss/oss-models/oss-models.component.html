@@ -1,0 +1,74 @@
+<mat-card>
+  <div class='ossTable'>
+    <mat-card-title>
+      <span>Open Source Software Model List</span>
+      <a *ngIf="pageContentIsEditable" mat-mini-fab color='warn' matTooltip="Add" matTooltipPosition="above" routerLink="/landing-pages/oss/model/create">
+        <mat-icon>add</mat-icon>
+      </a>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-card>
+        <mat-card-content fxLayout="column">
+          <div class='ossTable__filterArea'>
+            <mat-form-field>
+              <mat-select [disabled]='isLoading' (selectionChange)="mainSelectChange($event.value)" placeholder="Main Category">
+                <mat-option value=''>N/A</mat-option>
+                <mat-option *ngFor="let item of categoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select [disabled]='isLoading' (selectionChange)="subSelectChange($event.value)" placeholder="Subcategory"
+                [value]='subSelectedValue'>
+                <mat-option value=''>N/A</mat-option>
+                <mat-option *ngFor="let item of subCategoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput #modelFilter placeholder="Model Name">
+            </mat-form-field>
+          </div>
+          <mat-table #table [dataSource]="dataSource" class="table table-hover table-striped table-bordered table-condensed">
+            <!-- Subcategory Column -->
+            <ng-container matColumnDef="categoryName">
+              <mat-header-cell *cdkHeaderCellDef> Maincategory </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.categoryName}} </mat-cell>
+            </ng-container>
+
+            <!-- Subcategory Column -->
+            <ng-container matColumnDef="subCategoryName">
+              <mat-header-cell *cdkHeaderCellDef> Subcategory </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.subCategoryName}} </mat-cell>
+            </ng-container>
+
+            <!-- Model Column -->
+            <ng-container matColumnDef="modelsString">
+              <mat-header-cell *cdkHeaderCellDef> Model </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.modelsString}} </mat-cell>
+            </ng-container>
+
+            <!-- Go to announcement page Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef> Action </mat-header-cell>
+              <mat-cell *cdkCellDef="let row">
+                <a *ngIf="pageContentIsViewable" [disabled]='isLoading' routerLink={{row.id}} mat-mini-fab class="action-btn"
+                  color="primary" matTooltip="Edit" matTooltipPosition="above">
+                  <mat-icon>edit</mat-icon>
+                </a>
+                <button *ngIf="pageIsEditable" [disabled]='isLoading' (click)='removeModel(row.id)' mat-mini-fab class="action-btn"
+                  color="warn" matTooltip="Delete" matTooltipPosition="above">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [length]="totalCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 15]">
+          </mat-paginator>
+          <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </div>
+</mat-card>

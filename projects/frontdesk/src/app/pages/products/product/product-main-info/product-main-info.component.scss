@@ -1,0 +1,142 @@
+@import "../../../../../styles/var";
+$seriesWidth: 50px;
+$iconImgWidth: 70px;
+$iconWidth: 100px;
+$iconImgWidthInMobile: 60px;
+$iconWidthInMobile: 90px;
+.product-main-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 40px 40px 60px;
+}
+
+.product-photo-outer {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  width: 40%;
+}
+
+.product-photo {
+  flex: none;
+  max-width: 430px;
+}
+
+.product-info_img-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-info {
+  flex-grow: 1;
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  max-width: 100%;
+}
+
+.product-info__series {
+  padding: 0 25px;
+  .product-info_img-wrap {
+    width: $seriesWidth;
+    height: $seriesWidth;
+  }
+}
+
+.product-info__title {
+  padding: 0 25px;
+  font-size: 2.75em;
+  font-weight: 700;
+}
+
+.product-info__subtitle {
+  margin-bottom: 2em;
+  padding: 0 25px;
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+.product-info__icon-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-info__icon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  width: $iconWidth;
+  .product-info_img-wrap {
+    margin: 0 10px;
+    width: $iconImgWidth;
+    height: $iconImgWidth;
+  }
+  .product-info__icon-text {
+    margin-top: 10px;
+    max-width: 100%;
+    font-size: 0.9em;
+    font-weight: 700;
+    text-align: center;
+    color: $colorB6;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+}
+
+.product-info__description {
+  padding: 20px 40px;
+  background-color: $colorGy2;
+}
+
+/* mobile version */
+
+.product-main-info--mobile {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px 0 20px;
+  .product-info__subtitle {
+    margin-bottom: 1em;
+  }
+  .product-info__description {
+    padding: 15px 30px;
+  }
+  .product-photo {
+    align-self: center;
+    margin: 15px auto 25px;
+  }
+  .product-info__icon-list {
+    align-self: center;
+    margin: 0 auto;
+  }
+  .product-info__icon {
+    width: $iconWidthInMobile;
+    .product-info_img-wrap {
+      margin: 0 10px;
+      width: $iconImgWidthInMobile;
+      height: $iconImgWidthInMobile;
+    }
+  }
+}
+
+@media only screen and (max-width: 940px) {
+  .product-main-info {
+    display: none;
+    &.product-main-info--mobile {
+      display: flex;
+    }
+  }
+}
+
+@for $i from 5 to 0 {
+  @media only screen and (max-width: ($i+1) * $iconWidthInMobile) {
+    @if ($i > 0) {
+      .product-info__icon-list {
+        max-width: $i * $iconWidthInMobile;
+      }
+    }
+  }
+}

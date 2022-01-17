@@ -1,0 +1,6 @@
+<section *ngIf="template" class="model section model-download text-center">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title}}</h3>
+    <vvtk-download-list [downloadList]="template.downloadList"></vvtk-download-list>
+  </div>
+</section>

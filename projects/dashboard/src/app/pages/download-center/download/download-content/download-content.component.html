@@ -1,0 +1,90 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{isAddDownload ? 'Add' : 'Edit'}} Download</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-slide-toggle color="primary" name="isHide" [(ngModel)]="mainDetail.isHide">Hide
+          </mat-slide-toggle>
+          <mat-card-content fxLayout="column">
+            <mat-form-field>
+              <mat-select required placeholder="Document Type" name="selectedDocumentType" [(ngModel)]="mainDetail.documentTypeId"
+                [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let option of documentTypeOptions" [value]="option.value">
+                  {{option.optionText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <ng-container *ngIf="isDisplayProductOption">
+              <mat-form-field>
+                <mat-select required placeholder="Product" name="selectedProduct" [(ngModel)]="mainDetail.productId"
+                  [disabled]="!pageIsEditable">
+                  <mat-option>
+                    <ngx-mat-select-search placeholderLabel="Filter product" noEntriesFoundLabel="No result" name="filterProductKeyword"
+                      [(ngModel)]="filterProductKeyword" (ngModelChange)="filterProductKeyword$.next($event)"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let option of filteredProductOptions" [value]="option.value">
+                    {{option.optionText}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <h3>Properties</h3>
+              <ng-container *ngFor="let property of properties">
+                <ng-container [ngSwitch]="property.type">
+                  <mat-form-field *ngSwitchCase="propertyType.MultiLineString">
+                    <textarea matInput [placeholder]="property.name" name="property_input_{{property.id}}" [(ngModel)]="property.content"
+                      [readOnly]="!pageIsEditable"></textarea>
+                  </mat-form-field>
+
+                  <mat-form-field *ngSwitchCase="propertyType.Date">
+                    <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+                    <input matInput [matDatepicker]="picker" [placeholder]="property.name" name="property_input_{{property.id}}"
+                      [(ngModel)]="property.content" [readOnly]="!pageIsEditable">
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <ng-container *ngSwitchCase="propertyType.DownloadUrl">
+                    <button type="button" mat-button (click)="fileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">
+                      Upload a file
+                    </button>
+                    <input hidden type="file" #fileInput (change)="uploadFile($event)" />
+                    <mat-form-field *ngSwitchCase="propertyType.DownloadUrl">
+                      <input matInput [placeholder]="property.name" name="property_input_{{property.id}}" [(ngModel)]="property.content"
+                        [readOnly]="!pageIsEditable" (change)="downloadUrlChange($event.target.value)">
+                    </mat-form-field>
+                  </ng-container>
+
+                  <mat-form-field *ngSwitchCase="propertyType.FileSize">
+                    <input matInput [placeholder]="property.name" name="property_input_{{property.id}}" [(ngModel)]="property.content"
+                      disabled>
+                  </mat-form-field>
+
+                  <mat-form-field *ngSwitchDefault>
+                    <input matInput [placeholder]="property.name" name="property_input_{{property.id}}" [(ngModel)]="property.content"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                </ng-container>
+              </ng-container>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/download-center/download']" [queryParams]="{selectT: selectTTemp, selectP: selectPTemp}">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="form.invalid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

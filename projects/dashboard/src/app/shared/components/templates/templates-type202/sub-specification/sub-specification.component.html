@@ -1,0 +1,50 @@
+<div [sortablejs]="specDetails" [sortablejsOptions]="groupOptions">
+  <div style="margin:0 0 0 20px" fxLayout="column" *ngFor="let specDetail of specDetails; let i = index">
+    <mat-card-content fxLayout="row">
+      <mat-icon class="drag-handle" *ngIf="!readOnly">drag_handle</mat-icon>
+      <mat-form-field>
+        <mat-select [name]="'isAttribute_'+templateIndex+'_'+layer+'_'+i" placeholder="Specification Type" [(ngModel)]="specDetail.isAttribute"
+          (selectionChange)="changeType(i,$event.value)">
+          <mat-option [value]="false">Group</mat-option>
+          <mat-option [value]="true">Attribute</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput required maxlength="255" placeholder="Specification Name" [name]="'specName_'+templateIndex+'_'+layer+'_'+i"
+          [(ngModel)]="specDetail.name" [readOnly]="readOnly">
+      </mat-form-field>
+      <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Specification" matTooltipPosition="above" (click)="addSpec.emit(i+1)"
+        *ngIf="!readOnly">
+        <mat-icon>add</mat-icon>
+      </a>
+      <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Sub Specification" matTooltipPosition="above"
+        (click)="addChildSpec(i,0)" *ngIf="!readOnly && !specDetail.isAttribute && layer < 5">
+        <mat-icon>playlist_add</mat-icon>
+      </a>
+      <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Specification" matTooltipPosition="above"
+        (click)="deleteSpec.emit(i)" *ngIf="!readOnly">
+        <mat-icon>delete</mat-icon>
+      </a>
+      <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="specDetail.hideContent?'展開':'收合'"
+        matTooltipPosition="above" (click)="specDetail.hideContent = !specDetail.hideContent">
+        <mat-icon *ngIf="specDetail.hideContent">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="!specDetail.hideContent">keyboard_arrow_up</mat-icon>
+      </a>
+    </mat-card-content>
+
+    <ng-container *ngIf="specDetail.isAttribute; else specGroup">
+      <mat-form-field style="margin:0 0 0 20px" fxFlex [hidden]="specDetail.hideContent">
+        <textarea matInput rows="2" [placeholder]="specDetail.name" [name]="'attribute_'+templateIndex+'_'+layer+'_'+i"
+          [(ngModel)]="specDetail.content" [readOnly]="readOnly"></textarea>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-template #specGroup>
+      <mat-card-content fxLayout="column" [hidden]="specDetail.hideContent">
+        <vvtk-sub-specification fxFlex *ngIf="specDetail.children && specDetail.children.length > 0" [readOnly]="readOnly"
+          [specDetails]="specDetail.children" [layer]="layer + 1" (addSpec)="addChildSpec(i,$event)" (deleteSpec)="deleteChildSped(i,$event)">
+        </vvtk-sub-specification>
+      </mat-card-content>
+    </ng-template>
+  </div>
+</div>

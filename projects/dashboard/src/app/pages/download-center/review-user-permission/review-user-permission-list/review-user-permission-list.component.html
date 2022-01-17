@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-title>
+    <span>Download Center - Review User Permission</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content fxLayout="column">
+        <mat-table #table [dataSource]="dataSource$ | async" matSort class="table table-hover table-striped table-bordered table-condensed">
+          <ng-container cdkColumnDef="nameAndEmail">
+            <mat-header-cell *cdkHeaderCellDef>User name(e-mail)</mat-header-cell>
+            <mat-cell *cdkCellDef="let row"> {{row.name}}({{row.email}}) </mat-cell>
+          </ng-container>
+
+          <ng-container cdkColumnDef="action">
+            <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="200px" fxLayoutAlign="center center"> Action
+            </mat-header-cell>
+            <mat-cell *cdkCellDef="let row" fxLayout="row wrap" fxFlex="200px" fxLayoutAlign="center center">
+              <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                *ngIf="pageIsEditable" (click)="reviewUserPermission(row.id,row.name)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <ng-container *ngIf="(dataSource$ | async)?.length === 0">
+          No user apply permission.
+        </ng-container>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

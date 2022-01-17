@@ -1,0 +1,83 @@
+<div id="news" class="container">
+  <vvtk-top-banner [rootPath]="'/news/campaigns' | customPath" [contentPageTitle]="title"></vvtk-top-banner>
+  <ng-container *ngIf="_Content">
+    <section class="model-page section">
+      <div class="wrap">
+        <div class="page-header">
+          <h2>{{_Content.title}}</h2>
+          <div class="line afterClear">
+            <div class="info">
+              <span>
+                <i class="fa fa-clock-o"></i>{{'Date:'|i18n}} {{_Content.startAt|date:'MMM d, y'}} ~ {{_Content.endAt|date:'MMM d, y'}}</span>
+              <span>
+                <i class="fa fa-map-marker"></i>{{'Location:'|i18n}} {{_Content.address}}</span>
+            </div>
+            <vvtk-share [mailTitle]="_Content.title" [categoryId]="collection.Campaigns" [pageId]="id"></vvtk-share>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="text-center img">
+            <img src="{{_Content.image.src}}" alt="{{_Content.image.alt}}" title="{{_Content.image.title}}">
+          </div>
+          <h2 class="colorB">{{_Content.title}}</h2>
+          <div [innerHtml]="_Content.content"></div>
+        </div>
+        <div class="page-footer">
+          <div class="text-center">
+            <a [routerLink]="'/news/campaigns' | customPath" class="btn btn-back">{{'Back'|i18n}}</a>
+            <a [href]="('javascript:;' | safe:'url')" class="btn btn-apply" (click)="applyOpen($event)">{{'Apply'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</div>
+
+<vvtk-popup *ngIf="applyMask" [id]="'applyPopup'" [popupStyle]="'applyStyle'" (windowPopup)="windowPopup($event)">
+  <div class="apply-wrap" vvtkPopup>
+    <div class="page-apply" *ngIf="!doSuccess && !doFail">
+      <h2 class="text-center">{{'Apply'|i18n}}</h2>
+      <form [formGroup]="form" (ngSubmit)="next($event)">
+        <div class="input-box form-label" [ngClass]="{'has-error':!form.controls['name'].valid && form.controls['name'].touched}">
+          <input type="text" [formControl]="form.controls['name']">
+          <label for="">
+            <span class="colorR">*</span>{{'Name'|i18n}}</label>
+          <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+        </div>
+        <div class="input-box form-label" [ngClass]="{'has-error':!form.controls['phone'].valid && form.controls['phone'].touched}">
+          <input type="tel" [formControl]="form.controls['phone']" (keyup)="telFilter($event)">
+          <label for="">
+            <span class="colorR">*</span>{{'Phone'|i18n}}</label>
+          <div *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+          <div *ngIf="!formValid && form.controls['phone'].touched" class="alert alert-danger">{{'Wrong format'|i18n}}</div>
+        </div>
+        <div class="input-box form-label" [ngClass]="{'has-error':!form.controls['email'].valid && form.controls['email'].touched}">
+          <input type="email" [formControl]="form.controls['email']">
+          <label for="">
+            <span class="colorR">*</span>{{'Email'|i18n}}</label>
+          <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+          <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="alert alert-danger">{{'Wrong format'|i18n}}</div>
+        </div>
+        <div class="input-box btn-box text-center">
+          <button type="submit" class="btn btn-b" *ngIf="!loadingShow" [disabled]="!(form.valid&&formValid)">{{'Send'|i18n}}</button>
+          <div class="btn-loading" *ngIf="loadingShow">
+            <i class="fa fa-spinner fa-spin fa-fw"></i>
+            <span class="sr-only">{{'Loading...'|i18n}}</span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="text-center" *ngIf="doSuccess">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Registered successfully'|i18n}}</p>
+    </div>
+    <div class="text-center" *ngIf="doFail">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span> {{'Registration failed. Please register again.'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup>

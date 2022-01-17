@@ -1,0 +1,85 @@
+<vvtk-three-cards *ngIf="type === 'Cards'" [sectionBgColor]="sectionBgColor">
+  <div class="wrap" vvtkHomeCard>
+    <h2>{{ sectionTitle }}</h2>
+    <div class="list-row">
+      <vvtk-card *ngFor="let card of items;" [card]="card" [sectionBgColor]="sectionBgColor" target="_blank">
+        <div vvtkThreeCard>
+          <div class="text limit">
+            <p [innerHtml]="card.description"></p>
+          </div>
+          <div class="col-link text-right afterClear">
+            <vvtk-a [url]="card.href" [cName]="'link'" [vvtkRouterLink]="[card.href | customPath]">
+              <ng-container HtmlContent>
+                {{ "More Info" | i18n }}
+              </ng-container>
+            </vvtk-a>
+          </div>
+        </div>
+      </vvtk-card>
+    </div>
+  </div>
+</vvtk-three-cards>
+<!--上面是"type": "Cards" -->
+<!--下面是"type": "List" -->
+<section *ngIf="type === 'List'" class="model-oneCard section" [class.bg-b]="sectionBgColor">
+  <div class="wrap">
+    <h2>{{ sectionTitle }}</h2>
+    <div class="list-row">
+      <ng-container *ngFor="let item of items;let idx = index;">
+        <vvtk-card [card]="item" *ngIf="idx === 0" target="_blank">
+          <div vvtkThreeCard>
+            <div class="text limit">
+              <p [innerHtml]="item.description"></p>
+            </div>
+            <div class="col-link text-right afterClear">
+              <vvtk-a [url]="item.href" [cName]="'link'" [vvtkRouterLink]="[item.href | customPath]">
+                <ng-container HtmlContent>
+                  {{ "More Info" | i18n }}
+                </ng-container>
+              </vvtk-a>
+            </div>
+          </div>
+        </vvtk-card>
+      </ng-container>
+
+      <div class="list-col list-col8">
+        <div class="shadow">
+          <div class="list-list">
+            <div *ngFor="let item of items.slice(1);let idx = index;" class="list-item">
+              <div class="col-img" [class.icon-vedio]="item.video">
+                <div class="img-v">
+                  <img *ngIf="item.image?item.image.src:item.img.src" [src]="item.image?item.image.src:item.img.src" [alt]="item.image?item.image.alt:item.img.alt"
+                    [title]="item.image?item.image.title:item.img.title ">
+                </div>
+              </div>
+              <div class="col-text ">
+                <vvtk-a [url]="item.href" [vvtkRouterLink]="[item.href | customPath]">
+                  <ng-container HtmlContent>
+                    <div class="title " [innerHtml]="item.title"></div>
+                    <div class="text limit ">
+                      <p [innerHtml]="item.description "></p>
+                    </div>
+                  </ng-container>
+                </vvtk-a>
+              </div>
+              <div class="video " *ngIf="item.video " (click)="openVideo(item.video) "></div>
+            </div>
+            <div class="col-link text-right ">
+              <vvtk-a *ngIf="more && more.href " [url]="more.href " [cName]="'btn btn-r'">
+                <ng-container HtmlContent>
+                  <div [innerHTML]="more.text "></div>
+                </ng-container>
+              </vvtk-a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<vvtk-popup *ngIf="openPopup" [id]="'videoPopup'" [popupStyle]="'videoStyle'" (windowPopup)="windowPopup($event)">
+  <div class="video-wrap" vvtkPopup>
+    <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+  </div>
+</vvtk-popup>

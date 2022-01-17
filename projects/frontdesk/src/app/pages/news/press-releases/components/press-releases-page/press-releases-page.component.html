@@ -1,0 +1,62 @@
+<div id="news" class="container">
+  <vvtk-top-banner [rootPath]="'/news/press-releases' | customPath" [contentPageTitle]="_Content?_Content.title:''"></vvtk-top-banner>
+  <ng-container *ngIf="_Content">
+    <section class="model-page section">
+      <div class="wrap">
+        <div class="page-header">
+          <h2>{{_Content.title}}</h2>
+          <div class="line afterClear">
+            <div class="info">
+              <span>
+                <i class="fa fa-clock-o"></i>{{_Content.publishAt|date:'MMM d, y'}}</span>
+            </div>
+            <vvtk-share [mailTitle]="_Content.title" [categoryId]="collection.News" [pageId]="id"></vvtk-share>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="text-center img">
+            <img src="{{_Content.image.src}}" alt="{{_Content.image.alt}}" title="{{_Content.image.title}}">
+          </div>
+          <vvtk-model-selector #f [content]="f.setContent(_Content.content)"></vvtk-model-selector>
+          <!-- <div [innerHtml]="_Content.content"></div> -->
+        </div>
+        <div class="page-footer">
+          <div class="tag">
+            <i class="fa fa-tags"></i>
+
+            <ng-container *ngFor="let tag of _Content.tags">
+              <vvtk-a [url]="tag.url" [cName]="'link'" [vvtkRouterLink]="[('/news/press-releases/tags/' +tag.id) | customPath]">
+                <ng-container HtmlContent>
+                  {{tag.name}}
+                </ng-container>
+              </vvtk-a>
+            </ng-container>
+
+          </div>
+          <div class="text-center">
+            <a [routerLink]="'/news/press-releases' | customPath" class="btn btn-b">{{"Back"|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <vvtk-three-cards *ngIf="_Content.related" [sectionBgColor]="'odd'">
+      <div class="wrap" vvtkHomeCard>
+        <h2>{{'Other Releases'|i18n}}</h2>
+        <div class="list-row">
+          <vvtk-card *ngFor="let card of _Content.related;" [card]="card">
+            <div vvtkThreeCard>
+              <div class="text limit">
+                <p>{{card.description}}</p>
+              </div>
+              <div class="col-link text-right afterClear">
+                <span class="card-date float-left">
+                  <i class="fa fa-clock-o"></i> {{card.publishAt|date:'MMM d, y'}}</span>
+                <a [href]="[card.url]" class="link">{{"More Info"|i18n}}</a>
+              </div>
+            </div>
+          </vvtk-card>
+        </div>
+      </div>
+    </vvtk-three-cards>
+  </ng-container>
+</div>

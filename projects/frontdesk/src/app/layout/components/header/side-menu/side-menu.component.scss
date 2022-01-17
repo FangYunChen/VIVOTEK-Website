@@ -1,0 +1,176 @@
+@import '_var.scss';
+#sideMenu {
+  position: fixed;
+  width: 30%;
+  right: -32%;
+  top: 0;
+  @include transition(all 0.3s);
+  background-color: $colorW;
+  height: 100vh;
+  overflow-y: auto;
+  margin-top: 0;
+  z-index: 1000;
+  .wrap {
+    padding: 0 20px;
+  }
+  &.open {
+    right: 0;
+    @include transition(all 0.3s);
+  }
+  .sideMenu-top {
+    display: block;
+    background-color: $colorB1;
+    a {
+      display: inline-block;
+      color: $colorW;
+      padding: 8px 20px 10px;
+      font-size: $sizeLg;
+    }
+  }
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .nav-top {
+    display: none;
+  }
+  > ul {
+    > li {
+      display: block;
+      border-bottom: 1px solid $colorGy2;
+      position: relative;
+      > a {
+        font-size: $sizeNl;
+        display: block;
+        padding: 12px 25px 11px;
+        color: $colorFont;
+        text-decoration: none;
+        &:hover {
+          background-color: $colorGy2;
+        }
+        .icon {
+          width: 15px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 2px;
+        }
+        &.open {
+          & + .sub {
+            display: block;
+          }
+        }
+      }
+      &.sub-icon {
+        > a {
+          &:after {
+            font-family: fontAwesome;
+            content: '\f0da';
+            float: right;
+            margin-top: 2px;
+          }
+          &.open {
+            &:after {
+              content: '\f0d7';
+              margin-left: -3px;
+            }
+          }
+        }
+      }
+      .sub {
+        font-size: $sizeSler;
+        background-color: $colorB2;
+        display: none;
+        .sub-first {
+          padding: 8px 0;
+          > li {
+            > a {
+              color: $colorFont;
+              display: block;
+              padding: 10px 0 10px 25px;
+              &.open {
+                & + .sub-second {
+                  display: block;
+                }
+              }
+            }
+            &.sub-icon {
+              > a {
+                padding-left: 10px;
+                &:before {
+                  font-family: fontAwesome;
+                  content: '\f0da';
+                  display: inline-block;
+                  margin-top: -2px;
+                  margin-right: 10px;
+                }
+                &.open {
+                  &:before {
+                    content: '\f0d7';
+                  }
+                }
+              }
+            }
+          }
+        }
+        .sub-second {
+          margin-left: 25px;
+          display: none;
+          > li {
+            &.name {
+              display: none;
+            }
+            a {
+              color: $colorB1;
+              display: block;
+              padding: 5px 0;
+            }
+          }
+        }
+        .sub-third {
+          margin-left: 18px;
+          > li {
+            list-style-type: disc;
+            color: $colorB1;
+            a {
+              color: $colorB1;
+              display: block;
+              padding: 4px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+}
+
+@media screen and (max-width: $widthTable) {
+}
+
+@media screen and (max-width: $widthTableApp) {
+  #sideMenu {
+    width: 60%;
+    right: -65%;
+    .nav-top {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  #sideMenu {
+    width: 80%;
+    right: -85%;
+    > ul {
+      > li {
+        > a {
+          font-size: $sizeSler;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,145 @@
+@import '../../../../styles/_var';
+footer {
+  background-color: $colorW;
+  padding: 50px 0 20px;
+  font-size: $sizeSler;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  .follow {
+    display: inline-block;
+    vertical-align: top;
+    span {
+      display: inline-block;
+    }
+    .icon {
+      @include border-radius(100px);
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      margin: -4px 0 4px 2px;
+      vertical-align: top;
+      color: $colorW;
+      text-align: center;
+      padding-top: 8px;
+      font-size: $sizeNl;
+      overflow: hidden;
+      @include transition(all .3s);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      img {
+        display: none;
+      }
+      &:hover {
+        margin-top: -8px;
+        margin-bottom: 8px;
+        @include transition(all .3s);
+      }
+    }
+    .icon-facebook {
+      background-color: $facebook;
+    }
+    .icon-twitter {
+      background-color: $twitter;
+    }
+    .icon-youtbe {
+      background-color: $youtbe;
+    }
+  }
+  .footer-menu {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    margin-top: -5px;
+    a {
+      padding: 6px 18px 6px 6px;
+      color: $colorFont;
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      &:after {
+        position: absolute;
+        content: "|";
+        right: 0;
+        top: 4px;
+      }
+      &:first-child {
+        padding-left: 20px;
+        &:before {
+          position: absolute;
+          content: "|";
+          left: 0;
+          top: 4px;
+        }
+      }
+      &:hover {
+        color: $colorB1;
+        text-decoration: none;
+        &:after,
+        &:before {
+          color: $colorFont;
+        }
+      }
+    }
+  }
+  .copyright {
+    display: inline-block;
+    vertical-align: top;
+    float: right;
+  }
+}
+
+@media screen and (max-width:$widthWebTable) {}
+
+@media screen and (max-width:$widthTable) {
+  footer {
+    .follow {
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+      .icon {
+        width: 35px;
+        height: 35px;
+        padding-top: 7px;
+        font-size: $sizeLg;
+      }
+      span {
+        line-height: 45px;
+        margin-right: 10px;
+      }
+    }
+    .footer-menu {
+      display: block;
+      margin-left: 0;
+      text-align: center;
+    }
+    .copyright {
+      display: block;
+      text-align: center;
+      float: none;
+      margin: 15px 0;
+    }
+  }
+}
+
+@media screen and (max-width:$widthTableApp) {
+  footer {
+    position: initial;
+  }
+}
+
+@media screen and (max-width:$widthApp) {
+  footer {
+    font-size: $sizeSler;
+    padding: 40px 0 10px;
+    .footer-menu {
+      a {
+        padding-right: 12px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+    }
+  }
+}

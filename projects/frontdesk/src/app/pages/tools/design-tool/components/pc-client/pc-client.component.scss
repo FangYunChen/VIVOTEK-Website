@@ -1,0 +1,78 @@
+@import '../../../../../../styles/var';
+
+p {
+  margin: 5px 0;
+}
+
+.pc-info {
+  min-width: 500px;
+  .title {
+    margin-bottom: 12px;
+    strong {
+      font-size: 20px;
+    }
+  }
+  .sub-title {
+    margin-left: 20px;
+    color: $colorGy6;
+  }
+  &:nth-child(1) {
+    max-width: 360px;
+  }
+  &:nth-child(2) {
+    max-width: 540px;
+  }
+  & + .pc-info {
+    margin-left: 70px;
+  }
+
+  .content {
+    font-weight: 700;
+    color: $colorY;
+  }
+}
+
+.form-item {
+  display: flex;
+}
+
+.form-item__title {
+  margin-right: 16px;
+}
+
+.form-item__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item__input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  input {
+    min-width: 0;
+    & + input {
+      margin-left: 30px;
+    }
+  }
+  ::ng-deep {
+    .mat-select {
+      margin-right: 20px;
+    }
+  }
+}
+
+.red {
+  color: red;
+}
+
+@media screen and (max-width: 1200px) {
+  .pc-info {
+    &:nth-child(n) {
+      max-width: 100%;
+    }
+    & + .pc-info {
+      margin: 50px 0 0;
+    }
+  }
+}

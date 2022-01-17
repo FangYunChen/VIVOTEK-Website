@@ -1,0 +1,40 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Homepage - Main Banner</span>
+      <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['/home/slider/content',0]"
+        *ngIf="pageContentIsEditable">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="column" fxFlex="100%">
+        <div class="list mat-elevation-z4">
+          <mat-list [sortablejs]="data" [sortablejsOptions]="groupOptions">
+            <mat-list-item class="small-list-item" *ngFor="let list of data">
+              <h3 class="middle" mat-line>
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" [routerLink]="['/home/slider/content',list.id]"
+                  *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" (click)="delete(list.id, list.h1)"
+                  [disabled]="lockDelete" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <mat-slide-toggle color="primary" [(ngModel)]="list.isEnabled" [matTooltip]="list.isEnabled?'Online':'Online'" matTooltipPosition="above"
+                  (change)="changeIsEnabled($event, list.id)" [disabled]="!pageIsEditable" vvtkhtml>
+                </mat-slide-toggle>
+                <span>{{ list.h1 }}</span>
+              </h3>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

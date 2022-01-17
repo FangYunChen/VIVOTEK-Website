@@ -1,0 +1,72 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Investors Service - Categories Content</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Category (Applied to All)" name="category" [value]="getCategoryName(data.categoryId)" [readOnly]="true">
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="categoryId" placeholder="Category (Applied to All)" [(ngModel)]="data.categoryId" required>
+                    <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <input type="text" class="hidden-input" [value]="data.categoryId" required />
+              </div>
+            </vvtk-input-container>
+            <div class="padding" fxLayout="column" fxLayoutAlign="start stretch">
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="data.title" [readOnly]="!pageIsEditable" required>
+              </mat-form-field>
+            </div>
+
+            <!--<mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.content | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group (selectChange)="updateEditorHtml()" [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg #editor [path]="dirPath"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>-->
+            <!--樣板-->
+            <vvtk-templates #templates [path]="dirPath" [readOnly]="!pageIsEditable"></vvtk-templates>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <!-- <button mat-button [routerLink]="['/investors/service/pages/list']">Cancel</button> -->
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || (templates && !templates.form.valid) || isLoading"
+          *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,97 @@
+@import "_filter.scss";
+@import "_var.scss";
+#download-product {
+  input:focus-within {
+    border-bottom: none;
+  }
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+    .blue {
+      color: $colorB4;
+    }
+    .orange {
+      color: $colorY;
+    }
+    .grey {
+      color: $colorGy1;
+    }
+    .fix-top {
+      display: block;
+      position: sticky;
+      position: -webkit-sticky;
+      top: 0;
+      z-index: 6;
+    }
+    .mobile-filter {
+      display: none;
+      .mobile-filter-content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      @media screen and (max-width: $widthTablet) {
+        display: block;
+      }
+    }
+    .filter-container {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: white;
+      .filter-row {
+        margin: 25px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @include filter-box;
+        .step-title {
+          flex-basis: 120px;
+          flex-grow: 0;
+          flex-shrink: 0;
+          font-weight: bold;
+          font-size: 20px;
+          padding: 0 8px;
+        }
+        .filter-box {
+          flex-grow: 1;
+          margin-bottom: 0;
+          .box-title {
+            flex-basis: 150px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            align-self: center;
+            font-weight: bold;
+          }
+          .filter-dropdown,
+          .filter-search-box {
+            flex-basis: 150px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .filter-search-box {
+            border-bottom: none;
+            &:focus-within {
+              border-bottom: none;
+            }
+          }
+        }
+      }
+      @media screen and (max-width: $widthTablet) {
+        display: none;
+      }
+    }
+    .download-list {
+      margin-top: 20px;
+      .download-content {
+        margin-bottom: 20px;
+        .table-title {
+          padding-left: 24px;
+          padding-bottom: 14px;
+        }
+      }
+    }
+  }
+}

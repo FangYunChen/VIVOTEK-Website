@@ -1,0 +1,48 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Coverage</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="coverage.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Description" name="description" [(ngModel)]="coverage.description" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Url" name="Url" [(ngModel)]="coverage.url" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="picker" *ngIf="pageIsEditable"></mat-datepicker-toggle>
+              <input matInput [matDatepicker]="picker" placeholder="Publish at (Applied to All)" name="publishAt" [(ngModel)]="coverage.publishAt"
+                required readonly>
+            </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <vvtk-input-container>
+              <mat-slide-toggle color="primary" name="status" [(ngModel)]="status" [disabled]="!pageIsEditable" vvtkhtml>
+                {{status?'Online':'Offline'}} (Applied to All)
+              </mat-slide-toggle>
+            </vvtk-input-container>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/coverage/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,24 @@
+<section class="model-tab-videos model section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title|i18n}}</h3>
+    <mat-tab-group>
+      <mat-tab *ngFor="let tab of template.tabs">
+        <ng-template mat-tab-label>
+          <p class="p-medium">{{tab.tabName}}</p>
+        </ng-template>
+        <div class="video-container">
+          <div class="video-content" *ngFor="let video of tab.videos">
+            <div class="video-box">
+              <iframe [src]="'https://www.youtube.com/embed/'+video.videoUrl|safe:'resourceUrl'" frameborder="0"
+                allowfullscreen></iframe>
+            </div>
+            <h4 class="icon-name">
+              <ng-container *ngIf="!video.url">{{video.title}}</ng-container>
+              <a *ngIf="video.url" [href]="video.url">{{video.title}}</a>
+            </h4>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+@import '_var.scss';
+.date{
+	color:$colorGy3;
+	margin-top: 0;
+	&:before{
+		font-family: FontAwesome;
+		content: "\f017";
+		display: inline-block;
+		vertical-align: top;
+		margin-right: 5px;
+	}
+}

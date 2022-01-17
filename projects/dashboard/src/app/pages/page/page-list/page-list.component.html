@@ -1,0 +1,58 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Page Management</span>
+      <button mat-mini-fab (click)="updateFrontSetting()" target="_blank" class="action-btn" color="warn" matTooltip="Update front setting"
+        matTooltipPosition="above" *ngIf="pageContentIsEditable">
+        <mat-icon>replay</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-card-content fxLayout="column">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <mat-form-field fxFlex>
+            <input #filter matInput placeholder="Filter" [(ngModel)]="filterText">
+          </mat-form-field>
+          <div fxLayout="column" *ngFor="let page of filterPages">
+            <mat-card-title>
+              <h3>{{page.path}}</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxLayout="column" fxFlex="100%" class="tableBoxOuter">
+                <div fxLayout="column" class="tableBoxInner" style="min-width:950px;">
+                  <table class="table table-hover table-striped table-bordered table-condensed">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Url</th>
+                        <th>Custom Path</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let setting of page.settingList">
+                        <td>{{ setting.show.title || '' }}</td>
+                        <td>
+                          <a [href]="frontUrl+'/'+setting.show.referPath" target="_blank">{{ frontUrl }}/{{ setting.show.referPath }}</a>
+                        </td>
+                        <td>{{ setting.show.customPath || '' }}</td>
+                        <td width="50px">
+                          <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" (click)="edit(setting)"
+                            *ngIf="pageContentIsViewable">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </mat-card-content>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,27 @@
+.small-list-item {
+    padding-left: 6px;
+    padding-right: 16px;
+}
+
+.drag-handle {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.action-btn {
+    vertical-align: middle;
+}
+
+.mat-list .mat-list-item {
+    /deep/.mat-list-text {
+        >.mat-line {
+            padding: 8px 0;
+        }
+    }
+}
+
+.sortable-ghost {
+    opacity: .5;
+}

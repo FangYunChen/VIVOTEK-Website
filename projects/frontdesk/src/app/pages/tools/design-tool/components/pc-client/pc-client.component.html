@@ -1,0 +1,48 @@
+<div class="pc-info">
+  <div class="title">
+    <strong>PC Client</strong>
+    <span class="sub-title">Calculate from Cameras’ Liveview Bandwidth.</span>
+  </div>
+  <div class="form-item">
+    <div class="form-item__title">CPU:</div>
+    <div class="form-item__content">
+      <div class="form-item__input">
+        <!-- <mat-radio-button
+          name="PCClientCPU"
+          value="1"
+          checked
+        ></mat-radio-button>
+        <mat-select
+          style="min-width: 300px;"
+          [(ngModel)]="designToolService.cpuName"
+        >
+          <mat-option *ngFor="let item of cpuBenchmarkList" [value]="item.Name">
+            {{ item.Name }}
+          </mat-option>
+        </mat-select> -->
+        <input matInput [formControl]="myControl" [matAutocomplete]="auto" placeholder="Search..." style="min-width: 380px;" name="cpu" [(ngModel)]="designToolService.cpuName" ngDefaultControl>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let item  of filteredOptions | async" [value]="item.Name">
+            {{ item.Name }}
+          </mat-option>
+        </mat-autocomplete>
+        <span [ngClass]="{ red: isPercentOneAboveThen80() }">{{
+          percentOne | nullToDash: '%'
+        }}</span>
+      </div>
+    </div>
+  </div>
+  <div>
+  </div>
+ 
+  <br />
+  <p>
+    Server number:
+    <span class="content">{{ serverCount | number }}</span>
+  </p>
+  <br />
+  <p>RAM: 16GB(Dual Channel) or above</p>
+  <p>Network: 1 Gbps</p>
+  <p>Graphics Card: Support Direct3D Acceleration with 1GB Video RAM</p>
+  <p>OS: Windows 7, 10 64 bit</p>
+</div>

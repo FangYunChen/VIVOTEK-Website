@@ -1,0 +1,22 @@
+<div id="presentation" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model section model-text inner">
+    <div class="wrap">
+      <h2 class="line text-center">法說會資訊</h2>
+
+
+      <vvtk-model-selector #f [content]="f.setContent(presentationContent)"></vvtk-model-selector>
+      <section class="model section tabs-slider">
+        <vvtk-tab-slider *ngIf="yearList$.length > 0" [tabList]="yearList$" [preString]="'year'" (tabsOpen)="tabsChange($event)"
+          [tabsActive]="tabsActive"></vvtk-tab-slider>
+        <div *ngFor="let year of yearList$" class="tabs-slider-content">
+          <ng-container *ngFor="let item of presentationLinks;let idx = index">
+            <div *ngIf="year === item.year" class="tabs-slider-block" [class.active]="'year'+year === tabsActive">
+              <vvtk-download-list [downloadList]="item.links"></vvtk-download-list>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

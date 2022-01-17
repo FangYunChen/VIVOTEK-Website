@@ -1,0 +1,498 @@
+<div id="whereBuy" class="container">
+  <vvtk-top-banner [rootPath]="'/where-to-buy' | customPath" [contentPageTitle]="cardsItems.length>0?cardsItems[0].country:''"></vvtk-top-banner>
+  <section class="model section">
+    <vvtk-three-cards [sectionBgColor]="cardsItem.bgcolor" *ngFor="let cardsItem of cardsItems;">
+      <div class="wrap" vvtkHomeCard>
+        <h2 class="line">{{ cardsItem.country }}</h2>
+        <div class="list-row" *ngFor="let cardArea of cardsItem.states;">
+          <h3 [innerHtml]="cardArea.name"></h3>
+          <vvtk-card *ngFor="let card of cardArea.companies" [card]="card" [coverElementA]="false">
+            <div vvtkThreeCard>
+              <div class="text cardHide">
+                <div class="item" *ngIf="card.tag && card.tag.name">
+                  <p>
+                    <i class="fa fa-tag"></i>
+                    <span>{{ card.tag?card.tag.name:'' }}</span>
+                  </p>
+                </div>
+                <div class="item" *ngIf="card.phone.length > 0">
+                  <p>
+                    <i class="fa fa-phone"></i>
+                    <span *ngFor="let phone of card.phone">
+                      <a [href]="'tel:' + phone">{{ phone }}</a>
+                    </span>
+                  </p>
+                </div>
+                <div class="item" *ngIf="card.fax.length > 0">
+                  <p>
+                    <i class="fa fa-fax"></i>
+                    <span *ngFor="let fax of card.fax">{{ fax }}</span>
+                  </p>
+                </div>
+                <div class="item" *ngIf="card.address && card.address.length > 0 && card.addressUrl && card.addressUrl.length > 0">
+                  <p>
+                    <i class="fa fa-map-marker"></i>
+                    <!--
+                    <a [href]="card.addressUrl" [target]="'_blank'" class="link">{{ card.address }}</a>
+                    -->
+                    <a href="javascript:;" class="link" (click)="mapOpen(card.addressUrl)">{{ card.address }}</a>
+                  </p>
+                </div>
+                <div class="item" *ngIf="card.web.length > 0">
+                  <p>
+                    <i class="fa fa-link"></i>
+                    <a *ngFor="let web of card.web" [href]="web.url" class="link" [target]="'_blank'">{{ web.urlName || web.url }}</a>
+                  </p>
+                </div>
+                <div class="item" *ngIf="card.email.length > 0">
+                  <p>
+                    <i class="fa fa-envelope"></i>
+                    <a *ngFor="let email of card.email" [href]="'mailto:'+ email" class="link">{{ email }}</a>
+                  </p>
+                </div>
+                <div class="text-right" *ngIf="false">
+                  <p>
+                    <a [href]="('javascript:;' | safe:'url')" class="btn btn-r" (click)="openCard(card, cardMask)">{{'More Info'|i18n}}</a>
+                  </p>
+                </div>
+                    <a [href]="('javascript:;' | safe:'url')" class="btn btn-r" (click)="usaOpen($event)" *ngIf="card.hardcode === 1">{{'Authorized Distributors'|i18n}}</a>
+                    <a [href]="('javascript:;' | safe:'url')" class="btn btn-r" (click)="canadaOpen($event)" *ngIf="card.hardcode === 2">{{'Authorized Distributors'|i18n}}</a>
+              </div>
+            </div>
+          </vvtk-card>
+        </div>
+      </div>
+    </vvtk-three-cards>
+  </section>
+</div>
+
+<vvtk-popup *ngIf="cardMask" [id]="'cardPopup'" [popupStyle]="'cardStyle'" (windowPopup)="cardPopup($event)">
+  <div class="card-wrap" vvtkPopup>
+    <vvtk-card [card]="openItem" [coverElementA]="false">
+      <div vvtkThreeCard>
+        <div class="text">
+          <div class="item" *ngIf="openItem.tag && openItem.tag.name">
+            <p>
+              <i class="fa fa-tag"></i>
+              <span>{{ openItem.tag.name }}</span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.phone && openItem.phone.length > 0">
+            <p>
+              <i class="fa fa-phone"></i>
+              <span *ngFor="let phone of openItem.phone">
+                <a [href]="'tel:' + phone">{{ phone }}</a>
+                <!-- {{ phone }} -->
+              </span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.fax && openItem.fax.length > 0">
+            <p>
+              <i class="fa fa-fax"></i>
+              <span *ngFor="let fax of openItem.fax">{{ fax }}</span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.addressUrl && openItem.addressUrl.length > 1">
+            <p>
+              <i class="fa fa-map-marker"></i>
+              <!--
+              <a [href]="openItem.addressUrl" class="link" [target]="'_blank'">{{ openItem.address }}</a>
+              -->
+              <a href="javascript:;" class="link" (click)="mapOpen(openItem.addressUrl)">{{ openItem.address | i18n }}</a>
+            </p>
+          </div>
+          <div class="item" class="web" *ngIf="openItem.web && openItem.web.length > 0">
+            <p>
+              <i class="fa fa-link"></i>
+              <a *ngFor="let web of openItem.web" [href]="web.url" style="display: block;" class="link" [target]="'_blank'">{{ web.urlName || web.url }}</a>
+            </p>
+          </div>
+          <div class="item" class="mail" *ngIf="openItem.email && openItem.email.length > 0">
+            <p>
+              <i class="fa fa-envelope"></i>
+              <a *ngFor="let email of openItem.email" [href]="'mailto:'+ email" class="link">{{ email }}</a>
+          </div>
+        </div>
+      </div>
+    </vvtk-card>
+  </div>
+</vvtk-popup>
+
+<vvtk-popup *ngIf="mapMask" [id]="'mapPopup'" [popupStyle]="'mapStyle'" (windowPopup)="mapPopup($event)">
+  <div class="map-wrap" vvtkPopup>
+    <iframe [src]="mapUrl" frameborder="0" width="600" height="450" allowfullscreen></iframe>
+  </div>
+</vvtk-popup>
+
+<vvtk-popup *ngIf="usaMask" [id]="'usaPopup'" [popupStyle]="'usaStyle'" (windowPopup)="usaPopup($event)">
+  <div id="vivotekusa" vvtkPopup>
+    <div class="popup">
+      <div class="block">
+        <h3>Important Info</h3>
+        <p>VIVOTEK USA only sells products through a network of authorized distributors and resellers in the United States and
+          Canada. Goods sold by unauthorized resellers are not purchased from VIVOTEK USA; instead they are acquired from
+          a host of unidentified sources. Products purchased from unauthorized resellers often appear to be damaged, used,
+          refurbished, and defective; therefore, VIVOTEK cannot be held responsible for these items. Products sold by unauthorized
+          resellers might not entitled to VIVOTEK’s technical support and warranty coverage. We urge customers to be cautious
+          when placing orders online and please contact VIVOTEK for list of authorized distributors and resellers.</p>
+        <p>** If you are a reseller, integrator, or A&amp;E, please contact us directly via e-mail 
+          <a href="mailto:salesusa@vivotek.com" target="_blank">salesusa@vivotek.com</a> / call us at
+          <a href="tel:4087738686">(408)773-8686</a>, or contact a VIVOTEK authorized distributor. Listed below. **</p>
+      </div>
+      <div class="block">
+        <h3>Authorized Distributors</h3>
+        <div class="list-row">
+          <div class="list-col list-col2">
+            <a href="http://abdistributing.com/" target="_blank">
+              <img src="/assets/img/where/usa/ab-distributing.png" alt="AB DISTRIBUTING">
+              <span>AB DISTRIBUTING</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.accu-tech.com/" target="_blank">
+              <img src="/assets/img/where/usa/accutech.png" alt="Accu-Tech Logo">
+              <span>Accu-Tech Corp</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://adiglobal.us/Pages/default.aspx" target="_blank">
+              <img src="/assets/img/where/usa/adi.png" alt="ADI Logo">
+              <span>ADI</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.alarmax.com/ " target="_blank">
+              <img src="/assets/img/where/usa/AlarMaxLogoMSmallWWEB.png" alt="AlarMax Distributors Logo">
+              <span>AlarMax Distributors, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.apdmn.com/" target="_blank">
+              <img src="/assets/img/where/usa/alarm_products.png" alt="Alarm Products Distributors Logo">
+              <span>Alarm Products Distributors, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.anixter.com/" target="_blank">
+              <img src="/assets/img/where/usa/anixter.png" alt="Anixter Logo">
+              <span>Anixter, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.basscomputers.com/" target="_blank">
+              <img src="/assets/img/where/usa/basscomputers.png" alt="Bass Computers Logo">
+              <span>Bass Computers, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://blazer20.com/" target="_blank">
+              <img src="/assets/img/where/usa/blazer-electric-supply.jpg" alt="Blazer Electric Supply Company Logo">
+              <span>Blazer Electric Supply Company</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://bsmks.com/" target="_blank">
+              <img src="/assets/img/where/usa/blvs.png" alt="BLVS Logo">
+              <span>Brooklyn Low Voltage Supply Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.borderstates.com/" target="_blank">
+              <img src="/assets/img/where/usa/border_states.png" alt="Border States Electric Logo">
+              <span>Border States Electric (BSE)</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.cassidytechnologies.com/" target="_blank">
+              <img src="/assets/img/where/usa/Cassidy_Logo.JPG" alt="Cassidy Technologies">
+              <span>Cassidy Technologies</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.cmtint.com/" target="_blank">
+              <img src="/assets/img/where/usa/cmt.png" alt="CMT International, Inc. Logo">
+              <span>CMT International, Inc.</span>
+            </a>
+          </div>
+          
+          <div class="list-col list-col2">
+            <a href="http://www.ce-supply.com/" target="_blank">
+              <img src="/assets/img/where/usa/custom.png" alt="Custom Electronic Supply Logo">
+              <span>Custom Electronic Supply</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.dwgdistribution.com/" target="_blank">
+              <img src="/assets/img/where/usa/dwg.png" alt="DWG Logo">
+              <span>DWG</span>
+            </a>
+          </div>
+          <!-- <div class="list-col list-col2">
+            <a href="http://www.edist.com/" target="_blank">
+              <img src="/assets/img/where/usa/edist.png" alt="Edist Logo">
+              <span>Edist</span>
+            </a>
+          </div> -->
+          <div class="list-col list-col2">
+            <a href="https://www.esentia.com/" target="_blank">
+              <img src="./assets/img/where/usa/esentia-systems.png" alt="Esentia Systems, Inc. Logo">
+              <span>Esentia Systems, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.goldcom.us/products/brand/52/vivotek" target="_blank">
+              <img src="/assets/img/where/usa/Goldcom_logo.png" alt="GoldCom Logo">
+              <span>GoldCom, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.graybar.com/" target="_blank">
+              <img src="/assets/img/where/usa/graybar.png" alt="Graybar Logo">
+              <span>Graybar</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://gsscctv.com/" target="_blank">
+              <img src="/assets/img/where/usa/GSS.png" alt="Gsscctv Logo">
+              <span>GSS</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.lonestar-us.com/" target="_blank">
+              <img src="/assets/img/where/usa/lone-star.png" alt="Lone Star Logo">
+              <span>Lone Star</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.lowvoltagedirect.com/" target="_blank">
+              <img src="/assets/img/where/usa/low_voltage_direct.png" alt="Low Voltage Direct Logo">
+              <span>Low Voltage Direct</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.norfolkwire.com/" target="_blank">
+              <img src="/assets/img/where/usa/norfolk_wire.png" alt="Norfolk Wire - Richmond, Inc. Logo">
+              <span>Norfolk Wire - Richmond, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.platt.com/" target="_blank">
+              <img src="/assets/img/where/usa/platt.png" alt="Platt Electric Supply Logo">
+              <span>Platt Electric Supply</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.buypsa.com/" target="_blank">
+              <img src="/assets/img/where/usa/psa.png" alt="PSA Security Network Logo" class="width_100">
+              <span>PSA Security Network</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.securitydatasupply.com/" target="_blank">
+              <img src="/assets/img/where/usa/security-data-supply.png" alt="Security Data Supply Logo" class="width_100">
+              <span>Security Data Supply</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.sydist.com/" target="_blank">
+              <img src="/assets/img/where/usa/schaedler -yesco.png" alt="Schaedler Yesco">
+              <span>Schaedler Yesco</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.sesonline.com/" target="_blank">
+              <img src="/assets/img/where/usa/security_equipment.png" alt="Security Equipment Supply, Inc. Logo">
+              <span>Security Equipment Supply, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.silmarelectronics.com/" target="_blank">
+              <img src="/assets/img/where/usa/silmar_electronics.png" alt="Silmar Electronics, INC. Logo">
+              <span>Silmar Electronics, INC.</span>
+            </a>
+          </div>
+          <!-- <div class="list-col list-col2">
+            <a href="http://www.sotelsystems.com/" target="_blank">
+              <img src="/assets/img/where/usa/sotel_systems.png" alt="SoTel Systems, LLC Logo">
+              <span>SoTel Systems, LLC</span>
+            </a>
+          </div> -->
+          <div class="list-col list-col2">
+            <a href=" https://www.smcelectric.com/smc/" target="_blank">
+              <img src="/assets/img/where/usa/smc.png" alt="SMC Logo">
+              <span>SMC</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href=" https://www.springfieldelectric.com/" target="_blank">
+              <img src="/assets/img/where/usa/springfield-electric.jpg" alt="Springfield Electric Logo">
+              <span>Springfield Electric</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.stanion.com/" target="_blank">
+              <img src="/assets/img/where/usa/stanion.png" alt="Stanion Logo">
+              <span>Stanion</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.cctv.net/" target="_blank">
+              <img src="/assets/img/where/usa/sts_lab.png" alt="STS Lab, Inc. Logo">
+              <span>STS Lab, Inc. (CCTV.Net)</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.syndat.com/" target="_blank">
+              <img src="/assets/img/where/usa/synergy.png" alt="Synergy Datacom Supply, Inc. Logo">
+              <span>Synergy Datacom Supply, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.synnexcorp.com/" target="_blank">
+              <img src="/assets/img/where/usa/Synnex_logo.png" alt="SYNNEX Corporation, Inc. Logo">
+              <span>SYNNEX Corporation</span>
+            </a>
+          </div>
+          <!-- <div class="list-col list-col2">
+            <a href="http://www.tri-ed.com/" target="_blank">
+              <img src="/assets/img/where/usa/tried.png" alt="Tri-Ed/Northern Video Systems Logo">
+              <span>Tri-Ed/Northern Video Systems</span>
+            </a>
+          </div> 
+          <div class="list-col list-col2">
+            <a href="https://www.unisolinternational.com" target="_blank">
+              <img src="/assets/img/where/usa/unisol.jpg" alt="Unisol International Logo">
+              <span>Unisol International</span>
+            </a>
+          </div>-->
+          <div class="list-col list-col2">
+            <a href="http://www.udtech-usa.com/" target="_blank">
+              <img src="/assets/img/where/usa/united_digital.png" alt="United Digital Technologies, LLC Logo">
+              <span>United Digital Technologies, LLC</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.usmilcom.com/" target="_blank">
+              <img src="/assets/img/where/usa/usmilcom-inc.png" alt="USMILCOM, Inc. Logo">
+              <span>USMILCOM, Inc.</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="http://www.wesco.com/" target="_blank">
+              <img src="/assets/img/where/usa/communications.png" alt="WESCO">
+              <span>WESCO</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.volutone.com/Category.aspx?tab=1&m=1081&ps=12" target="_blank">
+              <img src="/assets/img/where/usa/logo_volutone_snap.png" alt="Volutone Logo">
+              <span>Volutone</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.3e-co.com/" target="_blank">
+              <img src="/assets/img/where/usa/3e.png" alt="3E Logo">
+              <span>3E</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <h3>
+          <span class="colorR">Unauthorized</span> Online Resellers</h3>
+        <div class="list-row">
+          <div class="list-col list-col5">
+            <img src="/assets/img/where/usa/vu_unauthorized_online_resellers_20151209.png" alt="VIVOTEK USA Unauthorized Online Resellers">
+          </div>
+          <div class="list-col list-col4">
+            <p class="colorR">** Make sure to look out for the let (VIVOTEK Authorized Reseller) logo. Only web resellers that show this logo
+              are approved web resellers of VIVOTEK product. Websites without this logo are unauthorized to sell VIVOTEK
+              products, and VIVOTEK will not support the warranty purchases made at unauthorized websites. So again, make
+              sure that the website you buy from is a true let and you see the let logo.</p>
+          </div>
+          <div class="list-col list-col3">
+            <img src="/assets/img/where/usa/var.png" alt="VIVOTEK let logo">
+          </div>
+        </div>
+      </div>
+      <!-- <div class="block">
+        <h3>Field Sales Territory Map</h3>
+        <img src="/assets/img/where/usa/vivotek-field-sales-territory-map.jpg" alt="VIVOTEK USA Field Sales Territory Map">
+      </div>
+      <div class="block">
+        <h3>Rep Firm Coveragey Map</h3>
+        <img src="/assets/img/where/usa/2015-08-06.jpg" alt="VIVOTEK USA Rep Firm Coveragey Map">
+      </div> -->
+    </div>
+  </div>
+</vvtk-popup>
+
+<vvtk-popup *ngIf="canadaMask" [id]="'canadaPopup'" [popupStyle]="'usaStyle'" (windowPopup)="canadaPopup($event)">
+  <div id="vivotekusa" vvtkPopup>
+    <div class="popup">
+      <div class="block">
+        <h3>Important Info</h3>
+        <p>VIVOTEK USA only sells products through a network of authorized distributors and resellers in the United States and
+          Canada. Goods sold by unauthorized resellers are not purchased from VIVOTEK USA; instead they are acquired from
+          a host of unidentified sources. Products purchased from unauthorized resellers often appear to be damaged, used,
+          refurbished, and defective; therefore, VIVOTEK cannot be held responsible for these items. Products sold by unauthorized
+          resellers might not entitled to VIVOTEK’s technical support and warranty coverage. We urge customers to be cautious
+          when placing orders online and please contact VIVOTEK for list of authorized distributors and resellers.</p>
+        <p>** If you are a reseller, integrator, or A&amp;E, please contact us directly via e-mail 
+          <a href="mailto:salesusa@vivotek.com" target="_blank">salesusa@vivotek.com</a> / call us at
+          <a href="tel:4087738686">(408)773-8686</a>, or contact a VIVOTEK authorized distributor. Listed below. **</p>
+      </div>
+      <div class="block">
+        <h3>Authorized Distributors</h3>
+        <div class="list-row">
+          <div class="list-col list-col2">
+            <a href="https://www.en.adiglobaldistribution.ca/" target="_blank">
+              <img src="/assets/img/where/canada/adi.png" alt="ADI Canada Logo">
+              <span>ADI Canada</span>
+            </a>
+          </div>
+          <!-- ADI Canada: https://www.en.adiglobaldistribution.ca/ 
+          Anixter Canada: https://www.anixter.com/en_ca.html
+          EECOL Electric: https://eecol.com/run/www/a.py/Main?job=Home 
+          Synnex Canada: https://www.synnexcorp.com/ca/ -->
+          <div class="list-col list-col2">
+            <a href="https://www.anixter.com/en_ca.html" target="_blank">
+              <img src="/assets/img/where/canada/anixter.png" alt="Anixter Canada Logo">
+              <span>Anixter Canada</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://eecol.com/run/www/a.py/Main?job=Home" target="_blank">
+              <img src="/assets/img/where/canada/eecol-electric_logo.jpg" alt="EECOL Electric Logo">
+              <span>EECOL Electric</span>
+            </a>
+          </div>
+          <div class="list-col list-col2">
+            <a href="https://www.synnexcorp.com/ca/ " target="_blank">
+              <img src="/assets/img/where/canada/SYNNEX_canada.png" alt="Synnex Canada Logo">
+              <span>Synnex Canada</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <h3>
+          <span class="colorR">Unauthorized</span> Online Resellers</h3>
+        <div class="list-row">
+          <div class="list-col list-col5">
+            <img src="/assets/img/where/usa/vu_unauthorized_online_resellers_20151209.png" alt="VIVOTEK USA Unauthorized Online Resellers">
+          </div>
+          <div class="list-col list-col4">
+            <p class="colorR">** Make sure to look out for the let (VIVOTEK Authorized Reseller) logo. Only web resellers that show this logo
+              are approved web resellers of VIVOTEK product. Websites without this logo are unauthorized to sell VIVOTEK
+              products, and VIVOTEK will not support the warranty purchases made at unauthorized websites. So again, make
+              sure that the website you buy from is a true let and you see the let logo.</p>
+          </div>
+          <div class="list-col list-col3">
+            <img src="/assets/img/where/usa/var.png" alt="VIVOTEK let logo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</vvtk-popup>

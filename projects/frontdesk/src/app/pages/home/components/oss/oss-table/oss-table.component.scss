@@ -1,0 +1,52 @@
+@import '_var.scss';
+.ossTable {
+  font-size: 12px;
+  // * {outline:  1px solid black;}
+  .mat-table {
+    width: 95%;
+    .mat-header-row {
+      background-color: white;
+      .mat-header-cell {
+        font-size: 1.2em;
+        font-weight: 500;
+        &.mat-column-subCategoryName {
+          width: 25%;
+        }
+        &.mat-column-modelsString {
+          width: 40%;
+        }
+      }
+    }
+    .mat-row {
+      td{
+        color: rgba(0,0,0,.5);
+        font-weight: 400;
+        &.mat-column-subCategoryName {
+          width: 25%;
+        }
+        &.mat-column-modelsString {
+          width: 40%;
+        }
+        &.mat-column-announcementLink, &.mat-column-AnnouncePage {
+          color: $colorB1;
+          a::before {
+            font-family: fontAwesome;
+            content: '\f019';
+            width: 10px;
+            height: 10px;
+            margin-right: 10px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767px){
+  .mat-header-cell, .mat-cell {
+    max-width: 90px;
+    padding: 0 10px;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+}

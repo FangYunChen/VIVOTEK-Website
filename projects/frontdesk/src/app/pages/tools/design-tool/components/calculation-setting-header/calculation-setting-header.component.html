@@ -1,0 +1,75 @@
+<div class="calculation-settings__header">
+  <label class="form-item form-item--large">
+    <span class="form-item__title">{{ "Type" | i18n }}</span>
+    <mat-select
+      placeholder="Type"
+      [(ngModel)]="product.typeName"
+      (selectionChange)="typeChanged()"
+      class="font-gothic"
+    >
+      <mat-option *ngFor="let type of typeList" [value]="type.TypeName">
+        {{ type.TypeName }}
+      </mat-option>
+    </mat-select>
+  </label>
+  <label class="form-item form-item--large">
+    <span class="form-item__title">{{ "Model" | i18n }}</span>
+    <mat-select
+      placeholder="Model"
+      [(ngModel)]="product.modelName"
+      (selectionChange)="changeModel($event.value)"
+      class="font-gothic"
+    >
+      <mat-option *ngFor="let model of modelList" [value]="model">
+        {{ model }}
+      </mat-option>
+    </mat-select>
+  </label>
+  <label class="form-item form-item--small">
+    <span class="form-item__title">{{ "Quantity" | i18n }}</span>
+    <input
+      type="number"
+      matInput
+      placeholder="Quantity"
+      [(ngModel)]="product.q"
+      min="1"
+      (ngModelChange)="changeQty()"
+    />
+  </label>
+  <label class="form-item form-item--large">
+    <span class="form-item__title">{{ "Scenario" | i18n }}</span>
+    <mat-select
+      placeholder="Scenario"
+      [(ngModel)]="product.scenario"
+      class="font-gothic"
+      (selectionChange)="changeScenario()"
+    >
+      <mat-option *ngFor="let item of ScenarioArr" [value]="item.value">
+        {{ item.name }}
+      </mat-option>
+    </mat-select>
+  </label>
+  <div class="form-item form-item--large">
+    <span class="form-item__title"></span>
+    <button mat-icon-button (click)="openVideo()">
+      <mat-icon>video_library</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="pop">
+  <vvtk-popup
+    *ngIf="openPopup"
+    id="videoPopup"
+    popupStyle="videoStyle"
+    (windowPopup)="windowPopup($event)"
+  >
+    <div class="video-wrap" vvtkPopup>
+      <iframe
+        [src]="videoUrl | safe: 'resourceUrl'"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </vvtk-popup>
+</div>

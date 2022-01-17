@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{ (id==0)?'Add':'Edit' }} Tag</h1>
+<div mat-dialog-content>
+    <form #form="ngForm">
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+            <mat-form-field fxFlex *ngFor="let lang of languages">
+                <input matInput maxlength="255" [placeholder]="lang.name" [name]="lang.code" [(ngModel)]="tag[lang.code]" [required]="lang.code=='global'">
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="save()" [disabled]="!form.valid || isLoading">SAVE</button>
+    <span fxFlex></span>
+    <button mat-button mat-dialog-close="false">Cancel</button>
+</div>

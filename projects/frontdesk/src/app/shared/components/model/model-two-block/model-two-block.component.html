@@ -1,0 +1,21 @@
+<section *ngIf="content" [class]="'model section model-img ' + modelStyle" [class.odd]="bgColor">
+  <div class="wrap">
+    <div class="img-block" *ngIf="modelStyle === 'model-rightVideo' || modelStyle === 'model-leftVideo'">
+      <div class="video-box">
+        <iframe [src]="'//www.youtube.com/embed/'+content.video|safe:'resourceUrl'" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="img-block" *ngIf="modelStyle === 'model-rightImg' || modelStyle === 'model-leftImg'" [ngStyle]="{'background-image': 'url('+ content.image.src +')'}">
+      <img [src]="content.image.src" [alt]="content.image.alt" [title]="content.image.title">
+    </div>
+    <div class="text-block">
+      <h2 class="title-text">{{content.title}}</h2>
+      <div [innerHtml]="content.content" class="model-content p-medium"></div>
+      <vvtk-a *ngIf="content.urlEnabled && content.url" [url]="content.url" [cName]="'btn btn-b'">
+        <ng-container HtmlContent>
+          {{'More'|i18n}}
+        </ng-container>
+      </vvtk-a>
+    </div>
+  </div>
+</section>

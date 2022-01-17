@@ -1,0 +1,94 @@
+<header id="header" [ngClass]="styleHeader">
+  <div class="wrap">
+    <ul class="nav-top text-right">
+      <li *ngIf="!authService.userData">
+        <a [href]="('javascript:;' | safe:'url')" class="popup-window" (click)="openSign($event)">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_sign.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_sign_bk.png" alt="">
+          </span> {{"Log in / Register" | i18n }}</a>
+      </li>
+      <li class="app-hide" *ngIf="authService.userData">
+        <a [routerLink]="'/my-account' | customPath">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_contact.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_contact_bk.png" alt="">
+          </span> {{"My Account" | i18n }}({{ authService.userData?.displayName }})</a>
+      </li>
+      <li class="app-hide" *ngIf="showAdminPanelLink">
+        <a href="{{ adminPanelLink }}" target="_blank">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_contact.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_contact_bk.png" alt="">
+          </span> {{"Admin Panel" | i18n }}</a>
+      </li>
+      <li *ngIf="authService.userData">
+        <a [href]="('javascript:;' | safe:'url')" (click)="signOut()">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_sign.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_sign_bk.png" alt="">
+          </span> {{"Log out" | i18n }}</a>
+      </li>
+      <li class="app-hide">
+        <a [href]="i18nService.getSelectedLanguageForLink()+'/contact-us'">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_contact.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_contact_bk.png" alt="">
+          </span> {{"Contact Us" | i18n }}</a>
+      </li>
+      <li class="app-hide" *ngIf="true">
+        <a [href]="('javascript:;' | safe:'url')" class="btn-lan" (click)="openLanguage($event)">
+          <span class="icon icon-w">
+            <img src="/assets/img/icon_globe.png" alt="">
+          </span>
+          <span class="icon icon-bk">
+            <img src="/assets/img/icon_globe_bk.png" alt="">
+          </span> {{"Language" | i18n }}</a>
+        <vvtk-language-menu [hidden]="!languageMask" [languageMask]="languageMask" (languageWindow)="languageWindow($event)"></vvtk-language-menu>
+      </li>
+    </ul>
+    <div class="afterClear">
+      <a [routerLink]="i18nService.getSelectedLanguageForLink()+'/'" class="logo"></a>
+      <vvtk-top-menu [styleHeader]="styleHeader"></vvtk-top-menu>
+      <!-- mobile menu -->
+      <vvtk-side-menu [authService]="authService" [showAdminPanelLink]="showAdminPanelLink" [adminPanelLink]="adminPanelLink" [sidemenuMask]="sidemenuMask"
+        (sidemenuWindow)="sidemenuWindow($event)"></vvtk-side-menu>
+      <ul class="nav-icon">
+        <li>
+          <a href="javascript:void(0);" class="btn-search" (click)="searchWindow($event)">
+            <span class="icon icon-w">
+              <img src="/assets/img/icon_search.png" alt="">
+            </span>
+            <span class="icon icon-bk">
+              <img src="/assets/img/icon_search_bk.png" alt="">
+            </span>
+          </a>
+          <div class="search-box open" *ngIf="searchMask">
+            <input gname="searchresults-only0" type="text" [placeholder]="'Search...' | i18n" (keydown.enter)="search($event)">
+          </div>
+        </li>
+        <li>
+          <a [href]="('javascript:;' | safe:'url')" class="btn-ham" (click)="openSidemenu($event)">
+            <span class="icon icon-w">
+              <img src="/assets/img/icon_menu.png" alt="">
+            </span>
+            <span class="icon icon-bk">
+              <img src="/assets/img/icon_menu_bk.png" alt="">
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="mask open" *ngIf="searchMask" (click)="searchWindow($event)"></div>
+</header>

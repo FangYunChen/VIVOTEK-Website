@@ -1,0 +1,17 @@
+@import "../../../../../styles/var";
+
+.product-page-content {}
+
+.btn-container {
+  text-align: center;
+
+  a.btn-top {
+    margin-left: 60%;
+    color: $colorGy7;
+
+    @media only screen and (max-width: 640px) {
+      margin: auto;
+    }
+  }
+
+}

@@ -1,0 +1,15 @@
+<mat-accordion [displayMode]="displayMode">
+  <mat-expansion-panel [disabled]="item.disabled || item.active" [expanded]="item.active" [hideToggle]="hideToggle"
+    *ngFor="let item of data; trackBy:trackItem" routerLinkActive="active">
+    <mat-expansion-panel-header [title]="item.name" [collapsedHeight]="collapsedHeight" [expandedHeight]="expandedHeight"
+      routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a *ngIf="!item.disabled; else titleNoLink" [routerLink]="baseRouterLink.concat(item.path)">{{ item.name | i18n }}</a>
+      <ng-template #titleNoLink>{{ item.name }}</ng-template>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <vvtk-nested-nav-list *ngIf="item.children?.length" [displayMode]="displayMode"
+        [hideToggle]="hideToggle" [collapsedHeight]="collapsedHeight" [expandedHeight]="expandedHeight"
+        [baseRouterLink]="baseRouterLink.concat(item.path)" [data]="item.children"></vvtk-nested-nav-list>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

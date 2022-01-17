@@ -1,0 +1,10 @@
+<div class="recommend">
+  <div class="recommend__title">
+    {{ "NVR Recommendation" | i18n }}
+  </div>
+  <div class="recommend__content">
+    <p *ngFor="let nvrRecommendation of nvrRecommendations">
+      {{ nvrRecommendation }}
+    </p>
+  </div>
+</div>

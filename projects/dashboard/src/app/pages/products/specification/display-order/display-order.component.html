@@ -1,0 +1,52 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Specification - Display Order</span>
+    </mat-card-title>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <mat-select name="productCategory" placeholder="Product Category" [(ngModel)]="productCategoryId"
+          (ngModelChange)="getData()" [disabled]="!pageIsEditable">
+          <mat-option *ngFor="let productCategory of productCategoryOptions" [value]="productCategory.value">
+            {{ productCategory.optionText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select name="purposeType" placeholder="Type" [(ngModel)]="purposeType" (ngModelChange)="getData()"
+          [disabled]="!pageIsEditable">
+          <mat-option *ngFor="let purposeType of purposeTypeOptions" [value]="purposeType.value">
+            {{ purposeType.optionText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-template *ngTemplateOutlet="specTree; context:{specificationDisplayOrders:specificationDisplayOrders}"></ng-template>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!pageIsEditable || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #specTree let-specificationDisplayOrders="specificationDisplayOrders">
+  <div [sortablejs]="specificationDisplayOrders" [sortablejsOptions]="groupOptions">
+    <div style="margin:0 0 0 30px" fxLayout="column" *ngFor="let displayOrder of specificationDisplayOrders; let i = index">
+      <mat-card-title fxLayout="row">
+        <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+        <h4>{{displayOrder.name}}</h4>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="displayOrder.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="displayOrder.hideContent = !displayOrder.hideContent">
+          <mat-icon *ngIf="displayOrder.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!displayOrder.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="displayOrder.hideContent">
+        <ng-template *ngTemplateOutlet="specTree; context:{specificationDisplayOrders:displayOrder.children||[]}"></ng-template>
+      </mat-card-content>
+    </div>
+  </div>
+</ng-template>

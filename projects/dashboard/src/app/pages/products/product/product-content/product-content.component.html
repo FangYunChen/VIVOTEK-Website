@@ -1,0 +1,202 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{isAddProduct ? 'Add' : 'Edit'}} Product</span>
+      <span fxFlex></span>
+      <mat-checkbox *ngIf="isAddProduct && pageIsEditable" name="copyModel" [(ngModel)]="copyModel">
+        Copy Model
+      </mat-checkbox>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <!--{{product | json}}-->
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <!-- choose product   mat-elevation-z4-->
+            <mat-card *ngIf="copyModel" class="mat-elevation-z8" style="margin-bottom:20px">
+              <mat-card-title>
+                <h3>Choose product to copy</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+                <mat-form-field>
+                  <mat-select name="copyProductCategory" placeholder="Product Categories" (selectionChange)="getAllProductByCategory($event.value)">
+                    <mat-option *ngFor="let productCategory of productCategoryOptions" [value]="productCategory.value">{{productCategory.optionText}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select name="copyProductId" placeholder="Product" [(ngModel)]="copyProductId" (selectionChange)="getCopyProduct($event.value)">
+                    <mat-option *ngFor="let copyProductOption of copyProductOptions" [value]="copyProductOption.value">{{copyProductOption.optionText}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Product Name" name="name" [(ngModel)]="product.name" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+
+            <mat-checkbox class = "showMsg-margin" [(ngModel)]="product.showMsg" [ngModelOptions]="{standalone: true}">
+              <label>Show Message (Default: The product is not available now, please contact your US/Canada sales for more information. The page will be redirect to VIVOTEK home page.)</label>
+            </mat-checkbox>
+
+            <ng-container>
+                <h3>Message Setting</h3>
+                <mat-card-content fxLayout="column">
+                  <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                    <mat-card-content>
+                      <div [innerHTML]="product.msg | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                  <mat-tab-group [hidden]="!pageIsEditable">
+                    <mat-tab label="Editor">
+                      <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-card fxFlex="100%">
+                          <mat-card-content fxLayout="column">
+                            <vvtk-wysiwyg [(html)]="product.msg" [path]="path"></vvtk-wysiwyg>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Preview">
+                      <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-card fxFlex="100%">
+                          <mat-card-content fxLayout="column">
+                            <div [innerHTML]="product.msg | safeHtml"></div>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </mat-card-content>
+              </ng-container>
+
+            <mat-form-field>
+              <mat-select name="productCategory" placeholder="Product Categories" [(ngModel)]="product.parentCategories"
+                multiple [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let productCategory of productCategoryOptions" [value]="productCategory.value">{{productCategory.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="type" placeholder="Product Page Type" [(ngModel)]="product.type" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let productPageType of productPageTypes" [value]="productPageType.value">{{productPageType.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-card style="margin-bottom:20px">
+              <mat-card-title>
+                <h3>Product Cover Image</h3>
+              </mat-card-title>
+              <mat-card-content>
+                <vvtk-image-selector [(selectedImages)]="coverImages" [imageTypes]="imageTypes" selectImageText="Choose image for product cover image"
+                  [pageIsEditable]="pageIsEditable" [multiple]="false"></vvtk-image-selector>
+              </mat-card-content>
+            </mat-card>
+
+            <!-- if 判斷句的type不要改 -->
+            <ng-container *ngIf="product.type===1">
+              <mat-card style="margin-bottom:20px">
+                <mat-card-title>
+                  <h3>Product Icons</h3>
+                </mat-card-title>
+                <mat-card-content>
+                  <vvtk-icon-selector [(selectedIcons)]="product.icons" [iconTypes]="iconTypes" selectImageText="Choose icon"
+                    [pageIsEditable]="pageIsEditable"></vvtk-icon-selector>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card style="margin-bottom:20px">
+                <mat-card-title>
+                  <h3>Product Images</h3>
+                </mat-card-title>
+                <mat-card-content>
+                  <vvtk-image-selector [(selectedImages)]="generalImages" [imageTypes]="imageTypes" selectImageText="Choose image for product"
+                    [pageIsEditable]="pageIsEditable"></vvtk-image-selector>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card style="margin-bottom:20px">
+                <mat-card-title>
+                  <h3>Product Six-view Images</h3>
+                </mat-card-title>
+                <mat-card-content>
+                  <vvtk-image-selector [(selectedImages)]="sixViewImages" [imageTypes]="imageTypes" selectImageText="Choose six view images"
+                    [pageIsEditable]="pageIsEditable"></vvtk-image-selector>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-form-field>
+                <mat-select name="series" placeholder="Product Series" [(ngModel)]="product.series" [disabled]="!pageIsEditable">
+                  <mat-option *ngFor="let series of seriesList" [value]="series.value">{{series.optionText}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+
+            <!-- if 判斷句的type不要改 -->
+            <mat-card-content *ngIf="product.type===4" fxLayout="column">
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Product Url" name="url" [(ngModel)]="product.url" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+            </mat-card-content>
+
+            <vvtk-language-selector fxFlexAlign="end" *ngIf="id!==0"></vvtk-language-selector>
+
+            <mat-form-field>
+              <mat-select name="state" placeholder="Product Status" [(ngModel)]="product.state" [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let state of states" [value]="state.value">{{state.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <textarea matInput rows="5" placeholder="Product Short Description" name="shortDescription" [(ngModel)]="product.shortDescription"
+                [readOnly]="!pageIsEditable"></textarea>
+            </mat-form-field>
+
+            <!-- if 判斷句的state不要改 -->
+            <ng-container *ngIf="product.state===3">
+              <h4>Product Legacy Description</h4>
+              <mat-card-content fxLayout="column">
+                <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                  <mat-card-content>
+                    <div [innerHTML]="product.legacyDescription | safeHtml"></div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-tab-group [hidden]="!pageIsEditable">
+                  <mat-tab label="Editor">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <vvtk-wysiwyg [(html)]="product.legacyDescription" [path]="path"></vvtk-wysiwyg>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Preview">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <div [innerHTML]="product.legacyDescription | safeHtml"></div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-card-content>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product']" [queryParams]="{filter: filterTemp, select: selectTemp}">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

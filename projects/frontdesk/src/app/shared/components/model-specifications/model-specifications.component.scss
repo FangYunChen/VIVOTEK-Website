@@ -1,0 +1,29 @@
+@import "../../../../styles/var";
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.anchor {
+  display: block;
+  position: relative;
+  top: -53px;
+  visibility: hidden;
+}
+
+.toggle-expand-btn {
+  display: flex;
+  margin: 0 auto;
+  padding: 0 10px;
+  font-size: 46px;
+  color: $colorB1;
+  cursor: pointer;
+  &.expanded {
+    transform: rotate(180deg);
+  }
+
+  /*for ie10 、 ie11*/
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    width: 1px;
+  }
+}

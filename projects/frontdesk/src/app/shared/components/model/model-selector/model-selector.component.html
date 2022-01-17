@@ -1,0 +1,43 @@
+<ng-container *ngIf="content?content.length > 0:false">
+  <vvtk-model-img-text [content]="content"></vvtk-model-img-text>
+</ng-container>
+<ng-container *ngIf="sheet">
+  <vvtk-model-table [tableName]="tableName" [sheet]="sheet"></vvtk-model-table>
+</ng-container>
+<ng-container *ngIf="templates?templates.length > 0:false">
+  <ng-container *ngFor="let template of templates;let idx = index">
+    <ng-container [ngSwitch]="template.type">
+      <vvtk-model-text *ngSwitchCase="1" [templateIndex]="idx" [content]="template"></vvtk-model-text>
+      <vvtk-model-download *ngSwitchCase="2" [template]="template"></vvtk-model-download>
+      <vvtk-model-three-cards *ngSwitchCase="3" [title]="template.title" [items]="template.cards"></vvtk-model-three-cards>
+      <vvtk-model-two-block *ngSwitchCase="4" [content]="template" modelStyle="model-rightVideo"></vvtk-model-two-block>
+      <vvtk-model-img-bg *ngSwitchCase="5" [content]="template"></vvtk-model-img-bg>
+      <vvtk-model-three-circle *ngSwitchCase="6" [content]="template"></vvtk-model-three-circle>
+      <vvtk-model-two-block *ngSwitchCase="7" [content]="template" modelStyle="model-rightImg"></vvtk-model-two-block>
+      <vvtk-model-two-block *ngSwitchCase="8" [content]="template" modelStyle="model-leftImg"></vvtk-model-two-block>
+      <vvtk-model-icon-horizontal *ngSwitchCase="9" [template]="template"></vvtk-model-icon-horizontal>
+      <vvtk-model-icon-vertical *ngSwitchCase="10" [template]="template"></vvtk-model-icon-vertical>
+      <vvtk-model-rich-text *ngSwitchCase="11" [content]="template"></vvtk-model-rich-text>
+      <vvtk-model-list-item *ngSwitchCase="12" [template]="template"></vvtk-model-list-item>
+      <vvtk-model-two-block *ngSwitchCase="13" [content]="template" modelStyle="model-leftVideo"></vvtk-model-two-block>
+      <vvtk-model-img-carousel *ngSwitchCase="14" [title]="template.title" [content]="template"></vvtk-model-img-carousel>
+      <vvtk-model-video-list *ngSwitchCase="15" [template]="template"></vvtk-model-video-list>
+      <vvtk-model-title-images *ngSwitchCase="16" [template]="template"></vvtk-model-title-images>
+      <vvtk-model-banner *ngSwitchCase="17" [content]="template"></vvtk-model-banner>
+      <vvtk-model-two-block-vertical *ngSwitchCase="18" [content]="template" modelStyle="model-bottomVideo"></vvtk-model-two-block-vertical>
+      <vvtk-model-two-block-vertical *ngSwitchCase="19" [content]="template" modelStyle="model-bottomImg"></vvtk-model-two-block-vertical>
+      <vvtk-model-list-link-item *ngSwitchCase="20" [content]="template"></vvtk-model-list-link-item>
+      <vvtk-model-two-rich-text *ngSwitchCase="21" [title]="template.title" [items]="template"></vvtk-model-two-rich-text>
+      <vvtk-model-three-panel *ngSwitchCase="22" [title]="template.title" [panels]="template.panels"></vvtk-model-three-panel>
+      <vvtk-model-event-location *ngSwitchCase="23" [template]="template"></vvtk-model-event-location>
+      <vvtk-model-four-cards-text *ngSwitchCase="24" [title]="template.title" [items]="template"></vvtk-model-four-cards-text>
+      <vvtk-model-mutiple-banner *ngSwitchCase="25" [content]="template"></vvtk-model-mutiple-banner>
+      <vvtk-model-mutiple-banner-two-block *ngSwitchCase="26" [template]="template"></vvtk-model-mutiple-banner-two-block>
+      <vvtk-model-article-management *ngSwitchCase="27" [template]="template"></vvtk-model-article-management>
+      <vvtk-model-content-image *ngSwitchCase="28" [template]="template"></vvtk-model-content-image>
+      <vvtk-model-tab-videos *ngSwitchCase="29" [template]="template"></vvtk-model-tab-videos>
+      <vvtk-product-model-special-highlight *ngSwitchCase="201" [template]="template"></vvtk-product-model-special-highlight>
+      <vvtk-model-specifications *ngSwitchCase="202" [data]="template"></vvtk-model-specifications>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,489 @@
+<div id="account" class="container">
+  <vvtk-top-banner [contentPageTitle]="'my-account'"></vvtk-top-banner>
+  <section class="model section tabs-slider">
+    <div class="wrap">
+      <vvtk-tab-slider [tabList]="tabList" [preString]="'tabs'" (tabsOpen)="tabsChange($event)" [tabsActive]="tabsActive"></vvtk-tab-slider>
+      <div class="tabs-slider-content">
+        <div class="tabs-slider-block" [class.active]="'tabs'+ tabList[0] == tabsActive">
+          <h2 class="line text-center">{{'My Account'|i18n}}</h2>
+          <section class="model-form section">
+            <form [formGroup]="form" (ngSubmit)="doUpdate()">
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" class="form-control" [formControl]="form.controls['email']" readonly="readonly"
+                      maxlength="256">
+                    <label for="">{{'Account (Email)'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['industryType']" maxlength="256">
+                    <label for="">{{'Industry'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':form.controls['countryId'].invalid && form.controls['countryId'].touched}">
+                    <select name="" id="" [formControl]="form.controls['countryId']" (change)="countriesChanged($event)">
+                      <option value="">{{'Please select'|i18n}}</option>
+                      <option *ngFor="let country of countries" value="{{ country.id }}">{{ country.name }}</option>
+                    </select>
+                    <label for="">
+                      <span class="colorR">*</span>{{'Country'|i18n}}</label>
+                    <div *ngIf="form.controls['countryId'].hasError('required') && form.controls['countryId'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':form.controls['identityRole'].invalid && form.controls['identityRole'].touched}">
+                    <select [formControl]="form.controls['identityRole']">
+                      <option value="">{{'Please select'|i18n}}</option>
+                      <option *ngFor="let identityRole of identityRoles" value="{{ identityRole }}">{{ identityRole }}</option>
+                    </select>
+                    <label for="">
+                      <span class="colorR">*</span>{{'User Type'|i18n}}</label>
+                    <div *ngIf="form.controls['identityRole'].hasError('required') && form.controls['identityRole'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':form.controls['firstName'].invalid && form.controls['firstName'].touched}">
+                    <input type="text" [formControl]="form.controls['firstName']" maxlength="128">
+                    <label for="">
+                      <span class="colorR">*</span>{{'First Name'|i18n}}</label>
+                    <div *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':form.controls['lastName'].invalid && form.controls['lastName'].touched}">
+                    <input type="text" [formControl]="form.controls['lastName']" maxlength="128">
+                    <label for="">
+                      <span class="colorR">*</span>{{'Last Name'|i18n}}</label>
+                    <div *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['phone']" maxlength="64">
+                    <label for="">{{'Phone Number'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['mobile']" maxlength="64">
+                    <label for="">{{'Mobile Phone Number'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['fax']" maxlength="64">
+                    <label for="">{{'Fax Number'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['website']" maxlength="1024">
+                    <label for="">{{'Website'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['source']" maxlength="256">
+                    <label for="">{{'Source'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['company']" maxlength="256">
+                    <label for="">{{'Company'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['department']" maxlength="256">
+                    <label for="">{{'Department'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['title']" maxlength="256">
+                    <label for="">{{'Title'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <select name="" id="" [formControl]="form.controls['stateId']">
+                      <option value="">{{'Please select'|i18n}}</option>
+                      <option *ngFor="let state of states" value="{{ state.id }}">{{ state.name }}</option>
+                    </select>
+                    <label for="">{{'Province / State'|i18n}}</label>
+                  </div>
+                </div>
+                <div class="list-col list-col6">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['city']" maxlength="256">
+                    <label for="">{{'City'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12 input-box">
+                  <div class="input-box form-label">
+                    <input type="text" [formControl]="form.controls['address']" maxlength="1024">
+                    <label for="">{{'Address'|i18n}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12 input-box text-center">
+                  <label for="newsletter">
+                    <input type="checkbox" [formControl]="form.controls['eNewsSubscription']"> {{'Subscribe to VIVOTEK
+                    e-newsletter'|i18n}}
+                  </label>
+                </div>
+              </div>
+
+              <div class="list-row" *ngIf="formDisabled">
+                <div class="list-col list-col12 btn-box text-center">
+                  <button type="button" class="btn btn-b" (click)="editInfo(false)" ng-model="all">{{'Edit
+                    information'|i18n}}</button>
+                </div>
+              </div>
+
+              <div class="list-row" *ngIf="!formDisabled">
+                <div class="list-col list-col12 btn-box text-center">
+                  <div class="btn-loading" *ngIf="loadingShow">
+                    <i class="fa fa-spinner fa-spin fa-fw"></i>
+                    <span class="sr-only">{{'Loading...'|i18n}}</span>
+                  </div>
+                  <button type="submit" class="btn btn-b" [disabled]="!form.valid" *ngIf="!loadingShow">{{'Save'|i18n}}</button>
+                  <button type="button" class="btn btn-b" (click)="cancelInfo()">{{'Cancel'|i18n}}</button>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="tabs-slider-block" [class.active]="'tabs'+ tabList[1] == tabsActive">
+          <h2 class="line text-center">{{'Change Password'|i18n}}</h2>
+          <section class="model-form section text-center">
+            <form [formGroup]="passwordForm" (ngSubmit)="doUpdatePassword()">
+              <div class="list-row" *ngIf="hasNoPassword == false">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':passwordForm.controls['oldPassword'].invalid && passwordForm.controls['oldPassword'].touched}">
+                    <input type="password" [formControl]="passwordForm.controls['oldPassword']">
+                    <label for="">
+                      <span class="colorR">*</span>{{'Enter original password'|i18n}}</label>
+                    <div *ngIf="passwordForm.controls['oldPassword'].hasError('required') && passwordForm.controls['oldPassword'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                    <div *ngIf="passwordForm.controls['oldPassword'].hasError('minlength') && passwordForm.controls['oldPassword'].touched"
+                      class="alert alert-danger">
+                      {{'Password is too short. Please input at least %s
+                      characters.'|i18n:passwordForm.controls['oldPassword'].errors['minlength']['requiredLength']}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col6">
+                  <div class="input-box form-label" [ngClass]="{'has-error':passwordForm.controls['password'].invalid && passwordForm.controls['password'].touched}">
+                    <input type="password" [formControl]="passwordForm.controls['password']">
+                    <label for="">
+                      <span class="colorR">*</span>{{'Enter new password'|i18n}}</label>
+                    <div *ngIf="passwordForm.controls['password'].hasError('required') && passwordForm.controls['password'].touched"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                    <div *ngIf="passwordForm.controls['password'].hasError('minlength') && passwordForm.controls['password'].touched"
+                      class="alert alert-danger">
+                      {{'Password is too short. Please input at least %s
+                      characters.'|i18n:passwordForm.controls['password'].errors['minlength']['requiredLength']}}
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col6">
+                    <div class="input-box form-label" [ngClass]="{'has-error':passwordForm.controls['checkPassword'].invalid && passwordForm.controls['checkPassword'].touched}">
+                      <input type="password" [formControl]="passwordForm.controls['checkPassword']">
+                      <label for="">
+                        <span class="colorR">*</span>{{'Re-enter new password'|i18n}}</label>
+                      <div *ngIf="passwordForm.controls['checkPassword'].hasError('required') && passwordForm.controls['checkPassword'].touched; else elseIfTemplate"
+                        class="alert alert-danger">
+                        {{'Required'|i18n}}
+                      </div>
+                      <ng-template #elseIfTemplate>
+                        <div *ngIf="passwordForm.controls['checkPassword'].hasError('validateNotEqual') && passwordForm.controls['checkPassword'].touched; else elseTemplate"
+                          class="alert alert-danger">
+                          {{'Two passwords are inconsistent'|i18n}}
+                        </div>
+                        <ng-template #elseTemplate>
+                          <div *ngIf="!passwordForm.controls['checkPassword'].hasError('validateNotEqual') && passwordForm.controls['checkPassword'].touched"
+                            class="alert alert-check">
+                            <i class="fa fa-check-circle-o"></i>
+                          </div>
+                        </ng-template>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-row">
+                  <div class="list-col list-col12 btn-box text-center">
+                    <button type="submit" class="btn btn-b" [disabled]="!passwordForm.valid" *ngIf="!loadingShow">{{'Save'|i18n}}</button>
+                    <div class="btn-loading" *ngIf="loadingShow">
+                      <i class="fa fa-spinner fa-spin fa-fw"></i>
+                      <span class="sr-only">{{'Loading...'|i18n}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="tabs-slider-block" [class.active]="'tabs'+ tabList[2] == tabsActive">
+          <h2 class="line text-center">{{'Collection'|i18n}}</h2>
+          <div class="block" *ngIf="cardList[Collection.News] && cardList[Collection.News].length > 0">
+            <h3>{{'Press Releases'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <vvtk-card *ngFor="let card of cardList[Collection.News];" [card]="card" [vvtkRouterLink]="[('/news/press-releases/'+card.id) | customPath]">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p [innerHtml]="card.description"></p>
+                      </div>
+                      <div class="card-date">
+                        <i class="fa fa-clock-o"></i> {{card.publishAt|date:'MMM d, y'}}</div>
+                      <div class="col-link text-right afterClear">
+                        <a class="btn-del float-left" (click)="deleteCollection(Collection.News, card.id)">
+                          <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                        <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/news-releases-page/' + card.id)| customPath]">
+                          <ng-container HtmlContent>
+                            {{ "More Info" | i18n }}
+                          </ng-container>
+                        </vvtk-a>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+          <div class="block" *ngIf="cardList[Collection.Campaigns] && cardList[Collection.Campaigns].length > 0">
+            <h3>{{'Campaigns'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <vvtk-card *ngFor="let card of cardList[Collection.Campaigns];" [card]="card" [vvtkRouterLink]="[('/news/campaigns/' + card.id)| customPath]">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p [innerHtml]="card.description"></p>
+                      </div>
+                      <div class="card-date">
+                        <i class="fa fa-clock-o"></i> {{card.startAt|date:'MMM d, y'}} ~ {{card.endAt|date:'MMM d, y'}}</div>
+                      <div class="col-link text-right afterClear">
+                        <a class="btn-del float-left" (click)="deleteCollection(Collection.Campaigns, card.id)">
+                          <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                        <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/news/campaigns/' + card.id)| customPath]">
+                          <ng-container HtmlContent>
+                            {{ "More Info" | i18n }}
+                          </ng-container>
+                        </vvtk-a>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+          <div class="block" *ngIf="cardList[Collection.Cases] && cardList[Collection.Cases].length > 0">
+            <h3>{{'Successful Cases'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <vvtk-card *ngFor="let card of cardList[Collection.Cases];" [card]="card" [vvtkRouterLink]="[('/news/successful-cases/' + card.id)| customPath]">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p [innerHtml]="card.description"></p>
+                      </div>
+                      <div class="card-date">
+                        <i class="fa fa-clock-o"></i> {{card.publishAt|date:'MMM d, y'}}</div>
+                      <div class="col-link text-right afterClear">
+                        <a class="btn-del float-left" (click)="deleteCollection(Collection.Cases, card.id)">
+                          <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                        <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/news/successful-cases/' + card.id)| customPath]">
+                          <ng-container HtmlContent>
+                            {{ "More Info" | i18n }}
+                          </ng-container>
+                        </vvtk-a>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+          <div class="block" *ngIf="cardList[Collection.Events] && cardList[Collection.Events].length > 0">
+            <h3>{{'Events'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <ng-container>
+                    <vvtk-card *ngFor="let card of cardList[Collection.Events];" [card]="card" [vvtkRouterLink]="[('/news/events/' + card.id)| customPath]">
+                      <div vvtkThreeCard>
+                        <div class="text">
+                          <p class="icon-time">{{card.startAt|date:'MMM d, y'}} ~ {{card.endAt|date:'MMM d, y'}}</p>
+                          <p class="icon-shop">{{card.boothNumber}}</p>
+                          <div class="icon-marker limit">
+                            <p>{{card.address | i18n}}</p>
+                          </div>
+                        </div>
+                        <div class="col-link text-right afterClear">
+                          <a class="btn-del float-left" (click)="deleteCollection(Collection.Events, card.id)">
+                            <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                          <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/news/events/' + card.id)| customPath]">
+                            <ng-container HtmlContent>
+                              {{ "More Info" | i18n }}
+                            </ng-container>
+                          </vvtk-a>
+                        </div>
+                      </div>
+                    </vvtk-card>
+                  </ng-container>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+          <div class="block" *ngIf="cardList[Collection.CSRActitvies] && cardList[Collection.CSRActitvies].length > 0">
+            <h3>{{'CSR Activities'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <vvtk-card *ngFor="let card of cardList[Collection.CSRActitvies];" [card]="card" [vvtkRouterLink]="[('/csr/activities/'+card.id) | customPath]">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p [innerHtml]="card.description"></p>
+                      </div>
+                      <div class="card-date">
+                        <i class="fa fa-clock-o"></i> {{card.publishAt|date:'MMM d, y'}}</div>
+                      <div class="col-link text-right afterClear">
+                        <a class="btn-del float-left" (click)="deleteCollection(Collection.CSRActitvies, card.id)">
+                          <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                        <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/csr/activities/'+card.id) | customPath]">
+                          <ng-container HtmlContent>
+                            {{ "More Info" | i18n }}
+                          </ng-container>
+                        </vvtk-a>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+          <div id="career" class="block" *ngIf="cardList[Collection.Vacancies] && cardList[Collection.Vacancies].length > 0">
+            <h3>{{'Job Opportunities'|i18n}}</h3>
+            <vvtk-three-cards>
+              <div vvtkHomeCard>
+                <div class="list-row">
+                  <ng-container>
+                    <vvtk-text-card *ngFor="let card of cardList[Collection.Vacancies];" [card]="card" [vvtkRouterLink]="[('/careers/job-opportunities/'+card.id) | customPath]">
+                      <div vvtkThreeCard>
+                        <div class="text">
+                          <p class="icon-tag">{{ card.category }}</p>
+                          <p class="icon-globe">{{ card.country.name }}</p>
+                          <p class="icon-fort-awesome">{{ card.states?card.states.name:'' }}</p>
+                          <div class="icon-marker limit">
+                            <p>{{ card.location }}</p>
+                          </div>
+                        </div>
+                        <div class="col-link text-right afterClear">
+                          <a class="btn-del float-left" (click)="deleteCollection(Collection.Vacancies, card.id)">
+                            <i class="fa fa-trash"></i> {{'Delete'|i18n}}</a>
+                          <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[('/careers/job-opportunities/'+card.id) | customPath]">
+                            <ng-container HtmlContent>
+                              {{'More Info'|i18n}}
+                            </ng-container>
+                          </vvtk-a>
+                        </div>
+                      </div>
+                    </vvtk-text-card>
+                  </ng-container>
+                </div>
+              </div>
+            </vvtk-three-cards>
+          </div>
+        </div>
+
+        <div class="tabs-slider-block" [class.active]="'tabs'+ tabList[3] == tabsActive">
+          <vvtk-apply-authority></vvtk-apply-authority>
+        </div>
+
+        <div class="tabs-slider-block" [class.active]="'tabs'+ tabList[4] == tabsActive">
+          <vvtk-recover-authority [recoverAuthMask]="recoverAuthMask" [recoverAuthSuccess]="recoverAuthSuccess"></vvtk-recover-authority>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<vvtk-popup *ngIf="feebackMask" [id]="'feebackPopup'" [popupStyle]="'alertStyle'" (windowPopup)="windowPopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center" [class.hide]="'failure' == showBlock">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Password changed successfully'|i18n}}</p>
+    </div>
+    <div class="text-center" [class.hide]="'' == showBlock">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span> {{'Incorrect password'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup>
+
+
+<vvtk-popup *ngIf="deleteMask" [id]="'alertPopup'" [popupStyle]="'alertStyle'" (windowPopup)="deletePopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Removed from my favorites.'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup>
+
+<vvtk-popup *ngIf="recoverAuthMask" id="recoveryAuthPopup" popupStyle="alertStyle" (windowPopup)="recoverAuthPopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center" *ngIf="recoverAuthSuccess">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Account is successfully of recovery authority'|i18n}}</p>
+    </div>
+    <div class="text-center" *ngIf="!recoverAuthSuccess">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span> {{'Account or password is Incorrect'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup>

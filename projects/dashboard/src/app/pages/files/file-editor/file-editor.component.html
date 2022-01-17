@@ -1,0 +1,43 @@
+<mat-card fxFlex="100%">
+  <mat-card-content fxLayout="column">
+    <mat-card-title>
+      <span>{{data.id==0?'Add':''}} {{data.type.split('/')[0] || 'file'}}</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.type.indexOf('image')==0">
+              <div class="text-center">
+                <img [src]="data.url | safeUrl">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="fileInput.click()" *ngIf="pageIsEditable && data.type!='folder' && data.id==0">Upload a file</button>
+            <input hidden type="file" #fileInput (change)="fileSelect($event)" />
+            <mat-form-field fxFlex *ngIf="data.type!='folder'">
+              <input matInput maxlength="250" placeholder="Url" name="url" [ngModel]="data.url" #url required readonly>
+              <a mdSuffix target="_blank" [href]="data.url" matTooltip="Download" matTooltipPosition="above" *ngIf="data.url">
+                <mat-icon>get_app</mat-icon>
+              </a>
+              <mat-icon mdSuffix [vvtkClipboard]="url" class="copy" matTooltip="Copy" matTooltipPosition="above" *ngIf="data.url">content_copy</mat-icon>
+            </mat-form-field>
+            <mat-form-field fxFlex *ngIf="data.type=='folder'">
+              <input matInput maxlength="255" placeholder="Type" name="type" [ngModel]="data.type" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Name" name="name" [(ngModel)]="data.name" [readonly]="!pageIsEditable || data.id!=0 || data.type!='folder'"
+                required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="data.id==0 && data.type=='folder' && pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card-content>
+</mat-card>

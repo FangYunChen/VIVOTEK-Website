@@ -1,0 +1,97 @@
+<div id="vwa" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <vvtk-model-selector #f [templates]="f.setTemplates(_Content.templates)"></vvtk-model-selector>
+  <div class="filter-box">
+    <div class="filter-dropdown" style="text-align: center;">
+      <!-- 20200706先隱藏 <input matInput  type="date" maxlength="256" placeholder="yyyy-MM-dd" name="date" [(ngModel)]="date" (change)="filterInsiderWebinars()" style="visibility: hidden;">
+      &nbsp;
+      <select [(ngModel)]="serie" (change)="filterInsiderWebinars()" style="visibility: hidden;">
+        <option *ngFor="let serieItem of series" [ngValue]="serieItem.id" >{{serieItem.seriesName}}
+        </option>
+      </select>
+      &nbsp; -->
+      <select [(ngModel)]="language" (change)="filterInsiderWebinars()">
+        <option *ngFor="let languageItem of languages" [ngValue]="languageItem.id">{{languageItem.languageName}}
+        </option>
+      </select>
+      <!-- &nbsp;<button class="reset-button" (click)="resetFilter()">Reset</button> -->
+    </div>
+  </div>
+        <!-- {{ webinars | json }}
+        {{ webinarsfilter | json }} -->
+        <!-- <table style="width: 84%; margin-right: calc(8%); margin-left: calc(8%);">
+          <thead>
+            <tr style="user-select: none;">
+              <th style="width: 13.4862%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);"><strong>Date</strong></th>
+              <th style="width: 18.6278%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);"><strong>Time</strong></th>
+              <th style="width: 12.2699%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);"><strong>Series</strong></th>
+              <th style="width: 30.5799%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);"><strong>Topic</strong></th>
+              <th style="width: 12.7126%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);">Language</th>
+              <th style="width: 12.5662%; background: rgb(44, 130, 201); text-align: center; color: rgb(255, 255, 255); user-select: text; border: 1px solid rgb(221, 221, 221);">
+                <br>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  *ngFor="let w of webinarsfilter">
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">{{ w.date }}</td>
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">{{ w.time }}</td>
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">{{ w.seriesName }}</td>
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">{{ w.topic }}</td>
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">{{ w.languageName }}</td>
+              <td style="text-align: center; min-width: 5px; user-select: text; border: 1px solid rgb(221, 221, 221);">
+                <p style="text-align: center; margin: auto 0px; line-height: 1.5;"><a [href]="w.register" rel="noopener noreferrer" style="color: #fff;background-color: #00a7e1;text-decoration: none;padding: 6px 12px;" target="_blank">Register</a></p>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+  <vvtk-three-cards [sectionBgColor]="false">
+    <div class="wrap" vvtkHomeCard>
+      <div class="list-row">
+        <vvtk-card *ngFor="let card of webinarsfilter" [card]="card" [coverElementA]="false">
+          <div vvtkThreeCard>
+            <div class="text limit">
+              <p><span>{{ card.languageName }}</span></p>
+            </div>
+            <div class="text limit">
+              <a [href]="card.register" rel="noopener noreferrer" style="color: #fff;background-color: #00a7e1;text-decoration: none;padding: 6px 12px;" target="_blank">Register</a>
+            </div>
+          </div>
+        </vvtk-card>
+      </div>
+    </div>
+  </vvtk-three-cards>
+  <h1 style="text-align: center;" *ngIf="webinarsOndemandfilter.length > 0">On-Demand</h1>
+  <vvtk-three-cards [sectionBgColor]="false">
+    <div class="wrap" vvtkHomeCard>
+      <div class="list-row">
+        <vvtk-card *ngFor="let card of webinarsOndemandfilter" [card]="card" [coverElementA]="false">
+          <div vvtkThreeCard>
+            <div class="text limit">
+              <p><span>{{ card.languageName }}</span></p>
+            </div>
+            <div class="text limit">
+              <a (click)="openVideo(card.watch)" rel="noopener noreferrer" style="color: #fff;background-color: #00a7e1;text-decoration: none;padding: 6px 12px;">Watch Webinars</a>
+            </div>
+          </div>
+        </vvtk-card>
+      </div>
+    </div>
+  </vvtk-three-cards>
+  <div class="pop">
+    <vvtk-popup
+      *ngIf="openPopup"
+      id="videoPopup"
+      popupStyle="videoStyle"
+      (windowPopup)="windowPopup($event)"
+    >
+      <div class="video-wrap" vvtkPopup>
+        <iframe
+          [src]="videoUrl | safe: 'resourceUrl'"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </vvtk-popup>
+  </div>
+</div>

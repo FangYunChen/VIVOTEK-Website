@@ -1,0 +1,10 @@
+<section class="model-list-link-item section" [ngStyle]="{'background':content.listLinkItem.backgroundColor}">
+  <div class="wrap">
+    <ul>
+      <li class="link-text" *ngFor="let item of content.listLinkItem.linkItems">
+        <ng-container *ngIf="!item.url">{{item.text}}</ng-container>
+        <a *ngIf="item.url" [href]="item.url">{{item.text}}</a>
+      </li>
+    </ul>
+  </div>
+</section>

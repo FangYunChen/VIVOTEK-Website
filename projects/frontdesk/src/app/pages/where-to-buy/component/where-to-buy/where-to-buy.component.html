@@ -1,0 +1,42 @@
+<div id="whereBuy" class="container">
+  <section class="where-model section tabs-slider">
+    <div class="wrap">
+      <h2>{{'Where to Buy'|i18n}}</h2>
+      <div class="filter">
+        <a [href]="('javascript:;' | safe:'url')" class="btn-filter" (click)="filterOpen(filterBox)">
+          <div class="icon"></div>
+        </a>
+        <form class="filter-box" [class.open]="filterBox">
+          <div class="list-row">
+            <!-- <div class="list-col list-col6">
+              <select name="" id="" #filterType>
+                <option value="title">{{'Company Name'|i18n}}</option>
+                <option value="tag">{{'Partner Type'|i18n}}</option>
+              </select>
+            </div> -->
+            <div class="list-col list-col12">
+              <div class="search search-select" [class.open]="searchSelect">
+                <input type="text" (keyup)="searchStringChange($event,'title')" (focus)="searchSelectOpen(true)" (blur)="searchSelectOpen(false)"
+                  placeholder="Company Name" #searchString>
+                <button type="submit" class="btn" [routerLink]="[('/where-to-buy/search/title/' + encodeParameter(searchString.value||'')) | customPath]">
+                  <div class="icon"></div>
+                </button>
+                <div class="search-select-box">
+                  <p *ngFor="let wrod of CompliWord" [innerHtml]="wrod|safe:'html'" (click)="searchString.value = searchRe(wrod)"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mask open" *ngIf="filterBox" (click)="filterOpen(filterBox)"></div>
+      <vvtk-tab-slider *ngIf="tabList.length > 0" [tabList]="tabList" [preString]="'tabs'" (tabsOpen)="tabsChange($event)" [tabsActive]="tabsOpen"
+        [clickEvent]="false" [mouseoverEvent]="true"></vvtk-tab-slider>
+      <div class="tabs-slider-content">
+        <div *ngFor="let cont of continents" class="tabs-slider-block" [class.active]="'tabs'+cont.continent === tabsOpen">
+          <a *ngFor="let country of cont.countries" [routerLink]="[('/where-to-buy/' + country.countryId + '/' + (country.customPath || '')) | customPath]">{{country.country}}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

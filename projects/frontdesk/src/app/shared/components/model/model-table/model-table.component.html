@@ -1,0 +1,24 @@
+<section class="model section model-table">
+  <div class="wrap CustomScrollbar">
+    <h3 class="text-center">{{ tableName }}</h3>
+    <ng-content select="[vvtkModelTable]"></ng-content>
+    <table *ngIf="sheet&&sheet.table" [ngStyle]="{'width':totalColsWidth+'px'}">
+      <thead *ngIf="sheet.table.length>0">
+        <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+          <tr *ngIf="rowIdx<sheet.table[0][0].rowspan">
+            <th *ngFor="let col of row;let colIdx = index;" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan"
+              [rowSpan]="col.rowspan" [ngStyle]="{'width': sheet.colsWidth[colIdx]*11+'px','height': sheet.rowsHeight[0]+'px'}">{{col.value}}</th>
+          </tr>
+        </ng-container>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+          <tr *ngIf="rowIdx>=sheet.table[0][0].rowspan">
+            <td *ngFor="let col of row;let colIdx = index;" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan" [rowSpan]="col.rowspan"
+              [ngStyle]="{'width': sheet.colsWidth[colIdx]+'em','height': sheet.rowsHeight[idx]+'px','background-color':col.NextDataRowColor?'#f9f9f9':'#fff'}">{{tran(col.value)}}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>

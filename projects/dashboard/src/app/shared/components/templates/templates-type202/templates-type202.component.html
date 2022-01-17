@@ -1,0 +1,10 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addSpec(0)" *ngIf="!readOnly">Add Spec</button>
+  <vvtk-sub-specification [specDetails]="template.nestedSpecs" [layer]="1" [readOnly]="readOnly" [templateIndex]="templateIndex"
+    (addSpec)="addSpec($event)" (deleteSpec)="deleteSpec($event)">
+  </vvtk-sub-specification>
+</div>

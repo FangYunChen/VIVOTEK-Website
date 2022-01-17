@@ -1,0 +1,11 @@
+<h2>
+  2. {{ "VMS" | i18n }}
+  <p class="sub-title">{{ "(Optional)" | i18n }}</p>
+</h2>
+<div class="vms-checkbox">
+  <mat-checkbox [(ngModel)]="designToolService.isExportVms">{{
+    "Export to PDF" | i18n
+  }}</mat-checkbox>
+</div>
+<vvtk-storage-and-bandwidth></vvtk-storage-and-bandwidth>
+<vvtk-pc-recommendation></vvtk-pc-recommendation>

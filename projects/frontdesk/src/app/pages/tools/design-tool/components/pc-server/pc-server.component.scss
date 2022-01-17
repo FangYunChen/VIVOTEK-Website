@@ -1,0 +1,43 @@
+@import "../../../../../../styles/var";
+
+p {
+  margin: 5px 0;
+}
+
+.pc-info {
+  min-width: 500px;
+  .title {
+    margin-bottom: 12px;
+    strong {
+      font-size: 20px;
+    }
+  }
+  .content{
+    font-weight: 700;
+    color: $colorY
+  }
+  .gray{
+    color: $colorGy6;
+  }
+
+  &:nth-child(1) {
+    max-width: 360px;
+  }
+  &:nth-child(2) {
+    max-width: 540px;
+  }
+  &+.pc-info {
+    margin-left: 70px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .pc-info {
+    &:nth-child(n) {
+      max-width: 100%;
+    }
+    &+.pc-info {
+      margin: 50px 0 0;
+    }
+  }
+}

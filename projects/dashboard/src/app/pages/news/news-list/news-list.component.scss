@@ -1,0 +1,10 @@
+.mat-slide-toggle {
+    margin: 0 5px;
+    /deep/.mat-slide-toggle-label {
+        display: inline-block;
+        vertical-align: middle;
+        /deep/.mat-slide-toggle-bar {
+            margin-right: 0;
+        }
+    }
+}

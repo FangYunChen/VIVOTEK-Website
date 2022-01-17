@@ -1,0 +1,116 @@
+@import '../../../../styles/_var.scss';
+
+.download-list {
+  letter-spacing: -8px;
+  margin-top: 15px;
+  padding-left: 0;
+
+  li {
+    letter-spacing: normal;
+    text-align: center;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 20px 15px 15px;
+
+    a {
+      display: block;
+      color: $colorB1;
+
+      &:before {
+        font-family: FontAwesome;
+        display: block;
+        margin: 0 auto;
+        content: '\f0ed';
+        font-size: 40px;
+        width: 55px;
+        height: 55px;
+        color: $colorGy11;
+        border: 6px solid $colorGy11;
+        text-align: center;
+        @include border-radius(100%);
+      }
+
+      &.video-icon::before {
+        content: '\f03d';
+      }
+
+      span {
+        display: block;
+        padding: 10px;
+        word-break: break-all;
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: $colorB1;
+
+        &:before {
+          color: #6EBEFF;
+          border-color: #6EBEFF;
+        }
+      }
+    }
+  }
+}
+
+.video-wrap {
+  .btn-loading {
+    position: absolute;
+    left: 50%;
+    margin-left: -30px;
+    top: 50%;
+    margin-top: -21px;
+    color: $colorW;
+    font-size: $sizeLger;
+  }
+}
+
+@media screen and (max-width:$widthWebTable) {}
+
+@media screen and (max-width:$widthTable) {
+  .download-list {
+    li {
+      width: 25%;
+    }
+  }
+}
+
+@media screen and (max-width:$widthTableApp) {
+  .download-list {
+    li {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width:$widthApp) {
+  .download-list {
+    li {
+      width: 100%;
+      display: block;
+
+      a {
+        text-align: left;
+
+        &:before {
+          margin-left: 0;
+          font-size: 32px;
+          width: 45px;
+          height: 45px;
+          border-width: 4px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        span {
+          padding: 0;
+          display: inline-block;
+          vertical-align: middle;
+          width: calc(100% - 65px);
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+}

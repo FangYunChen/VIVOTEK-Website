@@ -1,0 +1,37 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-card-content fxLayout="row">
+    <mat-form-field>
+      <mat-select placeholder="Support Category" [name]="'category_'+categoryIndex" [(ngModel)]="category.id"
+        [disabled]="!pageIsEditable" (selectionChange)="selectCategory()" required>
+        <mat-option *ngFor="let categoryOption of canSelectCategoryOptions" [value]="categoryOption.value">{{categoryOption.optionText}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Category" matTooltipPosition="above" (click)="categoryAdded.emit()"
+      *ngIf="pageIsEditable">
+      <mat-icon>add</mat-icon>
+    </a>
+    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Category" matTooltipPosition="above" (click)="categoryRemoved.emit()"
+      *ngIf="pageIsEditable">
+      <mat-icon>delete</mat-icon>
+    </a>
+    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="category.hideContent?'展開':'收合'" matTooltipPosition="above"
+      (click)="category.hideContent = !category.hideContent">
+      <mat-icon *ngIf="category.hideContent">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!category.hideContent">keyboard_arrow_up</mat-icon>
+    </a>
+  </mat-card-content>
+  <mat-card-content style="margin:0 0 0 40px" fxLayout="column" fxLayoutAlign="start stretch" [hidden]="category.hideContent"
+    *ngFor="let supportFeature of supportFeatures; let i = index">
+    <mat-card-title>
+      <h4>{{supportFeature.name}}</h4>
+    </mat-card-title>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Description" name="description" [(ngModel)]="category.features[i].description"
+        [readOnly]="!pageIsEditable">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Description Url" name="descriptionUrl" [(ngModel)]="category.features[i].descriptionUrl"
+        [readOnly]="!pageIsEditable">
+    </mat-form-field>
+  </mat-card-content>
+</div>

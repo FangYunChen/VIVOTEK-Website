@@ -1,0 +1,83 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addPanel(0)" *ngIf="!readOnly">Add Panel</button>
+  <div [sortablejs]="template.panels" [sortablejsOptions]="groupOptionsCard">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let panel of template.panels; let j = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-card" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Panel {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Panel" matTooltipPosition="above" (click)="deletePanel(j)"
+          *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="panel.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="panel.hideContent = !panel.hideContent">
+          <mat-icon *ngIf="panel.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!panel.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="!panel.hideContent">
+        {{panel.title}}
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="panel.hideContent">
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="panel.image.src">
+          <div class="text-center">
+            <img [src]="panel.image.src | safeUrl" [alt]="panel.image.alt" [title]="panel.image.title">
+          </div>
+        </div>
+        <button type="button" mat-button (click)="cardsImgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload
+          a image (Recommended size: 150*150)</button>
+        <input hidden type="file" #cardsImgFileInput accept="image/*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image url" [name]="'templateCardsImageSrc'+templateIndex+'_'+j" [(ngModel)]="panel.image.src"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput maxlength="255" placeholder="Image title" [name]="'templateCardsImageTitle'+templateIndex+'_'+j"
+            [(ngModel)]="panel.image.title" [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image alt" [name]="'templateCardsImageAlt'+templateIndex+'_'+j" [(ngModel)]="panel.image.alt"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Title" [name]="'templateCardsTitle'+templateIndex+'_'+j" [(ngModel)]="panel.title"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Subtitle" [name]="'templateCardsSubtitle'+templateIndex+'_'+j" [(ngModel)]="panel.subtitle"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-card fxFlex="100%" [hidden]="!readOnly">
+          <mat-card-content>
+            <div [innerHTML]="panel.htmlContent | safeHtml"></div>
+          </mat-card-content>
+        </mat-card>
+        <mat-tab-group [hidden]="readOnly">
+          <mat-tab label="Editor">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <mat-card fxFlex="100%">
+                <mat-card-content fxLayout="column">
+                  <vvtk-wysiwyg [(html)]="panel.htmlContent" [path]="path"></vvtk-wysiwyg>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Preview">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <mat-card fxFlex="100%">
+                <mat-card-content fxLayout="column">
+                  <div [innerHTML]="panel.htmlContent | safeHtml"></div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+      <button type="button" mat-button (click)="addPanel(j+1)" *ngIf="!readOnly">Add Panel</button>
+    </div>
+  </div>
+</div>

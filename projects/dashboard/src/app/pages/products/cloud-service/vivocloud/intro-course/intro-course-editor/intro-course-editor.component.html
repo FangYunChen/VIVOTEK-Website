@@ -1,0 +1,113 @@
+<mat-card fxFlex="100%" *ngIf="data">
+  <mat-card-title>
+    <span>{{(!data||data.id==0)?'Add':'Edit'}} Navigation</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="column">
+    <form #form="ngForm">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput maxlength="1023" placeholder="Title" name="title" [(ngModel)]="data.Title" [readOnly]="!pageIsEditable"
+              required>
+          </mat-form-field>
+        </mat-card-content>
+
+        <ng-container *ngIf="type==='article'">
+          <mat-card-title>
+            <h3>Summary</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.Summary | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="data.Summary" [path]="path"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.Summary | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+
+          <mat-card-title>
+            <h3>Content</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.Content | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="data.Content" [path]="path"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.Content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+
+
+          <mat-card-title>
+            <h3>Youtube Urls</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addYoutubeUrl(0)" *ngIf="pageIsEditable">Add Url</button>
+            <div [sortablejs]="youtubeUrls" [sortablejsOptions]="groupOptions">
+              <div *ngFor="let item of youtubeUrls;let i = index">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add YoutubeUrl" matTooltipPosition="above"
+                  (click)="addYoutubeUrl(i+1)" *ngIf="pageIsEditable">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete YoutubeUrl" matTooltipPosition="above"
+                  (click)="deleteYoutubeUrl(i)" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex="flex-grow">
+                  <input matInput placeholder="YoutubeUrl" [name]="'youtubeUrls['+i+']'" [(ngModel)]="item.value"
+                    [readOnly]="!pageIsEditable" required>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </ng-container>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <span fxFlex></span>
+      <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+    </div>
+  </mat-card-content>
+</mat-card>

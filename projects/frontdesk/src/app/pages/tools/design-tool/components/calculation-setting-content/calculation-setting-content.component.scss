@@ -1,0 +1,58 @@
+@import '../../../../../../styles/var';
+
+.calculation-settings__content {
+  background-color: #fff;
+}
+
+.streaming-list {
+  display: flex;
+}
+
+.streaming-category {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 0;
+  &:first-child {
+    width: 66.66%;
+  }
+  & + .streaming-category {
+    border-left: 4px solid $colorGy2;
+  }
+}
+
+.streaming-category__header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.streaming-category__content {
+  display: flex;
+}
+
+.streaming-item {
+  flex-grow: 1;
+  width: 33.33%;
+  padding: 0 20px;
+  & + .streaming-item {
+    border-left: 2px solid $colorGy2;
+  }
+}
+
+.streaming-gap {
+  border-left: 4px solid $colorGy2;
+}
+
+.recordingRadioBtn {
+  width: 33.33%;
+  flex-grow: 1;
+  margin-bottom: 26px;
+  margin-left: 20px;
+}
+
+.blue-icon {
+  color: #94E4FF;
+}

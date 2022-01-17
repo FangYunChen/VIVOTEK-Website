@@ -1,0 +1,18 @@
+<section class="model section product-model-special-highlight">
+  <div class="wrap">
+    <div class="special-highlight-container text-center" *ngFor="let imageText of template.imageTexts">
+      <h3 class="title-text text-center" *ngIf="imageText.title">{{imageText.title}}</h3>
+      <ng-container *ngIf="imageText.image.src && !imageText.image.url">
+        <img [src]="imageText.image.src" [alt]="imageText.image.alt" [title]="imageText.image.title">
+      </ng-container>
+
+      <ng-container *ngIf="imageText.image.src && imageText.image.url">
+        <vvtk-link [href]="imageText.image.url" target="_blank">
+          <ng-container>
+            <img [src]="imageText.image.src" [alt]="imageText.image.alt" [title]="imageText.image.title">
+          </ng-container>
+        </vvtk-link>
+      </ng-container>
+    </div>
+  </div>
+</section>

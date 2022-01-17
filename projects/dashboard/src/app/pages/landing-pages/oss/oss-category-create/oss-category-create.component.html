@@ -1,0 +1,32 @@
+<div class='ossCategoryCreate__container'>
+  <div class="ossCategoryCreate mat-elevation-z2">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf='pageIsEditable'>
+      <div class="ossCategoryCreate__header">
+        <h3 *ngIf="isMain">Create Main Category</h3>
+        <h3 *ngIf="!isMain">Create Subcategory</h3>
+        <mat-button-toggle-group formControlName="mode" name="mode" (change)='updateMode($event)'>
+          <mat-button-toggle value='main'>Main Category</mat-button-toggle>
+          <mat-button-toggle value='sub'>Sub Category</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="ossCategoryCreate__body">
+        <mat-form-field *ngIf="isMain">
+          <input matInput formControlName="mainCategoryName" placeholder="Main Category Name">
+        </mat-form-field>
+        <mat-form-field *ngIf="!isMain">
+          <mat-select formControlName="mainCategoryId" placeholder="Main Category">
+            <mat-option *ngFor="let item of mainCategoryRef" value={{item.id}}>{{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="!isMain">
+          <input matInput formControlName="subCategoryName" placeholder="Subcategory Name">
+        </mat-form-field>
+        <div class="ossCategoryCreate__body_action">
+          <a mat-raised-button routerLink="/landing-pages/oss/category">Cancel</a>
+          <button mat-raised-button color="primary" [disabled]="!form.valid" type='submit'>Submit</button>
+        </div>
+      </div>
+    </form>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </div>
+</div>

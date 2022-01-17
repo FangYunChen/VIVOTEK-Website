@@ -1,0 +1,43 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} 法說會Files</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Year" name="year" [value]="data.year" readOnly>
+            </mat-form-field>
+            <vvtk-input-container *ngIf="pageIsEditable">
+              <mat-form-field vvtkhtml>
+                <mat-select placeholder="Year" name="year" [(ngModel)]="data.year">
+                  <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </vvtk-input-container>
+            <button type="button" mat-button (click)="fileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a file</button>
+            <input hidden type="file" #fileInput accept="*" (change)="fileSelect($event)" />
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Url" name="url" [(ngModel)]="data.url" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="data.title" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/investors/presentation/links/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

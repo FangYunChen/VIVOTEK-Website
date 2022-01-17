@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <form #form="ngForm" fxLayout="column">
+    <mat-card fxFlex="100%">
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-select required placeholder="Review result" name="reviewResult" [(ngModel)]="reviewResult.reviewResult">
+            <mat-option *ngFor="let option of reviewOptions" [value]="option.value">
+              {{option.optionText}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="reviewResult.reviewResult === false">
+          <textarea matInput rows="5" placeholder="Rejected Reason" name="rejectedReason" [(ngModel)]="reviewResult.rejectedReason"></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [disabled]="form.invalid" (click)="review()">Submit</button>
+  <span fxFlex></span>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>

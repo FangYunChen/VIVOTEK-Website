@@ -1,0 +1,80 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Email Template - {{title}}</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column" *ngIf="name!='template'">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="1023" placeholder="Title" name="title" [(ngModel)]="email.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="getMergeHtml() | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [(selectedIndex)]="selectedTab" (selectChange)="updateEditorHtml()" [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg #editor [path]="'EmailTemplate/'+name"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+                      <table class="table table-hover table-striped table-bordered table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Preview Data</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of parameter; let i = index">
+                            <td>template-{{item.key}}</td>
+                            <td>{{item.value}}</td>
+                            <td>
+                              <mat-form-field fxFlex>
+                                <input matInput [name]="item.key" placeholder="" [(ngModel)]="item.preview">
+                              </mat-form-field>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="getMergeHtml() | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" (click)="saveHtml()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

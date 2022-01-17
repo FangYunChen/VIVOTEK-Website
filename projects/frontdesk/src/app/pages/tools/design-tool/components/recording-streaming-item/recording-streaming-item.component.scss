@@ -1,0 +1,64 @@
+@import '../../../../../../styles/var';
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.form-item__title {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  .mat-icon {
+    margin-left: 5px;
+    color: #94E4FF;
+  }
+}
+
+.form-item__content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  width: 50%;
+  input {
+    min-width: 0;
+    &[type='number'] {
+      max-width: 70px;
+    }
+  }
+}
+
+.footer {
+  margin-top: 40px;
+  .form-item {
+    font-weight: 700;
+  }
+  .form-item__content {
+    color: $colorB6;
+  }
+}
+
+.title__disable {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.function_disable ::ng-deep {
+  color: rgba(0, 0, 0, 0.1);
+
+  input:disabled {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.1);
+  }
+
+  .mat-select-placeholder {
+    color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.required {
+  border-bottom: 1px red solid;
+}

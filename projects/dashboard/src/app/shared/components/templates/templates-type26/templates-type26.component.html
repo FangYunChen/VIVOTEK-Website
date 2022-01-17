@@ -1,0 +1,82 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addImage(0)" *ngIf="!readOnly">Add Panel</button>
+  <div [sortablejs]="template.imageTexts" [sortablejsOptions]="groupOptionsBanner">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let imageText of template.imageTexts; let j = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-card" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Panel {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Panel" matTooltipPosition="above" (click)="deletePanel(j)"
+          *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="imageText.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="imageText.hideContent = !imageText.hideContent">
+          <mat-icon *ngIf="imageText.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!imageText.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <!--圖片-->
+      <!-- <mat-card-title> -->
+      <div fxLayout="column" fxLayoutAlign="start stretch">
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="imageText.image.src">
+          <div class="text-center">
+            <img [src]="imageText.image.src | safeUrl" [alt]="imageText.image.alt" [title]="imageText.image.title">
+          </div>
+        </div>
+        <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">
+          Upload a image (Recommended size: 460*230)
+        </button>
+        <input hidden type="file" #imgFileInput accept="image/*" (change)="uploadFile($event,j)" [disabled]="isLoading" />
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image url" [name]="'templateImageSrc'+templateIndex" [(ngModel)]="imageText.image.src"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput maxlength="255" placeholder="Image title" [name]="'templateImageTitle'+templateIndex"
+            [(ngModel)]="imageText.image.title" [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image alt" [name]="'templateImageAlt'+templateIndex" [(ngModel)]="imageText.image.alt"
+            [readOnly]="readOnly">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field>
+        <mat-select [name]="'imageText'+j" [(ngModel)]="imageText.horizontal" placeholder="Picture placement direction"
+          (selectionChange)="selectChange($event.value,j)" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let col of columns" [value]="col.key">
+            {{col.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- </mat-card-title> -->
+
+      <!-- <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="imageText.hideContent"> -->
+      <mat-form-field fxFlex>
+        <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="imageText.title"
+          [readOnly]="readOnly">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <textarea matInput rows="5" placeholder="Content" [name]="'templateContent'+templateIndex" [(ngModel)]="imageText.htmlContent"
+          [readOnly]="readOnly"></textarea>
+      </mat-form-field>
+      <vvtk-input-container>
+        <mat-slide-toggle color="primary" [name]="'urlEnabled'+templateIndex" [(ngModel)]="imageText.urlEnabled"
+          vvtkhtml [disabled]="readOnly">
+          {{imageText.urlEnabled?'Enabled Url':'Disabled Url'}}
+        </mat-slide-toggle>
+      </vvtk-input-container>
+      <mat-form-field fxFlex *ngIf="imageText.urlEnabled">
+        <input matInput placeholder="Url" [name]="'templateUrl'+templateIndex" [(ngModel)]="imageText.url" [readOnly]="readOnly">
+      </mat-form-field>
+      <!-- </mat-card-content> -->
+      <button type="button" mat-button (click)="addImage(j+1)" *ngIf="!readOnly">Add Panel</button>
+    </div>
+  </div>
+
+</div>

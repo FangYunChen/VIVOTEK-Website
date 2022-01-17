@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.product.modelName}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="Choose available language" [(ngModel)]="selectedLang" multiple>
+      <mat-option *ngFor="let lang of langList" [value]="lang.value">{{lang.optionText}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="OK()" [disabled]="isClick">OK</button>
+  <span fxFlex></span>
+  <button mat-button (click)="Cancel()" [disabled]="isClick">Cancel</button>
+</div>

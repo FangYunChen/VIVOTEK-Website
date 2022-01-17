@@ -1,0 +1,62 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addCard(0)" *ngIf="!readOnly">Add Card</button>
+  <div [sortablejs]="template.cards" [sortablejsOptions]="groupOptionsCard">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let card of template.cards; let j = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-card" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Card {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Card" matTooltipPosition="above" (click)="deleteCard(j)"
+          *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="card.hideContent?'展開':'收合'" matTooltipPosition="above"
+          (click)="card.hideContent = !card.hideContent">
+          <mat-icon *ngIf="card.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!card.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="!card.hideContent">
+        {{card.title}}
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="card.hideContent">
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="card.image.src">
+          <div class="text-center">
+            <img [src]="card.image.src | safeUrl" [alt]="card.image.alt" [title]="card.image.title">
+          </div>
+        </div>
+        <button type="button" mat-button (click)="cardsImgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload
+          a image (Recommended size: 460*230)</button>
+        <input hidden type="file" #cardsImgFileInput accept="image/*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image url" [name]="'templateCardsImageSrc'+templateIndex+'_'+j" [(ngModel)]="card.image.src"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput maxlength="255" placeholder="Image title" [name]="'templateCardsImageTitle'+templateIndex+'_'+j"
+            [(ngModel)]="card.image.title" [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image alt" [name]="'templateCardsImageAlt'+templateIndex+'_'+j" [(ngModel)]="card.image.alt"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Title" [name]="'templateCardsTitle'+templateIndex+'_'+j" [(ngModel)]="card.title"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Subtitle" [name]="'templateCardsSubtitle'+templateIndex+'_'+j" [(ngModel)]="card.subtitle"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Url" [name]="'templateCardsUrl'+templateIndex+'_'+j" [(ngModel)]="card.url"
+            [readOnly]="readOnly">
+        </mat-form-field>
+      </mat-card-content>
+      <button type="button" mat-button (click)="addCard(j+1)" *ngIf="!readOnly">Add Card</button>
+    </div>
+  </div>
+</div>

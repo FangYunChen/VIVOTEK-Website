@@ -1,0 +1,9 @@
+<div id="home" class="container">
+  <vvtk-home-slider></vvtk-home-slider>
+  <ng-container *ngFor="let section of sectionList;let odd = odd;">
+    <vvtk-home-section [type]="section.type" [more]="section.more" [sectionTitle]="section.title" [sectionBgColor]="odd" [items]="section.items"></vvtk-home-section>
+
+  </ng-container>
+
+  <!-- <vvtk-newsletter></vvtk-newsletter> -->
+</div>

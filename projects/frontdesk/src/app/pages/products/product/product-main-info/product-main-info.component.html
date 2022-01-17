@@ -1,0 +1,47 @@
+<div class="product-main-info">
+  <div class="product-photo-outer">
+    <vvtk-photo-gallery class="product-photo" [images]="images"></vvtk-photo-gallery>
+  </div>
+  <div class="product-info">
+    <div class="product-info__series">
+      <div class="product-info_img-wrap" *ngIf="seriesImageUrl">
+        <img [src]="seriesImageUrl">
+      </div>
+    </div>
+    <h2 class="product-info__title">{{ data?.name }}</h2>
+    <h5 class="product-info__subtitle">{{ data?.shortDescription }}</h5>
+    <div class="product-info__icon-list">
+      <div class="product-info__icon" *ngFor="let icon of data?.icons">
+        <div class="product-info_img-wrap">
+          <img [src]="icon.imagePath">
+        </div>
+        <span class="product-info__icon-text">{{ icon.name }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="data?.legacyDescription && data?.state===stateEnum.Legacy">
+      <div class="product-info__description" [innerHTML]="data?.legacyDescription | safe:'html'"></div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="product-main-info product-main-info--mobile">
+  <div class="product-info__series">
+    <div class="product-info_img-wrap" *ngIf="seriesImageUrl">
+      <img [src]="seriesImageUrl">
+    </div>
+  </div>
+  <h2 class="product-info__title">{{ data?.name }}</h2>
+  <h5 class="product-info__subtitle">{{ data?.shortDescription }}</h5>
+  <ng-container *ngIf="data?.legacyDescription && data?.state===stateEnum.Legacy">
+    <div class="product-info__description" [innerHTML]="data?.legacyDescription | safe:'html'"></div>
+  </ng-container>
+  <vvtk-photo-gallery class="product-photo" [images]="images"></vvtk-photo-gallery>
+  <div class="product-info__icon-list">
+    <div class="product-info__icon" *ngFor="let icon of data?.icons">
+      <div class="product-info_img-wrap">
+        <img [src]="icon.imagePath">
+      </div>
+      <span class="product-info__icon-text">{{ icon.name }}</span>
+    </div>
+  </div>
+</div>

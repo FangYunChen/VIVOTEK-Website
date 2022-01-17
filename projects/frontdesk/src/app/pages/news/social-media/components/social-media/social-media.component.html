@@ -1,0 +1,19 @@
+<div id="network" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <vvtk-three-cards>
+    <div class="wrap" vvtkHomeCard>
+      <div class="list-row">
+        <vvtk-card *ngFor="let card of items;" [card]="card">
+          <div vvtkThreeCard>
+            <div class="col-link afterClear">
+              <vvtk-a [url]="card.url" [cName]="'link'">
+                <ng-container HtmlContent>
+                </ng-container>
+              </vvtk-a>
+            </div>
+          </div>
+        </vvtk-card>
+      </div>
+    </div>
+  </vvtk-three-cards>
+</div>

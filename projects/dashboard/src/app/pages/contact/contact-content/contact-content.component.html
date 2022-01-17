@@ -1,0 +1,60 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Online Enquiry - Enquiry</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Created At" name="createdAt" [value]="data.createdAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Subject" name="subject" [value]="data.subject.name" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="First Name" name="firstName" [value]="data.firstName" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Last Name" name="lastName" [value]="data.lastName" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Email" name="email" [value]="data.email" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Company" name="company" [value]="data.company" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Phone" name="phone" [value]="data.phone" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Country" name="country" [value]="data.country.name" readonly>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <textarea matInput placeholder="Comments" name="comment" [value]="data.comment" rows="5" readonly></textarea>
+            </mat-form-field>
+            <vvtk-input-container>
+              <mat-slide-toggle color="primary" name="status" [(ngModel)]="status" vvtkhtml [disabled]="!canSave">
+                {{status?'Processed':'Not Processed'}}
+              </mat-slide-toggle>
+            </vvtk-input-container>
+            <mat-form-field fxFlex>
+              <textarea matInput maxlength="255" placeholder="Note" name="note" [(ngModel)]="data.note" [readOnly]="!canSave" rows="5"></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/contact/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="canSave">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

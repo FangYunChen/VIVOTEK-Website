@@ -1,0 +1,6 @@
+<div class="toggle-btn" [class.open]="showCategories" (click)="showCategories = !showCategories">
+  <i class="fa fa-th-list"></i>
+</div>
+<vvtk-nested-nav-list [class.close]="!showCategories" displayMode="flat" [hideToggle]="true" collapsedHeight="auto"
+  expandedHeight="auto" [baseRouterLink]="baseRouterLink" [data]="data">
+</vvtk-nested-nav-list>

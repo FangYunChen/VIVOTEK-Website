@@ -1,0 +1,123 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{ (id==0)?'Add':'Edit' }} Support Article Product</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <div fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="ProductName" name="ProductName" [(ngModel)]="data.name" [disabled]="!pageIsEditable"
+              required>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Route" name="Route" [(ngModel)]="data.subRoute" [disabled]="!pageIsEditable"
+              required>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-select placeholder="Is Display On Top" name="IsDisplayOnTop" [(ngModel)]="data.isDisplayOnTop"
+              [disabled]="!pageIsEditable" required>
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-card-title>
+            <h4>Image</h4>
+            <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="image.hideContent?'展開':'收合'"
+              matTooltipPosition="above" (click)="image.hideContent = !image.hideContent">
+              <mat-icon *ngIf="image.hideContent">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="!image.hideContent">keyboard_arrow_up</mat-icon>
+            </a>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" [hidden]="!image.hideContent">
+            {{image.title}}
+          </mat-card-content>
+          <mat-card-content fxLayout="column" [hidden]="image.hideContent">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="image.src">
+              <div class="text-center">
+                <img [src]="image.src | safeUrl" [alt]="image.alt" [title]="image.title">
+              </div>
+            </div>
+
+            <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+              a image (Recommended size: 460*230)</button>
+            <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadFile($event)" [disabled]="isLoading" />
+
+            <button type="button" mat-button (click)="displayImageSelector()" [disabled]="isLoading" *ngIf="pageIsEditable">Choose
+              an image from image group.</button>
+
+            <vvtk-image-selector *ngIf="imageSelectorVisible" [pageIsEditable]="pageIsEditable" selectImageText="Choose an image from image group."
+              [multiple]="false" (addSelect)="setImage($event)" [needDisplaySelectedImages]="false"></vvtk-image-selector>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image src" name="templateImagesSrc" [(ngModel)]="image.src" [disabled]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-card-title>
+            <h4>Categories</h4>
+            <button mat-mini-fab class="action-btn" color="primary" matTooltip="Add" matTooltipPosition="above" *ngIf="pageIsEditable"
+              (click)="addCategory()">
+              <mat-icon>add</mat-icon>
+            </button>
+
+          </mat-card-title>
+          <mat-card-content [sortablejs]="data.categories" [sortablejsOptions]="groupOptions" fxLayout="column">
+            <mat-card fxFlex="100%" *ngFor="let category of data.categories; index as categoryIdx">
+              <mat-card-content fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <mat-form-field>
+                  <input matInput required maxlength="255" placeholder="Category Name" name="CategoryName[{{categoryIdx}}]"
+                    [(ngModel)]="category.name" [disabled]="!pageIsEditable">
+                </mat-form-field>
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Add" matTooltipPosition="above"
+                  *ngIf="pageIsEditable" (click)="addChild(category)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                  (click)="deleteCategory(category)" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card-content>
+              <mat-card-content fxLayout="column" *ngIf="category.children && category.children.length>0">
+                <div class="list mat-elevation-z4">
+                  <mat-list [sortablejs]="category.children" [sortablejsOptions]="groupOptions">
+                    <mat-list-item class="small-list-item" *ngFor="let child of category.children; index as childIdx">
+                      <h3 class="middle" mat-line>
+                        <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                        <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                          (click)="deleteChild(category, child)" *ngIf="pageIsEditable">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                        <mat-form-field>
+                          <input matInput required maxlength="255" placeholder="Child Name" name="CategoryName[{{categoryIdx}}].ChildName[{{childIdx}}]"
+                            [(ngModel)]="child.name" [disabled]="!pageIsEditable">
+                        </mat-form-field>
+                      </h3>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </mat-card-content>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/supports/article/product']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

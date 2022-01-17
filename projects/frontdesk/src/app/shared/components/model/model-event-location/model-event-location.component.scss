@@ -1,0 +1,117 @@
+@import '_var.scss';
+
+.model-event-location {
+  .wrap {
+    padding: 0;
+    max-width: 1600px;
+
+    .event-location-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+
+      .event-location-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        margin: 0 25px;
+        margin-bottom: 50px;
+
+        @media (max-width: 1024px) {
+          width: 100%;
+          align-items: center;
+        }
+
+        @media (min-width: 1024px) and (max-width:1280px) {
+          width: 300px;
+        }
+
+        @media (min-width: 1280px) {
+          width: 350px;
+        }
+
+        .event-location-img {
+          align-self: center;
+          height: 150px;
+          width: 150px;
+          border-radius: 50%;
+        }
+
+        .event-location-name {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+
+          a {
+            color: #0093d5;
+          }
+
+          color: #0093d5;
+        }
+
+        .event-date-time {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-self: center;
+          height: 150px;
+          width: 150px;
+          border: 10px solid #92cbf8;
+          border-radius: 50%;
+          background: #0085d0;
+
+          .event-date {
+            align-self: center;
+            color: white;
+          }
+
+          .event-time {
+            align-self: center;
+            color: lightblue;
+          }
+        }
+
+        .event-place {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-self: flex-start;
+          color: #0093d5;
+
+          @media (max-width: 1024px) {
+            align-self: center;
+          }
+        }
+
+        .event-address {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-self: flex-start;
+          color: #0093d5;
+
+          @media (max-width: 1024px) {
+            align-self: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.icon-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    padding-left: 10px;
+  }
+}

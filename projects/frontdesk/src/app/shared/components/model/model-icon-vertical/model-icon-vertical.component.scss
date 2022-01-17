@@ -1,0 +1,30 @@
+@import '_var.scss';
+
+.model-icon-vertical {
+  .wrap {
+    max-width: 1600px;
+
+    .icon-container {
+      margin-bottom: 25px;
+
+      .icon-content {
+        width: 100%;
+        margin-bottom: 25px;
+
+        .icon-name {
+          font-size: 18px;
+          color: #0093d5;
+
+          a {
+            color: #0093d5;
+          }
+        }
+      }
+    }
+
+    .more {
+      margin-right: 10%;
+      float: right;
+    }
+  }
+}

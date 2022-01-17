@@ -1,0 +1,220 @@
+@import '../../../../styles/_var';
+@mixin styleW {
+  .icon-w {
+    display: inline-block !important;
+  }
+  .icon-bk {
+    display: none !important;
+  }
+  .nav-top {
+    >li {
+      >a {
+        color: $colorW;
+        &:hover {
+          color: $colorB2;
+        }
+      }
+    }
+  }
+  .logo {
+    background: url('/assets/img/vivotek-logo-n-w.svg') no-repeat center top;
+  }
+  .nav-icon {
+    a {
+      color: $colorW;
+      &:hover {
+        color: $colorB2;
+      }
+    }
+  }
+}
+
+@mixin styleBk {
+  background-color: $colorW;
+  .icon-w {
+    display: none !important;
+  }
+  .icon-bk {
+    display: inline-block !important;
+  }
+  .nav-top {
+    >li {
+      >a {
+        color: $colorGy3;
+        &:hover {
+          color: $colorB1;
+        }
+      }
+    }
+  }
+  .logo {
+    background: url('/assets/img/vivotek-logo-n.svg') no-repeat center top;
+  }
+  .nav-icon {
+    a {
+      color: $colorFont;
+      &:hover {
+        color: $colorB1;
+      }
+    }
+  }
+}
+
+header {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 990;
+  padding-top: 13px;
+  @include transition(all 0.3s);
+  ul,
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .nav-top {
+    >li {
+      display: inline-block;
+      margin-left: 25px;
+      >a {
+        font-size: $sizeSler;
+        display: block;
+        font-family: Gothic, $fontFamily;
+        .icon {
+          width: 18px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 2px;
+        }
+        &:hover {
+          text-decoration: none;
+          color: $colorB2;
+        }
+        i {
+          font-size: $sizeSler;
+        }
+      }
+    }
+  }
+  .logo {
+    width: 130px;
+    height: 35px;
+    display: block;
+    float: left;
+    margin-right: 26px;
+    margin-top: 9px;
+  }
+  .nav-icon {
+    float: right;
+    margin-top: 15px;
+    li {
+      display: inline-block;
+      margin-left: 17px;
+      position: relative;
+      a {
+        padding: 7px 5px;
+        font-size: $sizeLger;
+        .icon {
+          width: 28px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 2px;
+        }
+      }
+      .search-box {
+        position: absolute;
+        right: 0;
+        top: 38px;
+        display: none;
+        z-index: 9999;
+        &.open {
+          display: block;
+        }
+        input {
+          padding: 7px 15px;
+          border: 1px solid $colorGy1;
+        }
+      }
+    }
+  }
+  &.styleW {
+    @include styleW;
+  }
+  &.styleBk {
+    @include styleBk;
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+  header {
+    .logo {
+      margin-right: 15px;
+    }
+    .nav-icon {
+      li {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+  header {
+    padding-bottom: 10px;
+    .nav-icon {
+      li {
+        .search-box {
+          right: 40px;
+          top: 0;
+        }
+      }
+    }
+    &.styleTableW {
+      @include styleW;
+    }
+    &.styleTableBk {
+      @include styleBk;
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  header {
+    .app-hide {
+      display: none !important;
+    }
+    &.styleAppW {
+      @include styleW;
+    }
+    &.styleAppBk {
+      @include styleBk;
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  header {
+    padding-bottom: 5px;
+    .logo {
+      margin-top: -5px;
+    }
+    .nav-icon {
+      margin-top: 6px;
+      li {
+        a {
+          font-size: $sizeLg;
+          .icon {
+            width: 25px;
+            margin-top: 2px;
+          }
+        }
+        .search-box {
+          right: -45px;
+          top: 35px;
+        }
+      }
+    }
+  }
+}

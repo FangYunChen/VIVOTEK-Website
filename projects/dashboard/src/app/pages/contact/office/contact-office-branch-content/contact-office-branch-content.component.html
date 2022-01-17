@@ -1,0 +1,165 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-content fxLayout="column">
+      <mat-card-title fxLayout>
+        <span>{{(id==0)?'Add':'Edit'}} Global Offices - Branches</span>
+        <span fxFlex></span>
+        <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+      </mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <form #form="ngForm">
+            <div class="padding" fxLayout="column" fxLayoutAlign="start stretch">
+              <mat-form-field fxFlex *ngIf="!pageIsEditable">
+                <input matInput placeholder="Country" name="countryName" [value]="getCountryName(data.country.id)"
+                  readOnly>
+              </mat-form-field>
+              <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+                <div fxLayout="column" vvtkhtml>
+                  <mat-form-field>
+                    <mat-select name="country" placeholder="Country" [(ngModel)]="data.country.id" required>
+                      <mat-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <input type="text" class="hidden-input" [value]="data.country" required>
+                </div>
+              </vvtk-input-container>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="data.title" [readOnly]="!pageIsEditable">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Name" name="name" [(ngModel)]="data.name" [readOnly]="!pageIsEditable">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Address" name="address" [(ngModel)]="data.address"
+                  [readOnly]="!pageIsEditable">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <textarea matInput rows="5" placeholder="Content" name="contentText" [(ngModel)]="data.contentText"
+                  [readOnly]="!pageIsEditable"></textarea>
+              </mat-form-field>
+
+              <mat-card-title>
+                <h3>Phone</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <button type="button" mat-button (click)="addPhone(0)" *ngIf="pageIsEditable && phones.length<3">Add
+                  Phone</button>
+                <div [sortablejs]="phones" [sortablejsOptions]="groupOptions">
+                  <div *ngFor="let item of phones;let i = index">
+                    <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Phone" matTooltipPosition="above"
+                      (click)="addPhone(i+1)" *ngIf="pageIsEditable && phones.length<3">
+                      <mat-icon>add</mat-icon>
+                    </a>
+                    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Phone" matTooltipPosition="above"
+                      (click)="deletePhone(i)" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <mat-form-field fxFlex="flex-grow">
+                      <input matInput placeholder="Phone" [name]="'phones['+i+']'" [(ngModel)]="item.value" [readOnly]="!pageIsEditable"
+                        required>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-title>
+                <h3>Fax</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <button type="button" mat-button (click)="addFax(0)" *ngIf="pageIsEditable">Add Fax</button>
+                <div [sortablejs]="faxes" [sortablejsOptions]="groupOptions">
+                  <div *ngFor="let item of faxes;let i = index">
+                    <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Fax" matTooltipPosition="above"
+                      (click)="addFax(i+1)" *ngIf="pageIsEditable">
+                      <mat-icon>add</mat-icon>
+                    </a>
+                    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Fax" matTooltipPosition="above"
+                      (click)="deleteFax(i)" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <mat-form-field fxFlex="flex-grow">
+                      <input matInput placeholder="Fax" [name]="'faxes['+i+']'" [(ngModel)]="item.value" [readOnly]="!pageIsEditable"
+                        required>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-title>
+                <h3>Web</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <button type="button" mat-button (click)="addWeb(0)" *ngIf="pageIsEditable && data.webs.length<5">Add
+                  Web</button>
+                <div [sortablejs]="data.webs" [sortablejsOptions]="groupOptions">
+                  <div *ngFor="let item of data.webs;let i = index;let last = last" fxLayout="row" fxLayoutAlign="start center"
+                    style="margin:10px 0">
+                    <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Web" matTooltipPosition="above"
+                      (click)="addWeb(i+1)" *ngIf="pageIsEditable && data.webs.length<5">
+                      <mat-icon>add</mat-icon>
+                    </a>
+                    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Web" matTooltipPosition="above"
+                      (click)="deleteWeb(i)" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <div fxLayout="column" fxFlex="flex-grow">
+                      <mat-form-field>
+                        <input matInput placeholder="Web" [name]="'webs['+i+'].url'" [(ngModel)]="item.url" [readOnly]="!pageIsEditable"
+                          required>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput placeholder="WebUrlName" [name]="'webs['+i+'].urlName'" [(ngModel)]="item.urlName"
+                          [readOnly]="!pageIsEditable" required>
+                      </mat-form-field>
+                    </div>
+                    <div>
+                      <mat-divider style="margin-top:50px" *ngIf="!last"></mat-divider>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-title>
+                <h3>Email</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <button type="button" mat-button (click)="addEmail(0)" *ngIf="pageIsEditable && emails.length<3">Add
+                  Email</button>
+                <div [sortablejs]="emails" [sortablejsOptions]="groupOptions">
+                  <div *ngFor="let item of emails;let i = index">
+                    <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Email" matTooltipPosition="above"
+                      (click)="addEmail(i+1)" *ngIf="pageIsEditable && emails.length<3">
+                      <mat-icon>add</mat-icon>
+                    </a>
+                    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Email" matTooltipPosition="above"
+                      (click)="deleteEmail(i)" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <mat-form-field fxFlex="flex-grow">
+                      <input matInput type="email" email placeholder="Email" [name]="'emails['+i+']'" [(ngModel)]="item.value"
+                        [readOnly]="!pageIsEditable" required>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Map link" name="map" [(ngModel)]="data.map" [readOnly]="!pageIsEditable">
+              </mat-form-field>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button [routerLink]="['/contact/offices/branch/list']">Cancel</button>
+            <span fxFlex></span>
+            <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

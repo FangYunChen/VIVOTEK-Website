@@ -1,0 +1,75 @@
+@import "_css3.scss";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+@font-face {
+  font-family: 'Open Sans';
+  src: /*url(/assets/font/Gothic.eot);
+   IE9 Compat Modes */
+    /*src: url(/assets/font/Gothic.eot?#iefix) format("embedded-opentype"),
+     IE6-IE8 */
+    /*url(/assets/font/Gothic.woff) format("woff"),
+     Modern Browsers */
+    url(/assets/font/OpenSans-Regular.ttf) format("truetype"),
+    /* Safari, Android, iOS */
+    /*url(/assets/font/Gothic.svg#Gothic) format("svg");
+    Legacy iOS */
+}
+
+$fontFamily: 'Open Sans',
+"Microsoft JhengHei",
+CenturyGothic,
+AppleGothic,
+sans-serif;
+$fontFamily2: Roboto,
+"Helvetica Neue",
+sans-serif;
+$colorFont:#3c3c3c;
+$colorW:#fff;
+$colorBk:#0008;
+$colorGy1:#c8c8c8;
+$colorGy2:#f9f9f9;
+$colorGy3:#666;
+$colorGy4:#ddd;
+$colorGy5:#e1e1e1;
+$colorGy6:#969696;
+$colorGy7:#727272;
+$colorGy8:#eaeaea;
+$colorGy9:#0958d9;
+$colorGy10:#69b1ff;
+$colorGy11:#e0e0e0;
+$colorB1:#1877ff;
+$colorB1h:#4096ff;
+$colorB1_:#00265c;
+$colorB2:#d3eefb;
+$colorB2_: #f0f0f0;
+$colorB3:#00a5e1;
+$colorB4:#1877ff;
+$colorB5: #80c8f0;
+$colorB6:#202020;
+$colorB7:#8f8f8f;
+$colorR1:#f05a7d;
+$colorG:#82c878;
+$colorG1: #4cb050;
+$colorY:#f59132;
+$colorY1:#fecd66;
+$colorP:#aa5fa5;
+$facebook:#3b5998;
+$twitter:#1b95e0;
+$youtbe:#e62117;
+$linkedin:#0077b5;
+$google:#db4437;
+$sizeSl:12px;
+$sizeSler:14px;
+$sizeNl:16px;
+$sizeNler:18px;
+$sizeLg:20px;
+$sizeLger:24px;
+$sizeBanner:44px;
+
+$widthWebTable: 1200px;
+$widthTable: 1024px;
+$widthTableApp: 768px;
+$widthApp: 480px;
+$widthPC:1920px;
+$widthTablet:1024px;
+$widthMobile:640px;

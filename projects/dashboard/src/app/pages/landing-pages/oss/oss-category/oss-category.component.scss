@@ -1,0 +1,18 @@
+$color__primary: #3F51B5;
+
+.category__input {
+  outline: none;
+  border: none;
+  padding: 5px;
+  cursor: default;
+  width: 400px;
+  max-width: 80%;
+}
+.category__input--active {
+  outline: none;
+  cursor: auto;
+  border-bottom: 2px solid $color__primary;
+}
+.finishBtn {
+  display: none;
+}

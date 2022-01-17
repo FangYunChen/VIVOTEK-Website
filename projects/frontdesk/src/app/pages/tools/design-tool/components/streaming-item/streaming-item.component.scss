@@ -1,0 +1,42 @@
+@import '../../../../../../styles/var';
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  width: 258px;
+}
+
+.form-item__title {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  .mat-icon {
+    margin-left: 5px;
+    color: #94E4FF;
+  }
+}
+
+.form-item__content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  width: 50%;
+  input {
+    min-width: 0;
+    &[type='number'] {
+      max-width: 70px;
+    }
+  }
+}
+
+.mat-radio-button + .mat-radio-button ::ng-deep {
+  margin-left: 10px;
+}
+
+.required {
+  border-bottom: 1px red solid;
+}

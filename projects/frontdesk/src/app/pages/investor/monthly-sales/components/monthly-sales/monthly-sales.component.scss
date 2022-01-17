@@ -1,0 +1,31 @@
+@import '_var.scss';
+
+.block {
+  border-bottom: 1px solid $colorGy2;
+  margin-bottom: 20px;
+  h3 {
+    &:before {
+      content: '';
+      background-color: $colorB1;
+      width: 4px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 8px;
+      margin-top: 3px;
+    }
+  }
+}
+table {
+  min-width: auto;
+  td,
+  th {
+    min-width: auto;
+  }
+  thead {
+    text-align: center;
+    th {
+      border: 1px solid $colorW;
+    }
+  }
+}

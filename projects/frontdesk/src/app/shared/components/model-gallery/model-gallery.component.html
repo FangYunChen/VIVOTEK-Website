@@ -1,0 +1,30 @@
+<section class="model section model-gallery">
+  <div class="wrap">
+    <div class="gallery">
+      <ng-container *ngFor="let item of tabList;">
+        <a [href]="('javascript:;' | safe:'url')" (click)="openGallery($event)">
+          <span class="img"><img [src]="item.src" [title]="item.title" [alt]="item.alt"></span>
+        </a>
+      </ng-container>
+    </div>
+  </div>
+
+
+  <div id="galleryPopup" class="vvtk-popup-wrap" [class.open]="galleryOpen">
+    <div class="text-right">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closeGallery($event)">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <div class="gallery-wrap">
+      <div class="full-gallery">
+        <ng-container *ngFor="let item of tabList">
+          <a [href]="('javascript:;' | safe:'url')">
+            <img [src]="item.src" [title]="item.title" [alt]="item.alt">
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="mask open bg-bk" *ngIf="galleryOpen" (click)="closeGallery($event)"></div>
+</section>

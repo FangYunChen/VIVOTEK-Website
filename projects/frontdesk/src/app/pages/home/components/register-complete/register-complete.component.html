@@ -1,0 +1,41 @@
+<div id="register" class="container">
+  <vvtk-top-banner [contentPageTitle]="'Registration Completed' | i18n"></vvtk-top-banner>
+  <section class="process section">
+    <div class="wrap">
+      <ul class="text-center">
+        <li class="active">
+          <span class="num">1</span>
+          <span class="text">{{'Information'|i18n}}</span>
+        </li>
+        <li class="active">
+          <span class="num">2</span>
+          <span class="text">{{'Verification'|i18n}}</span>
+        </li>
+        <li class="active">
+          <span class="num">3</span>
+          <span class="text">{{'Complete'|i18n}}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Complete'|i18n}}</h2>
+      <div class="model-form text-center">
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <p class="text-center">{{'Congratulations! You have completed registration.'|i18n}}</p>
+              <p class="text-center" [innerHTML]="'Now you can log in %s!'|i18n:'<a href=\''+redirectUri+'\'>'+('Log in'|i18n)+'</a>'"></p>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12 btn-box text-center">
+            <a [routerLink]="'/index' | customPath" class="btn btn-b">{{'Back to Homepage'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,129 @@
+@import '../../../../../../styles/var';
+$pageMaxWidth: 1280px;
+$actionBtnWidth: 36px;
+:host ::ng-deep {
+  .mat-radio-button {
+    .mat-ripple-element {
+      background-color: $colorY !important;
+    }
+    .mat-radio-inner-circle {
+      background-color: $colorB1;
+    }
+    &.mat-radio-checked {
+      .mat-radio-outer-circle {
+        border-color: rgba(0, 0, 0, 0.54);
+      }
+    }
+  }
+  .mat-checkbox {
+    &:not(.mat-checkbox-disabled) {
+      .mat-checkbox-ripple {
+        .mat-ripple-element {
+          background-color: $colorY;
+        }
+      }
+    }
+  }
+  .mat-checkbox-checked {
+    .mat-checkbox-background {
+      background-color: $colorY;
+    }
+  }
+  .mat-select {
+    padding: 5px 0;
+    border-bottom: 1px solid $colorGy5;
+  }
+  .mat-horizontal-stepper-header {
+    pointer-events: none !important;
+  }
+  .mat-step-label {
+    font-family: $fontFamily !important;
+  }
+}
+
+.design-tool-page {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 0;
+}
+
+.design-tool-page ::ng-deep {
+  h1,
+  h2 {
+    text-align: center;
+    color: $colorB1;
+  }
+  h1 {
+    margin: 40px 0;
+    font-size: 44px;
+  }
+  h2 {
+    margin: 40px 0 30px;
+    font-size: 34px;
+  }
+  .section-content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $pageMaxWidth;
+  }
+  * :not(mat-icon) {
+    font-family: $fontFamily !important;
+  }
+}
+
+section {
+  margin: 20px 0;
+}
+
+.design-tool-page ::ng-deep {
+  .mat-table {
+    width: 100%;
+    thead,
+    tfoot {
+      background-color: transparent !important;
+    }
+  }
+  .actions {
+    padding: 6px;
+    text-align: center;
+    .mat-button-wrapper {
+      display: inline;
+    }
+    button {
+      margin: 6px 8px;
+      width: $actionBtnWidth;
+      height: $actionBtnWidth;
+      line-height: $actionBtnWidth;
+      color: #fff;
+      &.add-button {
+        background-color: $colorB1;
+      }
+      &.edit-button {
+        background-color: $colorB1;
+      }
+      &.delete-button {
+        color: $colorGy3;
+        background-color: $colorGy5;
+      }
+    }
+  }
+}
+
+.stepper {
+  max-width: $pageMaxWidth;
+  margin: 0 auto;
+}
+
+.container {
+  overflow: auto;
+}
+
+.go-top-btn {
+  text-align: right;
+  margin: 0 auto;
+  width: 1200px;
+
+  i {
+    font-family: FontAwesome !important;
+  }
+}

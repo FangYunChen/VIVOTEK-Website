@@ -1,0 +1,17 @@
+<div class="photo-gallery__img photo-gallery__cover" *ngIf="images?.length">
+  <img [src]="currentImg">
+</div>
+<div class="photo-gallery__selector" *ngIf="images?.length > 1">
+  <div class="photo-gallery__btn" [class.hide]="!(images?.length > 3)" (click)="scrollLeft(scrollContainer)">
+    <i class="fa fa-angle-left"></i>
+  </div>
+  <div class="photo-gallery__list" #scrollContainer [style.justifyContent]="images?.length > 3 ? 'flex-start' : 'center'">
+    <div class="photo-gallery__img photo-gallery__thumbnail" *ngFor="let img of images" #itemEle [class.active]="img === currentImg"
+      (click)="selectImg(img, scrollContainer, itemEle)">
+      <img [src]="img">
+    </div>
+  </div>
+  <div class="photo-gallery__btn" [class.hide]="!(images?.length > 3)" (click)="scrollRight(scrollContainer)">
+    <i class="fa fa-angle-right"></i>
+  </div>
+</div>

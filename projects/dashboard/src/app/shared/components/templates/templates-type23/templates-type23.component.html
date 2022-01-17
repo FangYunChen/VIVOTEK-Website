@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addEventLocation(0)" *ngIf="!readOnly">Add EventLocation</button>
+    <div [sortablejs]="template.eventLocations" [sortablejsOptions]="groupOptionsEventLocation">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let eventLocation of template.eventLocations; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-eventLocation" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>EventLocation {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete EventLocation" matTooltipPosition="above"
+            (click)="deleteEventLocation(j)" *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="eventLocation.hideContent?'展開':'收合'"
+            matTooltipPosition="above" (click)="eventLocation.hideContent = !eventLocation.hideContent">
+            <mat-icon *ngIf="eventLocation.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!eventLocation.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!eventLocation.hideContent">
+          {{eventLocation.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="eventLocation.hideContent">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="EventDate" [name]="'templateEventLocationsDate'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.eventDate" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="EventTime" [name]="'templateEventLocationsTime'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.eventTime" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Title" [name]="'templateEventLocationsTitle'+templateIndex+'_'+j" [(ngModel)]="eventLocation.title"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Subtitle" [name]="'templateEventLocationsSubtitle'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.subtitle" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="PlaceName" [name]="'templateEventLocationsPlaceName'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.placeName" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Address" [name]="'templateEventLocationsAddress'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.address" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="CalendarUrl" [name]="'templateEventLocationsCalendarUrl'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.calendarUrl" [readOnly]="readOnly">
+          </mat-form-field>
+          <vvtk-input-container>
+            <mat-slide-toggle color="primary" [name]="'templateEventLocationsUrlEnabled'+templateIndex+'_'+j"
+              [(ngModel)]="eventLocation.urlEnabled" vvtkhtml [disabled]="readOnly">
+              {{eventLocation.urlEnabled?'Enabled Url':'Disabled Url'}}
+            </mat-slide-toggle>
+          </vvtk-input-container>
+          <mat-form-field fxFlex *ngIf="eventLocation.urlEnabled">
+            <input matInput placeholder="Url" [name]="'templateEventLocationsUrl'+templateIndex+'_'+j" [(ngModel)]="eventLocation.url"
+              [readOnly]="readOnly">
+          </mat-form-field>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addEventLocation(j+1)" *ngIf="!readOnly">Add EventLocation</button>
+      </div>
+    </div>
+  </div>
+</div>

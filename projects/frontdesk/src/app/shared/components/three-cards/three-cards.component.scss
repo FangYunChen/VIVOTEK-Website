@@ -1,0 +1,8 @@
+@import '../../../../styles/_var.scss';
+.model-threeCard {
+  background-color: $colorW;
+  text-align: left;
+  &.bg-b {
+    background-color: $colorB2_;
+  }
+}

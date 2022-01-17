@@ -1,0 +1,70 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Insider Webinars</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput  type="date" maxlength="256" placeholder="yyyy-MM-dd" name="date" [(ngModel)]="webinars.date" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <!-- <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="picker" ></mat-datepicker-toggle>
+              <input matInput [matDatepicker]="picker" placeholder="date" name="date" [(ngModel)]="webinars.date"
+                required readonly>
+            </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker> -->
+            <mat-form-field fxFlex>
+              <input matInput placeholder="time" name="time" [(ngModel)]="webinars.time" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="series" placeholder="series" [(ngModel)]="webinars.series" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let serie of series" [value]="serie.id">{{serie.seriesName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="title" name="title" [(ngModel)]="webinars.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="language" placeholder="language" [(ngModel)]="webinars.language" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let l of language" [value]="l.id">{{l.languageName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="register" name="register" [(ngModel)]="webinars.register" [readOnly]="!pageIsEditable"
+              required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="image" name="image" [(ngModel)]="webinars.image" [readOnly]="!pageIsEditable"
+              required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="watch" name="watch" [(ngModel)]="webinars.watch" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/supports/learning/vwa/insider-webinars-list/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

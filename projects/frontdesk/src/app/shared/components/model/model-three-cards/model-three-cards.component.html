@@ -1,0 +1,21 @@
+<section class="model-three-card section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="title">{{title}}</h3>
+    <div class="list-row">
+      <vvtk-card *ngFor="let card of items" [card]="card">
+        <div vvtkThreeCard>
+          <div class="text limit">
+            <p *ngIf="card.subtitle" [innerHtml]="card.subtitle"></p>
+          </div>
+          <div class="col-link text-right afterClear">
+            <vvtk-a [url]="card.url" cName='link'>
+              <ng-container HtmlContent>
+                {{ "More" | i18n }}
+              </ng-container>
+            </vvtk-a>
+          </div>
+        </div>
+      </vvtk-card>
+    </div>
+  </div>
+</section>

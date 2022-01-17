@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-title>
+    <span>Smart Vca Support Model List</span>
+    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['./',0]"
+      *ngIf="pageContentIsEditable">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content fxLayout="column">
+        <div>
+          <mat-form-field fxFlex="100%">
+            <input matInput #filter="ngModel" ngModel placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-table #table [dataSource]="(dataSource$ | async)?.list" matSort class="table table-hover table-striped table-bordered table-condensed">
+            <ng-container cdkColumnDef="modelName">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Model Name</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.modelName}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="typeName">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Model Type</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.typeName}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="licenseName">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>License Name</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.licenseName}} </mat-cell>
+            </ng-container>
+            <!-- <ng-container cdkColumnDef="statusName">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Model Status</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.statusName}} </mat-cell>
+            </ng-container> -->
+
+            <ng-container cdkColumnDef="package">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Package</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.features?.join(',')}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="250px" fxLayoutAlign="center center"> Action
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxLayout="row" fxFlex="250px" fxLayoutAlign="center center">
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                  [routerLink]="['./',row.id]" *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                  (click)="delete(row.id, row.modelName)" [disabled]="lockDelete" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [length]="(dataSource$ | async)?.filterTotal" [pageIndex]="0" [pageSize]="10"
+            [pageSizeOptions]="[10, 30, 50, 100]">
+          </mat-paginator>
+        </div>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

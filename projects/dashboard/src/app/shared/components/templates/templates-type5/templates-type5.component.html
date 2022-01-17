@@ -1,0 +1,39 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <!--圖片-->
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="template.image.src">
+      <div class="text-center">
+        <img [src]="template.image.src | safeUrl" [alt]="template.image.alt" [title]="template.image.title">
+      </div>
+    </div>
+    <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload a image (Recommended size: 460*230)</button>
+    <input hidden type="file" #imgFileInput accept="image/*" (change)="uploadFile($event)" [disabled]="isLoading" />
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image url" [name]="'templateImageSrc'+templateIndex" [(ngModel)]="template.image.src" [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput maxlength="255" placeholder="Image title" [name]="'templateImageTitle'+templateIndex" [(ngModel)]="template.image.title"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image alt" [name]="'templateImageAlt'+templateIndex" [(ngModel)]="template.image.alt" [readOnly]="readOnly">
+    </mat-form-field>
+  </div>
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title" [readOnly]="readOnly">
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <textarea matInput rows="5" placeholder="Content" [name]="'templateContent'+templateIndex" [(ngModel)]="template.content"
+      [readOnly]="readOnly"></textarea>
+  </mat-form-field>
+  <vvtk-input-container>
+    <mat-slide-toggle color="primary" [name]="'urlEnabled'+templateIndex" [(ngModel)]="template.urlEnabled" vvtkhtml [disabled]="readOnly">
+      {{template.urlEnabled?'Enabled Url':'Disabled Url'}}
+    </mat-slide-toggle>
+  </vvtk-input-container>
+  <mat-form-field fxFlex *ngIf="template.urlEnabled">
+    <input matInput placeholder="Url" [name]="'templateUrl'+templateIndex" [(ngModel)]="template.url" [readOnly]="readOnly">
+  </mat-form-field>
+
+
+</div>

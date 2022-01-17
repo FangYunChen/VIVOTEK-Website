@@ -1,0 +1,7 @@
+@import '_var.scss';
+.link {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}

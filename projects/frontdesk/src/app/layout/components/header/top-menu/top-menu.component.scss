@@ -1,0 +1,183 @@
+@import '_var.scss';
+#topMenu {
+  float: left;
+  margin-top: 17px;
+  font-family: Gothic, $fontFamily;
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  > ul {
+    > li {
+      display: inline-block;
+      vertical-align: top;
+      a.noLink {
+        cursor: default !important;
+      }
+      > a {
+        font-size: $sizeNl;
+        display: block;
+        padding: 6px 16px;
+        overflow: hidden;
+        cursor: pointer;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      &:hover {
+        > a {
+          color: $colorB1;
+          background-color: $colorGy2;
+        }
+      }
+      .sub {
+        top: 86px;
+        background-color: $colorGy2;
+        font-size: $sizeSler;
+        display: none;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        &.open {
+          display: block;
+        }
+        .sub-first {
+          padding: 16px 0 15px 44px;
+          float: left;
+          width: 40%;
+          position: relative;
+          &:after {
+            position: absolute;
+            width: 1px;
+            height: 99999px;
+            background-color: $colorGy1;
+            content: '';
+            right: 0;
+            top: 0;
+          }
+          > li {
+            > a {
+              padding: 7px 20px 7px 34px;
+              display: block;
+              color: $colorFont;
+            }
+            &:hover,
+            &.open {
+              > a {
+                color: $colorW;
+                background-color: $colorB1;
+                text-decoration: none;
+                &:after {
+                  font-family: fontAwesome;
+                  content: '\f0da';
+                  float: right;
+                  margin-top: 2px;
+                }
+              }
+            }
+          }
+        }
+        .sub-second {
+          padding: 16px 44px 15px;
+          width: 60%;
+          overflow: hidden;
+          display: none;
+          &.open {
+            display: block;
+          }
+          > li {
+            display: none;
+            &.open {
+              display: block;
+            }
+          }
+        }
+        .sub-third {
+          > li {
+            width: 48%;
+            display: inline-block;
+            vertical-align: top;
+            &.name {
+              width: 100%;
+              display: block;
+              font-weight: bold;
+              padding: 7px 0;
+              border-bottom: 1px solid $colorGy1;
+            }
+            &.img {
+              width: 100%;
+              margin-top: 5px;
+            }
+            > a {
+              display: block;
+              padding: 7px 0 5px;
+              color: $colorFont;
+            }
+            &:hover {
+              > a {
+                color: $colorB1;
+                text-decoration: none;
+              }
+            }
+          }
+        }
+        .sub-fourth {
+          padding-left: 5px;
+          margin-left: 15px;
+          margin-bottom: 5px;
+          > li {
+            display: list-item !important;
+            width: 100% !important;
+            list-style-type: disc;
+            > a {
+              display: block;
+              padding: 1px 0;
+              color: $colorFont;
+              &:hover {
+                color: $colorB1;
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.styleW {
+    a {
+      color: $colorW;
+    }
+  }
+  &.styleBk {
+    a {
+      color: $colorFont;
+    }
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+  #topMenu {
+    > ul {
+      > li {
+        > a {
+          padding: 6px 8px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+  #topMenu {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+}
+
+@media screen and (max-width: $widthApp) {
+}

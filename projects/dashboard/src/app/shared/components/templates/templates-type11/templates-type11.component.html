@@ -1,0 +1,40 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title" [readOnly]="readOnly">
+  </mat-form-field>
+  <mat-card-content fxLayout="column">
+    <mat-card fxFlex="100%" [hidden]="!readOnly">
+      <mat-card-content>
+        <div [innerHTML]="template.htmlContent | safeHtml"></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-tab-group [hidden]="readOnly">
+      <mat-tab label="Editor">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-card fxFlex="100%">
+            <mat-card-content fxLayout="column">
+              <vvtk-wysiwyg [(html)]="template.htmlContent" [path]="path"></vvtk-wysiwyg>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Preview">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-card fxFlex="100%">
+            <mat-card-content fxLayout="column">
+              <div [innerHTML]="template.htmlContent | safeHtml"></div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+  <vvtk-input-container>
+    <mat-slide-toggle color="primary" [name]="'urlEnabled'+templateIndex" [(ngModel)]="template.urlEnabled" vvtkhtml [disabled]="readOnly">
+      {{template.urlEnabled?'Enabled Url':'Disabled Url'}}
+    </mat-slide-toggle>
+  </vvtk-input-container>
+  <mat-form-field fxFlex *ngIf="template.urlEnabled">
+    <input matInput placeholder="Url" [name]="'templateUrl'+templateIndex" [(ngModel)]="template.url" [readOnly]="readOnly">
+  </mat-form-field>
+</div>

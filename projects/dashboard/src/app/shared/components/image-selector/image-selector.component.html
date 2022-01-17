@@ -1,0 +1,42 @@
+<ng-container *ngIf="needDisplaySelectedImages">
+  <mat-card-content *ngIf="multiple; else singleSelector">
+    <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="selectedImages && selectedImages.length > 0; else noImage">
+      <div fxLayout="column" fxLayoutAlign="center center" *ngFor="let image of selectedImages">
+        <img style="cursor: pointer" [src]="image.imagePath | safeUrl" (click)="removeImage(image)">
+        <span>{{image.name}}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <ng-template #singleSelector>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutAlign="center center" *ngIf="selectedImages && selectedImages.length > 0; else noImage">
+        <img style="cursor: pointer" [src]="selectedImages[0].imagePath | safeUrl" (click)="removeImage(selectedImages[0])">
+        <span>{{selectedImages[0].name}}</span>
+      </div>
+    </mat-card-content>
+  </ng-template>
+
+  <ng-template #noImage>
+    <p class="text-center">No image</p>
+  </ng-template>
+</ng-container>
+
+<mat-card-title>
+  <h4>{{selectImageText}}</h4>
+</mat-card-title>
+
+<mat-card-content fxLayout="column">
+  <mat-form-field>
+    <mat-select placeholder="Image Type" name="selectedImageType" [(ngModel)]="selectedImageType" [disabled]="!pageIsEditable"
+      (selectionChange)="imageTypeChange($event.value)">
+      <mat-option *ngFor="let imageType of imageTypes" [value]="imageType.id">{{imageType.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="canSelectImages">
+    <div fxLayout="column" fxLayoutAlign="start center" *ngFor="let image of canSelectImages">
+      <img style="cursor: pointer" [src]="image.imagePath | safeUrl" (click)="addImage(image)">
+      <span>{{image.name}}</span>
+    </div>
+  </div>
+</mat-card-content>

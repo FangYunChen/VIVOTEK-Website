@@ -1,0 +1,87 @@
+<section class="model section three-banner">
+  <div class="wrap">
+    <ng-container *ngFor="let banner of bannerItem;">
+      <ng-container *ngIf="target && target === '_blank'; else elseTemplate">
+        <a [href]="getBlankUrl(banner.url, [preString + [banner.id] + [banner.customPath||''] | customPath]) | safe:'url'" class="tbanner"
+          target="_blank">
+          <span class="img-v">
+            <img [src]="banner.image.src" [title]="banner.image.title" [alt]="banner.image.alt">
+          </span>
+          <!--
+          <span *ngIf="banner.logo" class="img-v img-logo">
+            <img [src]="banner.logo.src" [alt]="banner.logo.alt" [title]="banner.logo.title">
+          </span>
+          -->
+
+          <span class="text">
+            <span class="title limit">
+              <p>{{ banner.title }}</p>
+            </span>
+            <span class="date">
+              <i class="fa fa-clock-o"></i>
+              <ng-container *ngIf="banner.publishAt; else elseDateTemplate">
+                {{banner.publishAt|date:'MMM d, y'}}
+              </ng-container>
+              <ng-template #elseDateTemplate>
+                {{banner.startAt|date:'MMM d, y'}} ~ {{banner.endAt|date:'MMM d, y'}}
+              </ng-template>
+            </span>
+          </span>
+        </a>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <a *ngIf="banner.url && banner.url.indexOf('http') > -1 ; else elseTabTemplate" [href]="[(banner.url|customPath)|safe:'url']"
+          class="tbanner">
+          <span class="img-v">
+            <img [src]="banner.image.src" [title]="banner.image.title" [alt]="banner.image.alt">
+          </span>
+          <!--
+          <span *ngIf="banner.logo" class="img-v img-logo">
+            <img [src]="banner.logo.src" [alt]="banner.logo.alt" [title]="banner.logo.title">
+          </span>
+          -->
+          <span class="text">
+            <span class="title limit">
+              <p>{{ banner.title }}</p>
+            </span>
+            <span class="date">
+              <i class="fa fa-clock-o"></i>
+              <ng-container *ngIf="banner.publishAt; else elseDateTemplate">
+                {{banner.publishAt|date:'MMM d, y'}}
+              </ng-container>
+              <ng-template #elseDateTemplate>
+                {{banner.startAt|date:'MMM d, y'}} ~ {{banner.endAt|date:'MMM d, y'}}
+              </ng-template>
+            </span>
+          </span>
+        </a>
+        <ng-template #elseTabTemplate>
+          <a [routerLink]="preString + [banner.id] + '/' + [banner.customPath || ''] | customPath" class="tbanner">
+            <span class="img-v">
+              <img [src]="banner.image.src" [title]="banner.image.title" [alt]="banner.image.alt">
+            </span>
+            <!--
+            <span *ngIf="banner.logo" class="img-v img-logo">
+              <img [src]="banner.logo.src" [alt]="banner.logo.alt" [title]="banner.logo.title">
+            </span>
+            -->
+            <span class="text">
+              <span class="title limit">
+                <p>{{ banner.title }}</p>
+              </span>
+              <span class="date">
+                <i class="fa fa-clock-o"></i>
+                <ng-container *ngIf="banner.publishAt; else elseDateTemplate">
+                  {{banner.publishAt|date:'MMM d, y'}}
+                </ng-container>
+                <ng-template #elseDateTemplate>
+                  {{banner.startAt|date:'MMM d, y'}} ~ {{banner.endAt|date:'MMM d, y'}}
+                </ng-template>
+              </span>
+            </span>
+          </a>
+        </ng-template>
+      </ng-template>
+    </ng-container>
+  </div>
+</section>

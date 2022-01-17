@@ -1,0 +1,16 @@
+@import '_var.scss';
+
+.article-content {
+  margin-bottom: 40px;
+
+  .article-title {
+    color: $colorB4;
+  }
+
+  .model-page {
+    .page-footer {
+      padding: 0;
+    }
+  }
+
+}

@@ -1,0 +1,53 @@
+<div id="news" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <vvtk-three-banner [bannerItem]="_bannerItem" [preString]="'/news/successful-cases/'"></vvtk-three-banner>
+  <section class="model section">
+    <div class="filter-model wrap">
+      <div class="filter-box afterClear">
+        <div class="selector">
+          <select name="" id="" (change)="changeSearchBy(searchBy.value, searchString.value)" #searchBy>
+            <option value="all">{{'By All'|i18n}}</option>
+            <option value="category">{{'By Vertical'|i18n}}</option>
+            <option value="country">{{'By Country'|i18n}}</option>
+            <option value="model">{{'By Model Name'|i18n}}</option>
+          </select>
+        </div>
+        <div class="search search-select" [class.open]="searchSelect">
+          <input type="text" [placeholder]="'Search...'|i18n" (keyup)="searchStringChange($event,searchBy.value)" (focus)="searchSelectOpen(true)"
+            (blur)="searchSelectOpen(false)" #searchString>
+          <button type="button" (click)="goSearch(searchString.value)">
+            <i class="fa fa-search"></i>
+          </button>
+          <div class="search-select-box">
+            <p *ngFor="let wrod of CompliWord" [innerHtml]="wrod|safe:'html'" (click)="searchString.value = searchRe(wrod)"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <vvtk-three-cards>
+      <div class="wrap" vvtkHomeCard>
+        <div class="list-row">
+          <ng-container *ngFor="let card of _cardsItems">
+            <vvtk-card [card]="card" [vvtkRouterLink]="[i18nService.getSelectedLanguageForLink()+'/news/successful-cases', card.id, (card.customPath || '')]">
+              <div vvtkThreeCard>
+                <div class="text limit">
+                  <p>{{card.description}}</p>
+                </div>
+                <div class="col-link text-right afterClear">
+                  <span class="card-date float-left">
+                    <i class="fa fa-clock-o"></i>{{card.publishAt | date:'MMM d, y'}}</span>
+                  <vvtk-a [url]="card.url" [cName]="'link'" [vvtkRouterLink]="[i18nService.getSelectedLanguageForLink()+'/news/successful-cases', card.id, (card.customPath || '')]">
+                    <ng-container HtmlContent>
+                      {{"More Info"| i18n}}
+                    </ng-container>
+                  </vvtk-a>
+                </div>
+              </div>
+            </vvtk-card>
+          </ng-container>
+          <!-- <vvtk-loading [loading]="isLoading"></vvtk-loading> -->
+        </div>
+      </div>
+    </vvtk-three-cards>
+  </section>
+</div>

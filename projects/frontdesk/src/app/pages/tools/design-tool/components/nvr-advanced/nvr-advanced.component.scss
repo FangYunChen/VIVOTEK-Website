@@ -1,0 +1,152 @@
+@import '../../../../../../styles/var';
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 40px 40px;
+  width: 680px;
+}
+
+.card__header {
+  padding: 20px 50px;
+  .field {
+    display: flex;
+    align-items: center;
+    & + .field {
+      margin-left: 40px;
+    }
+  }
+  .field__title {
+    font-weight: 700;
+  }
+  .field__content {
+    // margin-left: 30px;
+    // input[type='number'] {
+    //   margin-left: 20px;
+    //   min-width: 0;
+    //   width: 80px;
+    //   text-align: center;
+    // }
+    align-items: center;
+    input[type='number'] {
+      margin-left: 20px;
+      min-width: 0;
+      width: 100px;
+      text-align: center;
+    }
+  }
+  .model-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .model-item {
+    display: flex;
+    margin: 5px 0;
+  }
+  .model-select {
+    width: 200px;
+  }
+  .qty-select {
+    width: 80px;
+  }
+  .actions {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .remaining {
+    text-align: center;
+    color: $colorR1;
+    .highlight {
+      font-weight: 700;
+    }
+  }
+}
+
+.card__content {
+  color: $colorGy3;
+  background-color: $colorGy2;
+  overflow: auto;
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    & + .field-group {
+      margin-top: 20px;
+    }
+  }
+  .field-group__title {
+    margin: 10px 0;
+    font-size: 24px;
+  }
+  .field-group__content {
+    display: flex;
+    flex-direction: column;
+  }
+  .field {
+    display: flex;
+    margin: 10px 0;
+  }
+  .field__title {
+    flex: none;
+    width: 220px;
+  }
+  .field__content {
+    flex: none;
+    display: flex;
+  }
+  .model-field {
+    flex: none;
+    width: 120px;
+    text-align: center;
+  }
+}
+.wrap {
+  padding: 35px 50px;
+  color: $colorGy3;
+  background-color: $colorGy2;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  .field {
+    & + .field {
+      margin-top: 20px;
+    }
+  }
+  .field__title {
+    margin: 20px 0;
+    font-size: 24px;
+  }
+
+  .field__content {
+    width: 180px;
+    margin: 20px 0;
+  }
+
+  .item__title {
+    .field__content {
+      width: 220px;
+    }
+  }
+
+  .item__content {
+    .field__content {
+      text-align: center;
+    }
+  }
+  .item__group {
+    display: flex;
+    overflow: auto;
+    width: 440px;
+  }
+}
+
+.model-info {
+  background-color: $colorGy8;
+  text-align: center;
+  font-size: 24px;
+  color: $colorGy3;
+}

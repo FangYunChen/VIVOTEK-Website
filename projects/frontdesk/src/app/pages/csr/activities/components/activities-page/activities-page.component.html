@@ -1,0 +1,35 @@
+<div id="csr" class="container">
+  <vvtk-top-banner [rootPath]="'/csr/activities' | customPath" [contentPageTitle]="pageContent?pageContent.title:''"></vvtk-top-banner>
+  <ng-container>
+    <section class="model-page section">
+      <div class="wrap">
+        <div class="page-header">
+          <h2>{{pageContent.title}}</h2>
+          <div class="line afterClear">
+            <div class="info">
+              <span>
+                <i class="fa fa-clock-o"></i> {{pageContent.date|date:'MMM d, y'}}</span>
+            </div>
+            <vvtk-share [mailTitle]="pageContent.title" [categoryId]="collection.CSRActitvies" [pageId]="id"></vvtk-share>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="text-center">
+            <div class="img">
+              <figcaption>
+                <img [src]="pageContent.image.src" [alt]="pageContent.image.alt" [title]="pageContent.image.title">
+              </figcaption>
+            </div>
+          </div>
+          <vvtk-model-selector #f [content]="f.setContent(pageContent.content)"></vvtk-model-selector>
+          <!-- <div [innerHtml]="pageContent.content"></div> -->
+        </div>
+        <div class="page-footer">
+          <div class="text-center">
+            <a [routerLink]="'/csr/content' | customPath" class="btn btn-b">{{'Back'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</div>

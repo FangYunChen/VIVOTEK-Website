@@ -1,0 +1,50 @@
+.model-three-panel {
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+
+    .panel-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -25px;
+
+      .panel-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 670px;
+        box-shadow: 0 5px 10px rgba(220, 220, 220, 0.5);
+        border: 1px solid rgba(220, 220, 220, 0.2);
+        padding: 40px;
+        width: 500px;
+        margin: 25px;
+        overflow: hidden;
+
+        @media (max-width: 1024px) {
+          width: 100%;
+        }
+
+        @media (min-width: 1024px)and (max-width:1650px) {
+          width: calc(100% / 3 - 50px)
+        }
+
+        .panel-img {
+          align-self: center;
+          height: 150px;
+          width: 150px;
+          border-radius: 50%;
+          margin-bottom: 30px;
+        }
+
+        .panel-title {
+          color: #0093d5;
+          margin-bottom: 15px;
+        }
+
+        .panel-subtitle {
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+}

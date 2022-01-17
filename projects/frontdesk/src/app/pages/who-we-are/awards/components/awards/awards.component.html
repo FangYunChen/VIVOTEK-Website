@@ -1,0 +1,49 @@
+<div id="awards" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model section tabs-slider">
+    <div class="wrap">
+      <vvtk-tab-slider *ngIf="tabsList && tabsList.length > 0" [tabList]="tabsList" [preString]="''" (tabsOpen)="tabsChange($event)"
+        [tabsActive]="acticeTab"></vvtk-tab-slider>
+    </div>
+    <div class="tabs-slider-content">
+      <div *ngFor="let year of tabsList;" class="tabs-slider-block" [class.active]="year === acticeTab">
+        <vvtk-three-cards>
+          <div class="wrap" vvtkHomeCard>
+            <div class="list-row">
+              <ng-container *ngIf="year !== minYearTab; else elseTemplate">
+                <ng-container *ngFor="let card of cardsList[year];let idx = index">
+                  <vvtk-card [card]="card" target="_blank">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p>{{card.description}}</p>
+                      </div>
+                      <div class="col-link text-right afterClear">
+                        <span class="card-date float-left">
+                          <i class="fa fa-clock-o"></i> {{ card.date | date:'MMM y'}}</span>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </ng-container>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <ng-container *ngFor="let card of cardsList[minYear];let idx = index">
+                  <vvtk-card [card]="card" target="_blank">
+                    <div vvtkThreeCard>
+                      <div class="text limit">
+                        <p>{{card.description}}</p>
+                      </div>
+                      <div class="col-link text-right afterClear">
+                        <span class="card-date float-left">
+                          <i class="fa fa-clock-o"></i> {{ card.date | date:'MMM y'}}</span>
+                      </div>
+                    </div>
+                  </vvtk-card>
+                </ng-container>
+              </ng-template>
+            </div>
+          </div>
+        </vvtk-three-cards>
+      </div>
+    </div>
+  </section>
+</div>

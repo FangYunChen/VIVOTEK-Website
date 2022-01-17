@@ -1,0 +1,45 @@
+<section class="model-newsletter section">
+  <div class="wrap">
+    <h2>{{'E-newsletter'|i18n}}</h2>
+    <div class="list-row">
+      <div class="list-col list-col6 sm">
+        <p>{{'Members and non-members are welcome to subscribe. Enter your email and click Subscribe, or log in your account
+          to manage your subscription.'|i18n}}</p>
+        <p>{{'Not a VIVOTEK member? Register today to get access to the VIVOTEK e-newsletters and more.'|i18n}}</p>
+      </div>
+      <div class="list-col list-col6">
+        <div class="input-box btn-right">
+          <input #emailId type="text" placeholder="{{'Email'|i18n}}" [(ngModel)]="email">
+          <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="robotWindow(emailId.value)">Subscribe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="robotPopup" class="popup-wrap" [class.open]="robotMask">
+  <div class="popup">
+    <!--
+		<recaptcha (resolved)="resolved($event)" site_key="6LfwNioUAAAAAJvASwXnrPb0d6SidzP1CbVeMaTH"></recaptcha>
+        -->
+    <div class="text-center" *ngIf="noMail">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span> {{'Please enter email'|i18n}}</p>
+      <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="robotWindow($event)">{{'Close'|i18n}}</a>
+    </div>
+    <div [class.hide]="robotBox" class="text-center">
+      <div class="g-recaptcha" data-sitekey="6Ld-nGIUAAAAAC4DQJ93mAUjDQRR69sZoNc0D91B" data-callback="recaptchaCallback"></div>
+      <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="doSubscribe()">{{'Send'|i18n}}</a>
+      <p *ngIf="doCheck" class="text-center colorR">{{'Please click "I am not a robot" first'|i18n}}</p>
+    </div>
+    <div class="text-center" *ngIf="doSuccess">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Subscribed successfully'|i18n}}</p>
+    </div>
+  </div>
+</div>
+<div class="mask bg-bk" [class.open]="robotMask" (click)="robotWindow($event)"></div>

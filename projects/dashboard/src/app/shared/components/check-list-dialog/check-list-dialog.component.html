@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <form #form="ngForm" fxLayout="column">
+    <mat-card fxFlex="100%">
+      <mat-card-content fxLayout="column">
+        <div fxFlex *ngFor="let option of data.options">
+          <mat-checkbox name="selected_option_{{option.value}}" [(ngModel)]="option.checked">
+            {{option.optionText}}
+          </mat-checkbox>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="submitList()">Submit</button>
+  <span fxFlex></span>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>

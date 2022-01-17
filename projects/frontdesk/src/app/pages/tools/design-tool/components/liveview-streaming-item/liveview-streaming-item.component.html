@@ -1,0 +1,16 @@
+<div class="content">
+  <vvtk-streaming-item
+    [codecInfoList]="liveviewCodecList"
+    [codecInfo]="codecInfo"
+    [isSelected]="isSelected"
+    (bitRateChanged)="changeBitRate()"
+  ></vvtk-streaming-item>
+</div>
+<div class="footer">
+  <div class="form-item">
+    <span class="form-item__title">{{ "Bitrate" | i18n }}</span>
+    <div class="form-item__content">
+      {{ codecInfo.bitRate * qty | number: "1.0-2" | nullToDash: " Mbps" }}
+    </div>
+  </div>
+</div>

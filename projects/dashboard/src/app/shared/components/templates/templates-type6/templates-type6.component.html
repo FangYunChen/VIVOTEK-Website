@@ -1,0 +1,62 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <textarea matInput rows="5" placeholder="Content" [name]="'templateContent'+templateIndex" [(ngModel)]="template.content"
+      [readOnly]="readOnly"></textarea>
+  </mat-form-field>
+  <!--圖片群-->
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addImage(0)" *ngIf="!readOnly">Add Image</button>
+    <div [sortablejs]="template.images" [sortablejsOptions]="groupOptionsImage">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let image of template.images; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-image" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>Image {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Image" matTooltipPosition="above"
+            (click)="deleteImage(j)" *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="image.hideContent?'展開':'收合'"
+            matTooltipPosition="above" (click)="image.hideContent = !image.hideContent">
+            <mat-icon *ngIf="image.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!image.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!image.hideContent">
+          {{image.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="image.hideContent">
+          <div fxLayout="row" fxLayoutAlign="center" *ngIf="image.src">
+            <div class="text-center">
+              <img [src]="image.src | safeUrl" [alt]="image.alt" [title]="image.title">
+            </div>
+          </div>
+          <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload
+            a image (Recommended size: 460*230)</button>
+          <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Image url" [name]="'templateImagesSrc'+templateIndex+'_'+j" [(ngModel)]="image.src"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput maxlength="255" placeholder="Image title" [name]="'templateImagesTitle'+templateIndex+'_'+j"
+              [(ngModel)]="image.title" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Image alt" [name]="'templateImagesAlt'+templateIndex+'_'+j" [(ngModel)]="image.alt"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Url" [name]="'templateImagesUrl'+templateIndex+'_'+j" [(ngModel)]="image.url"
+              [readOnly]="readOnly">
+          </mat-form-field>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addImage(j+1)" *ngIf="!readOnly">Add Image</button>
+      </div>
+    </div>
+  </div>
+
+</div>

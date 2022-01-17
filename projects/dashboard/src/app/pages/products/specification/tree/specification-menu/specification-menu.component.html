@@ -1,0 +1,38 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Product - Specification</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <mat-select name="productCategory" placeholder="Product Category" [(ngModel)]="productCategoryId"
+          (ngModelChange)="changeCategory($event)" [disabled]="!pageIsEditable">
+          <mat-option *ngFor="let productCategory of productCategoryOptions" [value]="productCategory.value">
+            {{ productCategory.optionText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div fxLayout.lt-md="column" fxLayout="row" fxLayoutAlign="start" *ngIf="productCategoryId">
+        <div fxFlex="300px">
+          <mat-card fxFlex="100%">
+            <mat-card-content fxLayout="column">
+              <div id="tree" #tree></div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div fxFlex="20px"></div>
+        <div fxFlex="100%">
+          <vvtk-specification-editor *ngIf="selectedNode"
+            [data]="selectedNode?.data?.dbData"
+            [productCategoryId]="productCategoryId"
+            (saved)="updateSelectedNode($event)"
+            [hidden]="selectedType === 'root'"></vvtk-specification-editor>
+        </div>
+      </div>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+  </mat-card>
+</div>

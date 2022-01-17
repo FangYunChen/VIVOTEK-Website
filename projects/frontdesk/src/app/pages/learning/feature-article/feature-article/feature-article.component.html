@@ -1,0 +1,40 @@
+<div class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model-banner">
+    <img [src]="bannerImageSrc" />
+  </section>
+  <section class="model section model-text">
+    <div class="wrap">
+      <!-- <ul>
+            <li class="link-text" *ngFor="let item of items">
+              <a [routerLink]="['/learning/feature-article/' + item.id]">{{item.linkText}}</a>
+            </li>
+          </ul> -->
+      <div *ngFor="let item of items" class="content">
+        <div class="content-title">
+          <a
+            [routerLink]="
+              item.customPath
+                ? [
+                    this.i18nService.getSelectedLanguageForLink() +
+                      '/learning/feature-article/' +
+                      convertItemid(item.id),
+                    item.customPath
+                  ]
+                : [
+                    this.i18nService.getSelectedLanguageForLink() +
+                      '/learning/feature-article/' +
+                      convertItemid(item.id)
+                  ]
+            "
+          >
+            <h6 class="bold-text">{{ item.linkText }}</h6>
+          </a>
+        </div>
+        <div class="content-text">
+          {{ discriptionClip(item.description) }}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

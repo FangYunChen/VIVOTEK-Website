@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>
+  Export Product PDF
+</h2>
+
+<mat-dialog-content class="post-form" fxLayout="column">
+  <vvtk-language-selector></vvtk-language-selector>
+  <mat-form-field>
+    <input matInput placeholder="version" name="version" [(ngModel)]="version">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button color="primary" [disabled]="isLoading" (click)="export('general')">Official</button>
+  <button mat-button color="primary" [disabled]="isLoading" (click)="export('project')">Project</button>
+  <button mat-button mat-dialog-close color="warn" [disabled]="isLoading">Cancel</button>
+</mat-dialog-actions>
+
+<vvtk-loader *ngIf="isLoading"></vvtk-loader>

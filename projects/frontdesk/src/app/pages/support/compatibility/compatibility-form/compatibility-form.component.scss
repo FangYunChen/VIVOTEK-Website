@@ -1,0 +1,81 @@
+@import '_var.scss';
+$contentWidth: 90%;
+.compatibilityForm {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  &__header{
+    margin: 0 auto;
+    margin-top: 3em;
+    margin-bottom: 5em;
+    width: $contentWidth;
+    h3{
+      text-align: center;
+      color: $colorB4;
+      margin-bottom: 1em;
+    }
+    p {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  &__form {
+    margin: 0 auto;
+    margin-bottom: 2em;
+    width: $contentWidth;
+    .mat-form-field {
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    &_field--location {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1em;
+      > .mat-form-field {
+        flex-grow: 1;
+        &:not(:last-child) {
+          margin-right: 15px;
+        }
+      }
+    }
+
+    &_modelList {
+      display: flex;
+      &_content{
+        display: flex;
+        flex-wrap: wrap;
+        flex-basis: 90%;
+        > .mat-form-field {
+          flex-grow: 1;
+          margin-right: 15px;
+        }
+      }
+      span {
+        .mat-mini-fab {
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    &_textarea {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    &_submitBtn {
+      width: 40%;
+      margin: 0 auto;
+      display: block;
+      background-color: $colorB1;
+    }
+  }
+  input, textarea {
+    border-bottom: none;
+  }
+  button.mat-accent {
+    background-color: $colorG;
+  }
+}

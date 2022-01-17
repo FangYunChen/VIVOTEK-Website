@@ -1,0 +1,23 @@
+@import "../../../../../../styles/var";
+
+.recommend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 45px 50px;
+  .recommend__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  .recommend__content {
+    display: flex;
+    flex-direction: column;
+    color: $colorY;
+    font-weight: 700;
+  }
+  .recommend__item {
+    margin: 5px 0;
+    font-weight: 700;
+    color: $colorY;
+  }
+}

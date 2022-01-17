@@ -1,0 +1,12 @@
+@import "../../../styles/var";
+:host {
+  z-index: $z-index__main-toolbar;
+}
+
+.main-toolbar {
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  box-sizing: border-box;
+}

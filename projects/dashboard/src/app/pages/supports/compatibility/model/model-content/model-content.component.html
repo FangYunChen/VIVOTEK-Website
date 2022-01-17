@@ -1,0 +1,49 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Support Model</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field>
+              <mat-select placeholder="Brand" name="brand" [(ngModel)]="model.brandId" [disabled]="!pageIsEditable"
+                required>
+                <mat-option *ngFor="let brand of brandOptions" [value]="brand.value">{{brand.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Model Name" name="name" [(ngModel)]="model.name" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Model Url" name="url" [(ngModel)]="model.websiteUrl" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <button type="button" mat-button (click)="addProduct(0)" *ngIf="pageIsEditable">Add Product</button>
+              <h4 *ngIf="model.products.length > 0">Feature will display a dot by filling 'yes'</h4>
+              <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let product of model.products; let i = index; trackBy: trackProduct">
+                <mat-card-title>
+                  <h4>Support Product {{i + 1}}</h4>
+                </mat-card-title>
+                <vvtk-model-product-content [pageIsEditable]="pageIsEditable" [product]="product" [selectedProductIds]="selectedProductIds"
+                  [productOptions]="productOptions" [productIndex]="i" (productAdded)="addProduct(i+1)"
+                  (productRemoved)="deleteProduct(i)" (productSelected)="setSelectedProductIds()"></vvtk-model-product-content>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/supports/compatibility/model']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

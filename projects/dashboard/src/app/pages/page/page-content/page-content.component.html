@@ -1,0 +1,177 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Edit Page Management</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <a [href]="getUrl()" target="_blank">{{getUrl()}}</a>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Import/Export Setting</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" *ngIf="pageIsEditable">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Setting Import/Export" name="settingStr" [(ngModel)]="settingStr">
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <button mat-button (click)="setSetting()">Import Setting</button>
+              <span fxFlex></span>
+              <button mat-button (click)="getSetting()">Export Setting</button>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Setting</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Custom Path" name="customPath" [(ngModel)]="i18n.customPath" [readOnly]="!pageIsEditable"
+                pattern="[^\/\\#&%\^)][^\\#&%\^()=+|{}:;?`]*">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="i18n.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <!-- banner區塊用不到所以註解掉，也許以後會需要? -->
+          <!-- <mat-card-title>
+            <h3>Banner for PC</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgPcSrc">
+              <div class="text-center">
+                <img [src]="data.imgPcSrc | safeUrl" [alt]="i18n.imgPcAlt" [title]="i18n.imgPcTitle">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgPcFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 1920*400)</button>
+            <input hidden type="file" #imgPcFileInput accept="image/*" (change)="imgFileSelect($event,'imgPc')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgPcSrc" [(ngModel)]="data.imgPcSrc" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgPcTitle" [(ngModel)]="i18n.imgPcTitle" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgPcAlt" [(ngModel)]="i18n.imgPcAlt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Banner for Tablet</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgTabletSrc">
+              <div class="text-center">
+                <img [src]="data.imgTabletSrc | safeUrl" [alt]="i18n.imgTabletAlt" [title]="i18n.imgTabletTitle">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgTabletFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 1024*400)</button>
+            <input hidden type="file" #imgTabletFileInput accept="image/*" (change)="imgFileSelect($event,'imgTablet')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgTabletSrc" [(ngModel)]="data.imgTabletSrc" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgTabletTitle" [(ngModel)]="i18n.imgTabletTitle" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgTabletAlt" [(ngModel)]="i18n.imgTabletAlt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Banner for Mobile</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgMobileSrc">
+              <div class="text-center">
+                <img [src]="data.imgMobileSrc | safeUrl" [alt]="i18n.imgMobileAlt" [title]="i18n.imgMobileTitle">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgMobileFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 768*400)</button>
+            <input hidden type="file" #imgMobileFileInput accept="image/*" (change)="imgFileSelect($event,'imgMobile')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgMobileSrc" [(ngModel)]="data.imgMobileSrc" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgMobileTitle" [(ngModel)]="i18n.imgMobileTitle" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgMobileAlt" [(ngModel)]="i18n.imgMobileAlt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content> -->
+          <mat-card-title>
+            <h3>Import/Export Meta</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" *ngIf="pageIsEditable">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Meta Import/Export" name="metaStr" [(ngModel)]="metaStr">
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <button mat-button (click)="setMeta()">Import Meta</button>
+              <span fxFlex></span>
+              <button mat-button (click)="getMeta()">Export Meta</button>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Meta</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addMeta(0)" *ngIf="pageIsEditable">Add Meta</button>
+            <div class="metaList" fxLayout="column" *ngFor="let metaItem of meta;let metaIdx = index">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <a mat-mini-fab class="action-btn" color="primary" matTooltip="Add Meta" matTooltipPosition="above" (click)="addMeta(metaIdx+1)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="primary" matTooltip="Delete Meta" matTooltipPosition="above" (click)="deleteMeta(metaIdx)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex>
+                  <input matInput placeholder="Tag Name" [name]="'tagName_'+metaIdx" [(ngModel)]="metaItem.tagName" [readOnly]="!pageIsEditable"
+                    required>
+                </mat-form-field>
+              </div>
+              <button type="button" mat-button (click)="addAttribute(metaIdx, 0)" *ngIf="pageIsEditable">Add Attribute</button>
+              <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let attrItem of metaItem.attr;let attrIdx = index">
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Add Attribute" matTooltipPosition="above" (click)="addAttribute(metaIdx, attrIdx+1)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Attribute" matTooltipPosition="above" (click)="deleteAttribute(metaIdx,attrIdx)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex="150px">
+                  <input matInput placeholder="Attribute Name" [name]="'attributeName_'+metaIdx+'_'+attrIdx" [(ngModel)]="attrItem.name" [readOnly]="!pageIsEditable"
+                    required>
+                </mat-form-field>
+                <mat-form-field fxFlex="100%">
+                  <input matInput placeholder="Attribute Value" [name]="'attributeValue_'+metaIdx+'_'+attrIdx" [(ngModel)]="attrItem.value"
+                    [readOnly]="!pageIsEditable" required>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Json-ld</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <textarea matInput placeholder="Json-ld" name="jsonLd" [(ngModel)]="i18n.jsonLd" rows="5" [readOnly]="!pageIsEditable" required></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/page/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

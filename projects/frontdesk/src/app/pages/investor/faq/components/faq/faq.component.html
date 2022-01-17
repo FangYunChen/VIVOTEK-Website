@@ -1,0 +1,33 @@
+<div id="faq" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model section">
+    <div class="filter-model wrap">
+      <div class="filter-box afterClear">
+        <div class="selector">
+          <select name="" id="" (change)="changeCategoryParent(parent.value)" #parent>
+            <option *ngFor="let category of _Category;let idx = index" [value]="category.id">{{category.name}}</option>
+          </select>
+          <ng-container *ngFor="let category of _Category">
+            <select *ngIf="category.id === selectedCategoryParent && category.sub.length > 0" name="" id="" (change)="changeCategorySub(sub.value)"
+              #sub>
+              <option *ngFor="let sub of category.sub" [value]="sub.id">{{sub.name}}</option>
+            </select>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="collapse-model wrap">
+      <div class="collapse">
+        <ng-container *ngFor="let item of _FAQList;">
+          <div class="collapse-block" *ngIf="item.categoryId === selectedCategoryParent || item.categoryId === selectedCategorySub"
+            [class.open]="item.id === collapseContrl">
+            <h3 class="collapse-name" (click)="collapseOpen(item.id)">{{item.question}}</h3>
+            <div class="collapse-content" [innerHtml]="item.answer|safe:'html'">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+  </section>
+</div>

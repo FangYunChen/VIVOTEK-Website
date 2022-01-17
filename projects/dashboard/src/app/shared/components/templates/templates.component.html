@@ -1,0 +1,105 @@
+<form #form="ngForm">
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addTemplate(0)" *ngIf="!readOnly">Add Template</button>
+    <div [sortablejs]="templates" [sortablejsOptions]="groupOptionsTempalte">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let template of templates; let i = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h3>Template {{i+1}}</h3>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Template" matTooltipPosition="above"
+            (click)="deleteTemplate(i)" *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="template.hideContent?'展開':'收合'"
+            matTooltipPosition="above" (click)="template.hideContent = !template.hideContent">
+            <mat-icon *ngIf="template.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!template.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!template.hideContent">
+          Type {{template.type}} ({{typeDescriptions.get(template.type)}})
+          <br> {{template.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="template.hideContent">
+          <mat-form-field fxFlex *ngIf="readOnly">
+            <input matInput placeholder="Type" [name]="'templateType'+i" [value]="'Type '+template.type" [readOnly]="true">
+          </mat-form-field>
+          <vvtk-input-container fxLayout="column" *ngIf="!readOnly">
+            <div fxLayout="column" vvtkhtml>
+              <mat-form-field>
+                <mat-select [name]="'templateType'+i" placeholder="Type" [(ngModel)]="template.type" (selectionChange)="changeType(i)">
+                  <mat-option *ngFor="let type of types" [value]="type">Type {{type}} ({{typeDescriptions.get(type)}})</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </vvtk-input-container>
+          <button type="button" mat-button (click)="template.showStyle = !template.showStyle" *ngIf="template.type!=0">{{template.showStyle?'Hide':'Show'}}
+            Style</button>
+          <div fxLayout="row" fxLayoutAlign="center" *ngIf="template.type!=0 && template.showStyle">
+            <div>
+              <img [src]="'/assets/images/template'+template.type+'.jpg'">
+            </div>
+          </div>
+          <ng-container [ngSwitch]="template.type">
+            <vvtk-templates-type1 *ngSwitchCase="1" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type1>
+            <vvtk-templates-type2 *ngSwitchCase="2" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type2>
+            <vvtk-templates-type3 *ngSwitchCase="3" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type3>
+            <!-- type4,13, 18 一樣的設定 -->
+            <vvtk-templates-type4 *ngSwitchCase="4" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type4>
+            <vvtk-templates-type5 *ngSwitchCase="5" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type5>
+            <vvtk-templates-type6 *ngSwitchCase="6" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type6>
+            <!-- type5,7,8,19 一樣的設定 -->
+            <vvtk-templates-type5 *ngSwitchCase="7" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type5>
+            <vvtk-templates-type5 *ngSwitchCase="8" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type5>
+            <!-- type9,10 一樣的設定 -->
+            <vvtk-templates-type9 *ngSwitchCase="9" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type9>
+            <vvtk-templates-type9 *ngSwitchCase="10" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type9>
+            <vvtk-templates-type11 *ngSwitchCase="11" [readOnly]="readOnly" [path]="path" [templateIndex]="i"
+              [template]="template"></vvtk-templates-type11>
+            <vvtk-templates-type12 *ngSwitchCase="12" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type12>
+            <vvtk-templates-type4 *ngSwitchCase="13" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type4>
+            <vvtk-templates-type14 *ngSwitchCase="14" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type14>
+            <vvtk-templates-type15 *ngSwitchCase="15" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type15>
+            <vvtk-templates-type16 *ngSwitchCase="16" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type16>
+            <vvtk-templates-type17 *ngSwitchCase="17" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type17>
+            <vvtk-templates-type4 *ngSwitchCase="18" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type4>
+            <vvtk-templates-type5 *ngSwitchCase="19" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type5>
+            <vvtk-templates-type20 *ngSwitchCase="20" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type20>
+            <vvtk-templates-type21 *ngSwitchCase="21" [readOnly]="readOnly" [path]="path" [templateIndex]="i"
+              [template]="template"></vvtk-templates-type21>
+            <vvtk-templates-type22 *ngSwitchCase="22" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type22>
+            <vvtk-templates-type23 *ngSwitchCase="23" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type23>
+            <vvtk-templates-type24 *ngSwitchCase="24" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type24>
+            <vvtk-templates-type25 *ngSwitchCase="25" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type25>
+            <vvtk-templates-type26 *ngSwitchCase="26" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type26>
+            <vvtk-templates-type27 *ngSwitchCase="27" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type27>
+            <vvtk-templates-type28 *ngSwitchCase="28" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type28>
+            <vvtk-templates-type29 *ngSwitchCase="29" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type29>
+            <vvtk-templates-type201 *ngSwitchCase="201" [readOnly]="readOnly" [path]="path" [isLoading]="isLoading"
+              [templateIndex]="i" [template]="template" (upload)="isLoading = $event"></vvtk-templates-type201>
+            <vvtk-templates-type202 *ngSwitchCase="202" [readOnly]="readOnly" [templateIndex]="i" [template]="template"></vvtk-templates-type202>
+          </ng-container>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addTemplate(i+1)" *ngIf="!readOnly">Add Template</button>
+      </div>
+    </div>
+  </div>
+</form>

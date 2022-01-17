@@ -1,0 +1,46 @@
+@import '../../../../../../styles/var';
+
+.content {
+  margin-top: 52px;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 18px 0 0;
+}
+
+.form-item__title {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  .mat-icon {
+    margin-left: 5px;
+  }
+}
+
+.form-item__content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  width: 50%;
+  input {
+    min-width: 0;
+    &[type='number'] {
+      max-width: 70px;
+    }
+  }
+}
+
+.footer {
+  margin-top: 202px;
+  .form-item {
+    font-weight: 700;
+  }
+  .form-item__content {
+    color: $colorY;
+  }
+}

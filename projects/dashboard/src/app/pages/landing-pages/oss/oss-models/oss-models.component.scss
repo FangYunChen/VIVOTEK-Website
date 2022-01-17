@@ -1,0 +1,39 @@
+.ossTable {
+  font-size: 12px;
+  .mat-card-title {
+    span + a {
+      margin-left: 1em;
+    }
+  }
+  &__filterArea {
+    display: flex;
+    justify-content: space-around;
+    .mat-form-field {
+      flex-basis: 33%;
+    }
+  }
+  .mat-table {
+    width: 100%;
+    .mat-header-row {
+      background-color: white;
+      .mat-header-cell {
+        font-size: 1.2em;
+        font-weight: 500;
+      }
+    }
+    .mat-row {
+      color: rgba(0,0,0,.5);
+      font-weight: 400;
+    }
+    .mat-column-mainCategory {
+      flex-basis: 20%;
+    }
+    .mat-column-modelsString {
+      flex-basis: 30%;
+    }
+  }
+  .mat-paginator {
+    width: 100%;
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  }
+}

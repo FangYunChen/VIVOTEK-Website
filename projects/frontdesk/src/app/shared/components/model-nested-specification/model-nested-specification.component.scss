@@ -1,0 +1,87 @@
+@import "../../../../styles/var";
+ul {
+  list-style: none;
+}
+
+dl {
+  display: flex;
+  margin: 10px 0;
+  padding: 0.4375em 40px;
+  dt {
+    flex: none;
+    width: 25%;
+  }
+  dd {
+    flex-grow: 1;
+  }
+  &:nth-child(odd) {
+    background-color: $colorGy2;
+  }
+
+  &:nth-child(even) {
+    background-color: transparent;
+  }
+}
+
+.spec-title {
+  margin: 10px 0;
+  font-size: 1.125em;
+}
+
+.spec-layer {
+  .spec-title {
+    padding-left: 20px;
+  }
+  & > :host > dl:nth-child(odd) {
+    background-color: $colorGy2;
+  }
+  & > :host > dl:nth-child(even) {
+    background-color: transparent;
+  }
+  &.spec-layer-1 {
+    margin-bottom: 65px;
+    & > .spec-title {
+      margin: 20px 0;
+      padding-left: 0;
+      font-size: 1.375em;
+      font-weight: 700;
+      color: $colorB1;
+    }
+    & > :host > dl:nth-child(odd) {
+      background-color: transparent;
+    }
+    & > :host > dl:nth-child(even) {
+      background-color: $colorGy2;
+    }
+  }
+  &.spec-layer-2 {
+    margin-bottom: 65px;
+    & > .spec-title {
+      font-size: 1.375em;
+      font-weight: 700;
+    }
+  }
+  &.spec-layer-3 {
+    & > .spec-title {
+      font-size: 1.25em;
+      color: $colorB1;
+    }
+    dl > dt{
+      padding-left: 0.9375em;
+    }
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  dl {
+    flex-direction: column;
+    dt {
+      width: 100%;
+      font-weight: 700;
+    }
+    dd {
+      margin-top: 5px;
+      margin-left: 0;
+    }
+  }
+}

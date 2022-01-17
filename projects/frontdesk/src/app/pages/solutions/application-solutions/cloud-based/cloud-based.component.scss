@@ -1,0 +1,22 @@
+#cloud-based ::ng-deep {
+  .model-icon-horizontal {
+    .wrap {
+      .icon-container {
+        .icon-content {
+          .icon-img {
+            display: none;
+          }
+          .icon-name {
+            display: none;
+          }
+          @media (min-width: 1024px) and (max-width:1280px) {
+            width: 260px;
+          }
+          @media (min-width: 1280px) {
+            width: 300px;
+          }
+        }
+      }
+    }
+  }
+}

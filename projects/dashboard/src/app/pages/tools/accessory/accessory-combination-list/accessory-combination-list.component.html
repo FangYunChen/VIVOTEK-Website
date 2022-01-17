@@ -1,0 +1,42 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Edit Accessory Combination List</span>
+      <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" *ngIf="pageIsEditable"
+        [routerLink]="['/tools/accessory', id, 0]">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-card-content fxLayout="column">
+      <div class="list mat-elevation-z4" *ngIf="combinations && combinations.length > 0">
+        <mat-list [sortablejs]="combinations" [sortablejsOptions]="groupOptions">
+          <mat-list-item class="small-list-item" *ngFor="let combination of combinations">
+            <h3 class="middle" mat-line>
+              <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+              <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                [routerLink]="['/tools/accessory', id, combination.combinationId]" *ngIf="pageIsEditable">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                (click)="deleteCombination(combination.combinationId)" [disabled]="isLoading" *ngIf="pageIsEditable">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <span [matTooltip]="combination.combinationName" matTooltipPosition="above">{{
+                combination.combinationName }}</span>
+            </h3>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/tools/accessory']">Back</button>
+        <span fxFlex></span>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

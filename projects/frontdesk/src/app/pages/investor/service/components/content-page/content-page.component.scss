@@ -1,0 +1,12 @@
+@import 'var';
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-size: x-large;
+    font-weight: bold;
+    color: $colorB1;
+}
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: $colorB1;
+}
+.table thead, table .thead{
+    background-color: $colorB6 !important;
+}

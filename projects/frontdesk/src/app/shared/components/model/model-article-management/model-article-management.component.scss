@@ -1,0 +1,242 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 1140px;
+
+  .search-article {
+    display: flex;
+    align-items: center;
+    color: #0093d6;
+    min-width: 150px;
+    max-width: 610px;
+    max-height: 45px;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    margin-bottom: 20px;
+
+    .search-form {
+      width: 100%;
+      height: 100%;
+    }
+
+    .search-icon {
+      color: white;
+      background-color: #0093d6;
+      height: 45px;
+      width: 45px;
+      padding: 12.5px;
+    }
+
+    .search-icon:hover {
+      cursor: pointer;
+    }
+
+    .cancel-search {
+      color: #949494;
+    }
+  }
+}
+
+/* ink bar style */
+.model-article-managment ::ng-deep {
+
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #0091d2;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #0091d2;
+    height: 45px;
+  }
+
+  input.mat-input-element {
+    color: #3c3c3c;
+  }
+
+  .mat-form-field-infix {
+    height: 45px;
+    padding: 0;
+    margin-top: 10px;
+    border-width: 0;
+
+    input {
+      padding-top: 10px;
+    }
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 15px;
+    margin-top: 25px;
+  }
+
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-radius: 0;
+  }
+
+
+  .mat-form-field-suffix {
+    position: unset;
+
+    button {
+      padding: 0;
+      background-color: inherit;
+    }
+  }
+}
+
+li>a {
+  color: #3c3c3c;
+
+  &.anchor-highlight {
+    color: #2db8e0;
+  }
+}
+
+.article-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+    flex-grow: 0;
+
+    .list-layer-1st,
+    .list-layer-2nd {
+      list-style-type: none;
+      list-style: none;
+      padding: 0 10px;
+
+    }
+  }
+
+  .article-articles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    margin: 0 30px;
+
+    .article-context {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+
+      .article-title {
+        color: #0093d5;
+        align-self: flex-start;
+      }
+
+      .article-summary {
+        align-self: flex-start;
+      }
+
+      .article-summary,
+      .article-toggle {
+        margin: 20px 0;
+      }
+
+      .article-button-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        .article-button-left {
+          display: flex;
+          flex-direction: row;
+          background: white;
+          color: #626262;
+          font-weight: bold;
+          padding-right: 5px;
+          align-items: baseline;
+
+          i {
+            padding-right: 5px;
+          }
+        }
+
+        .article-button-right {
+          display: flex;
+          flex-direction: row;
+          background: white;
+          color: #626262;
+          font-weight: bold;
+          padding-right: 5px;
+          align-items: baseline;
+
+          i {
+            padding-right: 5px;
+          }
+        }
+      }
+
+      .video-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 30px;
+
+        .video-box {
+          position: relative;
+          max-width: 780px;
+          width: 100%;
+          height: 0;
+          padding-bottom: 56.25%;
+
+          iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .article-export {
+    align-self: flex-start;
+    flex-grow: 0;
+
+    .icon-text {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        padding-left: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width:640px) {
+  .article-content {
+    justify-content: center;
+
+    .article-articles {
+      margin: 0;
+    }
+
+    .article-list,
+    .article-export {
+      display: none;
+    }
+  }
+}

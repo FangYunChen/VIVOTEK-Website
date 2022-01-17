@@ -1,0 +1,159 @@
+<div id="download-product" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="section">
+    <div class="wrap">
+      <div vvtkFixedTop="fix-top" class="filter-container">
+        <div class="filter-row">
+          <h4 class="step-title">{{'Step 1' | i18n}}</h4>
+          <div class="filter-box mat-elevation-z2">
+            <div class="box-title blue">
+              <span>{{'Product Category' | i18n}}</span>
+            </div>
+            <div class="filter-dropdown">
+              <ng-container *ngTemplateOutlet="productMainCategoryForm"></ng-container>
+            </div>
+            <div class="filter-dropdown">
+              <ng-container *ngTemplateOutlet="productSubCategoryForm"></ng-container>
+            </div>
+            <div class="filter-search-box">
+              <ng-container *ngTemplateOutlet="searchModelNameForm"></ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <h4 class="step-title grey">{{'Step 2 (option)' | i18n}}</h4>
+          <div class="filter-box mat-elevation-z2">
+            <div class="box-title blue">
+              <span>{{'Model(optional)' | i18n}}</span>
+            </div>
+            <div class="filter-dropdown">
+              <ng-container *ngTemplateOutlet="productForm"></ng-container>
+            </div>
+            <div class="box-title blue">
+              <span>{{'File Type(optional)' | i18n}}</span>
+            </div>
+            <div class="filter-dropdown">
+              <ng-container *ngTemplateOutlet="downloadTypeForm"></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div vvtkFixedTop="fix-top" class="mobile-filter">
+        <mat-accordion displayMode="flat">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="blue">{{'Product Category' | i18n}}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="mobile-filter-content">
+              <ng-container *ngTemplateOutlet="productMainCategoryForm"></ng-container>
+              <ng-container *ngTemplateOutlet="productSubCategoryForm"></ng-container>
+              <ng-container *ngTemplateOutlet="searchModelNameForm"></ng-container>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="blue">{{'Model(optional)' | i18n}}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="mobile-filter-content">
+              <ng-container *ngTemplateOutlet="productForm"></ng-container>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="orange">{{'File Type(optional)' | i18n}}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="mobile-filter-content">
+              <ng-container *ngTemplateOutlet="downloadTypeForm"></ng-container>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="download-list">
+        <div style="text-align: right">
+          <vvtk-language-selector (selectionChange)="selectedLanguage$.next($event)"> </vvtk-language-selector>
+        </div>
+        <ng-container>
+          <ng-container *ngTemplateOutlet="paginator"></ng-container>
+        </ng-container>
+        <div class="download-content" *ngFor="let item of (dataSource$ | async)?.list">
+          <h4 class="table-title">{{item.productName}}</h4>
+          <div class="mat-elevation-z2">
+            <vvtk-dynamic-table [dataSource]="item.downloadMains" [dynamicColumns]="dynamicColumns"></vvtk-dynamic-table>
+          </div>
+        </div>
+        <ng-container *ngIf="(dataSource$ | async)?.filterTotal > 0">
+          <ng-container *ngTemplateOutlet="paginator"></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #productMainCategoryForm>
+  <mat-form-field>
+    <mat-select placeholder="{{'Select a category'|i18n}}" name="selectedProductMainCategory" (selectionChange)="selectedProductMainCategory$.next($event.value)"
+      [value]="selectedProductMainCategory$.value">
+      <mat-option *ngFor="let option of productMainCategoryOptions" [value]="option.value">
+        {{option.optionText}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #productSubCategoryForm>
+  <mat-form-field>
+    <mat-select placeholder="{{'Select Subcategory'|i18n}}" name="selectedProductSubCategory" (selectionChange)="selectedProductSubCategory$.next($event.value)"
+      [value]="selectedProductSubCategory$.value">
+      <mat-option *ngFor="let option of productSubCategoryOptions" [value]="option.value">
+        {{option.optionText|i18n}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #searchModelNameForm>
+  <mat-form-field>
+    <mat-icon class="filter-search-icon" matPrefix>search</mat-icon>
+    <input matInput name="searchModelName" [value]="searchModelName$.value" (keyup)="searchModelName$.next($event.target.value)"
+      placeholder="{{'Search by Model Name'|i18n}}">
+  </mat-form-field>
+</ng-template>
+
+<ng-template #productForm>
+  <mat-form-field>
+    <mat-select placeholder="{{'Model Name'|i18n}}" name="selectedProduct" (selectionChange)="selectedProduct$.next($event.value)"
+      [value]="selectedProduct$.value">
+      <mat-option *ngFor="let option of productOptions" [value]="option.value">
+        {{option.optionText}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #downloadTypeForm>
+  <mat-form-field>
+    <mat-select placeholder="{{'Select a type'|i18n}}" name="selectedDownloadType" (selectionChange)="selectedDownloadType$.next($event.value)"
+      [value]="selectedDownloadType$.value">
+      <mat-option *ngFor="let option of downloadTypeOptions" [value]="option.value">
+        {{option.optionText|i18n}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #paginator>
+  <mat-paginator (page)="pageEvent$.next($event)" [length]="(dataSource$ | async)?.filterTotal" [pageIndex]="pageEvent$.value.pageIndex"
+    [pageSize]="pageEvent$.value.pageSize" [pageSizeOptions]="[10, 30, 50, 100]">
+  </mat-paginator>
+</ng-template>

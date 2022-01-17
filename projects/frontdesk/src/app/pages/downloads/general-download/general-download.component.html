@@ -1,0 +1,37 @@
+<section class="section general-download">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="option.title">{{option.title|i18n}}</h3>
+    <div class="filter-box">
+      <div class="filter-search-box" *ngFor="let filter of filterList">
+        <mat-form-field>
+          <input matInput [name]="filter.name" [(ngModel)]="filter.content" (keyup)="filterTimer$.next($event.target.value)"
+            [placeholder]="filter.name|i18n">
+        </mat-form-field>
+      </div>
+      <div class="filter-dropdown" [style.display]="option.needLang ? 'flex' : 'none'">
+        <vvtk-language-selector (selectionChange)="selectedLanguage$.next($event)"> </vvtk-language-selector>
+      </div>
+
+      <!-- If user need reset button -->
+      <!-- <div class="filter-reset-box">
+        <button class="reset-button" (click)="resetFilter()">Reset</button>
+      </div> -->
+    </div>
+
+    <ng-container>
+      <ng-container *ngTemplateOutlet="paginator"></ng-container>
+    </ng-container>
+    <div class="mat-elevation-z2">
+      <vvtk-dynamic-table [dataSource]="(dataSource$ | async)?.list" [dynamicColumns]="dynamicColumns"></vvtk-dynamic-table>
+    </div>
+    <ng-container *ngIf="(dataSource$ | async)?.filterTotal > 0">
+      <ng-container *ngTemplateOutlet="paginator"></ng-container>
+    </ng-container>
+  </div>
+</section>
+
+<ng-template #paginator>
+  <mat-paginator (page)="pageEvent$.next($event)" [length]="(dataSource$ | async)?.filterTotal" [pageIndex]="pageEvent$.value.pageIndex"
+    [pageSize]="pageEvent$.value.pageSize" [pageSizeOptions]="[10, 30, 50, 100]">
+  </mat-paginator>
+</ng-template>

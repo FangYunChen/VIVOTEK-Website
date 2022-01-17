@@ -1,0 +1,11 @@
+<vvtk-review-page #review>
+  <div fxLayout="row" fxLayoutAlign="end center" vvtkhtml>
+    <vvtk-input-container>
+      <mat-form-field vvtkhtml>
+        <mat-select placeholder="Year" [(ngModel)]="year" (selectionChange)="changeYear()">
+          <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </vvtk-input-container>
+  </div>
+</vvtk-review-page>

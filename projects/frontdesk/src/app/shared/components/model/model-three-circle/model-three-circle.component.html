@@ -1,0 +1,14 @@
+<section *ngIf="content" class="model section model-textCircle">
+	<div class="wrap">
+		<h2 class="line text-center">{{content.title}}</h2>
+		<div [innerHtml]="content.content" class="model-content"></div>
+		<div class="circle-group">
+			<vvtk-a *ngFor="let circle of content.images" [url]="circle.url">
+				<ng-container HtmlContent>
+					<span class="img"><img [src]="circle.src" [alt]="circle.alt"></span>
+					<span class="text">{{circle.title}}</span>
+				</ng-container>
+			</vvtk-a>
+		</div>
+	</div>
+</section>

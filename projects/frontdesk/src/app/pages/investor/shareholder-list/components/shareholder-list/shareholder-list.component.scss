@@ -1,0 +1,24 @@
+@import '_var.scss';
+.table-style {
+  min-width: 100%;
+  .table-row {
+    min-width: 100%;
+    display: flex;
+    &:nth-child(2n + 1) {
+      background-color: $colorGy2;
+    }
+  }
+  .table-cell {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+  }
+  .table-thead {
+    background-color: $colorB1 !important;
+    color: $colorW;
+    font-weight: bold;
+    .table-cell {
+      text-align: center;
+    }
+  }
+}

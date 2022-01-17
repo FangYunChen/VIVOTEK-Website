@@ -1,0 +1,283 @@
+<div id="account" class="container">
+  <vvtk-top-banner [contentPageTitle]="'Project Registration'"></vvtk-top-banner>
+  <section class="model section tabs-slider">
+  <div class="wrap">
+    <h3 class="line text-center">{{'Project Registration'|i18n}}</h3>
+    <form [formGroup]="form" (ngSubmit)="doSubmit()">
+    <section class="model-form section">
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="date" maxlength="256" placeholder="yyyy/MM/dd" [formControl]="form.controls['Date']">
+              <label for="">{{'Date'|i18n}}</label>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['QuotationNumber']">
+              <label for="">{{'VIVOTEK Quotation Number'|i18n}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Discount']" required>
+              <label for=""><span class="colorR">*</span> {{'Discount (if applicable)'|i18n}}</label>
+              <div *ngIf="form.controls['Discount'].hasError('required') && form.controls['Discount'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['ApprovedBy']" required>
+              <label for=""><span class="colorR">*</span> {{'Approved by'|i18n}}</label>
+              <div *ngIf="form.controls['ApprovedBy'].hasError('required') && form.controls['ApprovedBy'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="model-form section">
+        <h2 class="text-left">* {{'Please complete the following information'|i18n}}</h2>
+      </section>
+      <h2 class="text-center">{{'Your Company'|i18n}}</h2>
+      <section class="model-form section">
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOUName']" required>
+              <label for=""><span class="colorR">*</span> {{'Name'|i18n}}</label>
+              <div *ngIf="form.controls['YOUName'].hasError('required') && form.controls['YOUName'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOULocation']" required>
+              <label for=""><span class="colorR">*</span> {{'Location'|i18n}}</label>
+              <div *ngIf="form.controls['YOULocation'].hasError('required') && form.controls['YOULocation'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOUTypeofBusiness']" required>
+              <label for=""><span class="colorR">*</span> {{'Type of Business (Distributor, System Integrator, etc.)'|i18n}}</label>
+              <div *ngIf="form.controls['YOUTypeofBusiness'].hasError('required') && form.controls['YOUTypeofBusiness'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOUContactName']" required>
+              <label for=""><span class="colorR">*</span> {{'Contact Name'|i18n}}</label>
+              <div *ngIf="form.controls['YOUContactName'].hasError('required') && form.controls['YOUContactName'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOUContactPhone']" required>
+              <label for=""><span class="colorR">*</span> {{'Contact Phone'|i18n}}</label>
+              <div *ngIf="form.controls['YOUContactPhone'].hasError('required') && form.controls['YOUContactPhone'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['YOUContactEmail']" required>
+              <label for=""><span class="colorR">*</span> {{'Contact Email'|i18n}}</label>
+              <div *ngIf="form.controls['YOUContactEmail'].hasError('required') && form.controls['YOUContactEmail'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h2 class="text-center">{{'Your Customer'|i18n}}</h2>
+      <section class="model-form section">
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Name1']" required>
+              <label for=""><span class="colorR">*</span> {{'Name'|i18n}}</label>
+              <div *ngIf="form.controls['Name1'].hasError('required') && form.controls['Name1'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Location1']" required>
+              <label for=""><span class="colorR">*</span> {{'Location'|i18n}}</label>
+              <div *ngIf="form.controls['Location1'].hasError('required') && form.controls['Location1'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['TypeofBusiness1']" required>
+              <label for=""><span class="colorR">*</span> {{'Type of Business (Distributor, System Integrator, etc.)'|i18n}}</label>
+              <div *ngIf="form.controls['TypeofBusiness1'].hasError('required') && form.controls['TypeofBusiness1'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h2 class="text-center">{{'End User'|i18n}}</h2>
+      <section class="model-form section">
+        <div class="list-row">
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Name2']" required>
+              <label for=""><span class="colorR">*</span> {{'Name'|i18n}}</label>
+              <div *ngIf="form.controls['Name2'].hasError('required') && form.controls['Name2'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col6">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Location2']" required>
+              <label for=""><span class="colorR">*</span> {{'Location'|i18n}}</label>
+              <div *ngIf="form.controls['Location2'].hasError('required') && form.controls['Location2'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['TypeofBusiness2']" required>
+              <label for=""><span class="colorR">*</span> {{'Type of Business (Distributor, System Integrator, etc.)'|i18n}}</label>
+              <div *ngIf="form.controls['TypeofBusiness2'].hasError('required') && form.controls['TypeofBusiness2'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h2 class="text-center">{{'Project Information'|i18n}}</h2>
+      <section class="model-form section">
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['ProjectForecast']" required>
+              <label for=""><span class="colorR">*</span> {{'VIVOTEK Network Camera Models Requested Esitimated Order Quantity/Forecast (for determining applicable discount)'|i18n}}</label>
+              <div *ngIf="form.controls['ProjectForecast'].hasError('required') && form.controls['ProjectForecast'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['ProjectOpportunity']" required>
+              <label for=""><span class="colorR">*</span> {{'Please briefly describe the opportunity and current status of communication with the customer'|i18n}}</label>
+              <div *ngIf="form.controls['ProjectOpportunity'].hasError('required') && form.controls['ProjectOpportunity'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['SoftwarePartners']" required>
+              <label for=""><span class="colorR">*</span> {{'Software partners'|i18n}}</label>
+              <div *ngIf="form.controls['SoftwarePartners'].hasError('required') && form.controls['SoftwarePartners'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Probability']" required>
+              <label for=""><span class="colorR">*</span> {{'Probability of win'|i18n}}</label>
+              <div *ngIf="form.controls['Probability'].hasError('required') && form.controls['Probability'].touched;" class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Decision']" required>
+              <label for=""><span class="colorR">*</span> {{'Decision Timeframe'|i18n}}</label>
+              <div *ngIf="form.controls['Decision'].hasError('required') && form.controls['Decision'].touched; " class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['ProductDelivery']" required>
+              <label for=""><span class="colorR">*</span> {{'Product Delivery Timeframe'|i18n}}</label>
+              <div *ngIf="form.controls['ProductDelivery'].hasError('required') && form.controls['ProductDelivery'].touched; " class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['MarkupMargin']" required>
+              <label for=""><span class="colorR">*</span> {{'Markup Margin to Customer'|i18n}}</label>
+              <div *ngIf="form.controls['MarkupMargin'].hasError('required') && form.controls['MarkupMargin'].touched; " class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <input type="text" maxlength="256" [formControl]="form.controls['Quotations']" required>
+              <label for=""><span class="colorR">*</span> {{'Are you currently soliciting quotations from other IP camera suppliers? If so, describe models'|i18n}}</label>
+              <div *ngIf="form.controls['Quotations'].hasError('required') && form.controls['Quotations'].touched; " class="alert alert-danger">
+                {{'Required'|i18n}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-row"><!--[disabled]="!form.valid"-->
+          <div class="list-col list-col12 btn-box text-center">
+            <button type="submit" class="btn btn-b" ng-model="all" [disabled]="!form.valid" *ngIf="!loadingShow">{{'Submit'|i18n}}</button>
+             <div class="btn-loading" *ngIf="loadingShow">
+              <i class="fa fa-spinner fa-spin fa-fw"></i>
+              <span class="sr-only">{{'Loading...'|i18n}}</span>
+            </div>
+          </div>
+        </div>
+    </section>
+    </form>
+    <vvtk-alert *ngIf="Mask" [id]="'applyPopup'" [alertStyle]="'applyStyle'"><!-- (windowPopup)="windowPopup($event)"-->
+      <div class="apply-wrap" vvtkPopup>
+        <div class="page-apply">
+            <div [innerHtml]="showMsg"></div>
+          <div class="input-box btn-box text-center">
+            <button type="submit" class="btn btn-b"  (click)="redirect()" >{{'OK'|i18n}}</button>
+          </div>
+        </div>
+      </div>
+    </vvtk-alert>
+  </div>
+  </section>
+</div>
+

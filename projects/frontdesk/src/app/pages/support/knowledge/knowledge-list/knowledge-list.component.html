@@ -1,0 +1,49 @@
+<h3 class="title-text text-center">{{'KM/FAQ/Technical Notes' | i18n}}</h3>
+<div class="knowledge-container">
+  <ng-container *ngIf="searchKeyword; else noSearch">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h5> {{searchKeyword}} {{'Search results' | i18n}} </h5>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="search-result-container">
+          <div class="search-result-list" *ngFor="let result of searchResult$ | async">
+            <ng-container *ngIf="result.articles && result.articles.length > 0">
+              <h4 class="search-result-title">{{result.name}}</h4>
+              <div class="search-result-content">
+                <div class="search-result-article" *ngFor="let article of result.articles; let i = index">
+                  <ng-container *ngIf="i < 5 || result.isExpand">
+                    <vvtk-link [routerLink]="article.subRoute">
+                      <p class="p-medium article-title">{{article.headline}}</p>
+                    </vvtk-link>
+                    <p class="p-medium article-description" [innerHTML]="article.lead | safe:'html'"></p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="p-medium search-result-more-info" *ngIf="result.articles.length > 5">
+                <a href="javascript:void(0)" (click)="result.isExpand = !result.isExpand">
+                  <i [ngClass]="['fa', result.isExpand ? 'fa-caret-square-o-up' : 'fa-caret-square-o-down']"></i>
+                  <span> {{'More Info' | i18n}}</span>
+                </a>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-template #noSearch>
+    <h5>{{'Most popular articles' | i18n}}</h5>
+    <div class="knowledge-list">
+      <vvtk-link [routerLink]="article.subRoute" *ngFor="let article of popularArticles$ | async">
+        <p class="p-medium">{{article.headline}}</p>
+      </vvtk-link>
+    </div>
+  </ng-template>
+  <button class="general-button" vvtkGoBack>
+    {{'Back'|i18n}}
+  </button>
+</div>

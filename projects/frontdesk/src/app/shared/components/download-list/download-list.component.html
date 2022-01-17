@@ -1,0 +1,24 @@
+<!-- TODO:串好API後要刪掉item.file和item.name -->
+<ul class="download-list">
+  <li *ngFor="let item of downloadList">
+    <ng-container *ngIf="item.url.indexOf('mp4') !== -1; else elseVideo">
+      <a class="video-icon" (click)="openVideo(item.url)">
+        <span>{{ item.description||item.title||item.name }}</span>
+      </a>
+    </ng-container>
+    <ng-template #elseVideo>
+      <a [href]="item.url" [target]="'_blank'">
+        <span>{{ item.description||item.title||item.name }}</span>
+      </a>
+    </ng-template>
+  </li>
+</ul>
+
+<vvtk-popup *ngIf="openPopup" [id]="'videoPopup'" [popupStyle]="'videoStyle'" (windowPopup)="windowPopup($event)">
+  <div class="video-wrap" vvtkPopup>
+    <div class="btn-loading">
+      <i class="fa fa-spinner fa-spin fa-fw"></i>
+    </div>
+    <video [src]="videoUrl" controls autoplay></video>
+  </div>
+</vvtk-popup>

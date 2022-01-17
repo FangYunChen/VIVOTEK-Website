@@ -1,0 +1,14 @@
+<div class="list-col list-col4">
+  <div class="shadow wrap">
+    <div class="panel-img">
+      <img [src]="panel.image?.src" [alt]="panel.image?.alt" [title]="panel.image?.title">
+    </div>
+    <div class="panel-title">
+      <h4>{{panel.title}}</h4>
+    </div>
+    <div class="panel-subtitle">
+      <h5>{{panel.subtitle}}</h5>
+    </div>
+    <div class="model-html-content p-medium" [innerHTML]="panel.htmlContent | safe:'html'"> </div>
+  </div>
+</div>

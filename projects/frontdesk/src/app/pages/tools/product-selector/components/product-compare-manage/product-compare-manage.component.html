@@ -1,0 +1,25 @@
+<div class="header">
+  <div class="header-left-area">
+    <!-- <button mat-stroked-button [disabled]="!products?.length" (click)="goToCompare()">Compare</button>
+    <button mat-stroked-button [disabled]="!products?.length" (click)="clearCompare()">Clear all</button> -->
+    <button mat-flat-button [class.compare-add]="products?.length > 0" [class.compare-remove]="products?.length === 0" [disabled]="!products?.length" (click)="goToCompare()">{{'Compare'|i18n}}</button>
+    <button mat-flat-button [class.compare-add]="products?.length > 0" [class.compare-remove]="products?.length === 0" [disabled]="!products?.length" (click)="clearCompare()">{{'Clear all'|i18n}}</button>
+  </div>
+  <div class="header-right-area">
+    <!-- <button mat-stroked-button>Go to Design Tool</button> -->
+  </div>
+</div>
+<div class="compare-list">
+  <div class="compare-product" *ngFor="let product of products">
+    <vvtk-link class="compare-product__img" [href]="product.url" [useHref]="true" target="_blank">
+      <ng-container *ngIf="product.imagePath;else defaultImg">
+        <img [src]="product.imagePath" [alt]="product.imageName">
+      </ng-container>
+      <ng-template #defaultImg>
+        <img src="/assets/img/default/default-product.png">
+      </ng-template>
+    </vvtk-link>
+    <vvtk-link class="compare-product__link" [href]="product.url" [useHref]="true" target="_blank">{{ product.name }}</vvtk-link>
+    <mat-icon class="remove-button" (click)="removeFromCompare(product)">close</mat-icon>
+  </div>
+</div>

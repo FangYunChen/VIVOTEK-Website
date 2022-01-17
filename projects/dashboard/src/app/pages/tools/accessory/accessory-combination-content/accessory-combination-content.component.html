@@ -1,0 +1,133 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{ isAddData?'Add':'Edit' }} Accessory Content</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="column">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Combination Name" name="CombinationName" [(ngModel)]="data.combinationName"
+            [disabled]="!pageIsEditable" required>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-card-title>
+          <h4>Center image</h4>
+        </mat-card-title>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.centerImg">
+            <div class="text-center">
+              <img [src]="data.centerImg | safeUrl">
+            </div>
+          </div>
+          <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading"
+            *ngIf="pageIsEditable">Upload
+            a image (Recommended size: 350*350)</button>
+          <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadFile($event)"
+            [disabled]="isLoading" />
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Image src" name="templateImagesSrc" [(ngModel)]="data.centerImg"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+        </mat-card-content>
+        <div>
+          <mat-card-title>
+            <h4>Combination detail</h4>
+            <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add Detail" matTooltipPosition="above"
+              (click)="addCombinationDetail(0)" *ngIf="pageIsEditable">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div [sortablejs]="data.combinationDetails" [sortablejsOptions]="groupOptions">
+              <div style="margin:0 0 0 30px" fxLayout="column"
+                *ngFor="let detail of data.combinationDetails; let dIdx = index">
+                <mat-card-content fxLayout="row" fxLayoutAlign="start baseline">
+                  <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                  <mat-form-field>
+                    <textarea matInput placeholder="Name" name="detailName[{{dIdx}}]" [(ngModel)]="detail.detailName"
+                      [disabled]="!pageIsEditable"></textarea>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput maxlength="255" placeholder="Image Src" name="img[{{dIdx}}]"
+                      [(ngModel)]="detail.img" [disabled]="!pageIsEditable">
+                  </mat-form-field>
+                  <div *ngIf="detail.img">
+                    <div class="text-center">
+                      <img style="width:100px;" [src]="detail.img | safeUrl">
+                    </div>
+                  </div>
+                  <a mat-mini-fab class="action-btn" color="primary" matTooltip="Upload
+                  a image (Recommended size: 150*150)" matTooltipPosition="above" (click)="CombinationDetailImgFileInput.click()"
+                    *ngIf="pageIsEditable">
+                    <mat-icon>cloud_upload</mat-icon>
+                  </a>
+                  <input hidden type="file" #CombinationDetailImgFileInput accept="image/*"
+                    (change)="uploadCombinationDetailImgFile(detail, $event)" [disabled]="isLoading" />
+                  <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Detail" matTooltipPosition="above"
+                    (click)="addCombinationDetail(dIdx+1)" *ngIf="pageIsEditable">
+                    <mat-icon>add</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Detail Item"
+                    matTooltipPosition="above" (click)="addCombinationDetailItem(dIdx,0)" *ngIf="pageIsEditable">
+                    <mat-icon>playlist_add</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Detail"
+                    matTooltipPosition="above" (click)="deleteDetail(data.combinationDetails,dIdx)"
+                    *ngIf="pageIsEditable">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="detail.hideContent?'展開':'收合'"
+                    matTooltipPosition="above" (click)="detail.hideContent = !detail.hideContent">
+                    <mat-icon *ngIf="detail.hideContent">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!detail.hideContent">keyboard_arrow_up</mat-icon>
+                  </a>
+                </mat-card-content>
+                <mat-card-content fxLayout="column" [hidden]="detail.hideContent">
+                  <mat-card-content fxLayout="column">
+                    <div [sortablejs]="detail.combinationDetailItems" [sortablejsOptions]="groupOptions">
+                      <div style="margin:0 0 0 30px" fxLayout="column"
+                        *ngFor="let item of detail.combinationDetailItems; let iIdx = index">
+                        <mat-card-content fxLayout="row" fxLayoutAlign="start baseline">
+                          <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                          <mat-form-field>
+                            <input matInput maxlength="255" placeholder="Item Name" name="ItemName[{{dIdx}}][{{iIdx}}]"
+                              [(ngModel)]="item.itemName" [disabled]="!pageIsEditable">
+                          </mat-form-field>
+                          <mat-form-field>
+                            <textarea matInput placeholder="Item Description" name="Description[{{dIdx}}][{{iIdx}}]"
+                              [(ngModel)]="item.description" [disabled]="!pageIsEditable"></textarea>
+                          </mat-form-field>
+                          <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Item"
+                            matTooltipPosition="above" (click)="addCombinationDetailItem(dIdx, iIdx+1)"
+                            *ngIf="pageIsEditable">
+                            <mat-icon>add</mat-icon>
+                          </a>
+                          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Item"
+                            matTooltipPosition="above" (click)="deleteItem(detail, item, iIdx)" *ngIf="pageIsEditable">
+                            <mat-icon>delete</mat-icon>
+                          </a>
+                        </mat-card-content>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card-content>
+              </div>
+            </div>
+          </mat-card-content>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button routerLink="/tools/accessory/{{id}}/combination-list">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

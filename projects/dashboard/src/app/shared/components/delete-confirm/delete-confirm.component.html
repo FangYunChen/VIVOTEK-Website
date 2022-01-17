@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content *ngIf="options && options.length > 0">
+  replace by
+  <mat-form-field>
+    <mat-select name="SelectedOption" [placeholder]="placeholder" [(ngModel)]="selectedOptionId" [disabled]="isClick">
+      <mat-option *ngFor="let option of options" [value]="option.value">{{option.optionText}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="OK()" [disabled]="isClick">OK</button>
+  <span fxFlex></span>
+  <button mat-button (click)="Cancel()" [disabled]="isClick">Cancel</button>
+</div>

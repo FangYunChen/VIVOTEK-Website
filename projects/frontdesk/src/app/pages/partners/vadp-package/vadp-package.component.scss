@@ -1,0 +1,70 @@
+@import '../../../../styles/var';
+.main-context {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 1600px;
+}
+
+.company-context {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
+
+  .company-title {
+    color: $colorB1;
+  }
+
+  .company-logo {
+    max-height: 250px;
+    max-width: 250px;
+  }
+
+  .company-reference {
+    a:hover {
+      text-decoration: none;
+    }
+
+    .ref-button {
+      background: $colorB1;
+      color: white;
+      font-weight: bold;
+      padding: 5px 10px;
+    }
+  }
+}
+
+
+.package-context {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: flex-start;
+  padding-bottom: 30px;
+
+  .package-logo {
+    max-height: 250px;
+    max-width: 250px;
+  }
+
+  .package-download {
+    display: flex;
+    flex-direction: row;
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .download-button {
+      display: flex;
+      flex-direction: row;
+      background: white;
+      color: $colorB1;
+      font-weight: bold;
+      padding: 0 5px;
+    }
+  }
+}

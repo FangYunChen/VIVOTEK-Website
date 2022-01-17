@@ -1,0 +1,9 @@
+<div class="container">
+  <vvtk-top-banner [rootPath]="rootPath" [contentPageTitle]="contentPageTitle"></vvtk-top-banner>
+  <section class="section">
+    <div class="wrap">
+      <vvtk-search-bar (searchKeyword)="search($event)" placeholder="Search support"></vvtk-search-bar>
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+</div>

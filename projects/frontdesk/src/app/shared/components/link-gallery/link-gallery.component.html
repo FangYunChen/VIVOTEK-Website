@@ -1,0 +1,22 @@
+<div class="link-gallery">
+  <div class="link-gallery__list-outer" #scrollContainer>
+    <ul class="link-gallery__list" #list>
+      <li class="link-gallery__item-outer" *ngFor="let item of data" #itemEle>
+        <vvtk-link class="link-gallery__item" [href]="item.linkUrl">
+          <img [src]="item.imageUrl" [alt]="item.imageAlt" [title]="item.imageTitle">
+          <div class="p-medium"> {{ item.linkText }} </div>
+        </vvtk-link>
+      </li>
+    </ul>
+  </div>
+  <div class="link-gallery__arrow-btn link-gallery__arrow-btn--left" [class.show]="isTabOverflow(scrollContainer)">
+    <div class="link-gallery__arrow-btn-inner" (click)="scrollLeft(scrollContainer)">
+      <i class="fa fa-chevron-left"></i>
+    </div>
+  </div>
+  <div class="link-gallery__arrow-btn link-gallery__arrow-btn--right" [class.show]="isTabOverflow(scrollContainer)">
+    <div class="link-gallery__arrow-btn-inner" (click)="scrollRight(scrollContainer)">
+      <i class="fa fa-chevron-right"></i>
+    </div>
+  </div>
+</div>

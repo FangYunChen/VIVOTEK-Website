@@ -1,0 +1,15 @@
+.padding {
+  padding: 20px 0;
+}
+
+.relatedTabLabel {
+  position: relative;
+  .deleteRelated {
+    position: absolute;
+    right: 0;
+    top: 0;
+    min-width: auto;
+    padding: 0;
+    line-height: 24px;
+  }
+}

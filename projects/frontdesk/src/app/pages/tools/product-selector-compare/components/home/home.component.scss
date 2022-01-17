@@ -1,0 +1,87 @@
+@import "../../../../../../styles/var";
+$dl-padding-width: 40px;
+$content-min-width: 120px;
+.container {
+  padding-bottom: 100px;
+  background-color: rgba(black, 0.04);
+}
+
+.product-selector-compare-page {
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto 0;
+  padding: 1.5em 2.5em 3.5em;
+  max-width: 1600px;
+  word-break: break-word;
+  background-color: white;
+}
+
+.back-btn {
+  color: white;
+  background-color: $colorB3;
+}
+
+.download-btn {
+  color: white;
+  background-color: $colorY;
+}
+
+.header {
+  .mat-flat-button {
+    margin: 0;
+  }
+}
+
+:host ::ng-deep.main-content {
+  overflow: auto;
+  dl {
+    display: flex;
+    margin: 10px 0;
+    padding: .4375em $dl-padding-width;
+    dt {
+      flex: none;
+      width: 20%;
+      min-width: $content-min-width;
+    }
+    dd {
+      flex-grow: 1;
+      display: flex;
+      margin: 0;
+      .content {
+        display: inline-block;
+        padding: 0 20px;
+        min-width: $content-min-width;
+      }
+    }
+  }
+
+  @for $i from 0 to 9 {
+    dl.compare-length-#{$i} {
+      min-width: $content-min-width * ($i + 1) + ($dl-padding-width * 2);
+      dt {
+        width: percentage(1 / ($i + 1));
+      }
+      @if ($i > 0) {
+        .content {
+          width: percentage(1 / $i);
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  .mat-flat-button {
+    margin: 0 2em;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    padding-bottom: 0;
+  }
+  .product-selector-compare-page {
+    margin-top: 50px;
+    padding: 1.5em 1.5em 3.5em;
+  }
+}

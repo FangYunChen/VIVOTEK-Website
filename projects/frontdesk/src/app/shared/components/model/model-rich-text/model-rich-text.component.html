@@ -1,0 +1,13 @@
+<section *ngIf="content" class="model section model-text">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="content.title">{{content.title}}</h3>
+    <div [innerHtml]="content.htmlContent | safe:'html'" class="model-html-content p-medium"></div>
+    <div style="text-align: center">
+      <vvtk-a *ngIf="content.urlEnabled" [url]="content.urlEnabled?content.url:''" [cName]="'btn btn-b'">
+        <ng-container HtmlContent>
+          {{'More'|i18n}}
+        </ng-container>
+      </vvtk-a>
+    </div>
+  </div>
+</section>

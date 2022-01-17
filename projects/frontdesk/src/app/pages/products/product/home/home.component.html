@@ -1,0 +1,33 @@
+<div id="product" class="container">
+  <!--{{ productMainInfo | json }} {{ productMainInfo.msg }}-->
+  <vvtk-top-banner-for-product-page [productCategoryRoutes]="productCategoryRoutes" [productName]="productMainInfo?.name"></vvtk-top-banner-for-product-page>
+  <div class="product-page-content" *ngIf="productMainInfo">
+    <div [ngSwitch]="productMainInfo.type">
+      <ng-container *ngSwitchCase="1">
+        <vvtk-normal-product [productMainInfo]="productMainInfo" [productTabInfos]="productTabInfos"></vvtk-normal-product>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        <vvtk-normal-product [productMainInfo]="productMainInfo" [productTabInfos]="productTabInfos" [displayMainInfo]="false"></vvtk-normal-product>
+      </ng-container>
+      <ng-container *ngSwitchCase="3">
+        <vvtk-switch-tab-product [productMainInfo]="productMainInfo" [productTabInfos]="productTabInfos"></vvtk-switch-tab-product>
+      </ng-container>
+      <div *ngSwitchDefault>This product page type is not define</div>
+    </div>
+    <div class="btn-container">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-top" vvtkGoTop>
+        <i class="fa fa-arrow-circle-up"></i> {{'Top of page'|i18n}}
+      </a>
+    </div>
+  </div>
+  <vvtk-alert *ngIf="productMask" [id]="'applyPopup'" [alertStyle]="'applyStyle'"><!-- (windowPopup)="windowPopup($event)"-->
+      <div class="apply-wrap" vvtkPopup>
+        <div class="page-apply">
+            <div [innerHtml]="showMsg"></div>
+          <div class="input-box btn-box text-center">
+            <button type="submit" class="btn btn-b"  (click)="redirect()" >{{'OK'|i18n}}</button>
+          </div>
+        </div>
+      </div>
+    </vvtk-alert>
+</div>

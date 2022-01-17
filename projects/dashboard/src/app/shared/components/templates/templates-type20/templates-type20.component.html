@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Background Color" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.listLinkItem.backgroundColor"
+      [readOnly]="readOnly" mccColorPickerOrigin #trigger="mccColorPickerOrigin">
+    <mcc-color-picker mccConnectedColorPicker [mccConnectedColorPickerOrigin]="trigger">
+    </mcc-color-picker>
+  </mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addItem(0)" *ngIf="!readOnly">Add Item</button>
+    <div [sortablejs]="template.listLinkItem.linkItems" [sortablejsOptions]="groupOptionsIcon">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let item of template.listLinkItem.linkItems; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-icon" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>Item {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Item" matTooltipPosition="above" (click)="deleteItem(j)"
+            *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="item.hideContent?'展開':'收合'" matTooltipPosition="above" (click)="item.hideContent = !item.hideContent">
+            <mat-icon *ngIf="item.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!item.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="item.hideContent">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Item Text" [name]="'templateIconsTitle'+templateIndex+'_'+j" [(ngModel)]="item.text" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Item Url" [name]="'templateIconsTitle'+templateIndex+'_'+j" [(ngModel)]="item.url" [readOnly]="readOnly">
+          </mat-form-field>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addItem(j+1)" *ngIf="!readOnly">Add Item</button>
+      </div>
+    </div>
+  </div>
+</div>

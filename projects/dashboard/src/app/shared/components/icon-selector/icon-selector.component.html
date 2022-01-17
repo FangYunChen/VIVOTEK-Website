@@ -1,0 +1,40 @@
+<mat-card-content *ngIf="multiple; else singleSelector">
+  <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="selectedIcons && selectedIcons.length > 0; else noIcon">
+    <div fxLayout="column" fxLayoutAlign="center center" *ngFor="let icon of selectedIcons">
+      <img style="cursor: pointer" [src]="icon.imagePath | safeUrl" (click)="removeIcon(icon)">
+      <span>{{icon.name}}</span>
+    </div>
+  </div>
+</mat-card-content>
+
+<ng-template #singleSelector>
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="selectedIcons && selectedIcons.length > 0; else noIcon">
+      <img style="cursor: pointer" [src]="selectedIcons[0].imagePath | safeUrl" (click)="removeIcon(selectedIcons[0])">
+      <span>{{selectedIcons[0].name}}</span>
+    </div>
+  </mat-card-content>
+</ng-template>
+
+<ng-template #noIcon>
+  <p class="text-center">No icon</p>
+</ng-template>
+
+<mat-card-title>
+  <h4>{{selectIconText}}</h4>
+</mat-card-title>
+
+<mat-card-content fxLayout="column">
+  <mat-form-field>
+    <mat-select placeholder="Icon Type" name="selectedIconType" [(ngModel)]="selectedIconType" [disabled]="!pageIsEditable"
+      (selectionChange)="iconTypeChange($event.value)">
+      <mat-option *ngFor="let iconType of iconTypes" [value]="iconType.id">{{iconType.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="canSelectIcons">
+    <div fxLayout="column" fxLayoutAlign="start center" *ngFor="let icon of canSelectIcons">
+      <img style="cursor: pointer" [src]="icon.imagePath | safeUrl" (click)="addIcon(icon)">
+      <span>{{icon.name}}</span>
+    </div>
+  </div>
+</mat-card-content>

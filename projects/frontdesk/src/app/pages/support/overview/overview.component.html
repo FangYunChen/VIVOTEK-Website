@@ -1,0 +1,26 @@
+<vvtk-link-gallery *ngIf="linkGalleryData" [data]="linkGalleryData"></vvtk-link-gallery>
+<div class="news-container">
+  <div class="news-list">
+    <h4>{{'Technical Bulletins' | i18n}}</h4>
+    <div class="news-content mat-elevation-z2">
+      <div class="news-article" *ngFor="let article of technicalBulletins$ | async">
+        <vvtk-link [routerLink]="['knowledge', article.subRoute]">
+          <p class="p-large-s article-title">{{article.headline}}</p>
+        </vvtk-link>
+        <p class="p-small"> <i class="fa fa-clock-o"></i> {{article.publishedAt|date:'MMM d, y'}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="news-list">
+    <h4>{{'News Update' | i18n}}</h4>
+    <div class="news-content mat-elevation-z2">
+      <div class="news-article" *ngFor="let article of newsUpdates$ | async">
+        <vvtk-link [routerLink]="['knowledge', article.subRoute]">
+          <p class="p-large-s article-title">{{article.headline}}</p>
+        </vvtk-link>
+        <p class="p-small"> <i class="fa fa-clock-o"></i> {{article.publishedAt|date:'MMM d, y'}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<vvtk-model-selector #f [templates]="f.setTemplates(overviewTemplates.templates)"></vvtk-model-selector>

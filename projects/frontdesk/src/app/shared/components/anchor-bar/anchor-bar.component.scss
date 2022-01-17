@@ -1,0 +1,144 @@
+@import "../../../../styles/var";
+$anchorBarArrowBtnWidth: 80px;
+$anchorBarArrowBtnWidthS: 50px;
+$anchorBarHiehgt: 56px;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.anchor-bar {
+  position: relative;
+  padding: 0 $anchorBarArrowBtnWidth;
+  width: 100%;
+  height: $anchorBarHiehgt;
+  overflow: hidden;
+}
+
+.anchor-bar__line {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: $colorW;
+  box-shadow: 0 1px 1px 0 $colorGy6;
+}
+
+.anchor-bar__list-outer {
+  position: relative;
+  padding-bottom: 20px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.anchor-bar__list {
+  flex-grow: 1;
+  display: inline-block;
+  height: $anchorBarHiehgt - 4px;
+  min-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  background-color: $colorW;
+}
+
+.anchor-bar__item-outer {
+  display: inline-flex;
+  height: 100%;
+  &+.anchor-bar__item-outer {
+    margin-left: 20px;
+  }
+}
+
+.anchor-bar__item {
+  flex-grow: 1;
+  display: flex;
+  color: $colorGy6;
+  &> ::ng-deep a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 40px;
+  }
+  &.active {
+    color: $colorFont;
+  }
+}
+
+.anchor-bar__ink-bar {
+  position: absolute;
+  visibility: hidden;
+  bottom: 17px;
+  left: 0;
+  height: 2px;
+  background-color: $colorB1;
+  box-shadow: 0 0 2px 0 $colorB1;
+  transition: all .25s ease-in-out;
+  &.visible {
+    visibility: visible;
+  }
+}
+
+.anchor-bar__arrow-btn {
+  position: absolute;
+  display: flex;
+  top: 0;
+  padding-bottom: 3px;
+  height: 100%;
+  width: $anchorBarArrowBtnWidth;
+  color: transparent;
+  pointer-events: none;
+  &:not(.disabled):hover {
+    color: $colorGy3;
+  }
+  &.show {
+    color: $colorGy7;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  &.disabled {
+    color: $colorGy1;
+  }
+}
+
+.anchor-bar__arrow-btn--left {
+  left: 0;
+}
+
+.anchor-bar__arrow-btn--right {
+  right: 0;
+}
+
+.anchor-bar__arrow-btn-inner {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $colorW;
+}
+
+@media only screen and (max-width: 1400px) {
+  .anchor-bar__item {
+    &> ::ng-deep a {
+      padding: 10px 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .anchor-bar__item {
+    &> ::ng-deep a {
+      padding: 10px 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .anchor-bar {
+    padding: 0 $anchorBarArrowBtnWidthS;
+  }
+  .anchor-bar__arrow-btn {
+    width: $anchorBarArrowBtnWidthS;
+  }
+}

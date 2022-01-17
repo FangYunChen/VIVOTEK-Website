@@ -1,0 +1,58 @@
+@import '_var.scss';
+.model-icon-horizontal {
+  .wrap {
+    padding: 0;
+    max-width: 1600px;
+    .icon-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      .icon-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        margin: 0 37.5px;
+        margin-bottom: 25px;
+        @media (max-width: 1024px) {
+          width: 100%;
+          align-items: center;
+        }
+        @media (min-width: 1024px) and (max-width:1280px) {
+          width: 300px;
+        }
+        @media (min-width: 1280px) {
+          width: 400px;
+        }
+        .icon-img {
+          align-self: center;
+          height: 150px;
+          width: auto;
+        }
+        .icon-name {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          a {
+            color: $colorB6;
+          }
+          color: $colorB6;
+        }
+        .model-html-content {
+          ::ng-deep {
+            h3 {
+              line-height: 36px;
+            }
+          }
+        }
+      }
+    }
+    .more {
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<div class="container">
+  <vvtk-top-banner [rootPath]="routerUrl"></vvtk-top-banner>
+  <div class="design-tool-page">
+    <h1>{{ "Design Tool" | i18n }}</h1>
+    <section>
+      <vvtk-project [stepper]="stepper"></vvtk-project>
+    </section>
+    <mat-horizontal-stepper class="stepper" #stepper>
+      <mat-step>
+        <ng-template matStepLabel>{{
+          "Calculation Setting - Cameras" | i18n
+        }}</ng-template>
+        <vvtk-calculation-setting> </vvtk-calculation-setting>
+        <vvtk-step-btn [hasNext]="true" [canNext]="canNext"></vvtk-step-btn>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel
+          >{{ "VMS" | i18n
+          }}{{ "(Optional)" | i18n }}</ng-template
+        >
+        <vvtk-vms></vvtk-vms>
+        <vvtk-step-btn
+          [hasNext]="true"
+          [hasBack]="true"
+          [canNext]="
+            !designToolService.isExportVms || designToolService.vmsValue
+          "
+        ></vvtk-step-btn>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel
+          >{{ "NVR" | i18n
+          }}{{ "(Optional)" | i18n }}</ng-template
+        >
+        <vvtk-nvr></vvtk-nvr>
+        <vvtk-step-btn
+          [hasNext]="true"
+          [hasBack]="true"
+          [canNext]="designToolService.isAdvancedNvrDone"
+        ></vvtk-step-btn>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{ "Export" | i18n }}</ng-template>
+        <vvtk-step-btn [hasExport]="true" [hasBack]="true"></vvtk-step-btn>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <div class="go-top-btn section-content">
+      <a [href]="'javascript:;' | safe: 'url'" class="btn-top" vvtkGoTop>
+        <i class="fa fa-arrow-circle-up"></i> {{ "Top of page" | i18n }}
+      </a>
+    </div>
+  </div>
+</div>

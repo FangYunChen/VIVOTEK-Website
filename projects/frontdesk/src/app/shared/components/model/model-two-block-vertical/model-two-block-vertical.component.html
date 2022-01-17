@@ -1,0 +1,16 @@
+<section *ngIf="content" [class]="'model section model-img ' + modelStyle" [class.odd]="bgColor">
+  <div class="wrap">
+    <div class="text-block">
+      <h2>{{content.title}}</h2>
+      <div class="model-content">{{content.content}}</div>
+    </div>
+    <div class="video-block" *ngIf="modelStyle === 'model-bottomVideo'">
+      <div class="video-box">
+        <iframe [src]="'//www.youtube.com/embed/'+content.video|safe:'resourceUrl'" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="img-block" *ngIf="modelStyle === 'model-bottomImg'">
+      <img [src]="content.image.src" [alt]="content.image.alt" [title]="content.image.title">
+    </div>
+  </div>
+</section>

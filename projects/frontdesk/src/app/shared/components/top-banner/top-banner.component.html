@@ -1,0 +1,45 @@
+<div class="pageBanner" [class.hasPcBanner]="bannerImgs&&bannerImgs.imgPcSrc" [class.hasTableBanner]="bannerImgs&&bannerImgs.imgTabletSrc"
+  [class.hasAppBanner]="bannerImgs&&bannerImgs.imgMobileSrc">
+  <div class="banner-img banner-img-pc" [ngStyle]="{'background-image': 'url('+ bannerImgs.imgPcSrc +')'}" *ngIf="bannerImgs&&bannerImgs.imgPcSrc">
+    <img [src]="bannerImgs.imgPcSrc" [alt]="bannerImgs.imgPcAlt" [title]="bannerImgs.imgPcTitle">
+  </div>
+  <div class="banner-img banner-img-table" [ngStyle]="{'background-image': 'url('+ bannerImgs.imgTabletSrc +')'}" *ngIf="bannerImgs&&bannerImgs.imgTabletSrc">
+    <img [src]="bannerImgs.imgTabletSrc" [alt]="bannerImgs.imgTabletAlt" [title]="bannerImgs.imgTabletTitle">
+  </div>
+  <div class="banner-img banner-img-app" [ngStyle]="{'background-image': 'url('+ bannerImgs.imgMobileSrc +')'}" *ngIf="bannerImgs&&bannerImgs.imgMobileSrc">
+    <img [src]="bannerImgs.imgMobileSrc" [alt]="bannerImgs.imgMobileAlt" [title]="bannerImgs.imgMobileTitle">
+  </div>
+  <div class="wrap">
+    <ng-container *ngIf="highestPriorityTitle; else elseTitle">
+      <h1>{{highestPriorityTitle}}</h1>
+    </ng-container>
+
+    <ng-template #elseTitle>
+      <ng-container *ngIf="breadcrumbs.length>0; else contentPageTitleTemplate">
+        <h1>{{breadcrumbs[breadcrumbs.length-1].title}}</h1>
+      </ng-container>
+      <ng-template #contentPageTitleTemplate>
+        <h1 *ngIf="contentPageTitle">{{contentPageTitle}}</h1>
+      </ng-template>
+    </ng-template>
+  </div>
+  <div class="breadcrumbs">
+    <div class="wrap">
+      <a [routerLink]="['/index' | customPath]">{{ 'Home' | i18n }}</a>
+      <ng-container *ngFor="let link of breadcrumbs;">
+        <ng-container *ngIf="!link.url; else linkTemplate">
+          <span>{{link.title}}</span>
+        </ng-container>
+        <ng-template #linkTemplate>
+          <ng-container *ngIf="link.url.startsWith('http'); else routerTemplate">
+            <a [href]="link.url">{{link.title}}</a>
+          </ng-container>
+          <ng-template #routerTemplate>
+            <a [routerLink]="link.url">{{link.title}}</a>
+          </ng-template>
+        </ng-template>
+      </ng-container>
+      <span *ngIf="contentPageTitle && breadcrumbs[breadcrumbs.length-1]?.title !== contentPageTitle">{{contentPageTitle}}</span>
+    </div>
+  </div>
+</div>

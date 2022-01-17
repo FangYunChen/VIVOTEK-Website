@@ -1,0 +1,261 @@
+@import '_var.scss';
+h2 {
+  font-size: $sizeLg;
+  margin-bottom: 10px;
+}
+
+.model-oneCard {
+  background-color: $colorW;
+  h2 {
+    font-size: $sizeLg;
+    margin-bottom: 10px;
+  }
+  .list-col8 {
+    .list-list {
+      background-color: $colorB2;
+      padding: 15px;
+      .col-link {
+        margin-top: 10px;
+      }
+    }
+    .list-item {
+      letter-spacing: -8px;
+      color: $colorFont;
+      margin-bottom: 1px;
+      display: block;
+      padding: 8px;
+      text-decoration: none;
+      position: relative;
+      @include transition(background 0.3s);
+      &:hover {
+        background-color: lighten($colorB2, 5%);
+        @include transition(background 0.3s);
+        .col-text {
+          padding-left: 30px;
+          padding-right: 10px;
+          @include transition(padding 0.3s);
+          .title {
+            margin-bottom: 5px;
+            color: $colorB1;
+            @include transition(color 0.3s);
+          }
+        }
+        .col-img {
+          img {
+            @include transform(
+              'scale3d(1.1, 1.1, 1)'
+            ); //@include scale3d(1.1, 1.1, 1);
+            @include transition(all 0.5s);
+            @include opacity(1);
+          }
+        }
+      }
+      .col-img {
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        letter-spacing: normal;
+        overflow: hidden;
+        background-color: $colorW;
+        padding-top: 72px;
+        position: relative;
+        .img-v {
+          position: absolute;
+          width: 101%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          &:before {
+            content: '';
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+          }
+          img {
+            display: inline-block;
+            vertical-align: middle;
+            width: 100%;
+            height: auto;
+            margin-left: -6px;
+          }
+        }
+      }
+      .col-text {
+        width: 80%;
+        letter-spacing: normal;
+        display: inline-block;
+        vertical-align: top;
+        padding: 2px 20px 2px 20px;
+        background-color: transparent;
+        @include transition(padding 0.3s);
+        .title {
+          margin-bottom: 5px;
+          color: $colorFont;
+          height: 23px;
+          @include transition(color 0.3s);
+        }
+      }
+      .video {
+        position: absolute;
+        padding-top: 10%;
+        width: 20%;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        cursor: pointer;
+      }
+      .icon-vedio {
+        position: relative;
+        z-index: 0;
+        &:after {
+          width: 42px;
+          height: 27px;
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-top: -14px;
+          margin-left: -21px;
+          z-index: 1;
+          @include opacity(0.8);
+          background: url(/assets/img/icon_video.png);
+          background-size: contain;
+        }
+      }
+    }
+  }
+  &.bg-b {
+    background-color: $colorB2_;
+    .list-col8 {
+      .list-list {
+        background-color: $colorGy2;
+      }
+      .list-item {
+        &:hover {
+          background-color: lighten($colorB2, 5%);
+        }
+      }
+    }
+  }
+}
+
+.video-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 56%;
+  iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+  .model-oneCard {
+    .list-col8 {
+      .list-item {
+        margin-bottom: 0;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+}
+
+@media screen and (max-width: $widthTableApp) {
+  .model-oneCard {
+    .list-col8 {
+      .list-item {
+        .col-img {
+          width: 30%;
+        }
+        .col-text {
+          width: 70%;
+        }
+        .video {
+          padding-top: 72px;
+          width: 29%;
+          left: 4px;
+          top: 4px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  .model-oneCard {
+    .list-col8 {
+      .list-item {
+        &:hover {
+          .col-text {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+        .col-img {
+          width: 100%;
+          display: block;
+        }
+        .col-text {
+          width: 100%;
+          display: block;
+          padding: 10px 0;
+          .title {
+            font-size: $sizeNl;
+          }
+        }
+        .video {
+          padding-top: 49%;
+          width: 97%;
+        }
+      }
+      .col-link {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  h2 {
+    font-size: $sizeLger;
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  h2 {
+    font-size: $sizeNler;
+  }
+  .model-oneCard {
+    .list-col8 {
+      .list-item {
+        .col-img {
+          padding-top: 50%;
+        }
+        .icon-vedio {
+          &:after {
+            width: 70px;
+            height: 45px;
+            margin-top: -23px;
+            margin-left: -35px;
+          }
+        }
+      }
+    }
+  }
+}
+.wrap {
+  .list-row {
+    .text.limit {
+      height: 45px;
+    }
+  }
+}
+

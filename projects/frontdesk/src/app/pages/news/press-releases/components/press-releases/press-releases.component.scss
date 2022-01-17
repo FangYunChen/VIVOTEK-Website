@@ -1,0 +1,14 @@
+@import '_var.scss';
+#news {
+}
+
+@media screen and (max-width: $widthWebTable) {
+}
+@media screen and (max-width: $widthTable) {
+  #news {
+  }
+}
+@media screen and (max-width: $widthApp) {
+  #news {
+  }
+}

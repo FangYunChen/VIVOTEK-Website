@@ -1,0 +1,16 @@
+<mat-accordion displayMode="flat" [multi]="true">
+  <ng-container *ngFor="let item of data; trackBy:trackItem">
+    <mat-expansion-panel *ngIf="item.children?.length || (item.isAttribute && item.selectorType && item.selectorOptions?.length)" [expanded]="item.isExpanded || item.selectorType === 4" [hideToggle]="true" #expansionPanel (afterCollapse)="updateExpansionPanel(item, expansionPanel.expanded)" (afterExpand)="updateExpansionPanel(item, expansionPanel.expanded)">
+      <mat-expansion-panel-header *ngIf="item.selectorType !== 4" [title]="item.name" collapsedHeight="auto" expandedHeight="auto">
+        <mat-icon matPrefix>arrow_right</mat-icon>
+        <a>{{ item.name }}</a>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ng-container *ngIf="item.isAttribute && item.selectorType && item.selectorOptions?.length">
+          <vvtk-product-selector-filter [specItem]="item" [data]="item.selectorOptions"></vvtk-product-selector-filter>
+        </ng-container>
+        <vvtk-product-selector-specification *ngIf="item.children?.length" [data]="item.children"></vvtk-product-selector-specification>
+      </ng-template>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>

@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { VADPPackageRoutingModule } from './vadp-package-routing.module';
+import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedMaterialModule } from '../../../../../shared-material/shared-material.module';
+import { VvtkPipeModule } from '../../../../../shared/pipes/vvtk-pipe.module';
+import { VADPPackageListComponent } from './vadp-package-list/vadp-package-list.component';
+import { VADPPackageContentComponent } from './vadp-package-content/vadp-package-content.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    FlexLayoutModule,
+    VADPPackageRoutingModule,
+    SharedModule,
+    SharedMaterialModule,
+    VvtkPipeModule
+  ],
+  declarations: [
+    VADPPackageListComponent,
+    VADPPackageContentComponent
+  ]
+})
+export class VADPPackageModule { }

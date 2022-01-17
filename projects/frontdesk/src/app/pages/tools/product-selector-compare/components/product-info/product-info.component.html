@@ -1,0 +1,15 @@
+<dl class="compare-length-{{ data.length }}">
+  <dt></dt>
+  <dd>
+    <div class="content" *ngFor="let item of data">
+      <div class="product">
+        <vvtk-link class="product__img" [href]="item.productUrl" [useHref]="true" target="_blank">
+          <img [src]="item.imagePath | defaultProductImage" [alt]="item.imageName">
+        </vvtk-link>
+        <vvtk-link class="product__link" [href]="item.productUrl" [useHref]="true" target="_blank">
+          <strong>{{ item.productName }}</strong>
+        </vvtk-link>
+      </div>
+    </div>
+  </dd>
+</dl>

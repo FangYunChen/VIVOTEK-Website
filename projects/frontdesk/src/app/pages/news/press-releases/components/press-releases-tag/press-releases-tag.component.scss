@@ -1,0 +1,37 @@
+@import '_var.scss';
+.tag {
+  display: inline-block;
+  @include border-radius(50px);
+  border: 1px solid $colorB1;
+  padding: 1px 10px;
+  font-size: $sizeNl;
+  margin-left: 5px;
+  margin-top: 1px;
+  vertical-align: top;
+}
+.filter-model {
+  margin-top: 15px;
+  background-color: $colorGy2;
+  .selector {
+    position: relative;
+    padding: 10px 10px 10px 60px;
+    max-width: 200px;
+  }
+  label {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+  }
+}
+@media screen and (max-width: $widthApp) {
+  .filter-model {
+    margin-top: 10px;
+    margin-bottom: 0;
+    .selector {
+      padding-left: 50px;
+    }
+    label {
+      left: 0;
+    }
+  }
+}

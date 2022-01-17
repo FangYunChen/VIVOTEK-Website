@@ -1,0 +1,125 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Homepage - Main Banner</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="h1" [(ngModel)]="data.h1" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Sub Title" name="h2" [(ngModel)]="data.h2" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Url/Path" name="href" [(ngModel)]="data.href" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Background for PC</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgWeb.src">
+              <div class="text-center">
+                <img [src]="data.imgWeb.src | safeUrl" [alt]="data.imgWeb.alt" [title]="data.imgWeb.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgWebFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 1920*640)</button>
+            <input hidden type="file" #imgWebFileInput accept="image/*" (change)="imgFileSelect($event,'imgWeb')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgWebSrc" [(ngModel)]="data.imgWeb.src" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgWebTitle" [(ngModel)]="data.imgWeb.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgWebAlt" [(ngModel)]="data.imgWeb.alt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Background for Tablet</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgTable.src">
+              <div class="text-center">
+                <img [src]="data.imgTable.src | safeUrl" [alt]="data.imgTable.alt" [title]="data.imgTable.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgTableFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 1024*620)</button>
+            <input hidden type="file" #imgTableFileInput accept="image/*" (change)="imgFileSelect($event,'imgTable')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgTableSrc" [(ngModel)]="data.imgTable.src" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgTableTitle" [(ngModel)]="data.imgTable.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgTableAlt" [(ngModel)]="data.imgTable.alt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Background for Mobile</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgMobile.src">
+              <div class="text-center">
+                <img [src]="data.imgMobile.src | safeUrl" [alt]="data.imgMobile.alt" [title]="data.imgMobile.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgMobileFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 640*800)</button>
+            <input hidden type="file" #imgMobileFileInput accept="image/*" (change)="imgFileSelect($event,'imgMobile')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgMobileSrc" [(ngModel)]="data.imgMobile.src" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgMobileTitle" [(ngModel)]="data.imgMobile.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgMobileAlt" [(ngModel)]="data.imgMobile.alt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Product Picture</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="data.imgProduct.src">
+              <div class="text-center">
+                <img [src]="data.imgProduct.src | safeUrl" [alt]="data.imgProduct.alt" [title]="data.imgProduct.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgProductFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 230*150)</button>
+            <input hidden type="file" #imgProductFileInput accept="image/*" (change)="imgFileSelect($event,'imgProduct')" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imgProductSrc" [(ngModel)]="data.imgProduct.src" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imgProductTitle" [(ngModel)]="data.imgProduct.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imgMobileAlt" [(ngModel)]="data.imgProduct.alt" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <vvtk-input-container>
+              <mat-slide-toggle color="primary" name="isEnabled" [(ngModel)]="data.isEnabled" [disabled]="!pageIsEditable" vvtkhtml>
+                {{data.isEnabled?'Online':'Online'}} (Applied to All)
+              </mat-slide-toggle>
+            </vvtk-input-container>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/home/sliders/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

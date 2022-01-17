@@ -1,0 +1,34 @@
+<div [ngClass]="getClass()">
+  <div>
+    <div class="col-img" [class.icon-vedio]="card.video">
+      <div class="img-v">
+        <img *ngIf="card.image || card.img" [src]="card.image?card.image.src:card.img.src" [alt]="card.image?card.image.alt:card.img.alt"
+          [title]="card.image?card.image.title:card.img.title">
+      </div>
+      <!--
+      <div *ngIf="card.logo" class="img-v img-logo">
+        <img [src]="card.logo.src" [alt]="card.logo.alt" [title]="card.logo.title">
+      </div>
+      -->
+    </div>
+    <div class="col-text" [class.textAuto]="card.hardcode">
+      <div class="title limit">
+        <h4>{{ card.title }}</h4>
+      </div>
+      <ng-content select="[vvtkThreeCard]"></ng-content>
+    </div>
+    <div class="video" *ngIf="card.video" (click)="openVideo(card.video)"></div>
+  </div>
+  <ng-container *ngIf="coverElementA">
+    <vvtk-a [url]="card.url||card.href" [cName]="'coverLink'" [vvtkRouterLink]="vvtkRouterLink" [target]="target">
+      <ng-container HtmlContent>
+      </ng-container>
+    </vvtk-a>
+  </ng-container>
+</div>
+
+<vvtk-popup *ngIf="openPopup" [id]="'videoPopup'" [popupStyle]="'videoStyle'" (windowPopup)="windowPopup($event)">
+  <div class="video-wrap" vvtkPopup>
+    <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+  </div>
+</vvtk-popup>

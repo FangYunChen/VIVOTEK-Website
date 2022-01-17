@@ -1,0 +1,45 @@
+@import '../../../../styles/_var.scss';
+#robotPopup {
+  width: 370px;
+  margin-left: -185px;
+  .popup {
+    .btn {
+      margin: 6px 0;
+    }
+  }
+  .hide {
+    display: none;
+  }
+  .lg {
+    font-size: $sizeNler;
+    .icon {
+      display: block;
+      font-size: 2em;
+    }
+  }
+}
+
+@media screen and (max-width:$widthWebTable) {}
+
+@media screen and (max-width:$widthTable) {}
+
+@media screen and (max-width:$widthTableApp) {
+  #robotPopup {
+    .lg {
+      font-size: $sizeNl;
+    }
+  }
+}
+
+@media screen and (max-width:$widthApp) {
+  #robotPopup {
+    width: 300px;
+    margin-left: -150px;
+    .g-recaptcha {
+      margin-top: 10px;
+      margin-bottom: -10px;
+      @include transform(scale(0.83));
+      @include transform-origin(0 0);
+    }
+  }
+}

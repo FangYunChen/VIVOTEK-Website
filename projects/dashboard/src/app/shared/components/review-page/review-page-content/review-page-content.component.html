@@ -1,0 +1,94 @@
+<div fxLayout="row" *ngIf="opts">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{opts.title}}({{{draft:'Draft Version',review:'Review Version',publish:'Published Version'}[type]}})</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <div class="padding" fxLayout="column" fxLayoutAlign="start stretch" [hidden]="!canSave" *ngIf="opts.hasFile">
+          <button type="button" mat-button (click)="fileInput.click()">Upload a File</button>
+          <input hidden type="file" #fileInput accept="*" (change)="fileSelect($event)" />
+        </div>
+        <mat-card fxFlex="100%" *ngIf="opts.hasFile">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="File Url" name="fileUrl" [(ngModel)]="data.file.url" [readOnly]="!canSave">
+              <a mdSuffix target="_blank" [href]="data.file.url" matTooltip="Download" matTooltipPosition="above" *ngIf="data.file.url">
+                <mat-icon>get_app</mat-icon>
+              </a>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="100%" [hidden]="canSave" *ngIf="opts.hasContent">
+          <mat-card-content>
+            <div [innerHTML]="data.content | safeHtml"></div>
+          </mat-card-content>
+        </mat-card>
+        <mat-tab-group (selectChange)="updateEditorHtml()" [hidden]="!canSave" *ngIf="opts.hasContent">
+          <mat-tab label="Editor">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <mat-card fxFlex="100%">
+                <mat-card-content fxLayout="column">
+                  <vvtk-wysiwyg #editor path="opts.dirPath"></vvtk-wysiwyg>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Preview">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <mat-card fxFlex="100%">
+                <mat-card-content fxLayout="column">
+                  <div [innerHTML]="data.content | safeHtml"></div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <vvtk-templates #templates [path]="opts.dirPath" [types]="opts.templateTypes" [readOnly]="!canSave" *ngIf="opts.hasTemplate"></vvtk-templates>
+        <div class="padding" fxLayout="column" fxLayoutAlign="start stretch" [hidden]="!canSave" *ngIf="opts.hasSheet">
+          <button type="button" mat-button (click)="sheetFileInput.click()">Upload a Excel</button>
+          <input hidden type="file" #sheetFileInput accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            (change)="sheetFileSelect($event)" />
+        </div>
+        <vvtk-table [sheet]="sheet" *ngIf="opts.hasSheet"></vvtk-table>
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <div class="padding" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="canSubmit && reviewers">
+              <vvtk-input-container fxLayout="column">
+                <div fxLayout="column" vvtkhtml>
+                  <mat-form-field>
+                    <mat-select name="reviewer" placeholder="Reviewer" [(ngModel)]="data.reviewer.id" required>
+                      <mat-option *ngFor="let user of reviewers" [value]="user.id">{{user.name}}({{user.email}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </vvtk-input-container>
+            </div>
+            <div class="padding" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="canReject || canDelete || canPass">
+              <mat-form-field fxFlex>
+                <input matInput type="text" placeholder="Review Note" name="reviewNote" [(ngModel)]="data.reviewNote" [disabled]="!canReject"
+                  required>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="[opts.parentPath]" [queryParams]="opts.parentQuery">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="isLoading" *ngIf="canSave">Save</button>
+        <button mat-button color="primary" (click)="submit()" [disabled]="!form.valid || (templates && !templates.form.valid) || isLoading"
+          *ngIf="canSubmit && reviewers">Submit for review</button>
+        <button mat-button color="primary" (click)="reject()" [disabled]="!form.valid || (templates && !templates.form.valid) || isLoading"
+          *ngIf="canReject">Reject</button>
+        <button mat-button color="primary" (click)="pass()" [disabled]="isLoading" *ngIf="canPass">Approve</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

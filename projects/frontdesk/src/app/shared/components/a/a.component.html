@@ -1,0 +1,27 @@
+<ng-template #contentTemp>
+  <ng-content select="[HtmlContent]"></ng-content>
+</ng-template>
+<ng-container *ngIf="target && target === '_blank'; else elseTemplate">
+  <a [class]="cName" [href]="blankUrl|safe:'url'" target="_blank">
+    <ng-container *ngTemplateOutlet="contentTemp"></ng-container>
+  </a>
+</ng-container>
+<ng-template #elseTemplate>
+
+  <ng-container *ngIf="url && url.startsWith('http'); else elseNoUrlTemplate">
+    <a [href]="url" [class]="cName" [target]="target">
+      <ng-container *ngTemplateOutlet="contentTemp"></ng-container>
+    </a>
+  </ng-container>
+  <ng-template #elseNoUrlTemplate>
+    <a *ngIf="!vvtkRouterLink || vvtkRouterLink.length === 0; else elseRouterTemplate" [href]="('javascript:void(0);') | safe:'url'"
+      [class]="cName">
+      <ng-container *ngTemplateOutlet="contentTemp"></ng-container>
+    </a>
+    <ng-template #elseRouterTemplate>
+      <a [routerLink]="vvtkRouterLink" [class]="cName" [target]="target">
+        <ng-container *ngTemplateOutlet="contentTemp"></ng-container>
+      </a>
+    </ng-template>
+  </ng-template>
+</ng-template>

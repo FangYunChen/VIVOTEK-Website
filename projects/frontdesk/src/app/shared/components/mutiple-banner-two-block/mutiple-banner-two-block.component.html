@@ -1,0 +1,24 @@
+<vvtk-full-slider>
+  <div class="full-slider" vvtkhtml (window:resize)="onResize($event)">
+    <div *ngFor="let item of bannerItem.imageTexts; let idx = index" class="slider-item">
+      <section *ngIf="item" class="model">
+        <div class="wrap">
+          <div [class]="'img-block ' + item.horizontal" *ngIf="item.horizontal === 'model-rightImg' || item.horizontal === 'model-leftImg'">
+            <div>
+              <img [src]="item.image.src" [alt]="item.image.alt" [title]="item.image.title">
+            </div>
+          </div>
+          <div [class]="'text-block ' + item.horizontal">
+            <h2 class="title-text">{{item.title}}</h2>
+            <div [innerHtml]="item.htmlContent" class="model-content p-medium"></div>
+            <vvtk-a *ngIf="item.urlEnabled && item.url" [url]="item.url" [cName]="'btn btn-b'">
+              <ng-container HtmlContent>
+                {{'More'|i18n}}
+              </ng-container>
+            </vvtk-a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</vvtk-full-slider>

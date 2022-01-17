@@ -1,0 +1,28 @@
+<div class='OssCategoryDeleteConfirm'>
+  <form [formGroup]="form" (submit)='Delete()'>
+    <h1 mat-dialog-title>Delete? {{data.title}}</h1>
+    <div class='OssCategoryDeleteConfirm__body'>
+      <div class="OssCategoryDeleteConfirm__body_description">replace by</div>
+      <div class="OssCategoryDeleteConfirm__body_selectArea" mat-dialog-content>
+        <mat-form-field>
+          <mat-select formControlName="mainCategoryObj" placeholder="Category" [(value)]="selectedMain">
+            <mat-option *ngFor="let item of data.mainCateList" [value]="item">
+              {{item.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="data.isSub">
+          <mat-select formControlName="subCategoryId" placeholder="Subcategory">
+            <mat-option *ngFor="let item of selectedMain.subCategories" [value]="item.id">
+              {{item.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="OssCategoryDeleteConfirm__body_actionArea" mat-dialog-actions>
+        <button mat-raised-button type="button" (click)="Cancel()" [disabled]="isClick">Cancel</button>
+        <button mat-raised-button type="submit" color='warn' [disabled]="!form.valid || isClick">Delete</button>
+      </div>
+    </div>
+  </form>
+</div>

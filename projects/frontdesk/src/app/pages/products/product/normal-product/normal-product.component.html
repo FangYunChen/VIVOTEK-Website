@@ -1,0 +1,31 @@
+<ng-container *ngIf="anchorBarItems?.length">
+  <vvtk-anchor-bar [data]="anchorBarItems" vvtkFixedTop></vvtk-anchor-bar>
+</ng-container>
+<div class="main-content">
+  <ng-container *ngIf="displayMainInfo">
+    <vvtk-product-main-info [data]="productMainInfo"></vvtk-product-main-info>
+    <hr>
+  </ng-container>
+  <ng-container *ngFor="let tabItem of productTabInfos">
+    <ng-container [ngSwitch]="tabItem.tabType">
+      <div class="anchor" [id]="tabItem.anchorUrl"></div>
+      <ng-container *ngSwitchCase="1">
+        <vvtk-model-list-item [template]="keyFeaturesTemplate"></vvtk-model-list-item>
+      </ng-container>
+      <ng-container *ngSwitchCase="4">
+        <vvtk-model-specifications class="section" [data]="specifications"></vvtk-model-specifications>
+      </ng-container>
+      <ng-container *ngSwitchCase="8">
+        <vvtk-model-table-download class="section" [data]="downloadData" (selectedLangChange)="downloadLangChange($event)"></vvtk-model-table-download>
+      </ng-container>
+      <ng-container *ngSwitchCase="10">
+        <vvtk-model-title-images [template]="relatedProductTemplate"></vvtk-model-title-images>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <ng-container *ngIf="tabItem.templates">
+          <vvtk-model-selector #f [templates]="f.setTemplates(tabItem.templates)"></vvtk-model-selector>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

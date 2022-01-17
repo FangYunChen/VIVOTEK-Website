@@ -1,0 +1,41 @@
+<div id="register" class="container">
+  <vvtk-top-banner [contentPageTitle]="'Registration Verification' | i18n"></vvtk-top-banner>
+  <section class="process section">
+    <div class="wrap">
+      <ul class="text-center">
+        <li class="active">
+          <span class="num">1</span>
+          <span class="text">{{'Information'|i18n}}</span>
+        </li>
+        <li class="active">
+          <span class="num">2</span>
+          <span class="text">{{'Verification'|i18n}}</span>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <span class="text">{{'Complete'|i18n}}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Verification'|i18n}}</h2>
+      <div class="model-form text-center">
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <p *ngIf="!isProcessing" class="text-center" [innerHTML]="'Verification mail has been sent to %s. Please check your email inbox.'|i18n:'<a [href]=\''+('javascript:;' | safe:'url')+'\'>'+email+'</a>'"></p>
+              <p *ngIf="isProcessing" class="text-center">{{ message }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12 btn-box text-center">
+            <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="resend()">{{'Resend verification mail'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

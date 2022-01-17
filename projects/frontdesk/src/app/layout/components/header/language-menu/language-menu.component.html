@@ -1,0 +1,23 @@
+<div class="language text-left open">
+  <div class="wrap">
+    <div class="language-top text-right">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closeLanguage($event)">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <div class="language-list list-row" ng-init="totalNode=0" >
+      <div class="list-col list-col12" ng-repeat-while="totalNode<24">
+        <ul class="language-height">
+          <ng-container *ngFor="let continent of _MenuNode;">
+            <ng-container *ngFor="let country of continent.countries;let lastRecotd = last;">
+              <li>
+                <a [href]="('javascript:;' | safe:'url')" (click)="switchLanguage(country.code)">{{ getCountryName(country) }}</a>
+              </li>
+            </ng-container>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mask open bg-bk" (click)="closeLanguage($event)"></div>

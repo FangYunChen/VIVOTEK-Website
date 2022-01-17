@@ -1,0 +1,4 @@
+<div class="tabs-slider-nav">
+  <a *ngFor="let taber of tabList" [href]="('javascript:;' | safe:'url')" [class.active]="preString+taber === tabsActive" (click)="click(preString+taber)"
+    (mouseover)="mouseover(preString+taber)">{{taber}}</a>
+</div>

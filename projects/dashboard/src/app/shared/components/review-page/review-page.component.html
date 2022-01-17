@@ -1,0 +1,125 @@
+<div fxLayout="row" *ngIf="opts">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{opts.title}}</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <ng-content select="[vvtkhtml]"></ng-content>
+    <mat-card-content fxLayout.lt-sm="column" fxLayout="row" fxLayoutAlign="space-around stretch" *ngIf="data">
+      <mat-card fxFlex.lt-sm="100%" fxFlex="32%">
+        <mat-card-title>
+          <span>Draft Version</span>
+          <span fxFlex></span>
+          <button mat-button [routerLink]="[opts.routerPath,'content','draft']" *ngIf="pageDraftIsViewable">Enter</button>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" *ngIf="!data.draft">
+          <p>Without Data</p>
+        </mat-card-content>
+        <mat-card-content fxLayout="column" *ngIf="data.draft">
+          <p>{{data.draft.status==5?'With Data':'Without Data'}}</p>
+          <p *ngIf="data.draft.updatedAt">
+            <span>Update Time:
+              <br>{{data.draft.updatedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.draft.updatedUser">
+            <span>Update By:
+              <br>{{data.draft.updatedUser.name}} ({{data.draft.updatedUser.email}})</span>
+          </p>
+          <p *ngIf="data.draft.submitedAt">
+            <span>Submitted for Review Time:
+              <br>{{data.draft.submitedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.draft.submitedUser">
+            <span>Submitted for Review By:
+              <br>{{data.draft.submitedUser.name}} ({{data.draft.submitedUser.email}})</span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex.lt-sm="100%" fxFlex="32%">
+        <mat-card-title>
+          <span>Review Version</span>
+          <span fxFlex></span>
+          <button mat-button [routerLink]="[opts.routerPath,'content','review']" *ngIf="pageReviewIsViewable && data.review && [0,1].indexOf(data.review.status)>-1">Enter</button>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" *ngIf="!data.review">
+          <p>Without Data</p>
+        </mat-card-content>
+        <mat-card-content fxLayout="column" *ngIf="data.review">
+          <p>
+            <span>Status:
+              <br>{{['Pending review','Rejected','刪除','Published'][data.review.status]}}</span>
+          </p>
+          <p *ngIf="data.review.submitedAt">
+            <span>Submitted for Review Time:
+              <br>{{data.review.submitedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.review.submitedUser">
+            <span>Submitted for Review By:
+              <br>{{data.review.submitedUser.name}} ({{data.review.submitedUser.email}})</span>
+          </p>
+          <p *ngIf="data.review.reviewAt">
+            <span>Review Time:
+              <br>{{data.review.reviewAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.review.reviewer">
+            <span>{{data.review.reviewAt?'Reviewer':'Designated Reviewer'}}:
+              <br>{{data.review.reviewer.name}} ({{data.review.reviewer.email}})</span>
+          </p>
+          <p *ngIf="data.review.rejectedAt">
+            <span>Reject Time:
+              <br>{{data.review.rejectedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.review.rejectedUser">
+            <span>Rejected by:
+              <br>{{data.review.rejectedUser.name}} ({{data.review.rejectedUser.email}})</span>
+          </p>
+          <p *ngIf="data.review.deletedAt">
+            <span>刪除時間：
+              <br>{{data.review.deletedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.review.deletedUser">
+            <span>刪除者：
+              <br>{{data.review.deletedUser.name}} ({{data.review.deletedUser.email}})</span>
+          </p>
+          <p *ngIf="data.review.publishedAt">
+            <span>Publish Time:
+              <br>{{data.review.publishedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.review.publishedUser">
+            <span>Publisher:
+              <br>{{data.review.publishedUser.name}} ({{data.review.publishedUser.email}})</span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card fxFlex.lt-sm="100%" fxFlex="32%">
+        <mat-card-title>
+          <span>Published Version</span>
+          <span fxFlex></span>
+          <button mat-button [routerLink]="[opts.routerPath,'content','publish']" *ngIf="pagePublishIsViewable && data.publish">Enter</button>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" *ngIf="!data.publish">
+          <p>Without Data</p>
+        </mat-card-content>
+        <mat-card-content fxLayout="column" *ngIf="data.publish">
+          <p *ngIf="data.publish.submitedAt">
+            <span>Submitted for Review Time:
+              <br>{{data.publish.submitedAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.publish.submitedUser">
+            <span>Submitted for Review By:
+              <br>{{data.publish.submitedUser.name}} ({{data.publish.submitedUser.email}})</span>
+          </p>
+          <p *ngIf="data.publish.reviewAt">
+            <span>Review Time:
+              <br>{{data.publish.reviewAt | amDateFormat:'YYYY/MM/DD HH:mm:ss'}}</span>
+          </p>
+          <p *ngIf="data.publish.reviewer">
+            <span>Reviewer:
+              <br>{{data.publish.reviewer.name}} ({{data.publish.reviewer.email}})</span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

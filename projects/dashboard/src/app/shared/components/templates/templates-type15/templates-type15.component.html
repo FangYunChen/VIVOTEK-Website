@@ -1,0 +1,49 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title" [readOnly]="readOnly">
+  </mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addVideo(0)" *ngIf="!readOnly">Add Video</button>
+    <div [sortablejs]="template.videos" [sortablejsOptions]="groupOptionsVideo">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let video of template.videos; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-video" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>Video {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Video" matTooltipPosition="above" (click)="deleteVideo(j)"
+            *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="video.hideContent?'展開':'收合'" matTooltipPosition="above"
+            (click)="video.hideContent = !video.hideContent">
+            <mat-icon *ngIf="video.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!video.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!video.hideContent">
+          {{video.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="video.hideContent">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Title" [name]="'templateVideosTitle'+templateIndex+'_'+j" [(ngModel)]="video.title" [readOnly]="readOnly">
+          </mat-form-field>
+
+
+          <vvtk-input-container>
+            <mat-slide-toggle color="primary" [name]="'templateVideosUrlEnabled'+templateIndex+'_'+j" [(ngModel)]="video.urlEnabled"
+              vvtkhtml [disabled]="readOnly">
+              {{video.urlEnabled?'Enabled Url':'Disabled Url'}}
+            </mat-slide-toggle>
+          </vvtk-input-container>
+          <mat-form-field fxFlex *ngIf="video.urlEnabled">
+            <input matInput placeholder="Url" [name]="'templateVideosUrl'+templateIndex+'_'+j" [(ngModel)]="video.url" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Video (Youtube code)" [name]="'templateVideosVideoUrl'+templateIndex" [(ngModel)]="video.videoUrl"
+              [readOnly]="readOnly">
+          </mat-form-field>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addVideo(j+1)" *ngIf="!readOnly">Add Video</button>
+      </div>
+    </div>
+  </div>
+</div>

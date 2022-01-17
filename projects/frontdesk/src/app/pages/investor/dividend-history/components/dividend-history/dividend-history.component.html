@@ -1,0 +1,10 @@
+<div id="dividend" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model section model-text inner">
+    <div class="wrap">
+      <h2 class="line text-center">歷年股利分配</h2>
+      <vvtk-model-selector #f [content]="f.setContent(dividendContent)"></vvtk-model-selector>
+      <vvtk-model-selector [tableName]="dividendSheet?dividendSheet.title:''" [sheet]="dividendSheet"></vvtk-model-selector>
+    </div>
+  </section>
+</div>

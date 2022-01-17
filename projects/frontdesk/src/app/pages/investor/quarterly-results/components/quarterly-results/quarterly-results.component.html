@@ -1,0 +1,29 @@
+<div id="quarterly" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+
+  <section class="model section model-text">
+    <div class="wrap">
+      <h2 class="line text-center">每季營運報告</h2>
+
+      <section class="model section tabs-slider">
+        <vvtk-tab-slider [tabList]="tabList" [preString]="'tabs'" (tabsOpen)="tabsChange($event)" [tabsActive]="tabsActive"></vvtk-tab-slider>
+        <div class="tabs-slider-content">
+          <div class="tabs-slider-block" [class.active]="'tabs'+tabList[0] === tabsActive">
+            <div class="block" *ngFor="let yearList of Quarterly_Single">
+              <h3>{{ yearList.year }}</h3>
+              <vvtk-download-list [downloadList]="yearList.reports"></vvtk-download-list>
+            </div>
+
+          </div>
+          <div class="tabs-slider-block" [class.active]="'tabs'+tabList[1] === tabsActive">
+            <div class="block" *ngFor="let yearList of Quarterly_Consolidated">
+              <h3>{{ yearList.year }}</h3>
+              <vvtk-download-list [downloadList]="yearList.reports"></vvtk-download-list>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

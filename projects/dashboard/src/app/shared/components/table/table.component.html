@@ -1,0 +1,26 @@
+<mat-card fxFlex="100%" *ngIf="sheet">
+    <mat-card-title>
+        <span>{{sheet.title}}</span>
+    </mat-card-title>
+    <mat-card-content fxLayout="column">
+        <div class="tableBox">
+            <table [style.width]="tableWidth+'px'">
+                <thead *ngIf="sheet.table.length>0">
+                    <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+                        <tr *ngIf="rowIdx<sheet.table[0][0].rowspan">
+                            <th *ngFor="let col of row;let colIdx = index" [align]="col.align" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan"
+                                [style.height]="sheet.rowsHeight[rowIdx]*1+'px'" [style.width]="sheet.colsWidth[colIdx]*8+'px'">{{col.value}}</th>
+                        </tr>
+                    </ng-container>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+                        <tr *ngIf="rowIdx>=sheet.table[0][0].rowspan">
+                            <td *ngFor="let col of row;" [align]="col.align" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan" [style.height]="sheet.rowsHeight[rowIdx]*1+'px'">{{col.value}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

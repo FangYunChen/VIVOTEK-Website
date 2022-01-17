@@ -1,0 +1,13 @@
+<section class="model-list-item model section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title|i18n}}</h3>
+    <div class="list-container">
+      <div class="list-content" [ngStyle]="{'flex-basis':ListContentRowFlexBasisStyle}" *ngFor="let listItem of template.listItems">
+        <h4 class="subtitle-text" *ngIf="listItem.title">{{listItem.title}}</h4>
+        <ul class="list">
+          <li class="list-item p-medium" *ngFor="let itemText of listItem.itemTexts">{{itemText.text}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

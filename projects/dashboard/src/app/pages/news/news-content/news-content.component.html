@@ -1,0 +1,165 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} News</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="news.title" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Description" name="description" [(ngModel)]="news.description" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="picker" *ngIf="pageIsEditable"></mat-datepicker-toggle>
+              <input matInput [matDatepicker]="picker" placeholder="Publish at (Applied to All)" name="publishAt" [(ngModel)]="news.publishAt"
+                required readonly>
+            </mat-form-field>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Tags (Applied to All)" name="tags" [value]="getTagsName(news.tags)" readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select multiple name="tags" placeholder="Tags (Applied to All)" [(ngModel)]="news.tags">
+                    <mat-option *ngFor="let newsTag of newsTags" [value]="newsTag.id">{{newsTag.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </vvtk-input-container>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="news.content | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group (selectChange)="updateEditorHtml()" [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg #editor path="News"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="news.content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Image</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="news.image.src">
+              <div class="text-center">
+                <img [src]="news.image.src | safeUrl" [alt]="news.image.alt" [title]="news.image.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 460*230)</button>
+            <input hidden type="file" #imgFileInput accept="image/*" (change)="imgFileSelect($event)" />
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image url (Applied to All)" name="imageSrc" [(ngModel)]="news.image.src" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="news.image.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="news.image.alt" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addRelated(0)" *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global') && news.related.length<3">Add Related</button>
+            <div [sortablejs]="news.related" [sortablejsOptions]="groupOptions">
+              <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let related of news.related; let i = index">
+                <mat-card-title>
+                  <mat-icon class="drag-handle" *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global')">drag_handle</mat-icon>
+                  <h3>Related {{i+1}}</h3>
+                  <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Related" matTooltipPosition="above" (click)="deleteRelated(i)"
+                    *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global')">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="related.hideContent?'展開':'收合'" matTooltipPosition="above"
+                    (click)="related.hideContent = !related.hideContent">
+                    <mat-icon *ngIf="related.hideContent">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!related.hideContent">keyboard_arrow_up</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="column" [hidden]="!related.hideContent">
+                  {{related.title}}
+                </mat-card-content>
+                <mat-card-content fxLayout="column" [hidden]="related.hideContent">
+                  <div fxLayout="row" fxLayoutAlign="center" *ngIf="related.image.src">
+                    <div class="text-center">
+                      <img [src]="related.image.src | safeUrl" [alt]="related.image.alt" [title]="related.image.title">
+                    </div>
+                  </div>
+                  <button type="button" mat-button (click)="relatedImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 460*230)</button>
+                  <input hidden type="file" #relatedImgFileInput accept="image/*" (change)="relatedImgFileSelect($event,i)" />
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Image url (Applied to All)" [name]="'relatedImageSrc'+i" [(ngModel)]="related.image.src" [readOnly]="!pageIsEditable"
+                      required>
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput maxlength="255" placeholder="Image title" [name]="'relatedImageTitle'+i" [(ngModel)]="related.image.title"
+                      [readOnly]="!pageIsEditable" required>
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Image alt" [name]="'relatedImageAlt'+i" [(ngModel)]="related.image.alt" [readOnly]="!pageIsEditable"
+                      required>
+                  </mat-form-field>
+                  <mat-divider></mat-divider>
+                  <mat-form-field fxFlex>
+                    <input matInput maxlength="255" placeholder="Title" [name]="'relatedTitle'+i" [(ngModel)]="related.title" [readOnly]="!pageIsEditable"
+                      required>
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Url/Path" [name]="'relatedUrl'+i" [(ngModel)]="related.url" [readOnly]="!pageIsEditable" required>
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-datepicker-toggle matPrefix [for]="relatedPicker" *ngIf="pageIsEditable"></mat-datepicker-toggle>
+                    <input matInput [matDatepicker]="relatedPicker" placeholder="Publish at (Applied to All)" [name]="'relatedPublishAt'+i" [(ngModel)]="related.publishAt"
+                      required readonly>
+                  </mat-form-field>
+                  <mat-datepicker #relatedPicker></mat-datepicker>
+                </mat-card-content>
+                <button type="button" mat-button (click)="addRelated(i+1)" *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global') && news.related.length<3">Add Related</button>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <vvtk-input-container>
+              <mat-slide-toggle color="primary" name="status" [(ngModel)]="status" [disabled]="!pageIsEditable" vvtkhtml>
+                {{status?'Online':'Offline'}} (Applied to All)
+              </mat-slide-toggle>
+            </vvtk-input-container>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/news/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

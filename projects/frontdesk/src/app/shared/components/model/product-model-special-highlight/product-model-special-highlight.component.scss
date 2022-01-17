@@ -1,0 +1,22 @@
+@import '_var.scss';
+
+.product-model-special-highlight {
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+
+    .special-highlight-container {
+      margin-bottom: 40px;
+
+      img {
+        width: unset;
+
+        /*for ie10 、 ie11*/
+        @media screen and (-ms-high-contrast: active),
+          (-ms-high-contrast: none) {
+          width: auto;
+        }
+      }
+    }
+  }
+}

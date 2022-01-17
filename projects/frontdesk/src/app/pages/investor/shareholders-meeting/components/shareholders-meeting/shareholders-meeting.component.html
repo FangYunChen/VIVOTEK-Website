@@ -1,0 +1,23 @@
+<div id="shareholder" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+
+  <section class="model section tabs-slider">
+    <div class="wrap">
+      <vvtk-tab-slider *ngIf="yearList$.length > 0" [tabList]="yearList$" [preString]="'year'" (tabsOpen)="tabsChange($event)"
+        [tabsActive]="tabsActive"></vvtk-tab-slider>
+    </div>
+    <div class="tabs-slider-content">
+      <ng-container *ngFor="let year of yearList$">
+        <div class="tabs-slider-block" [class.active]="'year'+ year === tabsActive">
+          <section *ngFor="let con of shardholderContents[year]" class="model section model-text inner">
+            <div class="wrap">
+              <h2 class="line text-center">{{con.title}}</h2>
+              <div [innerHtml]="con.content|safe:'html'">
+              </div>
+            </div>
+          </section>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</div>

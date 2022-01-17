@@ -1,0 +1,8 @@
+<div class="outerWrap">
+  <vvtk-header [signMask]="signMask" (signWindow)="signWindow($event)"></vvtk-header>
+  <router-outlet></router-outlet>
+  <vvtk-footer></vvtk-footer>
+</div>
+<vvtk-sign-popup *ngIf="signMask" [signMask]="signMask" [forgetMask]="forgetMask" (signWindow)="signWindow($event)" (forgetWindow)="forgetWindow($event)"
+  [signRedirect]="signRedirect"></vvtk-sign-popup>
+<vvtk-forget-popup *ngIf="forgetMask" [signMask]="signMask" [forgetMask]="forgetMask" (signWindow)="signWindow($event)" (forgetWindow)="forgetWindow($event)"></vvtk-forget-popup>

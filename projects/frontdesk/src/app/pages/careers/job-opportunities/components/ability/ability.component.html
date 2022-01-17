@@ -1,0 +1,152 @@
+<div id="careers" class="container">
+  <vvtk-top-banner [rootPath]="'/careers/job-opportunities' | customPath" [title]="('careers-ability' | i18n)"></vvtk-top-banner>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">職能項目</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="block">
+          <div class="ps">
+            <p>以下各項為晶睿通訊所重視職能，請您提出您最近(五年內)的經驗，以證明您具備該項職能。請您先看完下列說明，再填寫資料。</p>
+            <ul>
+              <li>舉一個您實際經驗過的例子(工作、學校、社團…)，並明確指出您所做的貢獻。</li>
+              <li>不要舉你知道，但沒有參與過的例子。</li>
+              <li>回答簡潔，並在空格內作答，勿提及不必要的細節；可自行增加列數，但請盡量簡述。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="block" formGroupName="teamWork">
+          <h3>團隊合作</h3>
+          <p>團隊中難免會有意見不合的時候，請舉您最近遇過的實例，並敘述意見不合的原因?您在團隊中所扮演的角色?及您當時如何面對這種情形？或採取的行動? 及該事件發展結果?</p>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="situation"></textarea>
+                <label for="">情況(S/T)</label>
+                <div *ngIf="isInvalid('teamWork.situation')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="action"></textarea>
+                <label for="">行動(A)</label>
+                <div *ngIf="isInvalid('teamWork.action')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="result"></textarea>
+                <label for="">結果(R)</label>
+                <div *ngIf="isInvalid('teamWork.result')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" formGroupName="learning">
+          <h3>持續學習</h3>
+          <p>有時候，因為工作需要及他人回饋，我們需要學習新知識技能，請舉例說明您最近曾經學習或改善自我能力的經過。敘述的內容包括學習的目的/動機、學習的方法、過程中是否遇到障礙、學習的成果。</p>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="situation"></textarea>
+                <label for="">情況(S/T)</label>
+                <div *ngIf="isInvalid('learning.situation')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="action"></textarea>
+                <label for="">行動(A)</label>
+                <div *ngIf="isInvalid('learning.action')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="result"></textarea>
+                <label for="">結果(R)</label>
+                <div *ngIf="isInvalid('learning.result')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block" formGroupName="analysisAndResolution">
+          <h3>問題分析與解決能力</h3>
+          <p>請描述您曾經解決過的複雜難題，並列出您解決問題的方法。敘述內容包括：如何確認問題、蒐集那些資訊、做了那些分析、曾經考慮過的選擇與優先方案，支持你做出決定的理由，以及結果為何?</p>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="situation"></textarea>
+                <label for="">情況(S/T)</label>
+                <div *ngIf="isInvalid('analysisAndResolution.situation')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="action"></textarea>
+                <label for="">行動(A)</label>
+                <div *ngIf="isInvalid('analysisAndResolution.action')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="result"></textarea>
+                <label for="">結果(R)</label>
+                <div *ngIf="isInvalid('analysisAndResolution.result')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block" formGroupName="active">
+          <h3>主動積極</h3>
+          <p>請舉例您曾完成之艱難的任務過程，敘述的內容包括：目的、過程中遇到的障礙?及如何克服?及結果為何?</p>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="situation"></textarea>
+                <label for="">情況(S/T)</label>
+                <div *ngIf="isInvalid('active.situation')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="action"></textarea>
+                <label for="">行動(A)</label>
+                <div *ngIf="isInvalid('active.action')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12">
+              <div class="input-box form-label">
+                <textarea class="form-control" placeholder="(簡述當時的情況及所須完成的任務)" formControlName="result"></textarea>
+                <label for="">結果(R)</label>
+                <div *ngIf="isInvalid('active.result')" class="alert alert-danger">必填</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-box btn-box text-center">
+          <a [href]="('javascript:;' | safe:'url')" class="btn btn-gy" (click)="prev($event)">上一步</a>
+          <button class="btn btn-b" [disabled]="form.invalid">下一步</button>
+          <!--
+					<div class="btn-loading" *ngIf="loadingShow"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="sr-only">Loading...</span></div>
+					-->
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

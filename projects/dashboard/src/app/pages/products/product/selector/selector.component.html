@@ -1,0 +1,112 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Edit {{product?.name}} Selector Content</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <div *ngFor="let item of data?.selectors; let i = index">
+              <ng-container [ngSwitch]="item.selectorType">
+                <ng-container *ngSwitchCase="productSelectorType.Single">
+                  <h3>{{item.specName}}</h3>
+                  <ng-template *ngTemplateOutlet="selectorOption; context:{selectors:item.selectorOptions}"></ng-template>
+                </ng-container>
+                <ng-container *ngSwitchCase="productSelectorType.Multiple">
+                  <h3>{{item.specName}}</h3>
+                  <ng-template *ngTemplateOutlet="selectorOption; context:{selectors:item.selectorOptions}"></ng-template>
+                </ng-container>
+                <ng-container *ngSwitchCase="productSelectorType.Range">
+                  <h3>{{item.specName}}</h3>
+                  <ng-template *ngTemplateOutlet="selectorRange; context:{selectors:item.selectorOptions}"></ng-template>
+                </ng-container>
+                <ng-container *ngSwitchCase="productSelectorType.YN">
+                  <!-- YN的selectors理論上只有一個 -->
+                  <ng-template *ngTemplateOutlet="selectorYN; context:{selector:item.selectorOptions[0], specName:item.specName}"></ng-template>
+                </ng-container>
+              </ng-container>
+              <mat-divider></mat-divider>
+            </div>
+
+            <ng-template #selectorOption let-selectors="selectors">
+              <div style="margin:0 0 0 30px" fxLayout="column" *ngFor="let selector of selectors">
+                <!-- This is group -->
+                <mat-card-content fxLayout="column" *ngIf="!selector.isFilter">
+                  <div fxLayout="row">
+                    <h4>{{selector.name}}</h4>
+                    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="selector.hideContent?'展開':'收合'"
+                      matTooltipPosition="above" (click)="selector.hideContent = !selector.hideContent">
+                      <mat-icon *ngIf="selector.hideContent">keyboard_arrow_down</mat-icon>
+                      <mat-icon *ngIf="!selector.hideContent">keyboard_arrow_up</mat-icon>
+                    </a>
+                  </div>
+                  <mat-card-content [hidden]="selector.hideContent">
+                    <ng-template *ngTemplateOutlet="selectorOption; context:{selectors:selector.children||[]}"></ng-template>
+                  </mat-card-content>
+                </mat-card-content>
+
+                <!-- This is filter -->
+                <mat-card-content fxLayout="row" *ngIf="selector.isFilter">
+                  <mat-checkbox [(ngModel)]="selector.content" name="content_{{selector.id}}" [disabled]="!pageIsEditable">
+                    {{selector.name}}
+                  </mat-checkbox>
+                </mat-card-content>
+              </div>
+            </ng-template>
+
+            <ng-template #selectorRange let-selectors="selectors">
+              <div style="margin:0 0 0 30px" fxLayout="column" *ngFor="let selector of selectors">
+                <mat-card-title fxLayout="row" fxLayoutAlign="start center" [hidden]="!selector.hideContent">
+                  <h4>{{selector.name}}</h4>
+                  <a mat-mini-fab class="action-btn" color="primary" matTooltip="展開" matTooltipPosition="above" (click)="selector.hideContent = !selector.hideContent">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="row" [hidden]="selector.hideContent">
+                  <div fxLayout="column">
+                    <div fxLayout="row" style="margin-bottom: 20px">
+                      <h4>{{selector.name}}</h4>
+                      <a mat-mini-fab class="action-btn" color="primary" matTooltip="收合" matTooltipPosition="above"
+                        (click)="selector.hideContent = !selector.hideContent">
+                        <mat-icon>keyboard_arrow_up</mat-icon>
+                      </a>
+                    </div>
+                    <mat-form-field>
+                      <input matInput type="number" [min]="selector.minimum" [max]="selector.content.maximum || selector.maximum"
+                        placeholder="Minimum" name="selectorContentMinimum__{{selector.id}}" [(ngModel)]="selector.content.minimum"
+                        [disabled]="!pageIsEditable">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput type="number" [min]="selector.content.minimum || selector.minimum" [max]="selector.maximum"
+                        placeholder="Maximum" name="selectorContentMaximum__{{selector.id}}" [(ngModel)]="selector.content.maximum"
+                        [disabled]="!pageIsEditable">
+                    </mat-form-field>
+                  </div>
+                </mat-card-content>
+              </div>
+            </ng-template>
+
+            <ng-template #selectorYN let-selector="selector" let-specName="specName">
+              <mat-card-content fxLayout="row" fxLayoutAlign="start center" *ngIf="selector">
+                <h3 style="margin:0">{{specName}}</h3>&nbsp;&nbsp;
+                <mat-slide-toggle color="primary" [(ngModel)]="selector.content" name="content_{{selector.id}}"
+                  [disabled]="!pageIsEditable">
+                </mat-slide-toggle>
+              </mat-card-content>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product']">Back</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

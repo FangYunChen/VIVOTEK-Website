@@ -1,0 +1,30 @@
+<div id="content" class="container">
+  <vvtk-top-banner [rootPath]="'/csr/content' | customPath" [contentPageTitle]="pageTitle"></vvtk-top-banner>
+  <div class="content-wrap">
+    <section class="model section model-nav">
+      <div class="wrap">
+        <ul [class.open]="navOpen">
+          <li class="btn-list">
+            <a (click)="navContrl($event)">
+              <i class="fa fa-th-list"></i>
+            </a>
+          </li>
+          <li *ngFor="let item of menus; let idx1 = index">
+            <a >{{ item.name }}</a><!--(click)="sideBar(idx1)"-->
+            <ul *ngIf="item.sub" class="sub" [class.open]="navControl[idx1]">
+              <li *ngFor="let sub of item.sub; let idx2 = index">
+                <a [routerLink]="[i18nService.getSelectedLanguageForLink() +'/csr/content', sub.pageId, (sub.customPath || '')]">{{ sub.title }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="content-main">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<div class="mask" [class.open]="navOpen" (click)="navContrl($event)"></div>

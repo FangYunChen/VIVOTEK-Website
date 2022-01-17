@@ -1,0 +1,4 @@
+<section *ngIf="template" class="model-banner">
+  <h3 class="title-text text-center" *ngIf="template.title">{{template.title}}</h3>
+  <vvtk-mutiple-banner-two-block [bannerItem]="template"></vvtk-mutiple-banner-two-block>
+</section>

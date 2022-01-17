@@ -1,0 +1,48 @@
+<div id="forgetPopup" class="popup-wrap open">
+  <div class="popup" [class.show]="'' === showBlock">
+    <div class="text-right">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closeForget($event)">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <h2 class="text-center">{{'Forget password'|i18n}}</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <p>{{'Please enter your email; your password will be sent to your email:'|i18n}}</p>
+      <div class="input-box form-label">
+        <input type="text" class="form-control" [formControl]="form.controls['email']" maxlength="256">
+        <label for="">{{'Account (Email)'|i18n}}</label>
+        <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+        <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="alert alert-danger">{{'Wrong format'|i18n}}</div>
+      </div>
+      <div class="input-box text-center">
+        <button type="button" class="btn btn-b" (click)="openSign($event)">{{'Back to log in page'|i18n}}</button>
+        <button type="submit" class="btn btn-r" *ngIf="!loadingShow" [disabled]="!form.valid">{{'Confirm'|i18n}}</button>
+        <div class="btn-loading" *ngIf="loadingShow">
+          <i class="fa fa-spinner fa-spin fa-fw"></i>
+          <span class="sr-only">{{'Loading...'|i18n}}</span>
+        </div>
+      </div>
+      <p class="ps">
+        {{'The system will send your account password to your email address in three minutes. Please check your e-mail inbox. If
+        you do not receive the password in the inbox, the e-mail may be classified as spam. Please cheek your spam folder.'|i18n}}
+      </p>
+    </form>
+  </div>
+  <div class="popup" [class.show]="'success' === showBlock">
+    <div class="text-center">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'If email is registered, you will get a reset link.'|i18n}}</p>
+    </div>
+  </div>
+  <div class="popup" [class.show]="'failure' === showBlock">
+    <div class="text-center">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'If email is registered, you will get a reset link.'|i18n}}</p>
+    </div>
+  </div>
+</div>
+<div class="mask open bg-bk" (click)="closeForget($event)"></div>

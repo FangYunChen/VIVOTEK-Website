@@ -1,0 +1,13 @@
+<section *ngIf="content" class="model section model-textBg" [ngStyle]="{'background-image':'url('+content.image.src+')'}">
+  <div class="wrap">
+    <h2 class="line text-center">{{content.title}}</h2>
+    <div [innerHtml]="content.content" class="model-content"></div>
+    <div class="btn-block" *ngIf="content.url">
+      <vvtk-a *ngIf="content.urlEnabled && content.url" [url]="content.url" [cName]="'btn btn-b'">
+        <ng-container HtmlContent>
+          {{'More'|i18n}}
+        </ng-container>
+      </vvtk-a>
+    </div>
+  </div>
+</section>

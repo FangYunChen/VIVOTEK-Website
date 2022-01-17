@@ -1,0 +1,121 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addCategory(0)" *ngIf="!readOnly">Add Category</button>
+  <div [sortablejs]="template.articleList.categories" [sortablejsOptions]="groupOptionsCategory">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let category of template.articleList.categories; let j = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-category" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Category {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Category" matTooltipPosition="above"
+          (click)="deleteCategory(j)" *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="category.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="category.hideContent = !category.hideContent">
+          <mat-icon *ngIf="category.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!category.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="!category.hideContent">
+        {{category.title}}
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="category.hideContent">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Category Title" [name]="'templateCategoryTitle'+templateIndex+'_'+j" [(ngModel)]="category.title"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <!--begin article-->
+        <button type="button" mat-button (click)="addArticle(j,0)" *ngIf="!readOnly">Add Article</button>
+        <div [sortablejs]="category.articles" [sortablejsOptions]="groupOptionsArticle">
+          <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let article of category.articles; let k = index">
+            <mat-card-title>
+              <mat-icon class="drag-handle-article" *ngIf="!readOnly">drag_handle</mat-icon>
+              <h4>Article {{k+1}}</h4>
+              <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Article" matTooltipPosition="above"
+                (click)="deleteArticle(j,k)" *ngIf="!readOnly">
+                <mat-icon>delete</mat-icon>
+              </a>
+              <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="article.hideContent?'展開':'收合'"
+                matTooltipPosition="above" (click)="article.hideContent = !article.hideContent">
+                <mat-icon *ngIf="article.hideContent">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="!article.hideContent">keyboard_arrow_up</mat-icon>
+              </a>
+            </mat-card-title>
+            <mat-card-content fxLayout="column" [hidden]="!article.hideContent">
+              {{article.title}}
+            </mat-card-content>
+            <mat-card-content fxLayout="column" [hidden]="article.hideContent">
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Article Title" [name]="'templateArticleTitle'+templateIndex+'_'+k"
+                  [(ngModel)]="article.title" [readOnly]="readOnly">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Article Summary" [name]="'templateArticleSUmmary'+templateIndex+'_'+k"
+                  [(ngModel)]="article.summary" [readOnly]="readOnly">
+              </mat-form-field>
+              <mat-card fxFlex="100%" [hidden]="!readOnly">
+                <mat-card-content>
+                  <div [innerHTML]="article.htmlContent | safeHtml"></div>
+                </mat-card-content>
+              </mat-card>
+              <mat-tab-group [hidden]="readOnly">
+                <mat-tab label="Editor">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-card fxFlex="100%">
+                      <mat-card-content fxLayout="column">
+                        <vvtk-wysiwyg [(html)]="article.htmlContent" [path]="path"></vvtk-wysiwyg>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Preview">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-card fxFlex="100%">
+                      <mat-card-content fxLayout="column">
+                        <div [innerHTML]="article.htmlContent | safeHtml"></div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+              <!--begin video-->
+              <mat-card-content fxLayout="column">
+                <div [sortablejs]="article.youtubeUrls" [sortablejsOptions]="groupOptionsVideo">
+                  <div *ngFor="let video of article.videos;let l = index" fxLayout="row" fxLayoutAlign="start center"
+                    style="margin:10px 0">
+                    <mat-icon class="drag-handle-video" *ngIf="!readOnly">drag_handle</mat-icon>
+                    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Item" matTooltipPosition="above"
+                      (click)="addVideoUrl(j,k,l+1)" *ngIf="!readOnly">
+                      <mat-icon>add</mat-icon>
+                    </a>
+                    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Item" matTooltipPosition="above"
+                      (click)="deleteVideoUrl(j,k,l)" *ngIf="!readOnly && article.videos.length>1">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <mat-form-field fxFlex="flex-grow">
+                      <input matInput placeholder="Video Url" [name]="'templateArticleSUmmary'+templateIndex+'_'+l"
+                        [(ngModel)]="video.videoUrl" [readOnly]="readOnly">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+              <!--end video-->
+            </mat-card-content>
+            <button type="button" mat-button (click)="addArticle(j,k+1)" *ngIf="!readOnly">Add Article</button>
+          </div>
+        </div>
+        <!--end article-->
+      </mat-card-content>
+      <button type="button" mat-button (click)="addCategory(j+1)" *ngIf="!readOnly">Add Category</button>
+    </div>
+  </div>
+  <!-- 尚未完成匯出功能實作，此功能先關閉 -->
+  <!-- <vvtk-input-container>
+    <mat-slide-toggle color="primary" [(ngModel)]="template.articleList.exportable" vvtkhtml [disabled]="readOnly">
+      {{template.articleList.exportable?'Enabled Export':'Disabled Export'}}
+    </mat-slide-toggle>
+  </vvtk-input-container> -->
+</div>

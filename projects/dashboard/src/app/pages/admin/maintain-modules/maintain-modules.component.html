@@ -1,0 +1,15 @@
+<div fxLayout="row">
+    <mat-card fxFlex="100%">
+        <mat-card-title>
+            <span>System Function Module and API Corresponding Data</span>
+            <span fxFlex></span>
+        </mat-card-title>
+        <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="left">
+                <button type="button" mat-button color="primary" (click)="download()">Download</button>
+                <button type="button" mat-button color="primary" (click)="fileInput.click()" *ngIf="pageIsEditable">Upload</button>
+                <input hidden type="file" #fileInput (change)="fileSelect($event)" />
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

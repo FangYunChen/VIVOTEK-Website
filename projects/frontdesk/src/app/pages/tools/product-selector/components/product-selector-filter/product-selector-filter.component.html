@@ -1,0 +1,43 @@
+<mat-accordion displayMode="flat" [multi]="true">
+  <mat-expansion-panel [disabled]="item.isFilter" [expanded]="true" [hideToggle]="true" *ngFor="let item of data; trackBy:trackItem">
+    <mat-expansion-panel-header *ngIf="!item.isFilter" [title]="item.name" collapsedHeight="auto" expandedHeight="auto">
+      <mat-icon matPrefix *ngIf="!item.isFilter">arrow_right</mat-icon>
+      <a>{{ item.name }}</a>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <div class="filter-content" *ngIf="item.isFilter">
+        <ng-container [ngSwitch]="specItem?.selectorType">
+          <!-- SelectorType = Single -->
+          <ng-container *ngSwitchCase="1">
+            <mat-radio-group name="specId_{{ specItem?.id }}">
+              <mat-radio-button color="primary" [title]="item.name" [value]="item.name" [checked]="item.model.singleValue" (click)="radioButtonClicked(item, $event)">{{ item.name }}</mat-radio-button>
+            </mat-radio-group>
+          </ng-container>
+          <!-- SelectorType = Multi -->
+          <ng-container *ngSwitchCase="2">
+            <mat-checkbox name="specId_{{ specItem?.id }}" color="primary" [title]="item.name" [(ngModel)]="item.model.multipleValue" (ngModelChange)="selectorChanged(item)">{{ item.name }}</mat-checkbox>
+          </ng-container>
+          <!-- SelectorType = Range -->
+          <ng-container *ngSwitchCase="3">
+            <a>{{ item.name }}</a>
+            <div class="range-container">
+              <input type="number" matInput name="specId_{{ specItem?.id }}_min" [min]="item.minimum" [max]="max.value" [value]="item.minimum"
+                [(ngModel)]="item.model.rangeMinValue" (ngModelChange)="selectorChanged(item)" #min>{{ item.unit }}
+              <span>~</span>
+              <input type="number" matInput name="specId_{{ specItem?.id }}_max" [min]="min.value" [max]="item.maximum" [value]="item.maximum"
+                [(ngModel)]="item.model.rangeMaxValue" (ngModelChange)="selectorChanged(item)" #max>{{ item.unit }}
+            </div>
+          </ng-container>
+          <!-- SelectorType = Boolean -->
+          <ng-container *ngSwitchCase="4">
+            <mat-slide-toggle color="primary" [title]="item.name" labelPosition="before" [(ngModel)]="item.model.yesNoValue" (ngModelChange)="selectorChanged(item)">{{ item.name }}</mat-slide-toggle>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <p style="color: red;">Error: SelectorType {{ specItem?.selectorType }} not defined!</p>
+          </ng-container>
+        </ng-container>
+      </div>
+      <vvtk-product-selector-filter *ngIf="item.children?.length" [specItem]="specItem" [data]="item.children"></vvtk-product-selector-filter>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>

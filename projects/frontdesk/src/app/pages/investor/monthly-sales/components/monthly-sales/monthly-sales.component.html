@@ -1,0 +1,20 @@
+<div id="month" class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+
+  <section class="model section model-text">
+    <div class="wrap">
+      <h2 class="line text-center">每月營業額報告</h2>
+
+      <section class="model section tabs-slider">
+        <vvtk-tab-slider *ngIf="yearList.length > 0" [tabList]="yearList" [preString]="'tabs'" (tabsOpen)="tabsChange($event)" [tabsActive]="tabsActive"></vvtk-tab-slider>
+
+        <div *ngFor="let year of yearList" class="tabs-slider-content">
+          <div *ngIf="_Contents[year]" class="tabs-slider-block" [class.active]="'tabs'+year === tabsActive">
+            <vvtk-model-selector #f [templates]="f.setTemplates(_Contents[year].templates)"></vvtk-model-selector>
+            <vvtk-model-selector [tableName]="_Contents[year].sheet?.title || (year+'年每月營業額報告')" [sheet]="_Contents[year].sheet"></vvtk-model-selector>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

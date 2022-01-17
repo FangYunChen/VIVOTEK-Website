@@ -1,0 +1,39 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-card-content fxLayout="row">
+    <mat-form-field>
+      <mat-select placeholder="Support Product" [name]="'product_'+productIndex" [(ngModel)]="product.id" [disabled]="!pageIsEditable"
+        (selectionChange)="selectProduct()" required>
+        <mat-option *ngFor="let productOption of canSelectProductOptions" [value]="productOption.value">{{productOption.optionText}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Product" matTooltipPosition="above" (click)="productAdded.emit()"
+      *ngIf="pageIsEditable">
+      <mat-icon>add</mat-icon>
+    </a>
+    <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Category" matTooltipPosition="above" (click)="addCategory(0)"
+      *ngIf="pageIsEditable">
+      <mat-icon>playlist_add</mat-icon>
+    </a>
+    <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Product" matTooltipPosition="above" (click)="productRemoved.emit()"
+      *ngIf="pageIsEditable">
+      <mat-icon>delete</mat-icon>
+    </a>
+    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="product.hideContent?'展開':'收合'" matTooltipPosition="above"
+      (click)="product.hideContent = !product.hideContent">
+      <mat-icon *ngIf="product.hideContent">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!product.hideContent">keyboard_arrow_up</mat-icon>
+    </a>
+  </mat-card-content>
+
+  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="product.hideContent">
+    <div style="margin: 0 0 0 40px" *ngFor="let category of product.categories; let i = index; trackBy: trackCategory">
+      <mat-card-title>
+        <h4>Support Category {{i + 1}}</h4>
+      </mat-card-title>
+      <vvtk-model-category-content [pageIsEditable]="pageIsEditable" [productId]="product.id" [category]="category"
+        [selectedCategoryIds]="selectedCategoryIds" [categoryOptions]="categoryOptions" [categoryIndex]="i"
+        (categoryAdded)="addCategory(i+1)" (categoryRemoved)="deleteCategory(i)" (categorySelected)="setSelectedCategoryIds()">
+      </vvtk-model-category-content>
+    </div>
+  </mat-card-content>
+</div>

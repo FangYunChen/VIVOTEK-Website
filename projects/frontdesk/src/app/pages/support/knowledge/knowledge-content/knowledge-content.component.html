@@ -1,0 +1,33 @@
+<h3 class="title-text text-center">{{'KM/FAQ/Technical Notes' | i18n}}</h3>
+<div class="knowledge-container" *ngIf="article$ | async as article">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h4 class="article-title">{{article.headline}}</h4>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p class="p-small"> <i class="fa fa-clock-o"></i> {{article.publishedAt|date:'MMM d, y'}}</p>
+      <div class="article-content">
+        <div class="p-medium" [innerHTML]="article.content | safe:'html'"></div>
+      </div>
+      <div class="model-page">
+        <div class="page-footer">
+          <div class="tag">
+            <i class="fa fa-tags"></i>
+            <ng-container *ngFor="let tag of article.tags">
+              <vvtk-link cName="link" [routerLink]="[tagNavigateRoutePrefix,'tag',tag.id]">
+                {{tag.name}}
+              </vvtk-link>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <button class="general-button" vvtkGoBack>
+    {{'Back'|i18n}}
+  </button>
+</div>

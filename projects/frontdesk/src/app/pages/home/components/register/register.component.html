@@ -1,0 +1,260 @@
+<div id="register" class="container">
+  <vvtk-top-banner [contentPageTitle]="'Register' | i18n"></vvtk-top-banner>
+  <section class="process section">
+    <div class="wrap">
+      <ul class="text-center">
+        <li class="active">
+          <span class="num">1</span>
+          <span class="text">{{'Information'|i18n}}</span>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <span class="text">{{'Verification'|i18n}}</span>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <span class="text">{{'Complete'|i18n}}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Enter Your Information'|i18n}}</h2>
+      <section class="model-form section">
+        <form [formGroup]="form" (ngSubmit)="next($event)">
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['email'].invalid && form.controls['email'].touched}">
+                <input type="text" class="form-control" [formControl]="form.controls['email']" maxlength="256">
+                <label for="">
+                  <span class="colorR">*</span>{{'Account (Email)'|i18n}}</label>
+
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['industryType']" maxlength="256">
+                <label for="">{{'Industry'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['email'].invalid && form.controls['email'].touched}">
+                <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched; else patternElseTemplate" class="alert alert-danger">
+                  {{'Required'|i18n}}
+                </div>
+                <ng-template #patternElseTemplate>
+                  <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched; else duplicatedElseTemplate" class="alert alert-danger">
+                    {{'Wrong format'|i18n}}
+                  </div>
+                  <ng-template #duplicatedElseTemplate>
+                    <div *ngIf="form.controls['email'].hasError('duplicatedUsername') && form.controls['email'].touched; else elseTemplate" class="alert alert-danger">
+                      {{'A link to activate your account has been emailed to the address provided.'|i18n}}
+                    </div>
+                    <ng-template #elseTemplate>
+                      <div *ngIf="!form.controls['email'].hasError('required') && form.controls['email'].touched" class="alert alert-check">
+                        <i class="fa fa-check-circle-o"></i>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </ng-template>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select name="" id="" [formControl]="form.controls['countryId']" (change)="countriesChanged($event)">
+                  <option [value]="null">{{'Please select'|i18n}}</option>
+                  <option *ngFor="let country of countries" value="{{ country.id }}">{{ country.name }}</option>
+                </select>
+                <label for="">{{'Country'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select [formControl]="form.controls['identityRole']">
+                  <option value="">{{'Please select'|i18n}}</option>
+                  <option *ngFor="let identityRole of identityRoles" value="{{ identityRole }}">{{ identityRole }}</option>
+                </select>
+                <label for="">{{'User Type'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['firstName'].invalid && form.controls['firstName'].touched}">
+                <input type="text" [formControl]="form.controls['firstName']" maxlength="128">
+                <label for=""><span class="colorR">*</span>{{'First Name'|i18n}}</label>
+                <div *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['lastName'].invalid && form.controls['lastName'].touched}">
+                <input type="text" [formControl]="form.controls['lastName']" maxlength="128">
+                <label for=""><span class="colorR">*</span>{{'Last Name'|i18n}}</label>
+                <div *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row" *ngIf="externalLoginData === null">
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['password'].invalid && form.controls['password'].touched}">
+                <input type="password" [formControl]="form.controls['password']">
+                <label for="">
+                  <span class="colorR">*</span>{{'Password'|i18n}}</label>
+                <div *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+                <div *ngIf="form.controls['password'].hasError('minlength') && form.controls['password'].touched" class="alert alert-danger">
+                  {{'Password is too short. Please input at least %s characters.'|i18n:form.controls['password'].errors['minlength']['requiredLength']}}
+                </div>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label" [ngClass]="{'has-error':form.controls['checkPassword'].invalid && form.controls['checkPassword'].touched}">
+                <input type="password" [formControl]="form.controls['checkPassword']">
+                <label for="">
+                  <span class="colorR">*</span>{{'Confirm password'|i18n}}</label>
+                <div *ngIf="form.controls['checkPassword'].hasError('required') && form.controls['checkPassword'].touched; else elseIfTemplate"
+                  class="alert alert-danger">
+                  {{'Required'|i18n}}
+                </div>
+                <ng-template #elseIfTemplate>
+                  <div *ngIf="form.controls['checkPassword'].hasError('validateNotEqual') && form.controls['checkPassword'].touched; else elseTemplate"
+                    class="alert alert-danger">
+                    {{'Two passwords are inconsistent'|i18n}}
+                  </div>
+                  <ng-template #elseTemplate>
+                    <div *ngIf="!form.controls['checkPassword'].hasError('validateNotEqual') && form.controls['checkPassword'].touched" class="alert alert-check">
+                      <i class="fa fa-check-circle-o"></i>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['phone']" maxlength="64">
+                <label for="">{{'Phone Number'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['mobile']" maxlength="64">
+                <label for="">{{'Mobile Phone Number'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['fax']" maxlength="64">
+                <label for="">{{'Fax Number'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['website']" maxlength="1024">
+                <label for="">{{'Website'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['source']" maxlength="256">
+                <label for="">{{'Source'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['company']" maxlength="256">
+                <label for=""><span class="colorR">*</span>{{'Company'|i18n}}</label>
+                <div *ngIf="form.controls['company'].hasError('required') && form.controls['company'].touched" class="alert alert-danger">{{'Required'|i18n}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['department']" maxlength="256">
+                <label for="">{{'Department'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['title']" maxlength="256">
+                <label for="">{{'Title'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <select name="" id="" [formControl]="form.controls['stateId']">
+                  <option value="">{{'Please select'|i18n}}</option>
+                  <option *ngFor="let state of states" value="{{ state.id }}">{{ state.name }}</option>
+                </select>
+                <label for="">{{'Province / State'|i18n}}</label>
+              </div>
+            </div>
+            <div class="list-col list-col6">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['city']" maxlength="256">
+                <label for="">{{'City'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12 input-box">
+              <div class="input-box form-label">
+                <input type="text" [formControl]="form.controls['address']" maxlength="1024">
+                <label for="">{{'Address'|i18n}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="list-row agree-box">
+            <div class="list-col list-col12 input-box text-center">
+              <label for="agree">
+                <input type="checkbox" id="agree" (click)="agreeForm(formDisabled)">
+                <span [innerHTML]="('Agree %s and %s'|i18n:'<a href=\''+('/privacy'|customPath)+'\' target=\'_blank\'>'+('Privacy Policy'|i18n)+'</a>':'<a href=\''+('/terms-of-use'|customPath)+'\' target=\'_blank\'>'+('Terms of Use'|i18n)+'</a>')">
+                </span>
+              </label>
+              <label for="newsletter">
+                <input type="checkbox" [formControl]="form.controls['eNewsSubscription']"> {{'Subscribe to VIVOTEK e-newsletter'|i18n}}
+              </label>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="list-col list-col12 btn-box text-center">
+              <button type="submit" class="btn btn-b" *ngIf="!loadingShow" [disabled]="!form.valid">{{'Next'|i18n}}</button>
+              <div class="btn-loading" *ngIf="loadingShow">
+                <i class="fa fa-spinner fa-spin fa-fw"></i>
+                <span class="sr-only">{{'Loading...'|i18n}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </section>
+</div>
+
+<vvtk-popup *ngIf="alertMask" [id]="'alertPopup'" [popupStyle]="'alertStyle'" (windowPopup)="windowPopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span>
+        <span [innerHTML]="'Please %s agree to the Privacy Policy and Terms of Use'|i18n:'<span class=\'colorR\'>'+('Checked'|i18n)+'</span>'"></span>
+      </p>
+    </div>
+  </div>
+</vvtk-popup>

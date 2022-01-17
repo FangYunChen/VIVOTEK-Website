@@ -1,0 +1,137 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{ isAddData?'Add':'Edit' }} Accessory Content</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <div fxLayout="column">
+          <mat-form-field fxFlex>
+            <textarea matInput placeholder="Model Name" name="ModelName" [(ngModel)]="data.modelName" [disabled]="!pageIsEditable"
+              required></textarea>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Subtitle" name="Subtitle" [(ngModel)]="data.subtitle" [disabled]="!pageIsEditable"
+              required>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-card-title>
+            <h4>Image</h4>
+            <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="image.hideContent?'展開':'收合'"
+              matTooltipPosition="above" (click)="image.hideContent = !image.hideContent">
+              <mat-icon *ngIf="image.hideContent">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="!image.hideContent">keyboard_arrow_up</mat-icon>
+            </a>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" [hidden]="!image.hideContent">
+            {{image.title}}
+          </mat-card-content>
+          <mat-card-content fxLayout="column" [hidden]="image.hideContent">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="image.src">
+              <div class="text-center">
+                <img [src]="image.src | safeUrl" [alt]="image.alt" [title]="image.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 350*350)</button>
+            <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadFile($event)" [disabled]="isLoading" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image src" name="templateImagesSrc" [(ngModel)]="image.src" [disabled]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-card-title>
+            <h4>Combination Index</h4>
+            <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" *ngIf="pageIsEditable"
+              (click)="addCombinationIndex()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-content>
+            <div [sortablejs]="data.combinationIndexModels" [sortablejsOptions]="groupOptions">
+              <div fxLayout="column" fxLayoutAlign="start stretch" style="margin-left:30px" *ngFor="let combinationIndex of data.combinationIndexModels; index as Idx">
+                <mat-card-title>
+                  <mat-icon class="drag-handle">drag_handle</mat-icon>
+                  <h4>Combination {{Idx + 1}}</h4>
+                  <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="combinationIndex.hideContent?'展開':'收合'"
+                    matTooltipPosition="above" (click)="combinationIndex.hideContent = !combinationIndex.hideContent">
+                    <mat-icon *ngIf="combinationIndex.hideContent">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!combinationIndex.hideContent">keyboard_arrow_up</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" *ngIf="pageIsEditable"
+                    (click)="deleteCombinationIndex(combinationIndex)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="column" [hidden]="combinationIndex.hideContent">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Name" name="Name[{{Idx}}]" [(ngModel)]="combinationIndex.name"
+                      [disabled]="!pageIsEditable"></textarea>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Img Src" name="Img[{{Idx}}]" [(ngModel)]="combinationIndex.img"
+                      [disabled]="!pageIsEditable">
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayoutAlign="center" *ngIf="combinationIndex.img">
+                    <div class="text-center">
+                      <img [src]="combinationIndex.img | safeUrl">
+                    </div>
+                  </div>
+                  <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+                    a image (Recommended size: 150*150)</button>
+                  <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadcombinationIndexFile(combinationIndex, $event)"
+                    [disabled]="isLoading" />
+                </mat-card-content>
+              </div>
+            </div>
+          </mat-card-content>
+        </div>
+        <br>
+        <div>
+          <h4>Appendix</h4>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.appendix | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="data.appendix" [path]="appendixHtmlEditorPath">
+                      </vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.appendix | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/tools/accessory']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

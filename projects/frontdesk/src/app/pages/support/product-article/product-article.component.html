@@ -1,0 +1,34 @@
+<div class="product-article">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let tab of tabs" [routerLink]="[tabNavigateRoute, tab.path]" routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive">
+      {{tab.title | i18n}}
+    </a>
+  </nav>
+  <div class="category-article-container">
+    <div class="category-container">
+      <ul [class.open]="menuOpen">
+        <li class="btn-list">
+          <a (click)="menuOpen = !menuOpen">
+            <i class="fa fa-th-list"></i>
+          </a>
+        </li>
+        <li *ngFor="let item of menu$ | async">
+          <ng-template *ngTemplateOutlet="categoryList; context:{item:item}"></ng-template>
+        </li>
+      </ul>
+    </div>
+    <div class="article-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<ng-template #categoryList let-item="item">
+  <a (click)="selectItem(item.id)" [class.chosen]="categoryId === item.id">{{ item.name }}</a>
+  <ul *ngIf="item.children">
+    <li *ngFor="let child of item.children">
+      <ng-template *ngTemplateOutlet="categoryList; context:{item:child}"></ng-template>
+    </li>
+  </ul>
+</ng-template>

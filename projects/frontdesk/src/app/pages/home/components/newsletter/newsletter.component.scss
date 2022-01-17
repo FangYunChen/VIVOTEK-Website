@@ -1,0 +1,72 @@
+@import '_var.scss';
+.model-newsletter {
+  background-color: $colorGy2;
+  p {
+    margin: 8px 0;
+  }
+  .input-box {
+    margin: 8px 60px;
+    input {
+      padding-right: 120px;
+      padding-left: 10px;
+      border: 1px solid $colorGy1;
+    }
+  }
+}
+
+#robotPopup {
+  width: 370px;
+  margin-left: -185px;
+  .popup {
+    .btn {
+      margin: 6px 0;
+    }
+  }
+  .hide {
+    display: none;
+  }
+  .lg {
+    font-size: $sizeNler;
+    .icon {
+      display: block;
+      font-size: 2em;
+    }
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+}
+
+@media screen and (max-width: $widthTable) {
+  .model-newsletter {
+    .input-box {
+      margin-top: 20px;
+      margin: 20px 40px 8px;
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  #robotPopup {
+    .lg {
+      font-size: $sizeNl;
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  .model-newsletter {
+    .input-box {
+      margin: 20px 0 0;
+    }
+  }
+  #robotPopup {
+    width: 300px;
+    margin-left: -150px;
+    .g-recaptcha {
+      margin-top: 10px;
+      margin-bottom: -10px;
+      @include transform(scale(0.83)) @include transform-origin(0 0);
+    }
+  }
+}

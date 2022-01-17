@@ -1,0 +1,86 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>股東會</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <div fxLayout="row" fxLayoutAlign="end center" vvtkhtml>
+      <vvtk-input-container>
+        <mat-form-field vvtkhtml>
+          <mat-select placeholder="Year" [(ngModel)]="year" (selectionChange)="changeYear()">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </vvtk-input-container>
+    </div>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addContent(0)" *ngIf="pageIsEditable">Add Content</button>
+            <div [sortablejs]="data" [sortablejsOptions]="groupOptions">
+              <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let content of data;let i = index">
+                <mat-card-title>
+                  <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                  <h3>Content {{i+1}}</h3>
+                  <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Content" matTooltipPosition="above" (click)="deleteContent(i)"
+                    *ngIf="pageIsEditable">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="content.hideContent?'展開':'收合'" matTooltipPosition="above"
+                    (click)="content.hideContent = !content.hideContent">
+                    <mat-icon *ngIf="content.hideContent">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!content.hideContent">keyboard_arrow_up</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="column" [hidden]="!content.hideContent">
+                  {{content.title}}
+                </mat-card-content>
+                <mat-card-content fxLayout="column" [hidden]="content.hideContent">
+                  <mat-form-field fxFlex>
+                    <input matInput maxlength="255" placeholder="title" [name]="'title'+i" [(ngModel)]="content.title" [readOnly]="!pageIsEditable"
+                      required>
+                  </mat-form-field>
+                  <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                    <mat-card-content>
+                      <div [innerHTML]="content.content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                  <mat-tab-group (selectChange)="updateEditorHtml(i)" [hidden]="!pageIsEditable">
+                    <mat-tab label="Editor">
+                      <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-card fxFlex="100%">
+                          <mat-card-content fxLayout="column">
+                            <vvtk-wysiwyg #editor [path]="dirPath" [html]="content.content"></vvtk-wysiwyg>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Preview">
+                      <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-card fxFlex="100%">
+                          <mat-card-content fxLayout="column">
+                            <div [innerHTML]="content.content | safeHtml"></div>
+                          </mat-card-content>
+                        </mat-card>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </mat-card-content>
+                <button type="button" mat-button (click)="addContent(i+1)" *ngIf="pageIsEditable">Add Content</button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

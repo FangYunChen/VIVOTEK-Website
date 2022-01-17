@@ -1,0 +1,17 @@
+<div class="container">
+  <vvtk-top-banner [rootPath]="routerUrl"></vvtk-top-banner>
+  <div class="product-selector-compare-page">
+    <div class="header">
+      <button mat-flat-button class="back-btn" vvtkGoBack>{{'Back'|i18n}}</button>
+    </div>
+    <div class="main-content">
+      <vvtk-product-info [data]="productInfoList"></vvtk-product-info>
+      <vvtk-nested-specification-compare [data]="specTreeList"></vvtk-nested-specification-compare>
+    </div>
+    <div class="footer">
+      <button mat-flat-button class="back-btn" vvtkGoBack>{{'Back'|i18n}}</button>
+      <button mat-flat-button class="download-btn" [disabled]="isDownloading" (click)="downloadPDF()">
+        {{'Download PDF'|i18n}}</button>
+    </div>
+  </div>
+</div>

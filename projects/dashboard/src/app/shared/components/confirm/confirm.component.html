@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>{{data.message}}</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="OK()" [disabled]="isClick">OK</button>
+    <span fxFlex></span>
+    <button mat-button (click)="Cancel()" [disabled]="isClick">Cancel</button>
+</div>

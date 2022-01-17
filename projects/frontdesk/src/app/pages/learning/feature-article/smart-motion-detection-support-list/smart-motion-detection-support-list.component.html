@@ -1,0 +1,82 @@
+<div id="support-list-tab" class="container">
+  <vvtk-top-banner></vvtk-top-banner><mat-tab-group  mat-stretch-tabs [selectedIndex]="contents.length">
+    <mat-tab *ngFor="let content of contents">
+      <ng-template mat-tab-label>
+        <a class="p-medium" [routerLink]="this.i18nService.getSelectedLanguageForLink() + '/learning/feature-article/smart-motion-detection'" [fragment]="content['anchorUrl']">
+          <span class="link-text">{{content['tabName']}}</span>
+        </a>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <a class="p-medium" [routerLink]="this.i18nService.getSelectedLanguageForLink() + '/learning/feature-article/smart-motion-detection/support-list'" fragment="support">
+          <span class="link-text">Support List & Package</span>
+        </a>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div id="support-list" class="container">
+  <section class="support-list section">
+    <div class="wrap">
+      <h3 class="title-text text-center">VIVOTEK Device Support List</h3>
+      <div class="filter-box">
+        <div class="filter-dropdown">
+          <select [(ngModel)]="supportType" (change)="filterSupportModel()">
+            <option *ngFor="let filterItem of supportTypeFilter" [ngValue]="filterItem.value">{{filterItem.text}}
+            </option>
+          </select>
+        </div>
+        <!-- <div class="filter-dropdown">
+          <select [(ngModel)]="supportStatus" (change)="filterSupportModel()">
+            <option *ngFor="let filterItem of supportStatusFilter" [ngValue]="filterItem.value">{{filterItem.text}}
+            </option>
+          </select>
+        </div> -->
+        <div class="filter-dropdown">
+          <select [(ngModel)]="supportFeature" (change)="filterSupportModel()">
+            <option *ngFor="let filterItem of supportFeatureFilter" [ngValue]="filterItem.value">{{filterItem.text}}
+            </option>
+          </select>
+        </div>
+        <div class="filter-search-box">
+          <mat-icon style="color:darkgrey;margin-top: 7px" matSuffix>search</mat-icon>
+          <input [(ngModel)]="modelName" type="text" [placeholder]="'Search by Model'|i18n" (keyup)="filterSupportModel()"
+            (change)="filterSupportModel()">
+        </div>
+        <div class="filter-reset-box">
+          <button class="reset-button" (click)="resetFilter()">Reset</button>
+        </div>
+      </div>
+      <ng-container *ngFor="let supportTypeGroup of supportTypeFilter">
+        <div class="support-container" *ngIf="groupedSupportModels.get(supportTypeGroup.value)?.length > 0">
+          <h4 class="text-center" *ngIf="supportTypeGroup.value != null">{{supportTypeGroup.text}}</h4>
+          <div class="support-model-container">
+            <div class="support-content" *ngFor="let support of groupedSupportModels.get(supportTypeGroup.value)">
+              <vvtk-a cName="support-link" [url]="support.url">
+                <ng-container HtmlContent>
+                  <img class="support-logo" [src]="support.imageUrl" [alt]="support.imageAlt" [title]="support.imageTitle">
+                  <p class="p-medium"> {{support.modelName}} </p>
+                </ng-container>
+              </vvtk-a>
+              <br/>
+              <div *ngIf="support.featureDownloadUrl?.length > 0">
+                <button mat-icon-button (click)="dowloadURLFile(support.featureDownloadUrl[0])">
+                  <i class="material-icons" style="color:#1877ff">get_app</i>
+                </button>{{support.features[0]}}
+                <!-- <vvtk-a cName="support-link" [url]="support.featureDownloadUrl[0]">
+                  <ng-container HtmlContent>
+                    <p class="p-medium" style="color:#3C3C3C"> {{support.features[0]}} </p>
+                  </ng-container>
+                </vvtk-a> -->
+              </div>
+            </div>
+          </div>
+          <div *ngIf="filteredSupportModels.length === 0">No results found
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+  <vvtk-model-selector #f [templates]="f.setTemplates(_Content.templates)"></vvtk-model-selector>
+</div>

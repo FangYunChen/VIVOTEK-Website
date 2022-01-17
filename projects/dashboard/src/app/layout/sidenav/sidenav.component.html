@@ -1,0 +1,26 @@
+<div class="sidenav-container" fxLayout="column">
+
+  <mat-toolbar color="primary" class="sidenav-toolbar mat-elevation-z2">
+    <div fxLayout="row" style="width: 100%;">
+      <!-- <span style="width: 40px; text-align: center; margin-left: -10px;" fxFlexAlign="center">
+        <img src="assets/img/icon2.png" style="width: 40px; vertical-align: text-top;">
+      </span> -->
+      <img style="height: 80px; margin-left: -7px; margin-bottom: 0px;" src="assets/img/logo2.png" fxFlexAlign="center" class="fade-in-on-icon-sidenav">
+      <span fxFlex>
+        <!-- fill space -->
+      </span>
+      <div fxHide="true" fxHide.gt-sm="false" fxFlexAlign="center">
+        <button mat-icon-button (click)="toggleIconSidenav()">
+          <mat-icon class="icon-sidenav-toggle fade-in-on-icon-sidenav" [class.rotate]="isIconSidenav()">chevron_left</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <div class="sidenav-scrollbar-container" fxLayout="column">
+    <mat-nav-list [perfectScrollbar] fxLayout="column" class="sidenav-list sidenav-toplevel">
+      <vvtk-sidenav-item *ngFor="let item of items" [item]="item"></vvtk-sidenav-item>
+    </mat-nav-list>
+  </div>
+
+</div>

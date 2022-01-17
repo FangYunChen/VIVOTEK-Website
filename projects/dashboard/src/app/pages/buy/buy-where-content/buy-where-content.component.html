@@ -1,0 +1,217 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Where to Buy</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="buyWhere.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Tag (Applied to All)" name="tag" [value]="getTagName(buyWhere.tag)" readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="tag" placeholder="Tag (Applied to All)" [(ngModel)]="buyWhere.tag">
+                    <mat-option *ngFor="let tag of tags" [value]="tag.id">{{tag.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </vvtk-input-container>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Continent (Applied to All)" name="continent" [value]="getContinentName(buyWhere.continent)"
+                readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="continent" placeholder="Continent (Applied to All)" [(ngModel)]="buyWhere.continent" (selectionChange)="getCountries()"
+                    required>
+                    <mat-option *ngFor="let continent of continents" [value]="continent.id">{{continent.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <input type="text" class="hidden-input" [value]="buyWhere.continent" required />
+              </div>
+            </vvtk-input-container>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Country (Applied to All)" name="country" [value]="getCountryName(buyWhere.country)" readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="country" placeholder="Country (Applied to All)" [(ngModel)]="buyWhere.country" (selectionChange)="getStates()"
+                    required>
+                    <mat-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <input type="text" class="hidden-input" [value]="buyWhere.country" required />
+              </div>
+            </vvtk-input-container>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable && states.length>0">
+              <input matInput placeholder="State (Applied to All)" name="state" [value]="getStateName(buyWhere.states)" readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable && states.length>0">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="state" placeholder="State (Applied to All)" [(ngModel)]="buyWhere.states" required>
+                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <input type="text" class="hidden-input" [value]="buyWhere.states" required />
+              </div>
+            </vvtk-input-container>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Address" name="address" [(ngModel)]="buyWhere.address" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Address Url" name="addressUrl" [(ngModel)]="buyWhere.addressUrl" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Image</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="buyWhere.logo.src">
+              <div class="text-center">
+                <img [src]="buyWhere.logo.src | safeUrl" [alt]="buyWhere.logo.alt" [title]="buyWhere.logo.title">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 460*230)</button>
+            <input hidden type="file" #imgFileInput accept="image/*" (change)="imgFileSelect($event)" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url (Applied to All)" name="imageSrc" [(ngModel)]="buyWhere.logo.src" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="buyWhere.logo.title" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="buyWhere.logo.alt" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Phone</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addPhone(0)" *ngIf="pageIsEditable && phone.length<3">Add Phone</button>
+            <div [sortablejs]="phone" [sortablejsOptions]="groupOptions">
+              <div *ngFor="let item of phone;let i = index">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Phone" matTooltipPosition="above" (click)="addPhone(i+1)"
+                  *ngIf="pageIsEditable && phone.length<3">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Phone" matTooltipPosition="above" (click)="deletePhone(i)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex="flex-grow">
+                  <input matInput placeholder="Phone" [name]="'phone['+i+']'" [(ngModel)]="item.value" [readOnly]="!pageIsEditable" required>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Fax</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addFax(0)" *ngIf="pageIsEditable">Add Fax</button>
+            <div [sortablejs]="fax" [sortablejsOptions]="groupOptions">
+              <div *ngFor="let item of fax;let i = index">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Fax" matTooltipPosition="above" (click)="addFax(i+1)" *ngIf="pageIsEditable">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Fax" matTooltipPosition="above" (click)="deleteFax(i)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex="flex-grow">
+                  <input matInput placeholder="Fax" [name]="'fax['+i+']'" [(ngModel)]="item.value" [readOnly]="!pageIsEditable" required>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Web</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addWeb(0)" *ngIf="pageIsEditable && buyWhere.web.length<5">Add Web</button>
+            <div [sortablejs]="buyWhere.web" [sortablejsOptions]="groupOptions">
+              <div *ngFor="let item of buyWhere.web;let i = index;let last = last" fxLayout="row" fxLayoutAlign="start center" style="margin:10px 0">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Web" matTooltipPosition="above" (click)="addWeb(i+1)" *ngIf="pageIsEditable && buyWhere.web.length<5">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Web" matTooltipPosition="above" (click)="deleteWeb(i)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <div fxLayout="column" fxFlex="flex-grow">
+                  <mat-form-field>
+                    <input matInput placeholder="Web" [name]="'web['+i+'].url'" [(ngModel)]="item.url" [readOnly]="!pageIsEditable" required>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="WebUrlName" [name]="'web['+i+'].urlName'" [(ngModel)]="item.urlName" [readOnly]="!pageIsEditable"
+                      required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-divider style="margin-top:50px" *ngIf="!last"></mat-divider>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Email</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addEmail(0)" *ngIf="pageIsEditable && email.length<3">Add Email</button>
+            <div [sortablejs]="email" [sortablejsOptions]="groupOptions">
+              <div *ngFor="let item of email;let i = index">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Email" matTooltipPosition="above" (click)="addEmail(i+1)"
+                  *ngIf="pageIsEditable && email.length<3">
+                  <mat-icon>add</mat-icon>
+                </a>
+                <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Email" matTooltipPosition="above" (click)="deleteEmail(i)"
+                  *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </a>
+                <mat-form-field fxFlex="flex-grow">
+                  <input matInput type="email" email placeholder="Email" [name]="'email['+i+']'" [(ngModel)]="item.value" [readOnly]="!pageIsEditable"
+                    required>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <!---->
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput type="number" min="0" placeholder="Sequence (Applied to All)" name="sequence" [(ngModel)]="buyWhere.sequence"
+                [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/buy/where/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

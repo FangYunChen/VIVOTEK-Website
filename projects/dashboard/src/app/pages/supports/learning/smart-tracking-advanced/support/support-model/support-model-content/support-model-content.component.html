@@ -1,0 +1,81 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Parking Violation Detection Support Model</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Model Name" name="modelName" [(ngModel)]="support.modelName" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Url" name="url" [(ngModel)]="support.url" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="typeId" placeholder="Model Type" [(ngModel)]="support.typeId" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let type of types" [value]="type.id">{{type.typeName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+              <mat-select name="statusId" placeholder="Model Status" [(ngModel)]="support.statusId" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.statusName}}</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+
+            <mat-card-title>
+              <h3>Package</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxFlex *ngFor="let feature of features">
+                <mat-checkbox name="selectedFeatures[]" [value]="feature.id" [checked]="selectedFeaturesChecked(feature.id)"
+                  (change)="selectedFeaturesChange(feature.id,$event)" [disabled]="!pageIsEditable">
+                  {{feature.featureName}}
+                </mat-checkbox>
+              </div>
+            </mat-card-content>
+
+            <mat-card-title>
+              <h3>Model Image</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxLayout="row" fxLayoutAlign="center" *ngIf="support.imageUrl">
+                <div class="text-center">
+                  <img [src]="support.imageUrl | safeUrl" [alt]="support.imageAlt" [title]="support.imageTitle">
+                </div>
+              </div>
+              <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+                a image (Recommended size: 250*250)</button>
+              <input hidden type="file" #imgFileInput accept="image/*" (change)="uploadModelImage($event)" />
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Image url" name="imageSrc" [(ngModel)]="support.imageUrl" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="support.imageTitle"
+                  [readOnly]="!pageIsEditable" required>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="support.imageAlt" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/supports/learning/parking-violation-detection/support/model']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

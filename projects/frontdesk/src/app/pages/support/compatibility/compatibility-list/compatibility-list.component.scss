@@ -1,0 +1,61 @@
+@import '_var.scss';
+
+.wrap {
+  max-width: 1600px;
+  padding: 0;
+
+  .compatibilityList {
+    &__header {
+      margin-top: 3em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h3 {
+        color: $colorB4;
+      }
+
+      .general-button {
+        margin-top: 1em;
+      }
+    }
+
+    &__search {
+      margin: 0 auto;
+      margin-top: 1em;
+      margin-bottom: 2rem;
+
+      .mat-form-field,
+      .reset-button {
+        margin: 0 10px;
+      }
+    }
+
+    &__filter {
+      margin: 0 auto;
+
+      .mat-form-field {
+        margin: 5px 10px;
+      }
+    }
+
+    &__table {
+      margin: 0 auto;
+      margin-bottom: 100px;
+
+      &--features {
+        justify-content: center;
+      }
+
+      .dot {
+        display: inline-block;
+        box-sizing: border-box;
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: #545454;
+        border-radius: 50%;
+      }
+    }
+  }
+}

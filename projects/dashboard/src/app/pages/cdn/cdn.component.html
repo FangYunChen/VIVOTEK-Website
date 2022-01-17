@@ -1,0 +1,21 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title>
+      <span>設定過濾 CDN 加速檔案類型</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <mat-form-field fxFlex>
+        <input matInput placeholder="設定過濾副檔名(內容以逗號分隔)" maxlength="255" name="fileType" [(ngModel)]="fileTypes">
+      </mat-form-field>
+      <mat-slide-toggle color="primary" name="enabled" [(ngModel)]="enabled">
+        開啟CDN過濾：{{enabled?'On':'Off'}}
+     </mat-slide-toggle>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" (click)="save()"  [disabled]="isLoading">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  </div>

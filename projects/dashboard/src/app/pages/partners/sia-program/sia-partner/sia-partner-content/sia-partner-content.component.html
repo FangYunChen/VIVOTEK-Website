@@ -1,0 +1,174 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} SIA Partner</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Company Name" name="companyName" [(ngModel)]="partner.companyName"
+                [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Brand Name" name="brandName" [(ngModel)]="partner.brandName" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <!-- <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="partnerCountry" placeholder="Partner Country" [(ngModel)]="partner.partnerCountry"
+                    required>
+                    <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </vvtk-input-container> -->
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Address" name="address" [(ngModel)]="partner.address" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Address_TC" name="address_TC" [(ngModel)]="partner.address_TC" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Telephone" name="telephone" [(ngModel)]="partner.telephone" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Fax" name="fax" [(ngModel)]="partner.fax" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Web Site" name="webSite" [(ngModel)]="partner.webSite" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Email" name="email" [(ngModel)]="partner.email" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="SupportEmail" name="supportEmail" [(ngModel)]="partner.supportEmail"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <h4>Templates</h4>
+            <vvtk-templates #templates [path]="path" [types]="[11,18]" [readOnly]="!pageIsEditable"></vvtk-templates>
+
+            <h4>Company Profile</h4>
+            <mat-card-content fxLayout="column">
+              <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                <mat-card-content>
+                  <div [innerHTML]="partner.companyProfile | safeHtml"></div>
+                </mat-card-content>
+              </mat-card>
+              <mat-tab-group [hidden]="!pageIsEditable">
+                <mat-tab label="Editor">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-card fxFlex="100%">
+                      <mat-card-content fxLayout="column">
+                        <vvtk-wysiwyg [(html)]="partner.companyProfile" [path]="path"></vvtk-wysiwyg>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Preview">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-card fxFlex="100%">
+                      <mat-card-content fxLayout="column">
+                        <div [innerHTML]="partner.companyProfile | safeHtml"></div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-card-content>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Camera Integration" name="cameraIntegration" [(ngModel)]="partner.cameraIntegration"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Reference" name="reference" [(ngModel)]="partner.reference" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-card-title>
+              <h3>Partner Logo</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxLayout="row" fxLayoutAlign="center" *ngIf="partner.logoSrc">
+                <div class="text-center">
+                  <img [src]="partner.logoSrc | safeUrl" [alt]="partner.logoAlt" [title]="partner.logoTitle">
+                </div>
+              </div>
+              <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+                a image (Recommended size: 300*300)</button>
+              <input hidden type="file" #imgFileInput accept="image/*" (change)="imgFileSelect($event)" />
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Image url" name="imageSrc" [(ngModel)]="partner.logoSrc" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="partner.logoTitle"
+                  [readOnly]="!pageIsEditable" required>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="partner.logoAlt" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+            </mat-card-content>
+
+            <mat-card-title>
+              <h3>Businesses</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxFlex *ngFor="let business of businesses">
+                <mat-checkbox name="selectedBusinesses[]" [value]="business.id" [checked]="selectedBusinessesChecked(business.id)"
+                  (change)="selectedBusinessesChange(business.id,$event)" [disabled]="!pageIsEditable">
+                  {{business.countryArea}}
+                </mat-checkbox>
+              </div>
+            </mat-card-content>
+
+            <mat-card-title>
+              <h3>Categories</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxFlex *ngFor="let category of categories">
+                <mat-checkbox name="selectedCategories[]" [value]="category.id" [checked]="selectedCategoriesChecked(category.id)"
+                  (change)="selectedCategoriesChange(category.id,$event)" [disabled]="!pageIsEditable">
+                  {{category.partnerCategory}}
+                </mat-checkbox>
+              </div>
+            </mat-card-content>
+
+            <mat-card-title>
+              <h3>Types</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxFlex *ngFor="let type of types">
+                <mat-checkbox name="selectedTypes[]" [value]="type.id" [checked]="selectedTypesChecked(type.id)"
+                  (change)="selectedTypesChange(type.id,$event)" [disabled]="!pageIsEditable">
+                  {{type.typeName}}
+                </mat-checkbox>
+              </div>
+            </mat-card-content>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/partners/sia-program/sia-partner']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

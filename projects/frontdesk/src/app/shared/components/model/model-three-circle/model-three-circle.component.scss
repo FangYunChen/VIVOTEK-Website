@@ -1,0 +1,88 @@
+@import '_var.scss';
+
+.model-textCircle {
+  padding-top: 65px;
+  padding-bottom: 65px;
+
+  .wrap {
+    max-width: 1600px;
+  }
+
+  .line {
+    background-image: none;
+  }
+
+  .circle-group {
+    margin-top: 20px;
+    text-align: center;
+
+    .img {
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      @include border-radius(100%);
+      margin: 0 auto 8px;
+      position: relative;
+
+      img {
+        position: absolute;
+        width: auto;
+        max-width: none;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+    }
+
+    .text {
+      font-size: $sizeNler;
+      color: $colorFont;
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+  .model-textCircle {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  .model-textCircle {
+    .circle-group {
+      a {
+        //margin: 0 8px;
+      }
+
+      .img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  .model-textCircle {
+    .circle-group {
+      a {
+        //margin: 0 5px;
+      }
+
+      .img {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 5px;
+
+        img {
+          position: static;
+        }
+      }
+
+      .text {
+        font-size: $sizeNl;
+      }
+    }
+  }
+}

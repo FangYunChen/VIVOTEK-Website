@@ -1,0 +1,15 @@
+<div fxLayout="row">
+    <mat-card fxFlex="100%">
+        <mat-card-title>
+            <span>E-newsletter Subscribers List</span>
+            <span fxFlex></span>
+        </mat-card-title>
+        <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <!--<button mat-raised-button color="primary" (click)="download()">Download</button>-->
+                <a mat-raised-button color="primary" [href]="downloadLink" target="_blank">Download</a>
+            </div>
+            <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+        </mat-card-content>
+    </mat-card>
+</div>

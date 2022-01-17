@@ -1,0 +1,54 @@
+<div id="sitemap" class="container">
+  <vvtk-top-banner contentPageTitle="Sitemap"></vvtk-top-banner>
+  <section class="section">
+    <div class="wrap">
+      <ul class="side-menu">
+        <ng-container *ngTemplateOutlet="sideMenu context: { $implicit: headerNodes }"> </ng-container>
+        <ng-container *ngTemplateOutlet="sideMenu context: { $implicit: footerNodes }"> </ng-container>
+      </ul>
+      <ul class="sitemap-level-1-container">
+        <ng-container *ngTemplateOutlet="sitemapL1Menu context: { $implicit: headerNodes }"> </ng-container>
+        <ng-container *ngTemplateOutlet="sitemapL1Menu context: { $implicit: footerNodes }"> </ng-container>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<ng-template #hasUrl let-node>
+  <vvtk-link [href]="node.url">
+    {{node.title}}
+  </vvtk-link>
+</ng-template>
+
+<ng-template #noUrl let-node>
+  <span>{{node.title}}</span>
+</ng-template>
+
+<ng-template #sideMenu let-nodes>
+  <li *ngFor="let node of nodes">
+    <ng-container *ngTemplateOutlet="!!node.url ? hasUrl : noUrl;  context: { $implicit: node }">
+    </ng-container>
+  </li>
+</ng-template>
+
+<ng-template #sitemapL1Menu let-nodes>
+  <li class="sitemap-level-1-content" *ngFor="let node of nodes">
+    <ng-container *ngTemplateOutlet="noUrl context: { $implicit: node }">
+    </ng-container>
+    <ul class="sitemap-level-2-container" *ngIf="node.subMenu && node.subMenu.length > 0">
+      <ng-container *ngTemplateOutlet="sitemapSubMenu context: { $implicit: node.subMenu, layer: 2 }">
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>
+
+<ng-template #sitemapSubMenu let-nodes let-layer="layer">
+  <li class="sitemap-level-{{layer}}-content" *ngFor="let node of nodes">
+    <ng-container *ngTemplateOutlet="!!node.url ? hasUrl : noUrl;  context: { $implicit: node }">
+    </ng-container>
+    <ul class="sitemap-level-{{layer + 1}}-container" *ngIf="node.subMenu && node.subMenu.length > 0">
+      <ng-container *ngTemplateOutlet="sitemapSubMenu context: { $implicit: node.subMenu, layer: layer + 1 }">
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>

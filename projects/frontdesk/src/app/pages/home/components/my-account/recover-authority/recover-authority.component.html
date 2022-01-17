@@ -1,0 +1,79 @@
+<h2 class="line text-center">{{'Recover Authority'|i18n}}</h2>
+<section class="model-form section text-center">
+  <form [formGroup]="recoverAuthForm" *ngIf="!isRecovered" (ngSubmit)="recoveryAuthority()">
+    <div class="list-row">
+      <div class="list-col list-col6">
+        <div class="input-box form-label" [ngClass]="{'has-error':recoverAuthForm.controls['account'].invalid && recoverAuthForm.controls['account'].touched}">
+          <input type="text" [formControl]="recoverAuthForm.controls['account']">
+          <label for="">
+            <span class="colorR">*</span>{{'Enter former account'|i18n}}</label>
+          <div *ngIf="recoverAuthForm.controls['account'].hasError('required') && recoverAuthForm.controls['account'].touched"
+            class="alert alert-danger">{{'Required'|i18n}}</div>
+          <div *ngIf="recoverAuthForm.controls['account'].hasError('minlength') && recoverAuthForm.controls['account'].touched"
+            class="alert alert-danger">
+            {{'Account is too short. Please input at least %s
+            characters.'|i18n:recoverAuthForm.controls['account'].errors['minlength']['requiredLength']}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list-row">
+      <div class="list-col list-col6">
+        <div class="input-box form-label" [ngClass]="{'has-error':recoverAuthForm.controls['password'].invalid && recoverAuthForm.controls['password'].touched}">
+          <input type="password" [formControl]="recoverAuthForm.controls['password']">
+          <label for="">
+            <span class="colorR">*</span>{{'Enter password'|i18n}}</label>
+          <div *ngIf="recoverAuthForm.controls['password'].hasError('required') && recoverAuthForm.controls['password'].touched"
+            class="alert alert-danger">{{'Required'|i18n}}</div>
+          <div *ngIf="recoverAuthForm.controls['password'].hasError('minlength') && recoverAuthForm.controls['password'].touched"
+            class="alert alert-danger">
+            {{'Password is too short. Please input at least %s
+            characters.'|i18n:recoverAuthForm.controls['password'].errors['minlength']['requiredLength']}}
+          </div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div class="list-col list-col6">
+          <div class="input-box form-label" [ngClass]="{'has-error':recoverAuthForm.controls['checkPassword'].invalid && recoverAuthForm.controls['checkPassword'].touched}">
+            <input type="password" [formControl]="recoverAuthForm.controls['checkPassword']">
+            <label for="">
+              <span class="colorR">*</span>{{'Re-enter password'|i18n}}</label>
+            <div *ngIf="recoverAuthForm.controls['checkPassword'].hasError('required') && recoverAuthForm.controls['checkPassword'].touched; else elseIfTemplate"
+              class="alert alert-danger">
+              {{'Required'|i18n}}
+            </div>
+            <ng-template #elseIfTemplate>
+              <div *ngIf="recoverAuthForm.controls['checkPassword'].hasError('validateNotEqual') && recoverAuthForm.controls['checkPassword'].touched; else elseTemplate"
+                class="alert alert-danger">
+                {{'Two passwords are inconsistent'|i18n}}
+              </div>
+              <ng-template #elseTemplate>
+                <div *ngIf="!recoverAuthForm.controls['checkPassword'].hasError('validateNotEqual') && recoverAuthForm.controls['checkPassword'].touched"
+                  class="alert alert-check">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="list-row">
+        <div class="list-col list-col12 btn-box text-center">
+          <button type="submit" class="btn btn-b" [disabled]="!recoverAuthForm.valid" *ngIf="!isLoding">{{'Submit'|i18n}}</button>
+          <div class="btn-loading" *ngIf="isLoding">
+            <i class="fa fa-spinner fa-spin fa-fw"></i>
+            <span class="sr-only">{{'Loading...'|i18n}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="list-row" *ngIf="isRecovered">
+    <div class="list-col list-col6 text-center">
+      <div class="input-box form-label">
+        <label for="">
+          <span class="colorR">*</span>{{'This account authority have been converted'|i18n}}</label>
+      </div>
+    </div>
+  </div>
+</section>

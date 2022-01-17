@@ -1,0 +1,30 @@
+<div class='ossTable'>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Subcategory Column -->
+    <ng-container matColumnDef="subCategoryName">
+      <th mat-header-cell *matHeaderCellDef> Subcategory </th>
+      <td mat-cell *matCellDef="let element"> {{element.subCategoryName}} </td>
+    </ng-container>
+
+    <!-- Model Column -->
+    <ng-container matColumnDef="modelsString">
+      <th mat-header-cell *matHeaderCellDef> Model </th>
+      <td mat-cell *matCellDef="let element"> {{element.modelsString}} </td>
+    </ng-container>
+
+    <!-- Announcement Column -->
+    <ng-container matColumnDef="announcementLink">
+      <th mat-header-cell *matHeaderCellDef> Announcement </th>
+      <td mat-cell *matCellDef="let element"> <a href={{element.announcementLink}} target="_blank">Download</a></td>
+    </ng-container>
+
+    <!-- Go to announcement page Column -->
+    <ng-container matColumnDef="AnnouncePage">
+      <th mat-header-cell *matHeaderCellDef> Source Code </th>
+      <td mat-cell *matCellDef="let element"> <a *ngIf="element.hasSourceCodeLink" routerLink={{element.id}}>Download</a></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

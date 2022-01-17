@@ -1,0 +1,23 @@
+<div class="container">
+  <button *ngIf="hasBack" mat-button matStepperPrevious class="back-button">
+    {{ "Back" | i18n }}
+  </button>
+  <button
+    *ngIf="hasNext"
+    [disabled]="!canNext"
+    mat-button
+    matStepperNext
+    class="next-button"
+  >
+    {{ "Next" | i18n }}
+  </button>
+  <button
+    *ngIf="hasExport"
+    mat-button
+    class="export-button"
+    (click)="exportPDF()"
+  >
+    <mat-icon>open_in_new</mat-icon>
+    {{ "Export" | i18n }}
+  </button>
+</div>

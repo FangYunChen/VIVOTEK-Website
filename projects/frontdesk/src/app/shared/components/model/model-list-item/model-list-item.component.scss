@@ -1,0 +1,42 @@
+@import '_var.scss';
+
+.model-list-item {
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+
+    .list-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      word-break: break-word;
+
+      .list-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 1%;
+        margin-bottom: 25px;
+
+        @media (max-width: 600px) {
+          flex-basis: 100% !important;
+        }
+
+        .subtitle-text {
+          margin-bottom: 14px;
+        }
+
+        .list {
+          padding-left: 30px;
+          margin-top: 0;
+
+          .list-item {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+  }
+}

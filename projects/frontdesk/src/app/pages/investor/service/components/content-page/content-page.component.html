@@ -1,0 +1,100 @@
+<vvtk-model-selector *ngIf="this.pageId != 8 && this.pageId != 10 && this.pageId != 5" #f [templates]="f.setTemplates(page.templates)"></vvtk-model-selector>
+<!-- <h2 class="line text-center">歷年股利分配</h2> -->
+<vvtk-model-selector *ngIf="this.pageId == 8" #f [content]="f.setContent(dividendContent)"></vvtk-model-selector>
+<vvtk-model-selector *ngIf="this.pageId == 8" [tableName]="dividendSheet?dividendSheet.title:''" [sheet]="dividendSheet"></vvtk-model-selector>
+<div id="manage" class="container" *ngIf="this.pageId == 14">
+  <section class="model section model-text">
+    <div class="wrap">
+      <h2 class="line text-center">{{_boardContent.sheet?_boardContent.sheet.title:''}}</h2>
+    </div>
+  </section>
+  <vvtk-model-selector [sheet]="_boardContent.sheet"></vvtk-model-selector>
+</div>
+<mat-tab-group *ngIf="this.pageId == 10"  (selectedTabChange)="reload1()">
+  <mat-tab [label]="this.i18nService.getI18n('Monthly consolidated revenue')">
+    <section class="model section model-text">
+      <div class="wrap">
+        <h2 class="line text-center">{{'Monthly sales report'|i18n}}</h2>
+        <section class="model section tabs-slider">
+          <vvtk-tab-slider #slidery *ngIf="yearYList.length > 0" [tabList]="yearYList" [preString]="'tabs'" (tabsOpen)="tabsYChange($event)"
+            [tabsActive]="tabsYActive"></vvtk-tab-slider>
+
+          <div *ngFor="let year of yearYList" class="tabs-slider-content">
+            <div *ngIf="_Contents[year]" class="tabs-slider-block" [class.active]="'tabs'+year === tabsYActive">
+              <vvtk-model-selector #f [templates]="f.setTemplates(_Contents[year].templates)"></vvtk-model-selector>
+              <vvtk-model-table-revenue [tableName]="_Contents[year].sheet?.title || (year +' Monthly sales report')" [sheet]="_Contents[year].sheet"></vvtk-model-table-revenue>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </mat-tab>
+  <mat-tab [label]="this.i18nService.getI18n('Financial report')" >
+    <div class="wrap">
+      <section class="model section tabs-slider">
+        <h2 class="line text-center">{{'Financial Reports'|i18n}}</h2>
+        <vvtk-tab-slider #slider1 [tabList]="tabList" [preString]="'tabs'" (tabsOpen)="tabsChange($event)" [tabsActive]="tabsActive"></vvtk-tab-slider>
+        <div class="tabs-slider-content">
+          <div class="tabs-slider-block" [class.active]="'tabs'+tabList[0] === tabsActive">
+            <div class="block" *ngFor="let yearList of Quarterly_Single">
+              <h3>{{ yearList.year }}</h3>
+              <vvtk-download-list [downloadList]="yearList.reports"></vvtk-download-list>
+            </div>
+
+          </div>
+          <div class="tabs-slider-block" [class.active]="'tabs'+tabList[1] === tabsActive">
+            <div class="block" *ngFor="let yearList of Quarterly_Consolidated">
+              <h3>{{ yearList.year }}</h3>
+              <vvtk-download-list [downloadList]="yearList.reports"></vvtk-download-list>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+<mat-tab-group *ngIf="this.pageId == 5" (selectedTabChange)="reload2()">
+  <mat-tab [label]="this.i18nService.getI18n('Shareholders\' Meeting')">
+    <section class="model section tabs-slider">
+      <div class="wrap">
+        <vvtk-tab-slider *ngIf="yearSList$.length > 0" [tabList]="yearSList$" [preString]="'year'" (tabsOpen)="tabsSChange($event)"
+          [tabsActive]="tabsSActive"></vvtk-tab-slider>
+      </div>
+      <div class="tabs-slider-content">
+        <ng-container *ngFor="let year of yearSList$">
+          <div class="tabs-slider-block" [class.active]="'year'+ year === tabsSActive">
+            <section *ngFor="let con of shardholderContents[year]" class="model section model-text inner">
+              <div class="wrap">
+                <h2 class="line-shareholder text-center">{{con.title}}</h2>
+                <div [innerHtml]="con.content|safe:'html'">
+                </div>
+              </div>
+            </section>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </mat-tab>
+  <mat-tab [label]="this.i18nService.getI18n('Earnings Conference')">
+    <section class="model section model-text inner">
+      <div class="wrap">
+        <h2 class="line text-center">{{'Earnings Conference Info'|i18n}}</h2>
+        <vvtk-model-selector #f [content]="f.setContent(presentationContent)"></vvtk-model-selector>
+        <section class="model section tabs-slider">
+          <vvtk-tab-slider #slider2 *ngIf="yearCList$.length > 0" [tabList]="yearCList$" [preString]="'year'" (tabsOpen)="tabsCChange($event)"
+            [tabsActive]="tabsCActive"></vvtk-tab-slider>
+          <div *ngFor="let year of yearCList$" class="tabs-slider-content">
+            <ng-container *ngFor="let item of presentationLinks;let idx = index">
+              <div *ngIf="year === item.year" class="tabs-slider-block" [class.active]="'year'+year === tabsCActive">
+                <vvtk-download-list [downloadList]="item.links"></vvtk-download-list>
+              </div>
+            </ng-container>
+          </div>
+        </section>
+      </div>
+    </section>
+  </mat-tab>
+</mat-tab-group>
+

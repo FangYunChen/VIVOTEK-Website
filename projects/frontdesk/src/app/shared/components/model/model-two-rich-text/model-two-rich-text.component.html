@@ -1,0 +1,11 @@
+<section class="section">
+  <h3 class="title-text text-center" *ngIf="title">{{title}}</h3>
+  <div class="list-row">
+    <div [ngClass]="adjustColumns()" *ngFor="let column of items.columns">
+      <div class="wrap">
+        <h3 class="title-text text-center" *ngIf="column.title">{{column.title}}</h3>
+        <div [innerHtml]="column.htmlContent | safe:'html'" class="model-html-content p-medium"></div>
+      </div>
+    </div>
+  </div>
+</section>

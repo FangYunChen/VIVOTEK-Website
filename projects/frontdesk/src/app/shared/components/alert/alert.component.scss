@@ -1,0 +1,30 @@
+@import '../../../../styles/_var.scss';
+.vvtk-alert-wrap {
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  max-width: 1160px;
+  display: block;
+  .btn-close {
+    font-size: $sizeSler;
+    color: $colorFont;
+    background-color: $colorW;
+    position: absolute;
+    right: 10px;
+    z-index: 10;
+    font-size: 20px;
+    text-align: left;
+    &:hover {
+      color: $colorB1;
+    }
+  }
+}
+
+@media screen and (max-width:$widthTable) {
+  .vvtk-alert-wrap {
+    width: 90%;
+  }
+}

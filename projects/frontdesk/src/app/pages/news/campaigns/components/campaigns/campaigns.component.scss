@@ -1,0 +1,63 @@
+@import '_var.scss';
+#news {
+  .tabs-slider {
+    .tabs-slider-nav {
+      letter-spacing: -8px;
+      text-align: center;
+      position: relative;
+      .slide {
+        letter-spacing: normal;
+        background: url(/assets/img/title-line.png) repeat-x left 106%;
+        display: inline-block;
+        width: 20%;
+      }
+      .slider-arrow {
+        font-size: $sizeLger;
+        width: 30px;
+        position: absolute;
+        top: 0;
+        display: none;
+        &.show {
+          display: block;
+        }
+        &:hover {
+          color: $colorB1;
+        }
+        &.disabled {
+          color: $colorGy1;
+        }
+      }
+      .prev {
+        left: 0;
+      }
+      .next {
+        right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthWebTable) {
+}
+@media screen and (max-width: $widthTable) {
+  #news {
+    .tabs-slider {
+      .tabs-slider-nav {
+        .slide {
+          width: 33.33%;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthApp) {
+  #news {
+    .tabs-slider {
+      .tabs-slider-nav {
+        .slide {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

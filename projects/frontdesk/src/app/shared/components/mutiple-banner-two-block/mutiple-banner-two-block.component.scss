@@ -1,0 +1,94 @@
+@import '../../../../styles/_var.scss';
+
+::ng-deep .full-slider{
+
+.model {
+  background-color: pink;
+  background-color: $colorGy2;
+  padding-top: 65px;
+  padding-bottom: 65px;
+
+  .wrap {
+  margin: 15px;
+  max-width: 1600px;
+  padding: 0;
+  display: inline-block;
+  }
+
+  .text-block {
+    width: calc(50% - 20px);
+    min-height: 450px;
+    padding:15px;
+    h2 {
+      line-height: 40px;
+    }
+
+    &.model-rightImg {
+      float: left;
+    }
+
+    &.model-leftImg {
+      float: right;
+    }
+
+    .btn {
+      margin-top: 20px;
+    }
+
+    &:after {
+      content: ' ';
+      display: block;
+      height: 0;
+      clear: both;
+    }
+
+    .model-content {
+      padding: 0;
+    }
+  }
+
+  .img-block {
+    width: calc(50% - 20px);
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: inherit;
+
+    &.model-rightImg {
+        float: right;
+    }
+
+    &.model-leftImg {
+        float: left;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+  .model-img {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+.model {
+  .wrap {
+      margin: 15px;
+      width: 100%;
+      padding: 0;
+      display: grid;
+    }
+    .text-block {
+      width: 100%;
+    }
+    .img-block{
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {}

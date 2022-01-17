@@ -1,0 +1,186 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{ (this.isAddData)?'Add':'Edit' }} {{this.modelName}} Product PDF Info </span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-slide-toggle color="primary" [(ngModel)]="data.showOverview" name="ShowOverview"
+          [matTooltip]="data.showOverview?'PDF with overview':'PDF without overview'" matTooltipPosition="above"
+          (change)="changeShowOverview($event)">
+          ShowOverview
+        </mat-slide-toggle>
+        <div fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Subtitle" name="Subtitle" [(ngModel)]="data.subtitle"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Short Description" name="ShortDescription" [(ngModel)]="data.shortDescription"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+        </div>
+        <br><br>
+        <div>
+          <h4>Order Information</h4>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.orderInformation | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="data.orderInformation" [path]="orderInformationHtmlEditorPath">
+                      </vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.orderInformation | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </div>
+        <br><br>
+        <h4>Accessory</h4>
+        <div *ngFor="let pdfTemplate of data.pdfTemplates; index as TemplateIdx">
+          <mat-card fxFlex="100%" style="margin-bottom:20px">
+            <mat-form-field>
+              <mat-select placeholder="Accessory Type" name="AccessoryType[{{TemplateIdx}}]"
+                [(ngModel)]="pdfTemplate.type" [disabled]="!pageIsEditable"
+                (valueChange)="emptyTemplate(pdfTemplate, $event)" required>
+                <mat-option [value]="'1'">Auto Generation</mat-option>
+                <mat-option [value]="'2'">Html Editor</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <a mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+              *ngIf="pageIsEditable" (click)="deletePdfTemplate(pdfTemplate)">
+              <mat-icon>delete</mat-icon>
+            </a>
+            <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="pdfTemplate.type == '1'">
+              <mat-card-title>
+                <h4>Auto Generation Editor</h4>
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Add" matTooltipPosition="above"
+                  *ngIf="pageIsEditable" (click)="addAccessoryItem(pdfTemplate)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-card-title>
+              <mat-card-content>
+                <div [sortablejs]="pdfTemplate.AccessoryItems" [sortablejsOptions]="groupOptions">
+                  <div fxLayout="column" fxLayoutAlign="start stretch" style="margin-left:30px"
+                    *ngFor="let accessoryItem of pdfTemplate.AccessoryItems; index as accessoryIdx">
+                    <mat-card-title>
+                      <mat-icon class="drag-handle">drag_handle</mat-icon>
+                      <h4>accessory item {{accessoryIdx + 1}}</h4>
+                      <a mat-mini-fab class="action-btn" color="primary"
+                        [matTooltip]="accessoryItem.hideContent?'展開':'收合'" matTooltipPosition="above"
+                        (click)="accessoryItem.hideContent = !accessoryItem.hideContent">
+                        <mat-icon *ngIf="accessoryItem.hideContent">keyboard_arrow_down</mat-icon>
+                        <mat-icon *ngIf="!accessoryItem.hideContent">keyboard_arrow_up</mat-icon>
+                      </a>
+                      <a mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                        *ngIf="pageIsEditable" (click)="deleteAccessoryItem(pdfTemplate, accessoryItem)">
+                        <mat-icon>delete</mat-icon>
+                      </a>
+                    </mat-card-title>
+                    <mat-card-content fxLayout="column" [hidden]="!accessoryItem.hideContent">
+                      {{accessoryItem.model}}
+                    </mat-card-content>
+                    <mat-card-content fxLayout="column" [hidden]="accessoryItem.hideContent">
+                      <mat-form-field>
+                        <input matInput placeholder="model" name="model[{{TemplateIdx}}][{{accessoryIdx}}]"
+                          [(ngModel)]="accessoryItem.model" [disabled]="!pageIsEditable"
+                          (blur)="getModelDetail(accessoryItem, accessoryItem.model)">
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput placeholder="title" name="title[{{TemplateIdx}}][{{accessoryIdx}}]"
+                          [(ngModel)]="accessoryItem.title" [disabled]="!pageIsEditable">
+                      </mat-form-field>
+                      <mat-form-field>
+                        <textarea matInput placeholder="description"
+                          name="description[{{TemplateIdx}}][{{accessoryIdx}}]" [(ngModel)]="accessoryItem.description"
+                          [disabled]="!pageIsEditable"></textarea>
+                      </mat-form-field>
+                      <mat-form-field>
+                        <input matInput placeholder="imgSrc" name="imgSrc[{{TemplateIdx}}][{{accessoryIdx}}]"
+                          [(ngModel)]="accessoryItem.imgSrc" [disabled]="!pageIsEditable">
+                      </mat-form-field>
+                      <div fxLayout="row" fxLayoutAlign="center" *ngIf="accessoryItem.imgSrc">
+                        <div class="text-center">
+                          <img [src]="accessoryItem.imgSrc | safeUrl">
+                        </div>
+                      </div>
+                      <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading"
+                        *ngIf="pageIsEditable">Upload
+                        a image</button>
+                      <input hidden type="file" #imgsImgFileInput accept="image/*"
+                        (change)="uploadFile(accessoryItem, $event)" [disabled]="isLoading" />
+                    </mat-card-content>
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+            <div *ngIf="pdfTemplate.type == '2'">
+              <h4>Accessory HTML Editor</h4>
+              <mat-card-content fxLayout="column">
+                <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                  <mat-card-content>
+                    <div [innerHTML]="pdfTemplate.htmlContent | safeHtml"></div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-tab-group [hidden]="!pageIsEditable">
+                  <mat-tab label="Editor">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <vvtk-wysiwyg [(html)]="pdfTemplate.htmlContent" [path]="accessoryHtmlEditorPath">
+                          </vvtk-wysiwyg>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Preview">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <div [innerHTML]="pdfTemplate.htmlContent | safeHtml"></div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-card-content>
+            </div>
+          </mat-card>
+        </div>
+      </form>
+    </mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button *ngIf="pageIsEditable" mat-button type="button" (click)="addTemplate()">Add Template</button>
+    </div>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading"
+          *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

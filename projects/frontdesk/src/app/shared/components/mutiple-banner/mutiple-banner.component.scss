@@ -1,0 +1,138 @@
+@import '../../../../styles/_var.scss';
+@mixin hasBanner {
+  background-color: transparent;
+  >.wrap {
+    padding-bottom: 80px;
+  }
+  .banner-img {
+    display: none;
+  }
+}
+
+.pageBanner {
+  position: relative;
+  overflow: hidden;
+  font-family: Gothic, $fontFamily;
+  background-color: $colorB3;
+  .banner-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    img {
+      display: none;
+    }
+  }
+  >.wrap {
+    position: relative;
+    z-index: 5;
+    color: $colorW;
+    padding: 120px 60px 60px;
+  }
+  h1 {
+    font-size: $sizeBanner;
+    letter-spacing: 2px;
+    font-weight: normal;
+  }
+  h2 {
+    font-size: $sizeLg;
+    font-weight: normal;
+    letter-spacing: 1px;
+    &:after {
+      display: inline-block;
+      content: '-';
+      margin-left: 10px;
+    }
+  }
+  .banner-img {
+    display: none;
+    background-position: center;
+  }
+}
+
+.breadcrumbs {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background-color: rgba($colorBk, .3);
+  z-index: 10;
+  a {
+    color: $colorW;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 0;
+    font-size: $sizeSler;
+    &:before {
+      display: inline-block;
+      vertical-align: top;
+      font-family: fontAwesome;
+      content: '\f105';
+      margin: 0 8px 0 5px;
+    }
+    &:first-child {
+      &:before {
+        display: none;
+      }
+    }
+    &:hover {
+      text-decoration: none;
+      color: $colorB2;
+      &:before {
+        color: $colorW;
+      }
+    }
+  }
+}
+
+@media screen and (max-width:$widthWebTable) {}
+
+@media screen and (max-width:$widthTable) {}
+
+@media screen and (max-width:$widthTableApp) {}
+
+@media screen and (max-width:$widthApp) {
+  .pageBanner {
+    >.wrap {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    h1 {
+      font-size: 28px;
+      letter-spacing: 0;
+      font-weight: normal;
+    }
+  }
+}
+
+@media screen and (min-width:$widthTable - 1px) {
+  .pageBanner.hasPcBanner {
+    @include hasBanner;
+    .banner-img.banner-img-pc {
+      display: block;
+    }
+  }
+}
+
+@media screen and (min-width:$widthTableApp - 1px) and (max-width:$widthTable) {
+  .pageBanner.hasTableBanner {
+    @include hasBanner;
+    .banner-img.banner-img-table {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width:$widthTableApp) {
+  .pageBanner.hasAppBanner {
+    @include hasBanner;
+    .banner-img.banner-img-app {
+      display: block;
+    }
+  }
+}

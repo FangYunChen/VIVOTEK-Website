@@ -1,0 +1,71 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select [(ngModel)]="template.rowColumn" placeholder="How many columns in a row" required>
+      <mat-option *ngFor="let col of columns" [value]="col.value">
+        {{col.optionText}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addColumn(0)" *ngIf="!readOnly">Add Column</button>
+    <div [sortablejs]="template.columns" [sortablejsOptions]="groupOptionsIcon">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let column of template.columns; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-icon" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>Column {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Column" matTooltipPosition="above"
+            (click)="deleteColumn(j)" *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="column.hideContent?'展開':'收合'"
+            matTooltipPosition="above" (click)="column.hideContent = !column.hideContent">
+            <mat-icon *ngIf="column.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!column.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!column.hideContent">
+          {{column.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="column.hideContent">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Title" [name]="'templateIconsTitle'+templateIndex+'_'+j" [(ngModel)]="column.title"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="!readOnly">
+              <mat-card-content>
+                <div [innerHTML]="template.htmlContent | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="readOnly">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="column.htmlContent" [path]="path"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="column.htmlContent | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addColumn(j+1)" *ngIf="!readOnly">Add Column</button>
+      </div>
+    </div>
+  </div>
+</div>

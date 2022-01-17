@@ -1,0 +1,165 @@
+@import '_var.scss';
+
+.wrap {
+  max-width: 1600px;
+}
+
+p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.ps {
+  color: $colorGy3;
+  font-size: $sizeSler;
+}
+
+.odd {
+  background-color: $colorB2_;
+}
+
+.block {
+  padding-top: 15px;
+
+  h3 {
+    margin-bottom: 8px;
+    font-size: $sizeLg;
+  }
+
+  .shadow {
+    background-color: $colorGy2;
+
+    .text {
+      li {
+        position: relative;
+        margin: 4px 0;
+        padding-right: 20px;
+
+        i {
+          width: 15px;
+        }
+
+        p {
+          display: inline-block;
+          overflow: hidden;
+          margin: 0;
+          max-width: 100%;
+          vertical-align: top;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.map {
+  position: relative;
+  margin-bottom: 10px;
+  padding-top: 30%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.company-info {
+  margin: 0 0 10px;
+  padding: 5px 15px;
+  background: $colorGy2 url(/assets/img/disabled.jpg) repeat center center;
+  list-style: none;
+
+  h3 {
+    margin-left: -30px;
+    padding-left: 5px;
+
+    &.title {
+      margin-bottom: 6px;
+      color: $colorB1;
+      font-size: $sizeLg;
+    }
+
+    &.name {
+      font-size: $sizeNler;
+    }
+  }
+
+  li {
+    position: relative;
+    margin: 6px 0;
+    padding: 0 0 0 30px;
+    min-height: 22px;
+    list-style: none;
+
+    .icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-top: 2px;
+      width: 25px;
+      text-align: center;
+    }
+  }
+}
+
+.model-threeCard {
+  .col-text {
+    position: relative;
+    height: 290px;
+
+    .ex {
+      position: absolute;
+      right: 12px;
+      bottom: 15px;
+      display: none;
+
+      span {
+        display: inline-block;
+        margin-left: 5px;
+        width: 5px;
+        height: 5px;
+        background-color: $colorGy3;
+        vertical-align: middle;
+
+        @include border-radius(100%);
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        span {
+          background-color: $colorB1;
+        }
+      }
+
+      &.show {
+        display: block;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: $widthTableApp) {
+  .model-threeCard {
+    .col-text {
+      height: auto;
+
+      li {
+        white-space: normal;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  #cardPopup {
+    margin-left: -150px;
+    width: 300px;
+  }
+}

@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-title fxLayout>
+    <span>Support Article Tag List</span>
+    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" (click)="edit(0)" *ngIf="pageIsEditable">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <vvtk-language-selector></vvtk-language-selector>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content fxLayout="column">
+        <div>
+          <mat-table #table [dataSource]="dataSource" class="table table-hover table-striped table-bordered table-condensed">
+            <ng-container cdkColumnDef="id">
+              <mat-header-cell *cdkHeaderCellDef>ID</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="name">
+              <mat-header-cell *cdkHeaderCellDef>Name</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxLayoutAlign="center center"> Action </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxLayout="row" fxLayoutAlign="center center">
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                  (click)="edit(row.id)" *ngIf="pageIsEditable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                  (click)="delete(row.id)" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

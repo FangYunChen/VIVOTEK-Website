@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-title>
+    <span>Compatibility - Suggestion - BCC</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form #form="ngForm" fxLayout="column">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <div fxFlex *ngFor="let user of bccUsers">
+            <mat-checkbox name="selected_user_{{user.id}}" [(ngModel)]="user.checked" [disabled]="!pageIsEditable">
+              {{user.name}}({{user.email}})
+            </mat-checkbox>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button color="primary" (click)="save()" [disabled]="isLoading" *ngIf="pageIsEditable">Save</button>
+  </div>
+  <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+</mat-card>

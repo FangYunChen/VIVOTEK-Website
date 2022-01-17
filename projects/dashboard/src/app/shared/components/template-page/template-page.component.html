@@ -1,0 +1,59 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{this.opts.title}}</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <!--圖文編輯-->
+          <mat-card-content fxLayout="column" *ngIf="opts.hasContent">
+            <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+              <mat-card-content>
+                <div [innerHTML]="data.content | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group (selectChange)="updateEditorHtml()" [hidden]="!pageIsEditable">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg #editor [path]="opts.dirPath"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="data.content | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+          <!--樣板-->
+          <vvtk-templates #templates [path]="opts.dirPath" [types]="opts.templateTypes" *ngIf="opts.hasTemplate" [readOnly]="!pageIsEditable"></vvtk-templates>
+          <div class="padding" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="opts.hasSheet">
+            <button type="button" mat-button (click)="fileInput.click()" *ngIf="pageIsEditable">Upload a Excel</button>
+            <input hidden type="file" #fileInput accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              (change)="fileSelect($event)" />
+          </div>
+          <vvtk-table [sheet]="sheet" *ngIf="opts.hasSheet"></vvtk-table>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || (templates && !templates.form.valid) || isLoading"
+          *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

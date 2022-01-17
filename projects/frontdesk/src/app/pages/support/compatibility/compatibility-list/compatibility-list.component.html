@@ -1,0 +1,153 @@
+<div class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="section">
+    <div class="wrap">
+      <div class="compatibilityList">
+        <div class="compatibilityList__header">
+          <h3>{{ "Compatibility List" | i18n }}</h3>
+          <button class="general-button" routerLink="suggest-form">
+            {{ "Suggest device" | i18n }}
+          </button>
+        </div>
+        <div class="compatibilityList__search">
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'Filter by Product' | i18n }}"
+              [(value)]="selectedProductId"
+              #productSelector
+            >
+              <mat-option
+                *ngFor="let product of productList"
+                value="{{ product.id }}"
+                >{{ product.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select
+              placeholder="{{ 'Filter by category' | i18n }}"
+              [(value)]="selectedCategoryId"
+              #categorySelector
+            >
+              <mat-option
+                *ngFor="let category of categoryList"
+                value="{{ category.id }}"
+                >{{ category.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <button class="reset-button" (click)="resetAll()">
+            {{ "Reset" | i18n }}
+          </button>
+        </div>
+        <div class="compatibilityList__filter mat-elevation-z8">
+          <mat-form-field>
+            <mat-select [(value)]="selectedBrand" #brandFilter>
+              <mat-option value="">{{ "All Brand" | i18n }}</mat-option>
+              <mat-option *ngFor="let brand of brandList" value="{{ brand }}">
+                {{ brand }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select [(value)]="selectedModel" #modelFilter>
+              <mat-option value="">{{ "All Model" | i18n }}</mat-option>
+              <mat-option
+                *ngFor="let data of dataSource.data"
+                value="{{ data.model }}"
+              >
+                {{ data.model }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-table
+          mat-table
+          [dataSource]="dataSource"
+          class="compatibilityList__table mat-elevation-z8"
+        >
+          <!-- Model Name Column -->
+          <ng-container matColumnDef="model">
+            <mat-header-cell *matHeaderCellDef>
+              {{ "Model" | i18n }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="element.modelWebsiteUrl; else modelNoUrl">
+                <a
+                  href="{{ generateI18nUrl(element.modelWebsiteUrl) }}"
+                  target="_blank"
+                  >{{ element.model }}</a
+                >
+              </ng-container>
+              <ng-template #modelNoUrl>{{ element.model }}</ng-template>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Brand Column -->
+          <ng-container matColumnDef="brand">
+            <mat-header-cell *matHeaderCellDef>
+              {{ "Brand" | i18n }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="element.brandWebsiteUrl; else brandNoUrl">
+                <a href="{{ element.brandWebsiteUrl }}" target="_blank">{{
+                  element.brand
+                }}</a>
+              </ng-container>
+              <ng-template #brandNoUrl>{{ element.brand }}</ng-template>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container
+            [matColumnDef]="column.name"
+            *ngFor="let column of featureColumn"
+          >
+            <mat-header-cell
+              *matHeaderCellDef
+              class="compatibilityList__table--features"
+              >{{ column.name }}</mat-header-cell
+            >
+            <mat-cell
+              *matCellDef="let element"
+              class="compatibilityList__table--features"
+            >
+              <ng-container
+                *ngIf="getModelFeature(column.id, element) as modelFeature"
+              >
+                <ng-container
+                  *ngIf="
+                    modelFeature.description === 'yes';
+                    else descriptionTemplate
+                  "
+                >
+                  <span class="dot"></span>
+                </ng-container>
+                <ng-template #descriptionTemplate>
+                  <ng-container
+                    *ngIf="modelFeature.descriptionUrl; else descriptionNoUrl"
+                  >
+                    <a
+                      href="{{ modelFeature.descriptionUrl }}"
+                      target="_blank"
+                      >{{ modelFeature.description }}</a
+                    >
+                  </ng-container>
+                  <ng-template #descriptionNoUrl>{{
+                    modelFeature.description
+                  }}</ng-template>
+                </ng-template>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+          ></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </section>
+</div>

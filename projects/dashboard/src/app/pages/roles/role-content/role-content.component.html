@@ -1,0 +1,63 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title>
+      <span>{{(id=='new')?'Add':'Edit'}} Role</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Name" name="name" [(ngModel)]="data.name" [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Permission</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div fxLayout="column" fxFlex="100%" class="tableBoxOuter">
+              <div fxLayout="column" class="tableBoxInner">
+                <table class="table table-hover table-striped table-bordered table-condensed">
+                  <thead>
+                    <tr>
+                      <th width="80px" class="text-center">isViewable</th>
+                      <th width="80px" class="text-center">isEditable</th>
+                      <th>name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of data.permissions;let idx=index">
+                      <td class="text-center">
+                        <mat-slide-toggle color="primary" name="isViewable{{idx}}" [(ngModel)]="row.isViewable" [disabled]="!pageIsEditable || row.lockIsViewable"
+                          (change)="changeIsViewable($event.checked,idx)">
+                        </mat-slide-toggle>
+                      </td>
+                      <td class="text-center">
+                        <mat-slide-toggle color="accent" name="isEditable{{idx}}" [(ngModel)]="row.isEditable" [disabled]="!pageIsEditable || row.lockIsEditable"
+                          (change)="changeIsEditable($event.checked,idx)">
+                        </mat-slide-toggle>
+                      </td>
+                      <td>
+                        <span *ngFor="let i of (row.level-1)|times">　</span>
+                        <span *ngIf="row.level">﹂</span>
+                        {{ row.name }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/roles/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

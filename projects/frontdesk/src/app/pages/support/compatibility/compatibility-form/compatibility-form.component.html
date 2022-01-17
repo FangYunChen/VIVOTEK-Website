@@ -1,0 +1,84 @@
+<div class="container">
+  <vvtk-top-banner rootPath="/support/compatibility" contentPageTitle="Compatibility List Suggestion"></vvtk-top-banner>
+  <div class='compatibilityForm'>
+    <vvtk-loading [loading]="isLoading"></vvtk-loading>
+    <div class='compatibilityForm__header'>
+      <h3>Compatibility List Suggestion</h3>
+      <p>Please fill out the information below to suggest the device you wish us to support. Please be noted that this
+        suggestion form is only for our evaluation, and you may or may not receive reply from us.</p>
+    </div>
+
+    <form class='compatibilityForm__form' [formGroup]='form' (ngSubmit)='onSubmit()'>
+      <mat-form-field>
+        <input matInput placeholder='Contact Person' formControlName='ContactPerson' required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder='Email Address' formControlName='Email' required>
+      </mat-form-field>
+
+      <div class='compatibilityForm__form_field--location'>
+
+        <mat-form-field>
+          <mat-select placeholder="by Continent" formControlName='Continent' required #continentSelector>
+            <mat-option *ngFor="let continent of continentList" value='{{continent.id}}'>
+              {{continent.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="by Country" formControlName='CountryId' required>
+            <mat-option *ngFor="let country of countryList" value='{{country.id}}'>
+              {{country.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <ng-container formArrayName='CompatibilitySuggestionProductModels'>
+        <div *ngFor='let model of modelList.controls; let i=index' [formGroupName]='i' class='compatibilityForm__form_modelList'>
+          <!-- The repeated alias template -->
+          <div class='compatibilityForm__form_modelList_content'>
+            <mat-form-field>
+              <mat-select placeholder="by Product" formControlName='ProductId' required>
+                <mat-option *ngFor="let product of productList" value='{{product.id}}'>
+                  {{product.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder='Brand Name' formControlName='BrandName' required />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder='Model Name' formControlName='ModelName' required />
+            </mat-form-field>
+          </div>
+
+          <span>
+
+            <button mat-mini-fab color='basic' type='button' [disabled]='modelList.length === 1' (click)='removeModel(i)'>
+              <mat-icon aria-label='Remove Model'>clear</mat-icon>
+            </button>
+
+            <button mat-mini-fab color='accent' type='button' (click)='addModel(i)'>
+              <mat-icon aria-label='Add Model'>add</mat-icon>
+            </button>
+
+          </span>
+
+        </div>
+      </ng-container>
+
+      <mat-form-field appearance="outline" class='compatibilityForm__form_textarea'>
+        <textarea matInput placeholder='Other Message' formControlName='OtherMessage' rows='10'>
+      </textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color='primary' type='submit' class='compatibilityForm__form_submitBtn' [disabled]='!form.valid'>Submit</button>
+    </form>
+  </div>
+</div>

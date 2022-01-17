@@ -1,0 +1,22 @@
+<div id="careers" class="container">
+  <vvtk-top-banner [rootPath]="'/careers/job-opportunities' | customPath" [contentPageTitle]="('careers-result' | i18n)"></vvtk-top-banner>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Job application has been sent!'|i18n}}</h2>
+      <div class="model-form text-center">
+        <div class="list-row">
+          <div class="list-col list-col12">
+            <div class="input-box form-label">
+              <p class="text-center">{{'Thanks for your application. We will contact you if you meet the qualifications.'|i18n}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-col list-col12 btn-box text-center">
+            <a [routerLink]="'/careers/job-opportunities' | customPath" class="btn btn-b">{{'Back to Careers page'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,31 @@
+<ng-template #contentTemplate>
+  <ng-content></ng-content>
+</ng-template>
+<ng-container *ngIf="href;else noHrefTemplate">
+  <ng-container *ngIf="useHref;else innerLinkTemplate">
+    <a [class]="cName || ''" [href]="href | safe:'url'" [target]="target || ''">
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </a>
+  </ng-container>
+  <ng-template #innerLinkTemplate>
+    <a [class]="cName || ''" [routerLink]="href" [queryParams]="queryParams" [fragment]="fragment"
+      [queryParamsHandling]="queryParamsHandling" [preserveFragment]="preserveFragment" [skipLocationChange]="skipLocationChange"
+      [replaceUrl]="replaceUrl">
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </a>
+  </ng-template>
+</ng-container>
+<ng-template #noHrefTemplate>
+  <ng-container *ngIf="routerLink;else noRouterLinkTemplate">
+    <a [class]="cName || ''" [routerLink]="routerLink" [queryParams]="queryParams" [fragment]="fragment"
+      [queryParamsHandling]="queryParamsHandling" [preserveFragment]="preserveFragment" [skipLocationChange]="skipLocationChange"
+      [replaceUrl]="replaceUrl">
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </a>
+  </ng-container>
+  <ng-template #noRouterLinkTemplate>
+    <a [class]="cName || ''">
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </a>
+  </ng-template>
+</ng-template>

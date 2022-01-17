@@ -1,0 +1,60 @@
+@import '_var.scss';
+#events {
+  [class*='icon-'] {
+    margin-bottom: 2px;
+    &:before {
+      width: 15px;
+      margin-right: 3px;
+      text-align: center;
+      display: inline-block;
+      vertical-align: top;
+      font-family: FontAwesome;
+    }
+  }
+  .icon-time {
+    &:before {
+      content: '\f017';
+    }
+  }
+  .icon-shop {
+    &:before {
+      width: 15px;
+      height: 19px;
+      content: '';
+      background: url(/assets/img/news/icon_event.svg) no-repeat center center;
+      background-size: contain;
+    }
+  }
+  .icon-marker {
+    height: 38px;
+    overflow: hidden;
+    &.limitAfter {
+      position: relative;
+      padding-right: 15px;
+      &:after {
+        position: absolute;
+        content: '...';
+        right: 0;
+        top: 16px;
+        z-index: 10;
+      }
+    }
+    &:before {
+      content: '\f041';
+    }
+    p {
+      display: inline;
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  #events {
+    .icon-shop {
+      &:before {
+        width: 17px;
+        height: 25px;
+      }
+    }
+  }
+}

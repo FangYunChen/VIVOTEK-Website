@@ -1,0 +1,14 @@
+<div class="pageBanner">
+  <div class="wrap">
+    <h1>{{productName}}</h1>
+  </div>
+  <div class="breadcrumbs">
+    <div class="wrap">
+      <a [routerLink]="['/index' | customPath]">{{ 'Home' | i18n }}</a>
+      <ng-container *ngFor="let link of breadcrumbs;">
+        <a [routerLink]="link.url">{{link.title}}</a>
+      </ng-container>
+      <span>{{productName}}</span>
+    </div>
+  </div>
+</div>

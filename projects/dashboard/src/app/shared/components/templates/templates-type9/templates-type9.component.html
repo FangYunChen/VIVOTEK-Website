@@ -1,0 +1,100 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title" [readOnly]="readOnly">
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Subtitle" [name]="'templateSubtitle'+templateIndex" [(ngModel)]="template.subtitle"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <vvtk-input-container>
+    <mat-slide-toggle color="primary" [name]="'urlEnabled'+templateIndex" [(ngModel)]="template.urlEnabled" vvtkhtml [disabled]="readOnly">
+      {{template.urlEnabled?'Enabled Url':'Disabled Url'}}
+    </mat-slide-toggle>
+  </vvtk-input-container>
+  <mat-form-field fxFlex *ngIf="template.urlEnabled">
+    <input matInput placeholder="Url" [name]="'templateUrl'+templateIndex" [(ngModel)]="template.url" [readOnly]="readOnly">
+  </mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <button type="button" mat-button (click)="addIcon(0)" *ngIf="!readOnly">Add Icon</button>
+    <div [sortablejs]="template.icons" [sortablejsOptions]="groupOptionsIcon">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let icon of template.icons; let j = index">
+        <mat-card-title>
+          <mat-icon class="drag-handle-icon" *ngIf="!readOnly">drag_handle</mat-icon>
+          <h4>Icon {{j+1}}</h4>
+          <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Icon" matTooltipPosition="above" (click)="deleteIcon(j)"
+            *ngIf="!readOnly">
+            <mat-icon>delete</mat-icon>
+          </a>
+          <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="icon.hideContent?'展開':'收合'" matTooltipPosition="above" (click)="icon.hideContent = !icon.hideContent">
+            <mat-icon *ngIf="icon.hideContent">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!icon.hideContent">keyboard_arrow_up</mat-icon>
+          </a>
+        </mat-card-title>
+        <mat-card-content fxLayout="column" [hidden]="!icon.hideContent">
+          {{icon.title}}
+        </mat-card-content>
+        <mat-card-content fxLayout="column" [hidden]="icon.hideContent">
+          <div fxLayout="row" fxLayoutAlign="center" *ngIf="icon.image.src">
+            <div class="text-center">
+              <img [src]="icon.image.src | safeUrl" [alt]="icon.image.alt" [title]="icon.image.title">
+            </div>
+          </div>
+          <button type="button" mat-button (click)="iconImgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload a image (Recommended size: 150*150)</button>
+          <input hidden type="file" #iconImgFileInput accept="image/*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Image url" [name]="'templateIconsImageSrc'+templateIndex+'_'+j" [(ngModel)]="icon.image.src"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput maxlength="255" placeholder="Image title" [name]="'templateIconsImageTitle'+templateIndex+'_'+j" [(ngModel)]="icon.image.title"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Image alt" [name]="'templateIconsImageAlt'+templateIndex+'_'+j" [(ngModel)]="icon.image.alt"
+              [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Title" [name]="'templateIconsTitle'+templateIndex+'_'+j" [(ngModel)]="icon.title" [readOnly]="readOnly">
+          </mat-form-field>
+          <mat-card-content fxLayout="column">
+            <mat-card fxFlex="100%" [hidden]="!readOnly">
+              <mat-card-content>
+                <div [innerHTML]="template.htmlContent | safeHtml"></div>
+              </mat-card-content>
+            </mat-card>
+            <mat-tab-group [hidden]="readOnly">
+              <mat-tab label="Editor">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <vvtk-wysiwyg [(html)]="icon.htmlContent" [path]="path"></vvtk-wysiwyg>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+              <mat-tab label="Preview">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                  <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                      <div [innerHTML]="icon.htmlContent | safeHtml"></div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+          <vvtk-input-container>
+            <mat-slide-toggle color="primary" [name]="'templateIconsUrlEnabled'+templateIndex+'_'+j" [(ngModel)]="icon.urlEnabled" vvtkhtml
+              [disabled]="readOnly">
+              {{icon.urlEnabled?'Enabled Url':'Disabled Url'}}
+            </mat-slide-toggle>
+          </vvtk-input-container>
+          <mat-form-field fxFlex *ngIf="icon.urlEnabled">
+            <input matInput placeholder="Url" [name]="'templateIconsUrl'+templateIndex+'_'+j" [(ngModel)]="icon.url" [readOnly]="readOnly">
+          </mat-form-field>
+        </mat-card-content>
+        <button type="button" mat-button (click)="addIcon(j+1)" *ngIf="!readOnly">Add Icon</button>
+      </div>
+    </div>
+  </div>
+</div>

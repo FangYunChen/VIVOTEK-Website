@@ -1,0 +1,164 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title>
+      <span>Edit Account</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <mat-tab-group>
+        <mat-tab label="Information" fxLayout="column">
+          <mat-card fxFlex="100%">
+            <mat-card-content fxLayout="column">
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Email" name="email" [value]="data.email" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Industry Type" name="industryType" [value]="data.industryType" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Last Name" name="lastName" [value]="data.lastName" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="First Name" name="firstName" [value]="data.firstName" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Phone" name="phone" [value]="data.phone" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Mobile" name="mobile" [value]="data.mobile" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Fax" name="fax" [value]="data.fax" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Website" name="website" [value]="data.website" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Source" name="source" [value]="data.source" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Company" name="Company" [value]="data.company" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Identity Role" name="identityRole" [value]="data.identityRole" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Title" name="title" [value]="data.title" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Country" name="country" [value]="data.country?data.country.name:''" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="State" name="state" [value]="data.state?data.state.name:''" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="City" name="city" [value]="data.city" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Address" name="address" [value]="data.address" readonly>
+              </mat-form-field>
+              <!--<mat-form-field fxFlex>
+                <input matInput maxlength="255" placeholder="Country" name="country2Id" [value]="data.country2Id" readonly>
+              </mat-form-field>-->
+              <mat-form-field fxFlex>
+                <input matInput maxlength="256" placeholder="Target applications to be working with VIVOTEK products" name="applications" [value]="data.applications" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="256" placeholder="Any projects ongoing / anticipated volume using VIVOTEK devices" name="devices" [value]="data.devices" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="What is your VIVOTEK LPR Camera model?" name="cameraModel" [value]="data.cameraModel" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="Which distributor/channel did you purchase VIVOTEK LPR Camera from?" name="distributorChannel" [value]="data.distributorChannel" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="Please provide one VIVOTEK LPR camera MAC address for validation." name="cameraMAC" [value]="data.cameraMAC" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="What’s your use case on VIVOTEL LPR camera?" name="useCases" [value]="data.useCases" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="Which distributor/channel did you purchase VIVOTEK counting camera?" name="useCases" [value]="data.purchase" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="Could you please provide one camera MAC address with us?" name="useCases" [value]="data.macAddress" readonly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput maxlength="300" placeholder="Could you please share a bit more about your use case?" name="useCases" [value]="data.countingUseCase" readonly>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="Permission">
+          <form #form="ngForm" fxLayout="column">
+            <mat-card fxFlex="100%">
+              <mat-card-content fxLayout="column">
+                <vvtk-input-container>
+                  <mat-slide-toggle color="primary" name="status" [(ngModel)]="data.status" [disabled]="!pageIsEditable" vvtkhtml>
+                    Account {{data.status?'Enable':'Disable'}}
+                  </mat-slide-toggle>
+                </vvtk-input-container>
+              </mat-card-content>
+              <mat-card-title>
+                <h3>Roles</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <div fxFlex *ngFor="let role of roles">
+                  <mat-checkbox name="selectedeRoles[]" [value]="role.id" [checked]="selectedRolesChecked(role.id)" (change)="selectedRolesChange(role.id,$event)"
+                    [disabled]="!pageIsEditable">
+                    {{role.name}}
+                  </mat-checkbox>
+                </div>
+              </mat-card-content>
+              <mat-card-title>
+                <h3>Personal Permission</h3>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <div fxLayout="column" fxFlex="100%" class="tableBoxOuter">
+                  <div fxLayout="column" class="tableBoxInner">
+                    <table class="table table-hover table-striped table-bordered table-condensed">
+                      <thead>
+                        <tr>
+                          <th width="80px" class="text-center">isViewable</th>
+                          <th width="80px" class="text-center">isEditable</th>
+                          <th>name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row of data.permissions;let idx=index;">
+                          <td class="text-center">
+                            <mat-slide-toggle color="primary" name="isViewable{{idx}}" [(ngModel)]="row.isViewable" [disabled]="!pageIsEditable || row.lockIsViewable"
+                              (change)="changeIsViewable($event.checked,idx)">
+                            </mat-slide-toggle>
+                          </td>
+                          <td class="text-center">
+                            <mat-slide-toggle color="accent" name="isEditable{{idx}}" [(ngModel)]="row.isEditable" [disabled]="!pageIsEditable || row.lockIsEditable"
+                              (change)="changeIsEditable($event.checked,idx)">
+                            </mat-slide-toggle>
+                          </td>
+                          <td>
+                            <span *ngFor="let i of (row.level-1)|times">　</span>
+                            <span *ngIf="row.level">﹂</span>
+                            {{ row.name }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/accounts/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

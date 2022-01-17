@@ -1,0 +1,106 @@
+<div class="calculation-settings__content">
+  <div class="streaming-list">
+    <div class="streaming-category" style="width: 75%;">
+      <div class="streaming-category__header">
+        <mat-checkbox
+          name="StreamingCategory"
+          value="recording"
+          [(ngModel)]="product.isRecording"
+          (change)="storageSizeChanged()"
+          >{{ "Recording" | i18n }}
+        </mat-checkbox>
+      </div>
+      <div>
+        <mat-radio-group
+          style="display: flex;"
+          [(ngModel)]="product.recordingStreamType"
+          (change)="storageSizeChanged()"
+        >
+          <mat-radio-button value="0" class="recordingRadioBtn">
+            {{ "Continuous Recording" | i18n }}</mat-radio-button
+          >
+          <mat-radio-button value="1" class="recordingRadioBtn">
+            {{ "Event Recording" | i18n }}</mat-radio-button
+          >
+          <mat-radio-button value="2" class="recordingRadioBtn">
+            {{ "Hybrid Recording" | i18n }}</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div class="streaming-category__content">
+        <vvtk-recording-streaming-item
+          [recordingType]="0"
+          [codecInfo]="product.continuousRecordingCodecInfo"
+          [qty]="product.qty"
+          [disable]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType != 0
+          "
+          [isSelected]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType == 0 &&
+            product.isRecording
+          "
+          (storageSizeChanged)="storageSizeChanged()"
+          class="streaming-item"
+        >
+        </vvtk-recording-streaming-item>
+        <vvtk-recording-streaming-item
+          [recordingType]="1"
+          [codecInfo]="product.eventRecordingCodecInfo"
+          [qty]="product.qty"
+          [disable]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType != 1
+          "
+          [isSelected]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType == 1 &&
+            product.isRecording
+          "
+          (storageSizeChanged)="storageSizeChanged()"
+          class="streaming-item"
+        >
+        </vvtk-recording-streaming-item>
+        <vvtk-recording-streaming-item
+          [recordingType]="2"
+          [codecInfo]="product.hybridRecordingCodecInfo"
+          [qty]="product.qty"
+          [disable]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType != 2
+          "
+          [isSelected]="
+            product.recordingStreamType !== undefined &&
+            product.recordingStreamType == 2 &&
+            product.isRecording
+          "
+          (storageSizeChanged)="storageSizeChanged()"
+          class="streaming-item"
+        >
+        </vvtk-recording-streaming-item>
+      </div>
+    </div>
+    <div class="streaming-category streaming-gap" style="width: 25%;">
+      <div class="streaming-category__header">
+        <mat-checkbox
+          name="StreamingCategory"
+          value="liveview"
+          [(ngModel)]="product.isLiveview"
+          (change)="storageSizeChanged()"
+          >{{ "Liveview" | i18n }}</mat-checkbox
+        >
+      </div>
+      <div class="streaming-category__content">
+        <vvtk-liveview-streaming-item
+          [codecInfo]="product.liveviewCodecInfo"
+          [qty]="product.qty"
+          [isSelected]="product.isLiveview"
+          (bitRateChanged)="storageSizeChanged()"
+          class="streaming-item"
+          style="width: 100%;"
+        ></vvtk-liveview-streaming-item>
+      </div>
+    </div>
+  </div>
+</div>

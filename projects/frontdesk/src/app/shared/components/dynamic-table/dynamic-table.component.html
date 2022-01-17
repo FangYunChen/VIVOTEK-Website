@@ -1,0 +1,65 @@
+<mat-table [dataSource]="dataSource" class="table-striped table-scroll">
+  <ng-container [matColumnDef]="Column.name" *ngFor="let Column of DynamicTableColumns">
+    <ng-container [ngSwitch]="Column.type">
+      <mat-header-cell *matHeaderCellDef class="p-medium" fxFlex="1 0 170px">
+          {{Column.name | i18n}}
+        <ng-container *ngSwitchCase="propertyType.CheckBoxDownload">
+          <button mat-icon-button (click)="mulDownloadFile()">
+            <i class="material-icons">get_app</i>
+          </button>
+        </ng-container>
+      </mat-header-cell>
+      <ng-container *ngSwitchCase="propertyType.Date">
+        <mat-cell *matCellDef="let element" class="p-medium" fxFlex="1 0 170px">
+          <ng-container *ngIf="getRowColumnContent(Column.id, element) as modelFeature">{{modelFeature?.content |
+            date:'yyyy-MM-dd'}}</ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.DownloadUrl">
+        <mat-cell *matCellDef="let element" class="p-medium" fxFlex="1 0 170px">
+          <ng-container *ngIf="getRowColumnContent(Column.id, element) as modelFeature">
+            <button mat-icon-button (click)="dowloadURLFile(modelFeature?.content)">
+              <i class="material-icons">get_app</i>
+            </button>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.CheckBoxDownload">
+        <mat-cell *matCellDef="let element" class="p-medium" fxFlex="1 0 170px">
+          <ng-container *ngIf="getRowColumnContent(Column.id, element) as modelFeature">
+            <mat-checkbox name="selectedeDownload[]" [value]="modelFeature?.content"
+              (change)="selectedIdChange(modelFeature?.content,$event)">
+            </mat-checkbox>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container *ngSwitchCase="propertyType.VideoUrl">
+        <mat-cell *matCellDef="let element" class="p-medium" fxFlex="1 0 170px">
+          <ng-container *ngIf="getRowColumnContent(Column.id, element) as modelFeature">
+            <ng-container *ngIf="modelFeature.content">
+              <a (click)="openVideo(modelFeature.content)">
+                <mat-icon>videocam</mat-icon>
+              </a>
+            </ng-container>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <mat-cell *matCellDef="let element" class="p-medium" fxFlex="1 0 170px">
+          <ng-container *ngIf="getRowColumnContent(Column.id, element) as modelFeature">{{modelFeature?.content | i18n}}</ng-container>
+        </mat-cell>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnList"></mat-row>
+</mat-table>
+
+<vvtk-popup *ngIf="openPopup" id="videoPopup" popupStyle="videoStyle" (windowPopup)="windowPopup($event)">
+  <div class="video-wrap" vvtkPopup>
+    <iframe [src]="videoUrl | safe:'resourceUrl'" frameborder="0" allowfullscreen></iframe>
+  </div>
+</vvtk-popup>
+
+<vvtk-loading [loading]="isLoading"></vvtk-loading>

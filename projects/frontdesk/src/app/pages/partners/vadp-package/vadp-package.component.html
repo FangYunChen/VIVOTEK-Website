@@ -1,0 +1,138 @@
+<div class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="section">
+    <!-- {{ companyVivotek | json }} -->
+    <div class="wrap">
+      <!-- <div class="circle_list" *ngFor="let company of companies">
+        <a (click)="goDistance(company.logoAlt)">{{company.companyName}}</a>
+      </div> -->
+      <div class="main-context">
+        <!--ngFor company-->
+        <div class="company-context" *ngFor="let company of companyVivotek">
+          <div [id]="company.logoAlt" class="company-title">
+            <h3>{{company.companyName}}</h3>
+          </div>
+          <div class="company-logo">
+            <ng-container *ngIf="company.logoLink; else noLogoLinkTemplate">
+              <a [href]="company.logoLink" target="_blank">
+                <img [src]="company.logoSrc" [alt]="company.logoAlt" [title]="company.logoTitle">
+              </a>
+            </ng-container>
+            <ng-template #noLogoLinkTemplate>
+              <img [src]="company.logoSrc" [alt]="company.logoAlt" [title]="company.logoTitle">
+            </ng-template>
+          </div>
+          <div *ngIf="company.reference" class="company-reference">
+            <a [href]="company.reference">
+              <div class="ref-button">
+                <span>Reference</span>
+              </div>
+            </a>
+          </div>
+          <!--ngFor package-->
+          <div class="package-context" *ngFor="let package of company.packages">
+            <div *ngIf="package.packageSrc" class="package-logo">
+              <ng-container *ngIf="package.packageLink; else noPackageLogoLinkTemplate">
+                <a [href]="package.packageLink" target="_blank">
+                  <img [src]="package.packageSrc" [alt]="package.packageAlt" [title]="package.packageTitle">
+                </a>
+              </ng-container>
+              <ng-template #noPackageLogoLinkTemplate>
+                <img [src]="package.packageSrc" [alt]="package.packageAlt" [title]="package.packageTitle">
+              </ng-template>
+            </div>
+
+            <div class="package-title">
+              <h4>{{package.packageName}}</h4>
+            </div>
+            <div class="package-content">
+              <div [innerHtml]="package.content | safe:'html'" class="model-html-content p-medium"></div>
+            </div>
+
+            <div class="package-model">
+              <h5>Supported Model:</h5>
+              <div [innerHtml]="package.supportedModel | safe:'html'" class="model-html-content p-medium"></div>
+            </div>
+            <div *ngIf="package.downloadUrl || package.userManualUrl" class="package-download">
+              <a *ngIf="package.downloadUrl" [href]="package.downloadUrl">
+                <div class="download-button">
+                  <mat-icon>get_app</mat-icon>
+                  <span>Download</span>
+                </div>
+              </a>
+              <!--ngIf user manual-->
+              <a *ngIf="package.userManualUrl" [href]="package.userManualUrl">
+                <div class="download-button">
+                  <mat-icon>get_app</mat-icon>
+                  <span>User Manual</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="company-context" *ngFor="let company of companies">
+          <div [id]="company.logoAlt" class="company-title">
+            <h3>{{company.companyName}}</h3>
+          </div>
+          <div class="company-logo">
+            <ng-container *ngIf="company.logoLink; else noLogoLinkTemplate">
+              <a [href]="company.logoLink" target="_blank">
+                <img [src]="company.logoSrc" [alt]="company.logoAlt" [title]="company.logoTitle">
+              </a>
+            </ng-container>
+            <ng-template #noLogoLinkTemplate>
+              <img [src]="company.logoSrc" [alt]="company.logoAlt" [title]="company.logoTitle">
+            </ng-template>
+          </div>
+          <div *ngIf="company.reference" class="company-reference">
+            <a [href]="company.reference">
+              <div class="ref-button">
+                <span>Reference</span>
+              </div>
+            </a>
+          </div>
+          <!--ngFor package-->
+          <div class="package-context" *ngFor="let package of company.packages">
+            <div *ngIf="package.packageSrc" class="package-logo">
+              <ng-container *ngIf="package.packageLink; else noPackageLogoLinkTemplate">
+                <a [href]="package.packageLink" target="_blank">
+                  <img [src]="package.packageSrc" [alt]="package.packageAlt" [title]="package.packageTitle">
+                </a>
+              </ng-container>
+              <ng-template #noPackageLogoLinkTemplate>
+                <img [src]="package.packageSrc" [alt]="package.packageAlt" [title]="package.packageTitle">
+              </ng-template>
+            </div>
+
+            <div class="package-title">
+              <h4>{{package.packageName}}</h4>
+            </div>
+            <div class="package-content">
+              <div [innerHtml]="package.content | safe:'html'" class="model-html-content p-medium"></div>
+            </div>
+
+            <div class="package-model">
+              <h5>Supported Model:</h5>
+              <div [innerHtml]="package.supportedModel | safe:'html'" class="model-html-content p-medium"></div>
+            </div>
+            <div *ngIf="package.downloadUrl || package.userManualUrl" class="package-download">
+              <a *ngIf="package.downloadUrl" [href]="package.downloadUrl">
+                <div class="download-button">
+                  <mat-icon>get_app</mat-icon>
+                  <span>Download</span>
+                </div>
+              </a>
+              <!--ngIf user manual-->
+              <a *ngIf="package.userManualUrl" [href]="package.userManualUrl">
+                <div class="download-button">
+                  <mat-icon>get_app</mat-icon>
+                  <span>User Manual</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

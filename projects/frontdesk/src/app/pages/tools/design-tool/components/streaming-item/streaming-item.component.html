@@ -1,0 +1,115 @@
+<div class="content">
+  <label class="form-item">
+    <span class="form-item__title">{{ "Codec" | i18n }}</span>
+    <div
+      class="form-item__content"
+      [ngClass]="{
+        required: isSelected && !codecInfo.codec
+      }"
+    >
+      <mat-select
+        placeholder="Codec"
+        [(ngModel)]="codecInfo.codec"
+        [disabled]="disable"
+        (selectionChange)="codecChanged()"
+      >
+        <mat-option
+          *ngFor="let codec of codecInfoList"
+          [value]="codec.CodecName"
+        >
+          {{ codec.CodecName }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </label>
+  <label class="form-item">
+    <span class="form-item__title">{{ "Resolution" | i18n }}</span>
+    <div
+      class="form-item__content"
+      [ngClass]="{
+        required: isSelected && !codecInfo.resolution
+      }"
+    >
+      <mat-select
+        placeholder="Resolution"
+        [(ngModel)]="codecInfo.resolution"
+        [disabled]="disable"
+        (selectionChange)="resolutionChanged()"
+      >
+        <mat-option
+          *ngFor="let resolution of codecInfo.resolutionList"
+          [value]="resolution.ResolutionName"
+        >
+          {{ resolution.ResolutionName }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </label>
+  <label class="form-item">
+    <span class="form-item__title">{{ "FPS" | i18n }}</span>
+    <div
+      class="form-item__content"
+      [ngClass]="{
+        required: isSelected && !codecInfo.fps
+      }"
+    >
+      <mat-select
+        placeholder="FPS"
+        [(ngModel)]="codecInfo.fps"
+        [disabled]="disable"
+        (selectionChange)="changeBitRate()"
+      >
+        <mat-option *ngFor="let fps of codecInfo.fpsList" [value]="fps">
+          {{ fps }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </label>
+  <label class="form-item">
+    <span class="form-item__title">{{ "Quality" | i18n }}</span>
+    <div
+      class="form-item__content"
+      [ngClass]="{
+        required: isSelected && !codecInfo.quality
+      }"
+    >
+      <mat-select
+        placeholder="Quality"
+        [(ngModel)]="codecInfo.quality"
+        [disabled]="disable"
+        (selectionChange)="changeBitRate()"
+      >
+        <mat-option
+          *ngFor="let quality of codecInfo.qualityList"
+          [value]="quality"
+        >
+          {{ quality }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </label>
+  <div class="form-item">
+    <span class="form-item__title">{{ "Smart Stream" | i18n }}</span>
+    <div
+      class="form-item__content"
+      [ngClass]="{
+        required: isSelected && !codecInfo.smartStream
+      }"
+    >
+      <mat-radio-group
+        [(ngModel)]="codecInfo.smartStream"
+        (change)="changeBitRate()"
+        [disabled]="disable"
+      >
+        <mat-radio-button
+          [value]="smartStreamOn"
+          [disabled]="!canSmartStream"
+          >{{ "On" | i18n }}</mat-radio-button
+        >
+        <mat-radio-button [value]="smartStreamOff">{{
+          "Off" | i18n
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</div>

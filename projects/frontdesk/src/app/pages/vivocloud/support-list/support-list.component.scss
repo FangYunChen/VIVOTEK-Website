@@ -1,0 +1,131 @@
+@import '../../../../styles/var.scss';
+@import '_filter.scss';
+#support-list-tab ::ng-deep {
+  .mat-tab-group {
+    .mat-tab-header {
+      .mat-tab-label-container {
+        .mat-tab-list {
+          .mat-ink-bar {
+            display: none;
+          }
+
+          .mat-tab-labels {
+            .mat-tab-label {
+              padding: 0;
+              opacity: 1;
+            }
+
+            .mat-tab-label-content {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              height: 100%;
+
+              a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                color: #3c3c3c;
+                padding: 0 24px;
+
+                &:hover {
+                  text-decoration: none;
+                }
+
+                .link-text {
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+
+            .mat-tab-label-active {
+              background-color: $colorB1;//rgba(21, 135, 205, 1)
+              color: #fff;
+
+              a {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .mat-tab-body {
+      .mat-tab-body-content {
+        overflow: hidden;
+      }
+    }
+  }
+
+  .mat-tab-group[mat-stretch-tabs] .mat-tab-label {
+    background: #ECEDEE;
+    margin-right: 2px;
+  }
+
+}
+.support-list::ng-deep {
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+    @include filter-box;
+
+    .support-container {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-bottom: 20px;
+
+      .support-model-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+
+        .support-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          flex-basis: 18%;
+          margin: 0 1%;
+          margin-bottom: 25px;
+
+          @media (max-width: 600px) {
+            flex-basis: 100%;
+          }
+
+          @media (min-width:600px)and(max-width:960px) {
+            flex-basis: 31%;
+          }
+
+          @media (min-width:960px)and(max-width:1280px) {
+            flex-basis: 23%;
+          }
+
+          .support-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .p-medium {
+              color: #0093d5;
+              text-align: center;
+            }
+
+            .support-logo {
+              height: 150px;
+              width: 150px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

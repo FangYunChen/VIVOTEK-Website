@@ -1,0 +1,51 @@
+<mat-card fxFlex="100%">
+  <mat-card-title>
+    <span>{{data.id==0?'Add':'Edit'}} Country</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="column">
+    <form #form="ngForm">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput maxlength="255" placeholder="Name" name="name" [(ngModel)]="data.name" [readOnly]="!pageIsEditable" required>
+          </mat-form-field>
+          <mat-form-field fxFlex *ngIf="!pageIsEditable">
+            <input matInput maxlength="255" placeholder="Language" name="languageName" [value]="getLangName(data.lang)" readOnly required>
+          </mat-form-field>
+          <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+            <div fxLayout="column" vvtkhtml>
+              <mat-form-field>
+                <mat-select name="language" placeholder="Language" [(ngModel)]="data.lang">
+                  <mat-option *ngFor="let lang of languages" [value]="lang.code">{{lang.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </vvtk-input-container>
+          <vvtk-input-container>
+            <mat-slide-toggle color="primary" name="isEnabled" [(ngModel)]="data.isEnabled" [disabled]="!pageIsEditable" vvtkhtml>
+              {{data.isEnabled?'Enabled':'Disabled'}}
+            </mat-slide-toggle>
+          </vvtk-input-container>
+          <vvtk-input-container>
+            <mat-slide-toggle color="warn" name="isReal" [(ngModel)]="data.isReal" [disabled]="!pageIsEditable" vvtkhtml>
+              {{data.isReal?'Show':'Hide'}} on the countries list
+            </mat-slide-toggle>
+          </vvtk-input-container>
+          <vvtk-input-container>
+            <mat-slide-toggle color="accent" name="isLanguage" [(ngModel)]="data.isLanguage" [disabled]="!pageIsEditable" vvtkhtml>
+              {{data.isLanguage?'Show':'Hide'}} on the language menu
+            </mat-slide-toggle>
+          </vvtk-input-container>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <span fxFlex></span>
+      <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+    </div>
+  </mat-card-content>
+
+</mat-card>

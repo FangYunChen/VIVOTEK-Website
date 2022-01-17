@@ -1,0 +1,41 @@
+import { Permission } from './permission';
+import { Role } from './role';
+import { Country, States } from './continent';
+export class Account {
+    id?: string;
+    roles: any; // 實際上是 Role[] || string[]
+    permissions: Permission[];
+    lastName: string;
+    firstName: string;
+    industryType: string;
+    identityRole: string;
+    countryId: number;
+    country: Country;
+    stateId: number;
+    state: States;
+    city: string;
+    address: string;
+    phone: string;
+    mobile: string;
+    fax: string;
+    website: string;
+    source: string;
+    company: string;
+    department: string;
+    title: string;
+    lang: string;
+    status: boolean | string;
+    displayName?: string;
+    email: string;
+    countryName: string;
+    applications: string;
+    devices: string;
+    docTypeName: string;
+    cameraModel: string;
+    distributorChannel: string;
+    cameraMAC: string;
+    useCases: string;
+    purchase: string;
+    macAddress: string;
+    countingUseCase: string;
+}

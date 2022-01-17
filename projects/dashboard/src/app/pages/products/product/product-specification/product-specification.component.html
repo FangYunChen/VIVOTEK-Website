@@ -1,0 +1,54 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Edit {{product?.name}} Specification</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <ng-template *ngTemplateOutlet="specifications; context:{specDetails:specDetails}"></ng-template>
+
+            <ng-template #specifications let-specDetails="specDetails">
+              <div style="margin:0 0 0 20px" fxLayout="column" *ngFor="let specDetail of specDetails">
+                <ng-container *ngIf="specDetail.isAttribute; else specGroup">
+                  <mat-form-field fxFlex *ngIf="specDetail.isAttribute; else specGroup">
+                    <textarea matInput rows="2" [placeholder]="specDetail.name" name="specContent_{{specDetail.id}}"
+                      [(ngModel)]="specDetail.content" [readOnly]="!pageIsEditable"></textarea>
+                  </mat-form-field>
+                </ng-container>
+
+                <ng-template #specGroup>
+                  <div fxLayout="column">
+                    <h4 fxFlex>
+                      {{specDetail.name}}
+                      <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="specDetail.hideContent?'展開':'收合'"
+                        matTooltipPosition="above" (click)="specDetail.hideContent = !specDetail.hideContent">
+                        <mat-icon *ngIf="specDetail.hideContent">keyboard_arrow_down</mat-icon>
+                        <mat-icon *ngIf="!specDetail.hideContent">keyboard_arrow_up</mat-icon>
+                      </a>
+                    </h4>
+                    <mat-card-content fxLayout="column" [hidden]="specDetail.hideContent">
+                      <ng-template *ngTemplateOutlet="specifications; context:{specDetails:specDetail.children}"></ng-template>
+                    </mat-card-content>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product']" [queryParams]="{filter: filterTemp, select: selectTemp}">Back</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

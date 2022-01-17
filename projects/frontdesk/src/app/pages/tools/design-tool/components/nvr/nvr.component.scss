@@ -1,0 +1,30 @@
+@import '../../../../../../styles/var';
+
+:host ::ng-deep {
+  .mat-checkbox-inner-container {
+    width: 20px;
+    height: 20px;
+  }
+  .mat-checkbox-label {
+    font-size: 20px;
+    color: $colorB3;
+  }
+  .mat-card {
+    margin-top: 20px;
+    padding: 0;
+    border-radius: 0;
+  }
+  .mat-select-value {
+    padding: 0 8px;
+  }
+}
+
+.sub-title {
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}

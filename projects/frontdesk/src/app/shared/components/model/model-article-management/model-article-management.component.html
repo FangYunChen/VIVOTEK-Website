@@ -1,0 +1,87 @@
+<section class="model section model-article-managment">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title}}</h3>
+    <div class="main-content">
+      <div class="search-article">
+        <mat-form-field class="search-form" appearance="outline">
+          <input matInput class="search-input" type="text" placeholder="Search Support" [(ngModel)]="searchKeyWord"
+            (keyup.enter)="SearchArticleTitleAndContext()">
+          <button mat-button *ngIf="searchKeyWord" matSuffix mat-icon-button aria-label="Clear" (click)="ResetSearchResult()">
+            <i class="cancel-search fa fa-times" aria-hidden="true"></i>
+          </button>
+        </mat-form-field>
+        <i class="search-icon fa fa-search" (click)="SearchArticleTitleAndContext()" aria-hidden="true"></i>
+      </div>
+      <div class="article-content">
+        <div class="article-list">
+          <div class="list-category">
+            <!--ngFor LIST catogory-->
+            <ul class="list-layer-1st">
+              <li *ngFor="let list of data">
+                {{list.title}}
+                <!--ngFor article title-->
+                <ul class="list-layer-2nd">
+                  <!--href="SetAnchorID(title)"-->
+                  <li *ngFor="let article of list.articles">
+                    <a [href]="GetAnchorID(article.title)" vvtkHighlight>{{article.title}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="article-articles">
+          <!--ngFor article content-->
+          <div *ngFor="let category of data">
+            <div *ngFor="let article of category.articles" class="article-context">
+              <!--id="SetAnchorID(title)"-->
+              <div [id]="SetAnchorID(article.title)" class="article-title">
+                <h3>{{article.title}}</h3>
+              </div>
+              <div class="article-summary">
+                <div [innerHtml]="article.summary | safe:'html'" class="model-html-content p-medium"></div>
+              </div>
+              <div class="article-toggle">
+                <div class="article-paragraph">
+                  <div [innerHtml]="article.htmlContent | safe:'html'" class="model-html-content p-medium"></div>
+                </div>
+              </div>
+              <div class="article-button-row">
+                <a href="javascript:void(0)" (click)="toggleLearnMore($event);" [ngStyle]="{'visibility': article.summary||article.htmlContent?'visible':'hidden'}">
+                  <div class="article-button-left">
+                    <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    <span>More Info</span>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" (click)="scrollToTop();">
+                  <div class="article-button-right">
+                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                    <span>Top of Page</span>
+                  </div>
+                </a>
+              </div>
+              <!--*ngIf="videos" -->
+              <div *ngFor="let video of article.videos" class="video-content">
+                <!-- *ngFor youtubeUrl-->
+                <div *ngIf="video.videoUrl" class="video-box">
+                  <iframe [src]="'https://www.youtube.com/embed/'+ GetVideoID(video.videoUrl)|safe:'resourceUrl'"
+                    frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-export" *ngIf="template.articleList.exportable">
+          <vvtk-a [url]="" [cName]="'btn btn-g'">
+            <ng-container HtmlContent>
+              <div class="icon-text">
+                <mat-icon>launch</mat-icon>
+                <span>Export</span>
+              </div>
+            </ng-container>
+          </vvtk-a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

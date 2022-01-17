@@ -1,0 +1,32 @@
+<div class="container">
+  <vvtk-top-banner></vvtk-top-banner>
+  <section class="model section model-text">
+    <div class="wrap">
+      <div class="year-selector">
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedYear" (selectionChange)="selectYear()">
+            <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <h3 class="black-title-text text-left">{{selectedYear}}</h3>
+      <hr>
+      <div *ngFor="let item of items" class="content">
+        <div class="content-title">
+          <ng-container *ngIf="item.url; else title">
+            <vvtk-link [href]="item.url" target="_blank">
+              <ng-container *ngTemplateOutlet="title"></ng-container>
+            </vvtk-link>
+          </ng-container>
+          <ng-template #title>
+            <h6 class="bold-text">{{item.title}}</h6>
+          </ng-template>
+        </div>
+        <div class="content-text">
+          {{discriptionClip(item.description)}}
+        </div>
+        <hr>
+      </div>
+    </div>
+  </section>
+</div>

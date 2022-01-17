@@ -1,0 +1,53 @@
+<mat-card>
+  <mat-card-title>
+    <span>Compatibility - Support Product List</span>
+    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['./',0]"
+      *ngIf="pageContentIsEditable">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content fxLayout="column">
+        <div>
+          <mat-table #table [dataSource]="dataSource$ | async" class="table table-hover table-striped table-bordered table-condensed">
+            <ng-container cdkColumnDef="id">
+              <mat-header-cell *cdkHeaderCellDef>ID</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="name">
+              <mat-header-cell *cdkHeaderCellDef>Product Name</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="categoriesText">
+              <mat-header-cell *cdkHeaderCellDef>Support Categories</mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.categoriesText}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="300px" fxLayoutAlign="center center"> Action
+              </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxLayout="row" fxFlex="300px" fxLayoutAlign="center center">
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit Detail" matTooltipPosition="above"
+                  [routerLink]="['./',row.id]" *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                  (click)="delete(row.id, row.name)" [disabled]="isLoading" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

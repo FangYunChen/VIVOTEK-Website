@@ -1,0 +1,49 @@
+<div id="signPopup" class="popup-wrap open">
+  <div class="popup">
+    <div class="text-right">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closeSign($event)">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <div class="text-center logo">
+      <img src="/assets/img/vivotek-logo-n.svg" alt="">
+    </div>
+    <form [action]="signRedirect">
+      <div class="input-box form-label">
+        <input type="text" name="email" [(ngModel)]="email">
+        <label for="">{{'Account (Email)' | i18n}}</label>
+      </div>
+      <div class="input-box form-label">
+        <input type="password" name="password" [(ngModel)]="password">
+        <label for="">{{'Password' | i18n}}</label>
+      </div>
+      <div class="input-box">
+        <label for="">
+          <input type="checkbox" name="remember" [(ngModel)]="remember"> {{'Remember me' | i18n}}</label>
+        <a class="forget" (click)="forgetPassword($event)">{{'Forget password?' | i18n}}</a>
+      </div>
+      <div class="input-box">
+        <button type="button" class="btn btn-b" (click)="signIn()">{{'Log in' | i18n}}</button>
+        <button type="button" class="btn btn-b-b" (click)="register()">{{'Register' | i18n}}</button>
+      </div>
+      <!-- <div class="hr">
+        <span>OR</span>
+      </div>
+      <div class="input-box else-sign afterClear">
+        <a href="{{ oauthUrl['federation'] }}" class="btn btn-b btn-viv" [title]="'VIVOTEK log in' | i18n" *ngIf="false">
+          <img src="/assets/img/vivotek-w.svg" alt="">
+        </a>
+        <a href="{{ oauthUrl['google'] }}" class="btn btn-google" [title]="'Google+ log in' | i18n">
+          <i class="fa fa-google-plus"></i>
+        </a>
+        <a href="{{ oauthUrl['facebook'] }}" class="btn btn-fb" [title]="'Facebook log in' | i18n">
+          <i class="fa fa-facebook"></i>
+        </a>
+        <a href="{{ oauthUrl['linkedIn'] }}" class="btn btn-in" [title]="'LinkedIn log in' | i18n">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </div> -->
+    </form>
+  </div>
+</div>
+<div class="mask open bg-bk" (click)="closeSign($event)"></div>

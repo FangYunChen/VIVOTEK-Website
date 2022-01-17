@@ -1,0 +1,48 @@
+@import '../../../../../../styles/var';
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 40px 40px;
+  width: 450px;
+}
+
+.card__header {
+  padding: 20px 50px;
+  .field {
+    display: flex;
+    align-items: center;
+    & + .field {
+      margin-left: 40px;
+    }
+  }
+  .field__title {
+    font-weight: 700;
+  }
+  .field__content {
+    margin-left: 50px;
+  }
+  .model-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .model-item {
+    display: flex;
+    margin: 5px 0;
+  }
+  .model-select {
+    width: 200px;
+  }
+  .qty-select {
+    width: 100px;
+  }
+  .actions {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

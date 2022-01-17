@@ -1,0 +1,96 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-card-title>
+    <h4>Banner for PC</h4>
+    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="template.bannerImage.imagePC.hideContent?'展開':'收合'"
+      matTooltipPosition="above" (click)="template.bannerImage.imagePC.hideContent = !template.bannerImage.imagePC.hideContent">
+      <mat-icon *ngIf="template.bannerImage.imagePC.hideContent">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!template.bannerImage.imagePC.hideContent">keyboard_arrow_up</mat-icon>
+    </a>
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="template.bannerImage.imagePC.hideContent">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="template.bannerImage.imagePC.src">
+      <div class="text-center">
+        <img [src]="template.bannerImage.imagePC.src | safeUrl" [alt]="template.bannerImage.imagePC.alt" [title]="template.bannerImage.imagePC.title">
+      </div>
+    </div>
+    <button type="button" mat-button (click)="imgPCInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload a
+      image (Recommended size: 1920*570)</button>
+    <input hidden type="file" #imgPCInput accept="image/*" (change)="uploadFile($event,'imagePC')" [disabled]="isLoading" />
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image url" [name]="'templateImageSrc'+templateIndex" [(ngModel)]="template.bannerImage.imagePC.src"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput maxlength="255" placeholder="Image title" [name]="'templateImageTitle'+templateIndex" [(ngModel)]="template.bannerImage.imagePC.title"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image alt" [name]="'templateImageAlt'+templateIndex" [(ngModel)]="template.bannerImage.imagePC.alt"
+        [readOnly]="readOnly">
+    </mat-form-field>
+  </mat-card-content>
+
+  <mat-card-title>
+    <h4>Banner for Tablet</h4>
+    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="template.bannerImage.imageTablet.hideContent?'展開':'收合'"
+      matTooltipPosition="above" (click)="template.bannerImage.imageTablet.hideContent = !template.bannerImage.imageTablet.hideContent">
+      <mat-icon *ngIf="template.bannerImage.imageTablet.hideContent">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!template.bannerImage.imageTablet.hideContent">keyboard_arrow_up</mat-icon>
+    </a>
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="template.bannerImage.imageTablet.hideContent">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="template.bannerImage.imageTablet.src">
+      <div class="text-center">
+        <img [src]="template.bannerImage.imageTablet.src | safeUrl" [alt]="template.bannerImage.imageTablet.alt"
+          [title]="template.bannerImage.imageTablet.title">
+      </div>
+    </div>
+    <button type="button" mat-button (click)="imgTabletInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload a
+      image (Recommended size: 1024*300)</button>
+    <input hidden type="file" #imgTabletInput accept="image/*" (change)="uploadFile($event,'imageTablet')" [disabled]="isLoading" />
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image url" [name]="'templateImageSrc'+templateIndex" [(ngModel)]="template.bannerImage.imageTablet.src"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput maxlength="255" placeholder="Image title" [name]="'templateImageTitle'+templateIndex" [(ngModel)]="template.bannerImage.imageTablet.title"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image alt" [name]="'templateImageAlt'+templateIndex" [(ngModel)]="template.bannerImage.imageTablet.alt"
+        [readOnly]="readOnly">
+    </mat-form-field>
+  </mat-card-content>
+
+  <mat-card-title>
+    <h4>Banner for Mobile</h4>
+    <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="template.bannerImage.imageMobile.hideContent?'展開':'收合'"
+      matTooltipPosition="above" (click)="template.bannerImage.imageMobile.hideContent = !template.bannerImage.imageMobile.hideContent">
+      <mat-icon *ngIf="template.bannerImage.imageMobile.hideContent">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!template.bannerImage.imageMobile.hideContent">keyboard_arrow_up</mat-icon>
+    </a>
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="template.bannerImage.imageMobile.hideContent">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="template.bannerImage.imageMobile.src">
+      <div class="text-center">
+        <img [src]="template.bannerImage.imageMobile.src | safeUrl" [alt]="template.bannerImage.imageMobile.alt"
+          [title]="template.bannerImage.imageMobile.title">
+      </div>
+    </div>
+    <button type="button" mat-button (click)="imgMobileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload a
+      image (Recommended size: 640*280)</button>
+    <input hidden type="file" #imgMobileInput accept="image/*" (change)="uploadFile($event,'imageMobile')" [disabled]="isLoading" />
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image url" [name]="'templateImageSrc'+templateIndex" [(ngModel)]="template.bannerImage.imageMobile.src"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput maxlength="255" placeholder="Image title" [name]="'templateImageTitle'+templateIndex" [(ngModel)]="template.bannerImage.imageMobile.title"
+        [readOnly]="readOnly">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput placeholder="Image alt" [name]="'templateImageAlt'+templateIndex" [(ngModel)]="template.bannerImage.imageMobile.alt"
+        [readOnly]="readOnly">
+    </mat-form-field>
+  </mat-card-content>
+</div>

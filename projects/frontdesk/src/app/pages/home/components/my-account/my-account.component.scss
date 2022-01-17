@@ -1,0 +1,101 @@
+@import '_var.scss';
+
+#account {
+  .btn-del {
+    color: $colorFont;
+    &:hover {
+      color: $colorB1;
+      text-decoration: none;
+    }
+  }
+  .card-date {
+    font-size: $sizeSler;
+    margin-top: 8px;
+  }
+  .block {
+    h3 {
+      margin-top: 20px;
+      margin-bottom: -25px;
+      font-size: $sizeLg;
+    }
+  }
+  [class*='icon-'] {
+    margin-bottom: 2px;
+    &:before {
+      width: 15px;
+      margin-right: 3px;
+      text-align: center;
+      display: inline-block;
+      vertical-align: top;
+      font-family: FontAwesome;
+    }
+  }
+  .icon-time {
+    &:before {
+      content: '\f017';
+    }
+  }
+  .icon-shop {
+    &:before {
+      content: '\f187';
+    }
+  }
+  .icon-marker {
+    height: 38px;
+    overflow: hidden;
+    &.limitAfter {
+      position: relative;
+      padding-right: 15px;
+      &:after {
+        position: absolute;
+        content: '...';
+        right: 0;
+        top: 16px;
+        z-index: 10;
+      }
+    }
+    &:before {
+      content: '\f041';
+    }
+    p {
+      display: inline;
+    }
+  }
+  #career {
+    .text {
+      height: 101px;
+    }
+    .icon-marker {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
+}
+
+#feebackPopup, #recoveryAuthPopup {
+  width: 400px;
+  margin-left: -200px;
+  .popup {
+    display: none;
+    &.show {
+      display: block;
+    }
+    .lg {
+      font-size: $sizeNler;
+      .icon {
+        display: block;
+        font-size: 2em;
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthWebTable) {
+}
+@media screen and (max-width: $widthTable) {
+}
+@media screen and (max-width: $widthTableApp) {
+}
+@media screen and (max-width: $widthApp) {
+}

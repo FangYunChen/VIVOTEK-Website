@@ -1,0 +1,77 @@
+@import '_var.scss';
+#faq {
+  .filter-model {
+    .selector {
+      width: 100%;
+      max-width: none;
+      select {
+        margin-right: 10px;
+        margin-bottom: 5px;
+        display: inline-block;
+        vertical-align: top;
+        font-size: $sizeNl;
+        max-width: 300px;
+      }
+    }
+  }
+}
+.collapse-model {
+  h2 {
+    font-size: $sizeLg;
+    margin-bottom: 10px;
+    .sub-category {
+      font-size: $sizeNl;
+    }
+  }
+  .collapse {
+    .collapse-block {
+      border: 1px solid $colorGy2;
+      &.open {
+        .collapse-name {
+          color: $colorB1;
+          background-color: $colorGy2;
+          &:before {
+            content: '\f0d7';
+          }
+        }
+        .collapse-content {
+          display: block;
+        }
+      }
+    }
+    .collapse-name {
+      padding: 15px 20px;
+      cursor: pointer;
+      font-weight: normal;
+      font-size: $sizeNl;
+      &:before {
+        display: inline-block;
+        font-family: FontAwesome;
+        content: '\f0da';
+        width: 15px;
+      }
+      &:hover {
+        color: $colorB1;
+      }
+    }
+    .collapse-content {
+      border-bottom: 1px solid $colorGy2;
+      padding: 15px 20px;
+      line-height: 1.6;
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  #faq {
+    .filter-model {
+      .selector {
+        select {
+          margin-right: 0;
+          max-width: none;
+        }
+      }
+    }
+  }
+}

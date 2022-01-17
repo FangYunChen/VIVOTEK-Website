@@ -1,0 +1,20 @@
+@import "_filter.scss";
+
+.general-download {
+  .wrap {
+    max-width: 1600px;
+    padding: 0;
+    .mat-elevation-z2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    @include filter-box;
+    .filter-box > .filter-search-box {
+      border-bottom: none;
+      &:focus-within {
+        border-bottom: none;
+      }
+    }
+  }
+}

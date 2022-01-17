@@ -1,0 +1,103 @@
+<div [ngClass]="{ function_disable: disable }">
+  <div class="content">
+    <vvtk-streaming-item
+      [codecInfoList]="recordingCodecList"
+      [codecInfo]="codecInfo"
+      [disable]="disable"
+      [isSelected]="isSelected"
+      (bitRateChanged)="bitRateChanged()"
+    ></vvtk-streaming-item>
+    <label class="form-item">
+      <span class="form-item__title">{{ "Recording Days" | i18n }}</span>
+      <div
+        class="form-item__content"
+        [ngClass]="{
+          required: isSelected && !codecInfo.recordingDays
+        }"
+      >
+        <input
+          type="number"
+          matInput
+          [(ngModel)]="codecInfo.recordingDays"
+          [disabled]="disable"
+          min="1"
+          (change)="changeStorageSize()"
+        />
+        <span>days</span>
+      </div>
+    </label>
+    <label class="form-item">
+      <span
+        class="form-item__title"
+        [ngClass]="{ title__disable: isRecordingHours }"
+        >{{ "Recording Hours" | i18n }}
+      </span>
+      <div
+        class="form-item__content"
+        [ngClass]="{
+          required: isSelected && !isRecordingHours && !codecInfo.recordingHours
+        }"
+      >
+        <mat-select
+          placeholder="Recording Hours"
+          [disabled]="isRecordingHours || disable"
+          [(ngModel)]="codecInfo.recordingHours"
+          (selectionChange)="changeStorageSize()"
+        >
+          <mat-option *ngFor="let hour of hourList" [value]="hour">
+            {{ hour }} hours
+          </mat-option>
+        </mat-select>
+      </div>
+    </label>
+    <label class="form-item">
+      <span
+        class="form-item__title"
+        [ngClass]="{ title__disable: isEventPercentage }"
+        >{{ "Event Percentage" | i18n }}
+      </span>
+      <div
+        class="form-item__content"
+        [ngClass]="{
+          required:
+            isSelected && !isEventPercentage && !codecInfo.eventPercentage
+        }"
+      >
+        <mat-select
+          placeholder="Event Percentage"
+          [disabled]="isEventPercentage || disable"
+          [(ngModel)]="codecInfo.eventPercentage"
+          (selectionChange)="changeStorageSize()"
+        >
+          <mat-option
+            *ngFor="let percentage of percentageList"
+            [value]="percentage"
+          >
+            {{ percentage }} %
+          </mat-option>
+        </mat-select>
+      </div>
+    </label>
+  </div>
+  <div class="footer">
+    <div class="form-item">
+      <span class="form-item__title">{{ "Bitrate" | i18n }}</span>
+      <div class="form-item__content">
+        {{ codecInfo.bitRate * qty | number: "1.0-2" | nullToDash: " Mbps" }}
+      </div>
+    </div>
+    <div class="form-item">
+      <span class="form-item__title">{{ "Storage Size" | i18n }}</span>
+      <div class="form-item__content">
+        {{ codecInfo.storageSize * qty | number: "1.0-2" | nullToDash: " MB" }}
+        /
+        {{
+          codecInfo.storageSize * qty
+            | mbToGb
+            | number: "1.0-2"
+            | nullToDash: " GB"
+        }}
+      </div>
+    </div>
+  </div>
+</div>

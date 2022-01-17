@@ -1,0 +1,105 @@
+<div id="careers" class="container">
+  <vvtk-top-banner [rootPath]="'/careers/job-opportunities' | customPath" [contentPageTitle]="title"></vvtk-top-banner>
+  <section class="model-page section">
+    <div class="page-header">
+      <div class="wrap">
+        <h2>{{vacancyData.title}}</h2>
+        <div class="line afterClear">
+          <vvtk-share [mailTitle]="vacancyData.title" [categoryId]="collection.Vacancies" [pageId]="vacancyId"></vvtk-share>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="wrap">
+        <div class="page-info">
+          <div class="table">
+            <div class="row">
+              <div class="col name">{{'Job Category'|i18n}}</div>
+              <div class="col name">{{'Job Country'|i18n}}</div>
+              <div class="col name">{{'Job States'|i18n}}</div>
+              <div class="col col2 name">{{'Job Location'|i18n}}</div>
+            </div>
+            <div class="row">
+              <div class="col text" [attr.data-name]="'Category'">{{vacancyData.category}}</div>
+              <div class="col text" [attr.data-name]="'Country'">{{vacancyData.country?vacancyData.country.name:''}}</div>
+              <div class="col text" [attr.data-name]="'States'">{{vacancyData.states?vacancyData.states.name:''}}</div>
+              <div class="col text" [attr.data-name]="'Location'">{{vacancyData.location}}</div>
+            </div>
+          </div>
+        </div>
+        <!--
+				<h2 class="colorB">{{vacancyData.title}}</h2>
+				<div [innerHtml]="vacancyData.content"></div>
+				-->
+        <h2 class="colorB">{{'Description'|i18n}}</h2>
+        <p [innerHTML]="vacancyData.description | safe:'html'"></p>
+
+        <h2 class="colorB">{{'Responsibilities'|i18n}}</h2>
+        <p [innerHTML]="vacancyData.responsibilities | safe:'html'"></p>
+
+        <h2 class="colorB">{{'Requirements'|i18n}}</h2>
+        <p [innerHTML]="vacancyData.requirements | safe:'html'"></p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="text-center">
+        <a [routerLink]="'/careers/job-opportunities' | customPath" class="btn btn-b">{{'Back'|i18n}}</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="agreePopup" class="popup-wrap open" *ngIf="applyMask">
+  <div class="popup">
+    <div class="text-right">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="applyWindow($event)">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+    <div class="page-agree">
+      <h2 class="text-center">個人資料收集告知函</h2>
+      <p>本告知內容乃依據個人資料保護法第九條之規定，您的資料來源為人力仲介機構間接取得，於蒐集您的個人資料時進行法定告知義務。</p>
+      <ul>
+        <li>一、蒐集之機關名稱：晶睿通訊股份有限公司（以下簡稱本公司）</li>
+        <li>二、蒐集之目的：本公司蒐集您個人資料的目的在於進行本公司招募作業管理。其法定之特定目的為：○○二 人事管理（包含甄選、離職及所屬員工基本資訊、現職、學經歷、考試分發、終身學習訓練進修、考績獎懲、銓審、薪資待遇、差勤、福利措施、褫奪公權、特殊查核或其他人事措施）。</li>
+        <li>三、蒐集個人資料類別：蒐集資料之範圍及項目類別包括 C001-C134 等項目。</li>
+        <li>四、使用期間、地區、對象及方式
+          <ol>
+            <li>個人資料之利用期間為招募至聘用之期間，利用地區不限。</li>
+            <li>利用方式及對象：利用您的個人資料於本公司招募期間，可能進行各項聯繫及通知(電子郵件、電話、書面)。</li>
+          </ol>
+        </li>
+        <li>五、個人資料之權利及權益：您依法得行使個人資料保護法第三條，查詢或請求閱覽、請求製給複製本、請求補充或更正、請求停止蒐集處理或利用、請求刪除之權利，惟此項權利之行使僅以您本次應徵之職務為限</li>
+        <li>六、本會於蒐集您的個人資料時，如有欄位標示為選擇性填寫，當您選擇不提供該個人資料時將不造成任何之權利影響，惟您若拒絕提供相關個人資料，本公司將無法進行必要之徵才審核及處理作業。</li>
+        <li>七、您於提供緊急連絡人、家屬成員、介紹人、推薦人等非由當事人提供之個人資料時，請務必確認已對該當事人告知您將該當事人之個人資料提供予您應徵之公司，且各該公司將依法蒐集、處理及利用其個人資料。</li>
+      </ul>
+      <p class="text-right">2017 年 9月 21日</p>
+      <h3>本人聲明:</h3>
+      <ol class="ex">
+        <li>本人所填資料均屬確實，如經錄用後，公司發現有虛偽或不實之情事，本人願受公司免職之處分。
+          <span class="en">I certify that the information provided herein is correct. If there is any false or withheld information, I am
+            willing to accept cancellation of my employment or acceptance.</span>
+        </li>
+        <li>是否有前科紀錄或訴訟案件涉訟中？
+          <span class="en">Have you ever committed crimes and been plead a charge?</span>
+          <label for="forehead-no">
+            <input type="radio" id="forehead-no" name="forehead" (click)="foreheadDes(true)" checked>否
+            <span>No</span>
+          </label>
+          <label for="forehead-yes">
+            <input type="radio" id="forehead-yes" name="forehead" (click)="foreheadDes(false)">是
+            <span>Yes</span>
+          </label>
+          <input type="text" placeholder="請簡述經過、原因 Description" [disabled]="foreheadRe" [(ngModel)]="foreheadText">
+        </li>
+      </ol>
+      <div class="input-box btn-box text-center">
+        <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="applyWindow($event)">不同意</a>
+        <a [href]="('javascript:;' | safe:'url')" class="btn btn-r" (click)="toTwResume($event)">同意</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mask bg-bk open" *ngIf="applyMask" (click)="applyWindow($event)"></div>

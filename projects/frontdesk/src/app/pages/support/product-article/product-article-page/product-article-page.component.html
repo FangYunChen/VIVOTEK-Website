@@ -1,0 +1,17 @@
+<div class="article-content" *ngIf="article$ | async as article">
+  <h4 class="article-title">{{article.headline}}</h4>
+  <p class="p-small"> <i class="fa fa-clock-o"></i> {{article.publishedAt|date:'MMM d, y'}}</p>
+  <div class="p-medium" [innerHTML]="article.content | safe:'html'"></div>
+  <div class="model-page">
+    <div class="page-footer">
+      <div class="tag">
+        <i class="fa fa-tags"></i>
+        <ng-container *ngFor="let tag of article.tags">
+          <vvtk-link cName="link" [routerLink]="[tagNavigateRoutePrefix,'tag',tag.id]">
+            {{tag.name}}
+          </vvtk-link>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

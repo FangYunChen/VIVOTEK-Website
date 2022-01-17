@@ -1,0 +1,36 @@
+<section class="sia-partner-list section">
+  <div class="wrap">
+    <h3 class="title-text text-center">{{partnerCategoryText|i18n}} </h3>
+    <div class="filter-box">
+      <div class="filter-dropdown">
+        <select *ngIf="hasTypeFilter" [(ngModel)]="partnerType" (change)="filterPartners()">
+          <option *ngFor="let filterItem of partnerTypeFilter" [ngValue]="filterItem.value">{{filterItem.text}}
+          </option>
+        </select>
+      </div>
+      <div class="filter-dropdown">
+        <select [(ngModel)]="businessTerritory" (change)="filterPartners()">
+          <option *ngFor="let filterItem of businessTerritoryFilter" [ngValue]="filterItem.value">{{filterItem.text}}
+          </option>
+        </select>
+      </div>
+      <div class="filter-search-box">
+        <mat-icon style="color:darkgrey;margin-top: 7px" matSuffix>search</mat-icon>
+        <input [(ngModel)]="brandName" type="text" [placeholder]="'Search by Company'|i18n" (keyup)="filterPartners()"
+          (change)="filterPartners()">
+      </div>
+      <div class="filter-reset-box">
+        <button class="reset-button" (click)="resetFilter()">{{'Reset'|i18n}}</button>
+      </div>
+    </div>
+    <div class="partner-container">
+      <div class="partner-content" *ngFor="let partner of filteredSiaPartners">
+        <a class="partner-link" [routerLink]="[partner.id, partner.brandName]">
+          <img class="partner-logo" [src]="partner.logoSrc" [alt]="partner.logoAlt" [title]="partner.logoTitle">
+          <p class="p-medium"> {{partner.brandName}} </p>
+        </a>
+      </div>
+      <div *ngIf="filteredSiaPartners.length === 0">No results found </div>
+    </div>
+  </div>
+</section>

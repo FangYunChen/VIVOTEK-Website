@@ -1,0 +1,27 @@
+<div fxLayout="row">
+    <mat-card fxFlex="100%">
+        <mat-card-title>
+            <span>Careers - BCC</span>
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content fxLayout="column">
+            <form #form="ngForm" fxLayout="column">
+                <mat-card fxFlex="100%">
+                    <mat-card-content fxLayout="column">
+                        <div fxFlex *ngFor="let user of handler">
+                            <mat-checkbox name="selectedHandler[]" [value]="user.id" [checked]="selectedHandlerChecked(user.id)" (change)="selectedHandlerChange(user.id,$event)"
+                                [disabled]="!pageIsEditable">
+                                {{user.name}}({{user.email}})
+                            </mat-checkbox>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </form>
+        </mat-card-content>
+        <mat-card-content fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button color="primary" (click)="save()" [disabled]="isLoading" *ngIf="pageIsEditable">Save</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,98 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Successful Cases</span>
+      <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['/case/content',0]"
+        *ngIf="pageContentIsEditable">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <div fxLayout="column" fxFlex="100%" class="tableBoxOuter">
+            <div fxLayout="column" class="tableBoxInner" style="min-width:950px;">
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <vvtk-input-container>
+                  <mat-form-field vvtkhtml>
+                    <mat-select placeholder="Filter type" [(ngModel)]="dataSource.filterType" (selectionChange)="changeFilterType()">
+                      <mat-option value="all">All</mat-option>
+                      <mat-option value="category">Vertical</mat-option>
+                      <mat-option value="country">Country</mat-option>
+                      <mat-option value="model">Model</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </vvtk-input-container>
+                <span fxFlex></span>
+                <vvtk-input-container>
+                  <mat-form-field vvtkhtml>
+                    <mat-select placeholder="Year" [(ngModel)]="database.selectedYear" (selectionChange)="database.selectYear()">
+                      <mat-option *ngFor="let year of database.years" [value]="year">{{year}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </vvtk-input-container>
+              </div>
+              <mat-form-field>
+                <input matInput #filter placeholder="Filter" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" (change)="doFilter()">
+                  <mat-option *ngFor="let option of dataSource.options" [value]="option" (onSelectionChange)="doFilter()">
+                    {{ option }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-table #table [dataSource]="dataSource" matSort class="table table-hover table-striped table-bordered table-condensed">
+                <ng-container cdkColumnDef="id">
+                  <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="50px" fxLayoutAlign="center center"> ID </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row" fxFlex="50px" fxLayoutAlign="center center"> {{row.id}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="title">
+                  <mat-header-cell *cdkHeaderCellDef mat-sort-header fxLayoutAlign="center center"> Title </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row"> {{row.title}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="publishAt">
+                  <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px" fxLayoutAlign="center center"> Date </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row" fxFlex="150px" fxLayoutAlign="center center"> {{row.publishAt | amDateFormat:'YYYY/MM/DD'}} </mat-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="action">
+                  <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="250px" fxLayoutAlign="center center"> Action </mat-header-cell>
+                  <mat-cell *cdkCellDef="let row" fxLayout="row" fxFlex="250px" fxLayoutAlign="center center">
+                    <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" [routerLink]="['/case/content',row.id]"
+                      *ngIf="pageContentIsViewable">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" (click)="delete(row.id, row.title)"
+                      [disabled]="lockDelete" *ngIf="pageIsEditable">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <mat-slide-toggle color="primary" name="status" [ngModel]="row.status" [matTooltip]="row.status?'Offline':'Online'" matTooltipPosition="above"
+                      (change)="changeStatus($event, row.id)" [disabled]="!pageIsEditable" vvtkhtml>
+                    </mat-slide-toggle>
+                    <mat-slide-toggle color="warn" name="stickTop" [ngModel]="row.stickTop" [matTooltip]="row.stickTop?'Unpin':'Pin'" matTooltipPosition="above"
+                      (change)="changeStickTop($event, row.id)" [disabled]="!pageIsEditable" vvtkhtml>
+                    </mat-slide-toggle>
+                    <mat-slide-toggle color="warn" name="isHideTw" [ngModel]="row.isHideTw" [matTooltip]="row.isHideTw?'Hide':'Show'" matTooltipPosition="above"
+                      (change)="changeIsHideTw($event, row.id)" [disabled]="!pageIsEditable" vvtkhtml>
+                    </mat-slide-toggle>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+              <mat-paginator #paginator [length]="dataSource.dataLength" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 100]">
+              </mat-paginator>
+              <vvtk-loader *ngIf="database.isLoading"></vvtk-loader>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

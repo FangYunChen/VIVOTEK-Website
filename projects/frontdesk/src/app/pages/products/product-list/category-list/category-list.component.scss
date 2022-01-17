@@ -1,0 +1,27 @@
+@import "../../../../../styles/var";
+:host {
+  margin: 10px 40px;
+}
+
+.toggle-btn {
+  display: none;
+  padding: 0 5px;
+  cursor: pointer;
+  &.open {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  :host {
+    background-color: $colorB2;
+  }
+  .toggle-btn {
+    display: block;
+  }
+  vvtk-nested-nav-list {
+    &.close {
+      display: none;
+    }
+  }
+}

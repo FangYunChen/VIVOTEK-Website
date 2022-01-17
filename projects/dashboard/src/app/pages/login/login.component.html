@@ -1,0 +1,25 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+  <div class="login mat-elevation-z12">
+    <div class="login-header" fxLayout="column" fxLayoutAlign="center center">
+      <img src="assets/img/icon2.png">
+    </div>
+    <form #form="ngForm" (ngSubmit)="login()" *ngIf="!isChecking">
+      <div class="login-content" fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-form-field>
+          <input matInput placeholder="E-Mail" type="text" name="email" required [(ngModel)]="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" type="password" name="password" required [(ngModel)]="password">
+        </mat-form-field>
+        <div class="extra-options" fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-checkbox class="remember-me" name="remember" [(ngModel)]="remember">Remember Me</mat-checkbox>
+        </div>
+        <button color="primary" mat-raised-button [disabled]="!form.valid">SIGN IN</button>
+        <button color="primary" mat-button type="button" (click)="adfsLogin()" *ngIf="false">VIVOTEK SIGN IN</button>
+      </div>
+    </form>
+    <div class="login-content text-center" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="isChecking">
+      <span>Loading...</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<label class="disk-capacity">
+  <span class="disk-capacity__title">{{ "Per Disk capacity" | i18n }}</span>
+  <input
+    type="number"
+    matInput
+    [ngClass]="{
+      required: designToolService.isExportVms && !designToolService.vmsValue
+    }"
+    [(ngModel)]="designToolService.vmsValue"
+    (change)="vmsValueChanged()"
+    min="1"
+    max="99999999"
+  />
+  TB
+</label>
+<br />
+<div class="result">
+  <div class="result__title">{{ "Volume Group number" | i18n }}:</div>
+  <div class="result__content highlight">
+    {{ volumeGroupNumber | nullToDash }}
+  </div>
+</div>
+<div class="result">
+  <div class="result__title">{{ "A Volume Group need" | i18n }}</div>
+  <div class="result__content highlight">
+    {{ volumeGroupNeed | nullToDash }}<span>{{ "Disks" | i18n }}</span>
+  </div>
+</div>
+<div class="result">
+  <div class="result__title">{{ "Total Disks" | i18n }}:</div>
+  <div class="result__content highlight">{{ totalDisks | nullToDash }}</div>
+</div>

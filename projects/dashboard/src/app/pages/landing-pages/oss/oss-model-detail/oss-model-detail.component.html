@@ -1,0 +1,51 @@
+<div class="ossModelDetail__container">
+  <div class="ossModelDetail mat-elevation-z2">
+    <h3>Specification</h3>
+    <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+      <div class="ossModelDetail__body">
+        <mat-form-field>
+          <mat-select [disabled]='isLoading && !pageIsEditable' formControlName="categoryId" placeholder="Main Category"
+            (selectionChange)='mainSelectChange($event.value)'>
+            <mat-option *ngFor="let item of categoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [disabled]='isLoading && !pageIsEditable' formControlName="subCategoryId" placeholder="Sub Category">
+            <mat-option *ngFor="let item of subCategoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input [readonly]='!pageIsEditable' [disabled]='isLoading' matInput formControlName="modelsString"
+            placeholder="Model Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="announcementLink" placeholder="Announcement Link">
+          <!-- <mat-hint>This field can't be edited manually, please upload the updated Announcement pdf file to replace the
+            value</mat-hint> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="sourceCodeLink" placeholder="Source Code Link">
+          <!-- <mat-hint>This field can't be edited manually, please upload the updated Announcement pdf file to replace the
+            value</mat-hint> -->
+        </mat-form-field>
+        <button [disabled]='isLoading' class='ossModelDetail__body_announcement--upload' mat-stroked-button color='primary'
+          type="button" mat-button (click)="announcementFileInput.click()" *ngIf="pageIsEditable">
+          Upload Announcement
+        </button>
+        <button [disabled]='isLoading' mat-stroked-button color='primary' type="button" mat-button (click)="SourceCodeFileInput.click()"
+          *ngIf="pageIsEditable">
+          Upload New Source Code
+        </button>
+        <input hidden type="file" #announcementFileInput accept="application/pdf" (change)="announcementUpload($event)"
+          [disabled]="isLoading" />
+        <input hidden type="file" #SourceCodeFileInput (change)="sourceCodeUpload($event)" [disabled]="isLoading" />
+      </div>
+      <div class="ossModelDetail__body_action">
+        <a [disabled]='isLoading' mat-raised-button routerLink="/landing-pages/oss/model">Cancel</a>
+        <!-- <button [disabled]='isLoading && !pageContentIsEditable' mat-raised-button color="warn" (click)='onReset()' type='button'>Reset</button> -->
+        <button [disabled]='isLoading || !modelForm.valid' mat-raised-button color="primary" type='submit'>Submit</button>
+      </div>
+    </form>
+  </div>
+  <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+</div>

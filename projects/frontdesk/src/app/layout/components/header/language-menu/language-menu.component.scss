@@ -1,0 +1,84 @@
+@import '_var.scss';
+.language {
+  display: none;
+  position: fixed;
+  width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  left: 0;
+  top: 0;
+  background-color: $colorW;
+  z-index: 9999;
+  font-size: $sizeSler;
+  padding-bottom: 20px;
+  &.open {
+    display: block;
+  }
+  .language-list {
+    width: 100%;
+    padding: 10px 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    height: 100%;
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    ul {
+      display: inline-flex;
+      flex-wrap: wrap;
+      flex-direction: column; //height: 360vh;
+      width: 100%;
+    }
+    li {
+      &.name {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      &.last {
+        margin-bottom: 30px;
+      }
+    }
+    a {
+      color: $colorFont !important;
+      padding: 5px 20px 5px 0;
+      display: block;
+      &:hover {
+        color: $colorB1 !important;
+      }
+    }
+  }
+  .language-top {
+    display: block;
+    a {
+      display: inline-block;
+      color: $colorFont !important;
+      padding: 8px 20px 10px;
+      font-size: $sizeLg;
+      &:hover {
+        color: $colorB1 !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  .language {
+    .language-list {
+    }
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  .language {
+    .language-list {
+      height: 100vh;
+      padding: 10px 0 !important;
+      ul {
+        height: auto;
+      }
+    }
+  }
+}

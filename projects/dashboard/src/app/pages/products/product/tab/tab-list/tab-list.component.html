@@ -1,0 +1,49 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{product?.name}} - Tabs</span>
+      <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['./',0]"
+        *ngIf="pageContentIsEditable">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="column" fxFlex="100%">
+        <div class="list mat-elevation-z4" *ngIf="data && data.list && data.list.length > 0; else noData">
+          <mat-list [sortablejs]="data.list" [sortablejsOptions]="groupOptions">
+            <mat-list-item class="small-list-item" *ngFor="let item of data.list">
+              <h3 class="middle" mat-line>
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                  [routerLink]="['./',item.id]" [queryParams]="{filter: filterTemp, select: selectTemp}" *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                  (click)="delete(item.id, item.tabName)" [disabled]="isLoading" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <mat-slide-toggle color="primary" [(ngModel)]="item.isDisplayOnTop" [matTooltip]="item.isDisplayOnTop?'Display on top':'Not display on top'"
+                  matTooltipPosition="above" (change)="changeIsDisplayOnTop($event, item.id)" [disabled]="!pageIsEditable"
+                  vvtkhtml>
+                </mat-slide-toggle>
+                <span>{{ item.tabName }}</span>
+              </h3>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <ng-template #noData>
+          <span>no tabs</span>
+        </ng-template>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </div>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product/']" [queryParams]="{filter: filterTemp, select: selectTemp}">Back</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

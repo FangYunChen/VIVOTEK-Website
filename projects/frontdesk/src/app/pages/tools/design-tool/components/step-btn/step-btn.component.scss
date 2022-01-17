@@ -1,0 +1,46 @@
+@import '../../../../../../styles/var';
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 15px;
+  button {
+    margin: 0 30px;
+  }
+}
+
+.export-button {
+  padding: 0 50px;
+  height: 40px;
+  border-radius: 0;
+  font-size: 16px;
+  color: #fff;
+  background-color: $colorG;
+  .mat-icon {
+    margin-right: 5px;
+    font-size: 22px;
+  }
+}
+
+.back-button {
+  padding: 0 50px;
+  height: 40px;
+  border-radius: 0;
+  font-size: 16px;
+  color: #fff;
+  background-color: $colorGy1;
+}
+
+.next-button {
+  padding: 0 50px;
+  height: 40px;
+  border-radius: 0;
+  font-size: 16px;
+  color: #fff;
+  background-color: $colorB3;
+
+  &:disabled {
+    color: #a5a5a5;
+    background-color: #dfdfdf;
+  }
+}

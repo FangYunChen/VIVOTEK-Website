@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-title>
+    <span>Download Center - Document Type Property</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="column">
+          <div fxLayout="row wrap" fxLayoutGap="30px">
+            <mat-form-field>
+              <mat-select required placeholder="Document Type" name="documentType" (selectionChange)="selectDocumentType($event.value)">
+                <mat-option *ngFor="let option of documentTypeOptions$ | async" [value]="option.value" [disabled]="option.disabled">
+                  {{option.optionText}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column">
+            <mat-list [sortablejs]="documentPropertyMappings" [sortablejsOptions]="groupOptions">
+              <mat-list-item class="small-list-item" *ngFor="let item of documentPropertyMappings; let i = index">
+                <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                <mat-slide-toggle color="primary" [(ngModel)]="item.isEnabled" [matTooltip]="item.isEnabled?'Enable':'Disable'"
+                  matTooltipPosition="above" [disabled]="!pageIsEditable">
+                </mat-slide-toggle>
+                {{item.name}}
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" *ngIf="pageIsEditable && documentTypeId">
+          <button mat-button color="primary" (click)="save()" [disabled]="isLoading">Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+  <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+</mat-card>

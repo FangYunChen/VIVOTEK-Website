@@ -1,0 +1,69 @@
+@import '../../../../../styles/var.scss';
+#crowdcontrol ::ng-deep {
+  .mat-tab-group {
+    .mat-tab-header {
+      .mat-tab-label-container {
+        .mat-tab-list {
+          .mat-ink-bar {
+            display: none;
+          }
+
+          .mat-tab-labels {
+            .mat-tab-label {
+              padding: 0;
+              opacity: 1;
+            }
+
+            .mat-tab-label-content {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              height: 100%;
+
+              a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                color: #3c3c3c;
+                padding: 0 24px;
+
+                &:hover {
+                  text-decoration: none;
+                }
+
+                .link-text {
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+
+            .mat-tab-label-active {
+              background-color: $colorB1;
+              color: #fff;
+
+              a {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .mat-tab-body {
+      .mat-tab-body-content {
+        overflow: hidden;
+      }
+    }
+  }
+
+  .mat-tab-group[mat-stretch-tabs] .mat-tab-label {
+    background: #ECEDEE;
+    margin-right: 2px;
+  }
+
+}

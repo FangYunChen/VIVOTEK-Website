@@ -1,0 +1,62 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <button type="button" mat-button (click)="addSpecialHightlight(0)" *ngIf="!readOnly">Add Special Hightlight</button>
+  <div [sortablejs]="template.imageTexts" [sortablejsOptions]="groupOptions">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let imageText of template.imageTexts; let j = index">
+      <mat-form-field fxFlex>
+        <input matInput placeholder="Special Hightlight Title" [name]="'templateTitle'+templateIndex+'_'+j" [(ngModel)]="imageText.title"
+          [readOnly]="readOnly">
+      </mat-form-field>
+      <mat-card-title>
+        <mat-icon class="drag-handle-image" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Special Hightlight {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Special Hightlight" matTooltipPosition="above"
+          (click)="deleteSpecialHightlight(j)" *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="imageText.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="imageText.hideContent = !imageText.hideContent">
+          <mat-icon *ngIf="imageText.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!imageText.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="!imageText.hideContent">
+        {{imageText.title}}
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="imageText.hideContent">
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="imageText.image.src">
+          <div class="text-center">
+            <img [src]="imageText.image.src | safeUrl" [alt]="imageText.image.alt" [title]="imageText.image.title">
+          </div>
+        </div>
+
+        <button type="button" mat-button (click)="imgsImgFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload
+          a image (Recommended size: 460*230)</button>
+        <input hidden type="file" #imgsImgFileInput accept="image/*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+
+        <button type="button" mat-button (click)="displayImageSelector(j)" [disabled]="isLoading" *ngIf="!readOnly && !imageSelectorVisible[j]">Choose
+          an image from image group.</button>
+
+        <vvtk-image-selector *ngIf="imageSelectorVisible[j]" [pageIsEditable]="!readOnly" selectImageText="Choose an image from image group."
+          [multiple]="false" (addSelect)="setImage($event,j)" [needDisplaySelectedImages]="false"></vvtk-image-selector>
+
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image src" [name]="'templateImagesSrc'+templateIndex+'_'+j" [(ngModel)]="imageText.image.src"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput maxlength="255" placeholder="Image title" [name]="'templateImagesTitle'+templateIndex+'_'+j"
+            [(ngModel)]="imageText.image.title" [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image alt" [name]="'templateImagesAlt'+templateIndex+'_'+j" [(ngModel)]="imageText.image.alt"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Image url link" [name]="'templateImagesUrl'+templateIndex+'_'+j" [(ngModel)]="imageText.image.url"
+            [readOnly]="readOnly">
+        </mat-form-field>
+      </mat-card-content>
+      <button type="button" mat-button (click)="addSpecialHightlight(j+1)" *ngIf="!readOnly">Add Special Hightlight</button>
+    </div>
+  </div>
+</div>

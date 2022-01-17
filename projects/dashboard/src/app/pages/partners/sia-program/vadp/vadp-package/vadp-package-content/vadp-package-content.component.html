@@ -1,0 +1,177 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} VADP Package</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Company Name" name="companyName" [(ngModel)]="company.companyName"
+                [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Reference" name="reference" [(ngModel)]="company.reference" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-card-title>
+              <h3>Company Logo</h3>
+            </mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="center" *ngIf="company.logoSrc">
+              <div class="text-center">
+                <img [src]="company.logoSrc | safeUrl" [alt]="company.logoAlt" [title]="company.logoTitle">
+              </div>
+            </div>
+            <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+              a image (Recommended size: 250*250)</button>
+            <input hidden type="file" #imgFileInput accept="image/*" (change)="uploadCompanyLogo($event)" />
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image url" name="imageSrc" [(ngModel)]="company.logoSrc" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Image title" name="imageTitle" [(ngModel)]="company.logoTitle"
+                [readOnly]="!pageIsEditable" required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Image alt" name="imageAlt" [(ngModel)]="company.logoAlt" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Logo Hyperlink" name="logoLink" [(ngModel)]="company.logoLink" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-card-title>
+              <h3>Packages</h3>
+            </mat-card-title>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <button type="button" mat-button (click)="addPackage(0)" *ngIf="pageIsEditable">Add Package</button>
+              <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let package of company.packages; let j = index">
+                <mat-card-title>
+                  <h4>Package {{j+1}}</h4>
+                  <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Icon" matTooltipPosition="above"
+                    (click)="deletePackage(j)" *ngIf="pageIsEditable">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="column">
+                  <div fxLayout="row" fxLayoutAlign="center" *ngIf="package.packageSrc">
+                    <div class="text-center">
+                      <img [src]="package.packageSrc | safeUrl" [alt]="package.packageAlt" [title]="package.packageTitle">
+                    </div>
+                  </div>
+                  <button type="button" mat-button (click)="packageImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload
+                    a image (Recommended size: 250*250)</button>
+                  <input hidden type="file" #packageImgFileInput accept="image/*" (change)="uploadPackageImage($event, j)"
+                    [disabled]="isLoading" />
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Image url" [name]="'PackageImageSrc'+j" [(ngModel)]="package.packageSrc"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput maxlength="255" placeholder="Image title" [name]="'PackageImageTitle'+j"
+                      [(ngModel)]="package.packageTitle" [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Image alt" [name]="'PackageImageAlt'+j" [(ngModel)]="package.packageAlt"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Package Name" [name]="'PackageName'+j" [(ngModel)]="package.packageName"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Package Hyperlink" [name]="'PackageLink'+j" [(ngModel)]="package.packageLink"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+
+                  <h4>Content</h4>
+                  <mat-card-content fxLayout="column">
+                    <mat-card fxFlex="100%" [hidden]="!readOnly">
+                      <mat-card-content>
+                        <div [innerHTML]="package.content | safeHtml"></div>
+                      </mat-card-content>
+                    </mat-card>
+                    <mat-tab-group [hidden]="!pageIsEditable">
+                      <mat-tab label="Editor">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                          <mat-card fxFlex="100%">
+                            <mat-card-content fxLayout="column">
+                              <vvtk-wysiwyg [(html)]="package.content" [path]="path"></vvtk-wysiwyg>
+                            </mat-card-content>
+                          </mat-card>
+                        </div>
+                      </mat-tab>
+                      <mat-tab label="Preview">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                          <mat-card fxFlex="100%">
+                            <mat-card-content fxLayout="column">
+                              <div [innerHTML]="package.content | safeHtml"></div>
+                            </mat-card-content>
+                          </mat-card>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-card-content>
+
+                  <h4>Supported Model</h4>
+                  <mat-card-content fxLayout="column">
+                    <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                      <mat-card-content>
+                        <div [innerHTML]="package.supportedModel | safeHtml"></div>
+                      </mat-card-content>
+                    </mat-card>
+                    <mat-tab-group [hidden]="!pageIsEditable">
+                      <mat-tab label="Editor">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                          <mat-card fxFlex="100%">
+                            <mat-card-content fxLayout="column">
+                              <vvtk-wysiwyg [(html)]="package.supportedModel" [path]="path"></vvtk-wysiwyg>
+                            </mat-card-content>
+                          </mat-card>
+                        </div>
+                      </mat-tab>
+                      <mat-tab label="Preview">
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                          <mat-card fxFlex="100%">
+                            <mat-card-content fxLayout="column">
+                              <div [innerHTML]="package.supportedModel | safeHtml"></div>
+                            </mat-card-content>
+                          </mat-card>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-card-content>
+
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Download Url" [name]="'DownloadUrl'+j" [(ngModel)]="package.downloadUrl"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="User Manual Url" [name]="'UserManualUrl'+j" [(ngModel)]="package.userManualUrl"
+                      [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                </mat-card-content>
+                <button type="button" mat-button (click)="addPackage(j+1)" *ngIf="pageIsEditable">Add Package</button>
+              </div>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/partners/sia-program/vadp/vadp-package']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,38 @@
+<div class="grid-list">
+  <div class="grid-list-item-wrap" *ngFor="let item of data">
+    <div class="grid-list-item">
+      <vvtk-link class="grid-list-item__img-wrap" [href]="item.url">
+        <ng-container HtmlContent>
+          <img
+            *ngIf="item.src; else defaultImg"
+            [src]="item.src"
+            [alt]="item.alt || item.src"
+          />
+          <ng-template #defaultImg>
+            <img src="/assets/img/default/default-product.png" />
+          </ng-template>
+        </ng-container>
+      </vvtk-link>
+      <div class="grid-list-item__info">
+        <vvtk-link [href]="item.url" style="width:100%">
+          <ng-container HtmlContent>
+            <h4 class="grid-list-item__title">{{ item.title }}</h4>
+          </ng-container>
+        </vvtk-link>
+        <p
+          class="grid-list-item__subtitle"
+          *ngIf="item.subtitle"
+          [innerHTML]="item.subtitle"
+        ></p>
+      </div>
+      <div class="label-list">
+        <vvtk-label
+          *ngFor="let label of item.labels"
+          [color]="label.color"
+          [bgColor]="label.bgColor"
+          >{{ label.text }}</vvtk-label
+        >
+      </div>
+    </div>
+  </div>
+</div>

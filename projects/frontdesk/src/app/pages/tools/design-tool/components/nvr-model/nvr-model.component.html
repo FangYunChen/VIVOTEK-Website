@@ -1,0 +1,31 @@
+<div class="model-info">
+  {{ "Model Info" | i18n }}
+</div>
+<div class="wrap">
+  <div class="item__title">
+    <div class="field">
+      <div class="field__title">{{ "Storages" | i18n }}</div>
+      <div class="field__content">HDD Devices</div>
+      <div class="field__content">HDD Max. Capacity</div>
+    </div>
+    <div class="field">
+      <div class="field__title">{{ "Record" | i18n }}</div>
+      <div class="field__content">Maximum Channel</div>
+      <div class="field__content">Recording Throughput (MB)</div>
+      <div class="field__content">Network Throughput (MB)</div>
+    </div>
+  </div>
+  <div class="item__content">
+    <div class="field" *ngIf="nvr">
+      <div class="field__title"><br /></div>
+      <div class="field__content">{{ nvr.hddDevices }}</div>
+      <div class="field__content">{{ nvr.hddMaxCapacity }}</div>
+      <div class="field">
+        <div class="field__title"><br /></div>
+        <div class="field__content">{{ nvr.maximumChanel }}</div>
+        <div class="field__content">{{ nvr.recordingThroughput }}</div>
+        <div class="field__content">{{ nvr.networkThroughput }}</div>
+      </div>
+    </div>
+  </div>
+</div>

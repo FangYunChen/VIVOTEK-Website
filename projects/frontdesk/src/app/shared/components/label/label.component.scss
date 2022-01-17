@@ -1,0 +1,32 @@
+@import '../../../../styles/var';
+:host {
+  display: inline-flex;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 22px;
+  line-height: 1.67em;
+  font-size: 0.75em;
+  font-weight: 700;
+  color: $colorW;
+}
+
+.label__bg {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: skew(-33deg);
+  background-color: $colorB1;
+}
+
+.label__text {
+  position: relative;
+}

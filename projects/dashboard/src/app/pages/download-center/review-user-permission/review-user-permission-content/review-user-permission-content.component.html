@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <form #form="ngForm" fxLayout="column">
+    <mat-card fxFlex="100%">
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngFor="let reviewDocumentType of data.reviewDocumentTypes" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-form-field>
+            <mat-select [placeholder]="reviewDocumentType.documentTypeText" name="reviewDocumentType_{{reviewDocumentType.documentTypeId}}"
+              [(ngModel)]="reviewDocumentType.reviewResult">
+              <mat-option *ngFor="let option of reviewOptions" [value]="option.value">
+                {{option.optionText}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="reviewDocumentType.reviewResult === false">
+            <textarea matInput rows="5" placeholder="Rejected reason" name="rejectedReason_{{reviewDocumentType.documentTypeId}}"
+              [(ngModel)]="reviewDocumentType.rejectedReason"></textarea>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="submitList()">Submit</button>
+  <span fxFlex></span>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>

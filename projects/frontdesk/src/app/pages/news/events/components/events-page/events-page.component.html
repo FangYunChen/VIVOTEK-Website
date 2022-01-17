@@ -1,0 +1,45 @@
+<div id="events" class="container">
+  <vvtk-top-banner [rootPath]="'/news/events' | customPath" [contentPageTitle]="title"></vvtk-top-banner>
+  <section *ngIf="_Content" class="model-page section">
+    <div class="page-header">
+      <div class="wrap">
+        <h2>
+          <a [href]="_Content.boothUrl.url" target="_blank">{{_Content.title}}</a>
+        </h2>
+        <div class="line afterClear">
+          <vvtk-share [mailTitle]="_Content.title" [categoryId]="collection.Events" [pageId]="id"></vvtk-share>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="wrap">
+        <div class="page-info">
+          <div class="table">
+            <div class="row">
+              <div class="col name">{{'Date'| i18n}}</div>
+              <div class="col name">{{'Booth Number'| i18n}}</div>
+              <div class="col name">{{'Location'| i18n}}</div>
+            </div>
+            <div class="row">
+              <div class="col text" [attr.data-name]="'Date'">{{_Content.startAt|date:'MMM d, y'}} ~ {{_Content.endAt|date:'MMM d, y'}}</div>
+              <div class="col text" [attr.data-name]="'Booth'">{{_Content.boothNumber}}</div>
+              <div class="col text" [attr.data-name]="'Location'">{{_Content.address}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <vvtk-model-text [textAlign]="'center'" *ngFor="let item of content" [content]="item"></vvtk-model-text> -->
+    <vvtk-model-selector #f [content]="f.setContent(_Content.content)"></vvtk-model-selector>
+    <vvtk-model-gallery [tabList]="_Content.album"></vvtk-model-gallery>
+
+    <div class="page-footer">
+      <div class="wrap">
+        <div class="text-center">
+          <a [routerLink]="'/news/events' | customPath" class="btn btn-b">{{"Back"|i18n}}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

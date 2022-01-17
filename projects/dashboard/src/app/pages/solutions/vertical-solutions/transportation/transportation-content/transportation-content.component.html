@@ -1,0 +1,10 @@
+<vvtk-sub-template-page [opts]="opts" [(data)]="data">
+  <ng-container formFields>
+    <mat-form-field>
+      <input matInput type="text" maxlength="255" placeholder="TabName" name="tabname" [(ngModel)]="data.tabName">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" maxlength="255" placeholder="AnchorUrl" name="anchorUrl" [(ngModel)]="data.anchorUrl">
+    </mat-form-field>
+  </ng-container>
+</vvtk-sub-template-page>

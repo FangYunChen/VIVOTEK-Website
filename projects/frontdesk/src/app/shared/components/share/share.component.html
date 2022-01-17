@@ -1,0 +1,42 @@
+<div class="share">
+  <a [href]="" class="icon icon-facebook" (click)="shareButton('facebook')">
+    <i class="fa fa-facebook"></i>
+  </a>
+  <a [href]="" class="icon icon-twitter" (click)="shareButton('twitter')">
+    <i class="fa fa-twitter"></i>
+  </a>
+  <a [href]="" class="icon icon-linkedin" (click)="shareButton('linkedin')">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  <a [href]="" class="icon icon-mail" (click)="shareButton('mail')">
+    <i class="fa fa-envelope"></i>
+  </a>
+  <a [href]="" class="icon icon-like" (click)="addCollection()">
+    <i class="fa fa-heart"></i>
+  </a>
+</div>
+
+<vvtk-popup *ngIf="collectionMask" [id]="'alertPopup'" [popupStyle]="'alertStyle'" (windowPopup)="windowPopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Added to my favorites'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup>
+
+<div id="robotPopup" class="popup-wrap" [class.open]="robotMask">
+  <div class="popup">
+    <!--
+		<recaptcha (resolved)="resolved($event)" site_key="6LfwNioUAAAAAJvASwXnrPb0d6SidzP1CbVeMaTH"></recaptcha>
+        -->
+    <div class="text-center">
+      <div class="g-recaptcha" data-sitekey="6Ld-nGIUAAAAAC4DQJ93mAUjDQRR69sZoNc0D91B" data-callback="recaptchaCallback"></div>
+      <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="doShare()">{{'Send'|i18n}}</a>
+      <p *ngIf="doCheck" class="text-center colorR">{{'Please click "I am not a robot" first'|i18n}}</p>
+    </div>
+  </div>
+</div>
+<div class="mask bg-bk" [class.open]="robotMask" (click)="robotWindow(false)"></div>

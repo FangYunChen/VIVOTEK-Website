@@ -1,0 +1,23 @@
+@import "../../../../../../styles/var";
+$product-img-height: 120px;
+.product {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.product__img {
+  height: $product-img-height;
+  text-align: center;
+  img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: $product-img-height;
+  }
+}
+
+.product__link {
+  margin-top: 5px;
+  font-weight: 700;
+  text-align: center;
+}

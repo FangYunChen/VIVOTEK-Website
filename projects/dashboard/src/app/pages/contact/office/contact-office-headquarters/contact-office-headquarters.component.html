@@ -1,0 +1,81 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Global Offices - Headquarters</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-title>
+            <h3>Vivotek Inc</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="vivotekIncTitle" [(ngModel)]="data.vivotekInc.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Address" name="vivotekIncAddress" [(ngModel)]="data.vivotekInc.address" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Phone" name="vivotekIncPhone" [(ngModel)]="data.vivotekInc.phone" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" type="email" placeholder="Email" name="vivotekIncEmail" [(ngModel)]="data.vivotekInc.email"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Fax" name="vivotekIncFax" [(ngModel)]="data.vivotekInc.fax" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Map link" name="vivotekIncMap" [(ngModel)]="data.vivotekInc.map" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <!--應急-->
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Url" name="vivotekIncName" [(ngModel)]="data.vivotekInc.name" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-title>
+            <h3>Technical Center</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="technicalCenterTitle" [(ngModel)]="data.technicalCenter.title"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Address" name="technicalCenterAddress" [(ngModel)]="data.technicalCenter.address"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Phone" name="technicalCenterPhone" [(ngModel)]="data.technicalCenter.phone"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" type="email" placeholder="Email" name="technicalCenterEmail" [(ngModel)]="data.technicalCenter.email"
+                [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Fax" name="technicalCenterFax" [(ngModel)]="data.technicalCenter.fax" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Map link" name="technicalCenterMap" [(ngModel)]="data.technicalCenter.map" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <!--應急-->
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Url" name="technicalCenterName" [(ngModel)]="data.technicalCenter.name" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

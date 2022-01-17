@@ -1,0 +1,52 @@
+<section class="model section model-table">
+  <div class="wrap CustomScrollbar">
+    <h3 class="text-center">{{ tableName }}</h3>
+    <ng-content select="[vvtkModelTable]"></ng-content>
+    <table *ngIf="sheet&&sheet.table">
+      <thead *ngIf="sheet.table.length>0" style="word-break: normal;">
+        <ng-container *ngIf="sheet.table[0].length != 5">
+          <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+            <tr *ngIf="rowIdx<sheet.table[0][0].rowspan">
+              <th *ngFor="let col of row;let colIdx = index;" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan"
+                [rowSpan]="col.rowspan" [ngStyle]="{'width': (colIdx < 3 ? '154px':'175px'),'height': sheet.rowsHeight[0]+'px'}">{{col.value}}</th>
+            </tr>
+
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="sheet.table[0].length == 5">
+          <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+            <tr *ngIf="rowIdx<sheet.table[0][0].rowspan">
+              <th *ngFor="let col of row;let colIdx = index;let last = last" [class.hidden]="last" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan"
+                [rowSpan]="col.rowspan" [ngStyle]="{'width': (colIdx < 3 ? '154px':'175px'),'height': sheet.rowsHeight[0]+'px'}">{{col.value}}</th>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="sheet.table[0].length != 5">
+          <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+            <tr *ngIf="rowIdx>=sheet.table[0][0].rowspan">
+              <td *ngFor="let col of row;let colIdx = index;" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan" [rowSpan]="col.rowspan"
+                [ngStyle]="{'width': (colIdx < 3 ? '154px':'175px'),'height': sheet.rowsHeight[idx]+'px','background-color':col.NextDataRowColor?'#f9f9f9':'#fff'}">{{tran(col.value)}}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="sheet.table[0].length == 5">
+          <ng-container *ngFor="let row of sheet.table;let rowIdx = index">
+            <tr *ngIf="rowIdx>=sheet.table[0][0].rowspan">
+              <td *ngFor="let col of row;let colIdx = index;let first = first;let last = last" [class.hidden]="last" [attr.valign]="col.valign" [attr.align]="col.align" [colSpan]="col.colspan" [rowSpan]="col.rowspan"
+                [ngStyle]="{'width': (colIdx < 3 ? '154px':'175px'),'height': sheet.rowsHeight[idx]+'px','background-color':col.NextDataRowColor?'#f9f9f9':'#fff'}">
+                <a *ngIf="addHref(sheet.table[rowIdx][4].value) && first" [href]="stringisnull(sheet.table[rowIdx][4].value)" target="_blank">
+                  {{tran(col.value)}}
+                </a>
+                <ng-container *ngIf="!addHref(sheet.table[rowIdx][4].value) || !first">
+                  {{tran(col.value)}}
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>

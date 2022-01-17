@@ -1,0 +1,21 @@
+<label class="disk-capacity">
+  <span class="disk-capacity__title">{{
+    "Total storage capacity" | i18n
+  }}</span>
+  <input
+    type="number"
+    matInput
+    [(ngModel)]="designToolService.vmsValue"
+    (change)="vmsValueChanged()"
+    min="1"
+    max="99999999"
+  />
+  TB
+</label>
+<br />
+<div class="result">
+  <div class="result__title">{{ "Keep videos(days)" | i18n }}</div>
+  <div class="result__content highlight">
+    {{ keepVideos | nullToDash }}<span>{{ "days" | i18n }}</span>
+  </div>
+</div>

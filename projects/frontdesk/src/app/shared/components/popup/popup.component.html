@@ -1,0 +1,9 @@
+<div [id]="id" [class]="popupStyle+' vvtk-popup-wrap open'">
+  <div class="text-right">
+    <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closePopup($event)">
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+  <ng-content select="[vvtkPopup]"></ng-content>
+</div>
+<div class="mask bg-bk open" (click)="closePopup($event)"></div>

@@ -1,0 +1,42 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(tabId==0)?'Add':'Edit'}} {{productTab.productName}} Tab</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="!isAddTab"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Tab Name" name="tabName" [(ngModel)]="productTab.tabName" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Anchor Url" name="anchorUrl" [(ngModel)]="productTab.anchorUrl" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="tabType" placeholder="Tab Type" [(ngModel)]="productTab.tabType" required [disabled]="!pageIsEditable || tabId > 0 || productTab.productType !== 1"
+                (selectionChange)="selectTabType()">
+                <mat-option *ngFor="let tabType of tabTypesList" [value]="tabType.value">{{tabType.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <ng-template vvtkDynamicComponentHost></ng-template>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/products/product/tab', productId]" [queryParams]="{filter: filterTemp, select: selectTemp}">Back</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+    <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+  </mat-card>
+</div>

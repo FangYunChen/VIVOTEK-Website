@@ -1,0 +1,23 @@
+<section class="model-title-images model section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title|i18n}}</h3>
+    <div class="image-container">
+      <div class="image-content" [ngStyle]="{'flex-basis':ListContentRowFlexBasisStyle}" *ngFor="let image of template.linkImages">
+        <ng-container *ngIf="image.src && !image.url">
+          <img [src]="image.src" [alt]="image.alt" [title]="image.title">
+          <p class="p-medium">{{image.linkText}} </p>
+        </ng-container>
+
+        <ng-container *ngIf="image.url">
+          <vvtk-link [href]="image.url" target="_blank">
+            <img [src]="image.src" [alt]="image.alt" [title]="image.title">
+          </vvtk-link>
+          <vvtk-link [cName]="'model-title-image'" *ngIf="image.linkText" [href]="image.url" target="_blank">
+            {{image.linkText}}
+          </vvtk-link>
+        </ng-container>
+        <div *ngIf="image.description" [innerHtml]="image.description" class="model-content p-medium"></div>
+      </div>
+    </div>
+  </div>
+</section>

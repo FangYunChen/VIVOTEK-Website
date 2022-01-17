@@ -1,0 +1,48 @@
+<div class='ossModelCreate__container'>
+  <div class="ossModelCreate mat-elevation-z2">
+    <h3>Create New Model</h3>
+    <form [formGroup]="modelForm" (ngSubmit)="onSubmit()" *ngIf="pageIsEditable">
+      <div class="ossModelCreate__body">
+        <mat-form-field>
+          <mat-select [disabled]='isLoading' formControlName="categoryId" placeholder="Main Category" (selectionChange)='mainSelectChange($event.value)'>
+            <mat-option *ngFor="let item of categoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [disabled]='isLoading' formControlName="subCategoryId" placeholder="Sub Category">
+            <mat-option *ngFor="let item of subCategoryList" value={{item.id}}>{{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input [disabled]="isLoading" matInput formControlName="modelsString" placeholder="Model Name">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="announcementLink" placeholder="Announcement Link">
+          <!-- <mat-hint>This field can't be edited manually, please upload the updated Announcement pdf file to replace the
+            value</mat-hint> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="sourceCodeLink" placeholder="Source Code Link">
+          <!-- <mat-hint>This field can't be edited manually, please upload the updated Source Code file to replace the
+            value</mat-hint> -->
+        </mat-form-field>
+        <button [disabled]="isLoading" class='ossModelCreate__body_announcement--upload' mat-stroked-button color='primary'
+          type="button" mat-button (click)="announcementFileInput.click()">
+          Upload Announcement
+        </button>
+        <button [disabled]="isLoading" mat-stroked-button color='primary' type="button" mat-button (click)="SourceCodeFileInput.click()">
+          Upload New Source Code
+        </button>
+        <input hidden type="file" #announcementFileInput accept="application/pdf" (change)="announcementUpload($event)"
+          [disabled]="isLoading" />
+        <input hidden type="file" #SourceCodeFileInput (change)="sourceCodeUpload($event)" [disabled]="isLoading" />
+      </div>
+      <div class="ossModelCreate__body_action">
+        <a mat-raised-button routerLink="/landing-pages/oss/model" [disabled]="!parentContentIsViewable && isLoading">Cancel</a>
+        <!-- <button mat-raised-button color="warn" (click)='onReset()' type='button' [disabled]="isLoading">Reset</button> -->
+        <button mat-raised-button color="primary" type='submit' [disabled]="isLoading || !modelForm.valid ">Submit</button>
+      </div>
+    </form>
+  </div>
+  <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+</div>

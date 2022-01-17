@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-title>
+    <span>Account List</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-content fxLayout="column">
+        <div>
+          <mat-form-field fxFlex="100%">
+            <input matInput #filter="ngModel" ngModel placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-table #table [dataSource]="(dataSource$ | async)?.users" matSort class="table table-hover table-striped table-bordered table-condensed">
+            <ng-container cdkColumnDef="email">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="300px"> Email </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxFlex="300px"> {{row.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="identityRole">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header> Identity Role </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.identityRole}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="displayName">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.displayName}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="mobile">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.mobile}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="company">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header> Company </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.company}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="status">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="100px"> Status </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxFlex="100px"> {{row.status}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="50px" fxLayoutAlign="center center"> Action </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxLayout="row" fxFlex="50px" fxLayoutAlign="center center">
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" [routerLink]="['/account/content',row.id]"
+                  *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [length]="(dataSource$ | async)?.userCount" [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[10, 30, 50, 100]">
+          </mat-paginator>
+        </div>
+        <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

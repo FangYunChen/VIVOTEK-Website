@@ -1,0 +1,57 @@
+<mat-card fxFlex="100%" *ngIf="data">
+  <mat-card-title>
+    <span>{{(!data||data.id==0)?'Add':'Edit'}} Category</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="column">
+    <form #form="ngForm">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput maxlength="1023" placeholder="Name" name="name" [(ngModel)]="data.name" [readOnly]="!pageIsEditable"
+              required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput maxlength="1023" placeholder="SubRoute" name="subRoute" [(ngModel)]="data.subRoute"
+              [readOnly]="!pageIsEditable" required>
+          </mat-form-field>
+
+          <mat-card-title>
+            <h3>Cover Image</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column" fxLayoutAlign="start center">
+            <img style="cursor: pointer" [src]="data.imagePath | safeUrl" (click)="removeCoverImage()" *ngIf="data.imageId && data.imageId > 0; else noCoverImage">
+            <ng-template #noCoverImage>
+              No cover image
+            </ng-template>
+          </mat-card-content>
+
+          <mat-card-title>
+            <h3>Select a image to be cover image</h3>
+          </mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field>
+              <mat-select placeholder="Image Type" name="selectedImageType" [(ngModel)]="selectedImageType" [disabled]="!pageIsEditable"
+                (selectionChange)="imageTypeChange($event.value)">
+                <mat-option *ngFor="let type of imageTypes" [value]="type.value">{{type.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="images">
+              <div fxLayout="column" fxLayoutAlign="center center" *ngFor="let image of images">
+                <img style="cursor: pointer" [src]="image.imagePath | safeUrl" (click)="chooseCoverImage(image)">
+                <span>{{image.name}}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <span fxFlex></span>
+      <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+    </div>
+  </mat-card-content>
+</mat-card>

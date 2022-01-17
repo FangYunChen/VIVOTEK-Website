@@ -1,0 +1,45 @@
+<div class="container">
+  <vvtk-top-banner [rootPath]="routerUrl"></vvtk-top-banner>
+  <div class="product-selector-page">
+    <aside>
+      <section class="filter-area">
+        <mat-form-field class="search-bar" floatLabel="never" color="black">
+          <mat-icon matPrefix>search</mat-icon>
+          <input type="search" matInput placeholder="{{'Search by Model'|i18n}}" [(ngModel)]="searchKeyword" #searchInput="ngModel" (keyup.esc)="clearSearchInput()">
+          <mat-icon class="close-icon" matSuffix (click)="clearSearchInput()">close</mat-icon>
+        </mat-form-field>
+        <div class="action-bar">
+          <button mat-button class="clear-filter-button" (click)="resetAllFilter($event)">{{'Reset'|i18n}}</button>
+        </div>
+        <vvtk-product-selector-category [baseRouterLink]="baseRouterLink" [data]="categories$ | async"></vvtk-product-selector-category>
+      </section>
+      <!-- <section class="other-selectors">
+        <ul>
+          <li>
+            <a>NVR Selector</a>
+          </li>
+          <li>
+            <a>CaMate Illuminator Selector</a>
+          </li>
+          <li>
+            <a>PoE Switch Selector</a>
+          </li>
+          <li>
+            <a>PoE Enclosure Selector</a>
+          </li>
+          <li>
+            <a>Accessory Installation Selector</a>
+          </li>
+        </ul>
+      </section> -->
+    </aside>
+    <main>
+      <div class="compare-list mat-elevation-z4" vvtkFixedTop>
+        <vvtk-product-compare-manage></vvtk-product-compare-manage>
+      </div>
+      <div class="result-panel">
+        <vvtk-product-selector-result></vvtk-product-selector-result>
+      </div>
+    </main>
+  </div>
+</div>

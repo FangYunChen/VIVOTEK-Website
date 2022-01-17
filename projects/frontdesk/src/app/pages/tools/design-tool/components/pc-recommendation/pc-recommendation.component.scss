@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

@@ -1,0 +1,16 @@
+<div class="list-col list-col4">
+  <div class="shadow">
+    <div class="col-text">
+      <div class="title limit">
+        <p>{{ card.title }}</p>
+      </div>
+      <ng-content select="[vvtkThreeCard]"></ng-content>
+    </div>
+  </div>
+  <ng-container *ngIf="coverElementA">
+    <vvtk-a [url]="card.url || card.href" [cName]="'coverLink'" [vvtkRouterLink]="vvtkRouterLink" [target]="target">
+      <ng-container HtmlContent>
+      </ng-container>
+    </vvtk-a>
+  </ng-container>
+</div>

@@ -1,0 +1,31 @@
+::ng-deep {
+  .cdk-overlay-container {
+    .cdk-overlay-dark-backdrop {
+      height: auto;
+      background: rgba(0, 0, 0, 0.8);
+    }
+  }
+  .slider-container {
+    display: flex;
+    flex-direction: column;
+    .slider-nav {
+      max-height: 75vh;
+      .slick-list div.slick-slide {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      img {
+        max-height: 75vh;
+        width: auto;
+      }
+    }
+    .general-button {
+      align-self: center;
+    }
+  }
+  .mat-dialog-content {
+    max-height: 80vh;
+    height: 80vh;
+  }
+}

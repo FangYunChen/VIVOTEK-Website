@@ -1,0 +1,44 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addDownload(0)" *ngIf="!readOnly">Add Download</button>
+  <div [sortablejs]="template.downloadList" [sortablejsOptions]="groupOptionsDownload">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let download of template.downloadList; let j = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-download" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Download {{j+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Download" matTooltipPosition="above"
+          (click)="deleteDownload(j)" *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="download.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="download.hideContent = !download.hideContent">
+          <mat-icon *ngIf="download.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!download.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" [hidden]="!download.hideContent">
+        {{download.description}}
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="download.hideContent">
+        <button type="button" mat-button (click)="doenloadFileInput.click()" [disabled]="isLoading" *ngIf="!readOnly">Upload
+          a file</button>
+        <input hidden type="file" #doenloadFileInput accept="*" (change)="uploadFile($event, j)" [disabled]="isLoading" />
+        <mat-form-field fxFlex>
+          <input matInput placeholder="File path" [name]="'templateDoenloadUrl'+templateIndex+'_'+j" [(ngModel)]="download.url"
+            [readOnly]="isLoading" [readOnly]="readOnly">
+          <a mdSuffix target="_blank" [href]="download.url" matTooltip="Download" matTooltipPosition="above" *ngIf="download.url">
+            <mat-icon>get_app</mat-icon>
+          </a>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput maxlength="255" placeholder="Description" [name]="'templateDownloadDescription'+templateIndex+'_'+j"
+            [(ngModel)]="download.description" [readOnly]="readOnly">
+        </mat-form-field>
+      </mat-card-content>
+      <button type="button" mat-button (click)="addDownload(j+1)" *ngIf="!readOnly">Add Download</button>
+    </div>
+  </div>
+</div>

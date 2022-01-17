@@ -1,0 +1,135 @@
+<mat-card fxFlex="100%" *ngIf="data">
+  <mat-card-title>
+    <span>{{(!data||data.id==0)?'Add':'Edit'}} Specification</span>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="column">
+    <form #form="ngForm">
+      <mat-card fxFlex="100%">
+        <mat-card-content fxLayout="column">
+          <mat-form-field fxFlex>
+            <input matInput maxlength="1023" placeholder="Specification Name" name="name" [(ngModel)]="data.name"
+              [disabled]="!pageIsEditable" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Is Attribute" name="isAttribute" [(ngModel)]="data.isAttribute" [disabled]="data.id && data.id !== 0">
+              <mat-option [value]="true">true</mat-option>
+              <mat-option [value]="false">false</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="data.isAttribute">
+            <mat-select placeholder="Selector Type" name="selectorType" [(ngModel)]="data.selectorType" [disabled]="!pageIsEditable"
+              (selectionChange)="changeSelectorType()">
+              <mat-option [value]="null">No Selector</mat-option>
+              <mat-option *ngFor="let option of productSelectorTypeOptions" [value]="option.value">{{option.optionText}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ng-container *ngIf="data.isAttribute && (data.selectorType === productSelectorType.Single || data.selectorType===productSelectorType.Multiple)">
+            <button type="button" mat-button (click)="addSelector(data.selectorOptions, 0)" *ngIf="pageIsEditable">Add
+              Selector</button>
+            <ng-template *ngTemplateOutlet="selectorOption; context:{selectors:data.selectorOptions, layer:1}"></ng-template>
+          </ng-container>
+          <ng-container *ngIf="data.isAttribute && data.selectorType === productSelectorType.Range">
+            <button type="button" mat-button (click)="addSelector(data.selectorOptions, 0)" *ngIf="pageIsEditable">Add
+              Selector</button>
+            <ng-template *ngTemplateOutlet="selectorRange; context:{selectors:data.selectorOptions}"></ng-template>
+          </ng-container>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </mat-card-content>
+  <mat-card-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <span fxFlex></span>
+      <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #selectorOption let-selectors="selectors" let-layer="layer">
+  <div [sortablejs]="selectors" [sortablejsOptions]="groupOptions">
+    <div style="margin:0 0 0 30px" fxLayout="column" *ngFor="let selector of selectors; let i = index">
+      <mat-card-content fxLayout="row">
+        <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+        <mat-form-field>
+          <mat-select name="isFilter_{{layer}}_{{i}}" placeholder="Is Filter" [(ngModel)]="selector.isFilter"
+            [disabled]="!pageIsEditable || selector.id !== 0" (selectionChange)="changeIsFilter(selectors, i, $event.value)">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput maxlength="255" placeholder="Selector Name" name="selectorName_{{layer}}_{{i}}" [(ngModel)]="selector.name"
+            [disabled]="!pageIsEditable">
+        </mat-form-field>
+        <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Selector" matTooltipPosition="above" (click)="addSelector(selectors,i+1)"
+          *ngIf="pageIsEditable">
+          <mat-icon>add</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Sub Selector" matTooltipPosition="above"
+          (click)="addChildSelector(selectors,i,0)" *ngIf="pageIsEditable && !selector.isFilter && layer < 5">
+          <mat-icon>playlist_add</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Selector" matTooltipPosition="above"
+          (click)="deleteSelector(selectors,i)" *ngIf="pageIsEditable">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a *ngIf="!selector.isFilter" mat-mini-fab class="action-btn" color="primary" [matTooltip]="selector.hideContent?'展開':'收合'"
+          matTooltipPosition="above" (click)="selector.hideContent = !selector.hideContent">
+          <mat-icon *ngIf="selector.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!selector.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-content>
+      <mat-card-content fxLayout="column" [hidden]="selector.hideContent">
+        <ng-template *ngTemplateOutlet="selectorOption; context:{selectors:selector.children||[], layer:layer+1}"></ng-template>
+      </mat-card-content>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #selectorRange let-selectors="selectors">
+  <div [sortablejs]="selectors" [sortablejsOptions]="groupOptions">
+    <div fxLayout="column" *ngFor="let selector of selectors; let i = index">
+      <mat-card-title fxLayout="row" fxLayoutAlign="start center" [hidden]="!selector.hideContent">
+        <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+        <h4>{{selector.name}}</h4>
+        <a mat-mini-fab class="action-btn" color="primary" matTooltip="展開" matTooltipPosition="above" (click)="selector.hideContent = !selector.hideContent">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="row" [hidden]="selector.hideContent">
+        <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+        <div fxLayout="column">
+          <div fxLayout="row" style="margin-bottom: 20px">
+            <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Selector" matTooltipPosition="above"
+              (click)="addSelector(selectors,i+1)" *ngIf="pageIsEditable">
+              <mat-icon>add</mat-icon>
+            </a>
+            <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Selector" matTooltipPosition="above"
+              (click)="deleteSelector(selectors,i)" *ngIf="pageIsEditable">
+              <mat-icon>delete</mat-icon>
+            </a>
+            <a mat-mini-fab class="action-btn" color="primary" matTooltip="收合" matTooltipPosition="above" (click)="selector.hideContent = !selector.hideContent">
+              <mat-icon>keyboard_arrow_up</mat-icon>
+            </a>
+          </div>
+          <mat-form-field>
+            <input matInput maxlength="255" placeholder="Selector Name" name="selectorName_{{i}}" [(ngModel)]="selector.name"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" maxlength="255" placeholder="Minimum" name="minimum_{{i}}" [(ngModel)]="selector.minimum"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" maxlength="255" placeholder="Maximum" name="maximum_{{i}}" [(ngModel)]="selector.maximum"
+              [disabled]="!pageIsEditable">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput maxlength="255" placeholder="Unit" name="unit_{{i}}" [(ngModel)]="selector.unit" [disabled]="!pageIsEditable">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</ng-template>

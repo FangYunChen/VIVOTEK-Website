@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <button type="button" mat-button (click)="addFeature(0)" *ngIf="pageIsEditable">Add Feature</button>
+  <div [sortablejs]="features" [sortablejsOptions]="groupOptions">
+    <div fxLayout="row" fxLayoutAlign="start stretch" *ngFor="let feature of features; let i = index">
+      <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+      <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Feature" matTooltipPosition="above" (click)="addFeature(i+1)"
+        *ngIf="pageIsEditable">
+        <mat-icon>add</mat-icon>
+      </a>
+      <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Feature" matTooltipPosition="above" (click)="deleteFeature(i)"
+        *ngIf="pageIsEditable">
+        <mat-icon>delete</mat-icon>
+      </a>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="feature" [name]="'feature'+i" [(ngModel)]="feature.content" [readOnly]="!pageIsEditable"
+          required>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="container">
+  <vvtk-top-banner [rootPath]="routerUrl"></vvtk-top-banner>
+  <div class="product-list-page-content">
+    <vvtk-category-list [categories]="allCategories"></vvtk-category-list>
+    <div class="main-content">
+      <vvtk-model-grid-list-item [data]="categories"></vvtk-model-grid-list-item>
+      <br>
+      <vvtk-model-grid-list-item [data]="products"></vvtk-model-grid-list-item>
+    </div>
+  </div>
+</div>

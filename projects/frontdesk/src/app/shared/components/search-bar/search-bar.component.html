@@ -1,0 +1,12 @@
+<div class="search-bar-container">
+  <div class="search-bar">
+    <mat-form-field class="search-form" appearance="outline">
+      <input matInput class="search-input" type="text" [placeholder]="placeholder | i18n" [(ngModel)]="searchValue"
+        (keyup.enter)="search()">
+      <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+        <i class="cancel-search fa fa-times" aria-hidden="true"></i>
+      </button>
+    </mat-form-field>
+    <i class="search-icon fa fa-search" (click)="search()" aria-hidden="true"></i>
+  </div>
+</div>

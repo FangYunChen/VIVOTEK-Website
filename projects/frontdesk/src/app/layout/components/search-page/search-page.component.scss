@@ -1,0 +1,24 @@
+@import '../../../../styles/_var.scss';
+.bg-b {
+  background-color: darken($colorB1, 10%);
+  color: $colorW;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-weight: normal;
+  font-size: $sizeBanner;
+}
+
+@media screen and (max-width: $widthTableApp) {
+  h2 {
+    font-size: $sizeLger;
+  }
+}
+
+@media screen and (max-width: $widthApp) {
+  .bg-b {
+    padding: 20px 10px;
+  }
+}

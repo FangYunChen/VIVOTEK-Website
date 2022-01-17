@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-title>
+    <span>Role List</span>
+    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Add" matTooltipPosition="above" [routerLink]="['/role/content','new']"
+      *ngIf="pageContentIsEditable">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content fxLayout="column">
+    <mat-card>
+      <mat-card-content fxFlex="100%">
+        <div>
+          <mat-form-field fxFlex="100%">
+            <input matInput #filter placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-table #table [dataSource]="dataSource" matSort class="table table-hover table-striped table-bordered table-condensed">
+
+            <ng-container cdkColumnDef="name">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *cdkCellDef="let row"> {{row.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="action">
+              <mat-header-cell *cdkHeaderCellDef fxLayout="row" fxFlex="150px" fxLayoutAlign="center center"> Action </mat-header-cell>
+              <mat-cell *cdkCellDef="let row" fxLayout="row" fxFlex="150px" fxLayoutAlign="center center">
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above" [routerLink]="['/role/content',row.id]"
+                  *ngIf="pageContentIsViewable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above" (click)="delete(row.id, row.name)"
+                  [disabled]="row.isProtected || lockDelete" *ngIf="pageIsEditable">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator #paginator [length]="dataSource.dataLength" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 100]">
+          </mat-paginator>
+        </div>
+        <vvtk-loader *ngIf="database.isLoading"></vvtk-loader>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

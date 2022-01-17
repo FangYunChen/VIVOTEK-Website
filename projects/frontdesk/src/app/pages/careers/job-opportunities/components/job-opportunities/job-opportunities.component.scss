@@ -1,0 +1,57 @@
+@import '_var.scss';
+[class*='icon-'] {
+  margin-bottom: 2px;
+  &:before {
+    width: 15px;
+    margin-right: 3px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    font-family: FontAwesome;
+  }
+}
+#careers {
+  .text {
+    height: 101px;
+  }
+}
+.icon-tag {
+  &:before {
+    content: '\f02b';
+  }
+}
+.icon-globe {
+  &:before {
+    content: '\f0ac';
+  }
+}
+.icon-fort-awesome {
+  &:before {
+    content: '\f286';
+  }
+}
+.icon-marker {
+  height: 38px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  &.limitAfter {
+    position: relative;
+    padding-right: 15px;
+    &:after {
+      position: absolute;
+      content: '...';
+      right: 0;
+      top: 16px;
+      z-index: 10;
+    }
+  }
+  &:before {
+    content: '\f041';
+  }
+  p {
+    display: inline;
+  }
+}

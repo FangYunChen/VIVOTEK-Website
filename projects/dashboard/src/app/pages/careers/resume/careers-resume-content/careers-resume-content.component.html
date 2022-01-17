@@ -1,0 +1,312 @@
+<div fxLayout="row" *ngIf="data">
+  <mat-card fxFlex="100%">
+    <mat-card-title>
+      <span>Online Applications</span>
+      <button mat-mini-fab class="action-btn" color="primary" matTooltip="Download" matTooltipPosition="above" (click)="downloadPDF()">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm" fxLayout="column">
+        <mat-card fxFlex="100%">
+          <mat-card-title>Files</mat-card-title>
+          <mat-card-content fxLayout="row">
+            <a class="file" mat-raised-button color="accent" *ngFor="let file of data.resume.files" [href]="file.url" target="_blank">{{file.name}}</a>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-title>Introduction</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div class="mybox" fxLayout="column">
+              <mat-form-field fxFlex>
+                <input matInput placeholder="ID" [value]="data.id" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Name" [value]="data.resume.name" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Sex" [value]="['Male', 'Female'][data.resume.sex]" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Application Date" [value]="data.applicationDate | amDateFormat:'YYYY/MM/DD HH:mm'" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Applied Position" [value]="data.vacancy.name" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Date of Birth" [value]="data.resume.birthday | amDateFormat:'YYYY/MM/DD'" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="ID Card No." [value]="data.resume.idNo" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Marital Status" [value]="['Single', 'Married'][data.resume.maritalStatus]" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Number of Children" [value]="data.resume.childrenNumber" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Military Service" [value]="['Retired', 'Exempt from service', 'Not serviced'][data.resume.militaryService]"
+                  readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="E-MAIL" [value]="data.resume.email" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Cell Phone Number" [value]="data.resume.cellphone" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Present Address" [value]="data.resume.presentAddress" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Present Phone Number" [value]="data.resume.presentPhone" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Permanent Address" [value]="data.resume.permanentAddress" readOnly>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Permanent Phone Number" [value]="data.resume.permanentPhone" readOnly>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Education</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230" *ngFor="let education of data.resume.education;let idx=index">
+                <h3>Education {{idx+1}}</h3>
+                <h4>Name of School</h4>
+                <p>{{education.schoolName}}</p>
+                <h4>Major in</h4>
+                <p>{{education.major}}</p>
+                <h4>Day/ Evening Division</h4>
+                <p>{{['Day', 'Evening'][education.division]}}</p>
+                <h4>Degree</h4>
+                <p>{{education.degree}}</p>
+                <h4>From</h4>
+                <p>{{education.fromDate}}</p>
+                <h4>To</h4>
+                <p>{{education.toDate}}</p>
+                <h4>Graduate or not</h4>
+                <p>{{['Graduate', 'Not'][education.gradute]}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Employment Record</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230" *ngFor="let employmentRecord of data.resume.employmentRecord;let idx=index">
+                <h3>Employment Record {{idx+1}}</h3>
+                <h4>Name of Company</h4>
+                <p>{{employmentRecord.companyName}}</p>
+                <h4>Department</h4>
+                <p>{{employmentRecord.department}}</p>
+                <h4>Job Title</h4>
+                <p>{{employmentRecord.title}}</p>
+                <h4>From</h4>
+                <p>{{employmentRecord.fromDate}}</p>
+                <h4>To</h4>
+                <p>{{employmentRecord.toDate}}</p>
+                <h4>Reason for Leaving</h4>
+                <p>{{employmentRecord.reasonForLeaving}}</p>
+                <h4>Supervisor's Name</h4>
+                <p>{{employmentRecord.supervisor.name}}</p>
+                <h4>Supervisor's Title</h4>
+                <p>{{employmentRecord.supervisor.title}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Family Information</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230" *ngFor="let familyInformation of data.resume.familyInformation;let idx=index">
+                <h3>Family Information {{idx+1}}</h3>
+                <h4>Relation</h4>
+                <p>{{familyInformation.relation}}</p>
+                <h4>Name</h4>
+                <p>{{familyInformation.name}}</p>
+                <h4>Job & Title</h4>
+                <p>{{familyInformation.job.company}} {{familyInformation.job.title}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Emergency Contact</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230">
+                <h4>Name</h4>
+                <p>{{data.resume.emergencyContact.name}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>Relation</h4>
+                <p>{{data.resume.emergencyContact.relation}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>Phone Number</h4>
+                <p>{{data.resume.emergencyContact.phone}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230">
+                <h4>Interests</h4>
+                <p>{{data.resume.interests}}</p>
+                <h4>Skills</h4>
+                <p>{{data.resume.skills}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>Work expectations</h4>
+                <p>{{data.resume.workExpectation}}</p>
+                <h4>Future Aspirations</h4>
+                <p>{{data.resume.futureAspiration}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>Expected Salary</h4>
+                <p>{{data.resume.expectedSalary}}</p>
+                <h4>Date of Availability</h4>
+                <p>{{data.resume.availabilityDate | amDateFormat:'YYYY/MM/DD'}}</p>
+                <h4>Where catch this</h4>
+                <p>{{data.resume.whereCatchVacancy}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Reference</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230" *ngFor="let reference of data.resume.reference;let idx=index">
+                <h3>Reference {{idx+1}}</h3>
+                <h4>Name</h4>
+                <p>{{reference.name}}</p>
+                <h4>Name of Company</h4>
+                <p>{{reference.company}}</p>
+                <h4>Job Title</h4>
+                <p>{{reference.title}}</p>
+                <h4>Phone Number</h4>
+                <p>{{reference.phone}}</p>
+                <h4>Relation</h4>
+                <p>{{reference.relation}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%">
+          <mat-card-title>Other</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w100p">
+                <h4>Note</h4>
+                <p>{{data.resume.note || 'None'}}</p>
+              </div>
+              <div class="mybox w100p">
+                <h4>Committed crimes</h4>
+                <p>{{data.forehead || 'None'}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%" *ngIf="data.competencyTable">
+          <mat-card-title>職能項目</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230">
+                <h4>團隊合作 情況</h4>
+                <p>{{data.competencyTable.teamWork.situation}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>團隊合作 行動</h4>
+                <p>{{data.competencyTable.teamWork.action}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>團隊合作 結果</h4>
+                <p>{{data.competencyTable.teamWork.result}}</p>
+              </div>
+            </div>
+            <div>
+              <div class="mybox w230">
+                <h4>持續學習 情況</h4>
+                <p>{{data.competencyTable.learning.situation}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>持續學習 行動</h4>
+                <p>{{data.competencyTable.learning.action}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>持續學習 結果</h4>
+                <p>{{data.competencyTable.learning.result}}</p>
+              </div>
+            </div>
+            <div>
+              <div class="mybox w230">
+                <h4>問題分析與解決能力 情況</h4>
+                <p>{{data.competencyTable.analysisAndResolution.situation}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>問題分析與解決能力 行動</h4>
+                <p>{{data.competencyTable.analysisAndResolution.action}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>問題分析與解決能力 結果</h4>
+                <p>{{data.competencyTable.analysisAndResolution.result}}</p>
+              </div>
+            </div>
+            <div>
+              <div class="mybox w230">
+                <h4>主動積極 情況</h4>
+                <p>{{data.competencyTable.active.situation}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>主動積極 行動</h4>
+                <p>{{data.competencyTable.active.action}}</p>
+              </div>
+              <div class="mybox w230">
+                <h4>主動積極 結果</h4>
+                <p>{{data.competencyTable.active.result}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex="100%" *ngIf="data.questionnaire">
+          <mat-card-title>DICE 量表</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <div>
+              <div class="mybox w230" *ngFor="let q of data.questionnaire;let idx = index">
+                <h4>{{idx+1}}</h4>
+                <p>{{diceText[idx][0]}} ({{q[0]}})</p>
+                <p>{{diceText[idx][1]}} ({{q[1]}})</p>
+                <p>{{diceText[idx][2]}} ({{q[2]}})</p>
+                <p>{{diceText[idx][3]}} ({{q[3]}})</p>
+              </div>
+            </div>
+            <div>
+              <div class="mybox w230">
+                <h4>Result</h4>
+                <p>D ({{data.questionnaireScore[0]}})</p>
+                <p>I ({{data.questionnaireScore[0]}})</p>
+                <p>C ({{data.questionnaireScore[0]}})</p>
+                <p>E ({{data.questionnaireScore[0]}})</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-button [routerLink]="['/careers/resume/list']">Cancel</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

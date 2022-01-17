@@ -1,0 +1,77 @@
+<nav id="sideMenu" [class.open]="sidemenuMask">
+  <div class="sideMenu-top text-right">
+    <a [href]="('javascript:;' | safe:'url')" class="btn-close" (click)="closeSidemenu($event)">
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+  <ul class="nav-top">
+    <li *ngIf="authService.userData" (click)="closeSidemenu($event)">
+      <a [routerLink]="'/my-account' | customPath">
+        <span class="icon">
+          <img src="/assets/img/icon_contact_sbk.png" alt="">
+        </span> {{"My Account" | i18n }}({{ authService.userData?.displayName }})</a>
+    </li>
+    <li *ngIf="showAdminPanelLink">
+      <a href="{{ adminPanelLink }}" target="_blank">
+        <span class="icon">
+          <img src="/assets/img/icon_contact_sbk.png" alt="">
+        </span> {{"Admin Panel" | i18n }}</a>
+    </li>
+    <li *ngIf="false">
+      <a [href]="('javascript:;' | safe:'url')" class="btn-lan" (click)="openLanguage($event)">
+        <span class="icon">
+          <img src="/assets/img/icon_globe_sbk.png" alt="">
+        </span> {{"Language" | i18n }}</a>
+    </li>
+    <li>
+      <a [routerLink]="'/contact-us' | customPath" (click)="closeSidemenu($event)">
+        <span class="icon">
+          <img src="/assets/img/icon_contact_sbk.png" alt="">
+        </span> {{"Contact Us" | i18n}}</a>
+    </li>
+  </ul>
+  <ul>
+    <li *ngFor="let item of _MenuNode; let index = index;" [class.sub-icon]="item.subMenu && item.subMenu.length>0">
+      <a *ngIf="item.subMenu;" [href]="('javascript:;' | safe:'url')" [class.open]="index.toString() === subMenu" (click)="menuControl(index.toString())">{{item.title}}</a>
+      <ng-container *ngIf="!item.subMenu;">
+        <a *ngIf="item.url&&item.url.indexOf('http')==-1;else itemHrefLink" [routerLink]="[item.url | customPath]" (click)="closeSidemenu($event)">{{item.title}}</a>
+        <ng-template #itemHrefLink>
+          <a [href]="item.url||('javascript:;' | safe:'url')">{{item.title}}</a>
+        </ng-template>
+      </ng-container>
+      <div *ngIf="item.subMenu;" class="sub">
+        <div class="wrap">
+          <ul class="sub-first">
+            <li *ngFor="let item2 of item.subMenu; let index = index" [class.sub-icon]="item2.subMenu && item2.subMenu.length>0">
+              <a *ngIf="item2.subMenu;" [href]="('javascript:;' | safe:'url')" [class.open]="index === subMenuIndex" (click)="subControl(index)">{{item2.title}}</a>
+              <ng-container *ngIf="!item2.subMenu;">
+                <a *ngIf="item2.url&&item2.url.indexOf('http')==-1;else item2HrefLink" [routerLink]="[item2.url | customPath]" (click)="closeSidemenu($event)">{{item2.title}}</a>
+                <ng-template #item2HrefLink>
+                  <a [href]="item2.url||('javascript:;' | safe:'url')">{{item2.title}}</a>
+                </ng-template>
+              </ng-container>
+              <ul *ngIf="item2.subMenu;" class="sub-second">
+                <li *ngFor="let item3 of item2.subMenu" [class.sub-icon]="item3.subMenu && item3.subMenu.length>0">
+                  <a *ngIf="item3.url&&item3.url.indexOf('http')!=0;else item3HrefLink" [routerLink]="[item3.url | customPath]" (click)="closeSidemenu($event)">{{item3.title}}</a>
+                  <ng-template #item3HrefLink>
+                    <a [href]="item3.url||('javascript:;' | safe:'url')">{{item3.title}}</a>
+                  </ng-template>
+                  <ul *ngIf="item3.subMenu;" class="sub-third">
+                    <li *ngFor="let item4 of item3.subMenu" [class.sub-icon]="item4.subMenu && item4.subMenu.length>0">
+                      <a *ngIf="item4.url&&item4.url.indexOf('http')!=0;else item4HrefLink" [routerLink]="[item4.url | customPath]" (click)="closeSidemenu($event)">{{item4.title}}</a>
+                      <ng-template #item4HrefLink>
+                        <a [href]="item4.url||('javascript:;' | safe:'url')">{{item4.title}}</a>
+                      </ng-template>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>
+<vvtk-language-menu [hidden]="!languageMask" [languageMask]="languageMask" (languageWindow)="languageWindow($event)"></vvtk-language-menu>
+<div class="mask bg-bk" [class.open]="sidemenuMask" (click)="closeSidemenu($event)"></div>

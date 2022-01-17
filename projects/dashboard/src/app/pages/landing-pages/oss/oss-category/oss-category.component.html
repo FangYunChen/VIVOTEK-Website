@@ -1,0 +1,73 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>Open Source Software Categories</span>
+      <button mat-mini-fab class="action-btn" color="primary" matTooltip="Add Category" matTooltipPosition="above"
+        [routerLink]="['/landing-pages/oss/category/create']" *ngIf="pageContentIsEditable">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content [sortablejs]="dataList" [sortablejsOptions]="mainCategoryOptions" fxLayout="column">
+      <mat-card fxFlex="100%" *ngFor="let mainCategory of dataList">
+        <mat-card-title>
+          <h3 class="middle" mat-line>
+            <form id="maincategory-form-{{mainCategory.id}}" (submit)="handleCategorySubmit($event, 'main')"
+              [attr.data-maincategory-id]="mainCategory.id">
+              <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+              <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                (click)="handleCategoryEdit($event, mainCategory.id, 'main')" [disabled]="lockDelete" *ngIf="pageIsEditable"
+                type="button">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                (click)="delete(mainCategory.id, mainCategory.categoryName, 'main')" [disabled]="lockDelete" *ngIf="pageIsEditable"
+                type='button'>
+                <mat-icon>delete</mat-icon>
+              </button>
+              <input class='category__input' name="categoryName" [value]="mainCategory.categoryName" readonly (click)="handleInputClick($event)"
+                [attr.data-mainCategory-id]="mainCategory.id" />
+              <button name='finishBtn' mat-mini-fab class="action-btn finishBtn" matTooltip="Finish" matTooltipPosition="above"
+                [disabled]="lockDelete" type='submit' (click)='handleSubmitBtnClick($event)'>
+                <mat-icon>done</mat-icon>
+              </button>
+            </form>
+          </h3>
+        </mat-card-title>
+        <mat-card-content fxLayout="column">
+          <div class="list mat-elevation-z4">
+            <mat-list [sortablejs]="mainCategory.subCategories" [sortablejsOptions]="subCategoryOptions"
+              [attr.data-maincategory-id]="mainCategory.id">
+              <mat-list-item class="small-list-item" *ngFor="let subCategory of mainCategory.subCategories">
+                <h3 class="middle" mat-line>
+                  <form id="subcategory-form-{{subCategory.id}}" (submit)="handleCategorySubmit($event, 'sub')"
+                    [attr.data-subcategory-id]="subCategory.id">
+                    <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                    <button mat-mini-fab class="action-btn" color="primary" matTooltip="Edit" matTooltipPosition="above"
+                      (click)="handleCategoryEdit($event, subCategory.id, 'sub')" *ngIf="pageIsEditable" [disabled]="lockDelete"
+                      type="button">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                      (click)="delete(subCategory.id, subCategory.categoryName, 'sub')" [disabled]="lockDelete" *ngIf="pageIsEditable"
+                      type="button">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <input class='category__input' name="categoryName" [value]="subCategory.categoryName" readonly
+                      (click)="handleInputClick($event)" [attr.data-subcategory-id]="subCategory.id" />
+                    <button name='finishBtn' mat-mini-fab class="action-btn finishBtn" matTooltip="Finish"
+                      matTooltipPosition="above" [disabled]="lockDelete" type='submit' (click)='handleSubmitBtnClick($event)'>
+                      <mat-icon>done</mat-icon>
+                    </button>
+                  </form>
+                </h3>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+  </mat-card>
+</div>

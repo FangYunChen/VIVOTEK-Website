@@ -1,0 +1,31 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{this.opts.title}}</span>
+      <span fxFlex></span>
+      <!--<vvtk-language-selector></vvtk-language-selector>-->
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxLayout="column" fxFlex="100%">
+          <mat-form-field>
+            <input matInput type="text" maxlength="255" placeholder="LinkText" name="linktext" [(ngModel)]="data.linkText">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" maxlength="255" placeholder="Description" name="description" [(ngModel)]="data.description">
+          </mat-form-field>
+          <vvtk-templates #templates [path]="opts.dirPath" [readOnly]="!pageIsEditable"></vvtk-templates>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button [routerLink]="['/supports/learning/feature-article']" fxFlex>Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || (templates && !templates.form.valid) || isLoading"
+          *ngIf="pageIsEditable" fxFlex>Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

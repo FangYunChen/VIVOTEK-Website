@@ -1,0 +1,31 @@
+<vvtk-full-slider>
+  <div class="full-slider" vvtkhtml (window:resize)="onResize($event)">
+    <div *ngFor="let item of sliderItems; let idx = index" class="slider-item">
+      <div class="slider-item-img">
+        <ng-container *ngIf="'web' === rwdDevice; else elseIfTable">
+          <img [attr.src]="item.imgWeb.src" [attr.alt]="item.imgWeb.alt" [attr.title]="'web'+rwdDevice">
+        </ng-container>
+        <ng-template #elseIfTable>
+          <ng-container *ngIf="'table' === rwdDevice; else elseIfMobile">
+            <img [attr.src]="item.imgTable.src" [attr.alt]="item.imgTable.alt" [attr.title]="'table'+rwdDevice">
+          </ng-container>
+          <ng-template #elseIfMobile>
+            <img [attr.src]="item.imgMobile.src" [attr.alt]="item.imgMobile.alt" [attr.title]="'mobile'+rwdDevice">
+          </ng-template>
+        </ng-template>
+      </div>
+      <div class="wrap">
+        <div *ngIf="item.h1 || item.h2 || item.href || (item.imgProduct && item.imgProduct.src)" class="slider-item-text">
+          <div class="pro-img">
+            <img *ngIf="item.imgProduct && item.imgProduct.src" [attr.src]="item.imgProduct.src" [attr.alt]="item.imgProduct.alt" [attr.title]="item.imgProduct.title">
+          </div>
+          <h1 [innerHtml]="item.h1"></h1>
+          <h2 [innerHtml]="item.h2"></h2>
+          <div class="text-right">
+            <a [attr.href]="item.href" [target]="'_blank'" class="btn btn-r">{{'More Info'|i18n}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</vvtk-full-slider>

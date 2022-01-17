@@ -1,0 +1,47 @@
+<div class="article-list">
+  <div class="article-content" *ngFor="let article of articles$ | async">
+    <ng-container *ngIf="article.type === supportArticleType.Article; else videoContent">
+      <h4 class="article-title">{{article.headline}}</h4>
+      <p class="p-small"> <i class="fa fa-clock-o"></i> {{article.publishedAt|date:'MMM d, y'}}</p>
+      <div class="p-medium" [innerHTML]="article.lead | safe:'html'"></div>
+      <div class="model-page">
+        <div class="page-footer">
+          <div class="tag">
+            <i class="fa fa-tags"></i>
+            <ng-container *ngFor="let tag of article.tags">
+              <vvtk-link cName="link" [routerLink]="[tagNavigateRoutePrefix,'tag',tag.id]">
+                {{tag.name}}
+              </vvtk-link>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-button-row">
+        <a [routerLink]="[article.subRoute]">
+          <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+          <span> {{'More Info' | i18n}}</span>
+        </a>
+        <a href="javascript:void(0)" (click)="goTop()">
+          <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+          <span>{{'Top of Page' | i18n}}</span>
+        </a>
+      </div>
+    </ng-container>
+    <ng-template #videoContent>
+      <h4 class="article-title">{{article.headline}}</h4>
+      <div class="video-container">
+        <div class="video-content" *ngFor="let video of article.videos">
+          <div class="video-box">
+            <iframe [src]="'https://www.youtube.com/embed/'+video.link|safe:'resourceUrl'" frameborder="0"
+              allowfullscreen></iframe>
+          </div>
+          <h6 class="video-title">
+            <a *ngIf="video.link; else noVideoLink" [href]="'https://www.youtube.com/watch?v=' + video.link">{{video.title}}</a>
+            <ng-template #noVideoLink>{{video.title}}</ng-template>
+          </h6>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="anchor" #anchor></div>
+<h3 class="title-text text-center" *ngIf="data?.title">{{ data?.title|i18n }}</h3>
+<vvtk-model-nested-specification [data]="data?.nestedSpecs" *ngIf="isExpand"></vvtk-model-nested-specification>
+<div class="toggle-expand-btn" [class.expanded]="isExpand" (click)="toggleExpand(anchor)">
+  <i class="fa fa-angle-double-down"></i>
+</div>

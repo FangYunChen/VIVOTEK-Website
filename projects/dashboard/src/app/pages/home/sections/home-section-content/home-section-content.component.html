@@ -1,0 +1,105 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Homepage - Featured Topic</span>
+      <span fxFlex></span>
+      <vvtk-language-selector *ngIf="id>0"></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput maxlength="255" placeholder="Title" name="title" [(ngModel)]="data.title" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex *ngIf="!pageIsEditable">
+              <input matInput placeholder="Type (Applied to All)" name="type" [value]="data.type" readOnly>
+            </mat-form-field>
+            <vvtk-input-container fxLayout="column" *ngIf="pageIsEditable">
+              <div fxLayout="column" vvtkhtml>
+                <mat-form-field>
+                  <mat-select name="type" placeholder="Type (Applied to All)" [(ngModel)]="data.type" (selectionChange)="changeType()">
+                    <mat-option value="Cards">Cards</mat-option>
+                    <mat-option value="List">List</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </vvtk-input-container>
+          </mat-card-content>
+          <mat-card-content fxLayout="column" *ngIf="data.type=='List'">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="More Text" name="moreText" [(ngModel)]="data.more.text" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="More Url/Path" name="moreHref" [(ngModel)]="data.more.href" [readOnly]="!pageIsEditable">
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-content fxLayout="column">
+            <button type="button" mat-button (click)="addItem(0)" *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global') && (data.items.length<3 || (data.items.length<4&&data.type=='List'))">Add Card</button>
+            <div [sortablejs]="data.items">
+              <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let item of data.items; let i = index">
+                <mat-card-title>
+                  <mat-icon class="drag-handle" *ngIf="pageIsEditable">drag_handle</mat-icon>
+                  <h3>Card {{i+1}}</h3>
+                  <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Card" matTooltipPosition="above" (click)="deleteItem(i)"
+                    *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global')">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="item.hideContent?'展開':'收合'" matTooltipPosition="above" (click)="item.hideContent = !item.hideContent">
+                    <mat-icon *ngIf="item.hideContent">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="!item.hideContent">keyboard_arrow_up</mat-icon>
+                  </a>
+                </mat-card-title>
+                <mat-card-content fxLayout="column" [hidden]="!item.hideContent">
+                  {{item.title}}
+                </mat-card-content>
+                <mat-card-content fxLayout="column" [hidden]="item.hideContent">
+                  <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="item.video==''">
+                    <div fxLayout="row" fxLayoutAlign="center" *ngIf="item.img.src!=''">
+                      <div class="text-center">
+                        <img [src]="item.img.src | safeUrl" [alt]="item.img.alt" [title]="item.img.title">
+                      </div>
+                    </div>
+                    <button type="button" mat-button (click)="itemImgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">Upload a image (Recommended size: 460*230)</button>
+                    <input hidden type="file" #itemImgFileInput accept="image/*" (change)="itemImgFileSelect($event,i)" />
+                    <mat-form-field fxFlex>
+                      <input matInput placeholder="Image url (Applied to All)" [name]="'itemImgSrc'+i" [(ngModel)]="item.img.src" [readOnly]="!pageIsEditable">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                      <input maxlength="255" matInput placeholder="Image title" [name]="'itemImgTitle'+i" [(ngModel)]="item.img.title" [readOnly]="!pageIsEditable">
+                    </mat-form-field>
+                    <mat-form-field fxFlex>
+                      <input matInput placeholder="Image alt" [name]="'itemImageAlt'+i" [(ngModel)]="item.img.alt" [readOnly]="!pageIsEditable">
+                    </mat-form-field>
+                  </div>
+                  <mat-form-field fxFlex *ngIf="item.img.src==''">
+                    <input matInput maxlength="255" placeholder="Video (Youtube code)" [name]="'itemVideo'+i" [(ngModel)]="item.video" [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-divider></mat-divider>
+                  <mat-form-field fxFlex>
+                    <input matInput maxlength="255" placeholder="Title" [name]="'itemTitle'+i" [(ngModel)]="item.title" [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Description" [name]="'itemDescription'+i" [(ngModel)]="item.description" [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <input matInput placeholder="Url/Path" [name]="'itemUrl'+i" [(ngModel)]="item.href" [readOnly]="!pageIsEditable">
+                  </mat-form-field>
+                </mat-card-content>
+                <button type="button" mat-button (click)="addItem(i+1)" *ngIf="pageIsEditable && (id==0 || selectedLanguage=='global') && (data.items.length<3 || (data.items.length<4&&data.type=='List'))">Add Card</button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/home/sections/list']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

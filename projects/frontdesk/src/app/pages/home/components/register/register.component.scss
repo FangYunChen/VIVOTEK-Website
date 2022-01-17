@@ -1,0 +1,36 @@
+@import '_var.scss';
+
+#alertPopup {
+  width: 370px;
+  margin-left: -185px;
+  .popup {
+    .btn {
+      margin: 6px 0;
+    }
+  }
+  .lg {
+    font-size: $sizeNler;
+    .icon {
+      display: block;
+      font-size: 2em;
+    }
+  }
+}
+.agree-box {
+  label {
+    margin: 0 5px 5px;
+  }
+}
+@media screen and (max-width: $widthTableApp) {
+  #alertPopup {
+    .lg {
+      font-size: $sizeNl;
+    }
+  }
+}
+@media screen and (max-width: $widthApp) {
+  #alertPopup {
+    width: 300px;
+    margin-left: -150px;
+  }
+}

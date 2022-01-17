@@ -1,0 +1,156 @@
+<div id="news" class="container">
+  <vvtk-top-banner [rootPath]="'/news/successful-cases' | customPath" [contentPageTitle]="_Content?_Content.title:''"></vvtk-top-banner>
+  <ng-container *ngIf="_Content">
+    <section class="model-page section">
+      <div class="page-header">
+        <div class="wrap">
+          <h2>{{_Content.title}}</h2>
+          <div class="line afterClear">
+            <div class="info">
+              <span>
+                <i class="fa fa-clock-o"></i> {{_Content.publishAt|date:'MMM d, y'}}</span>
+            </div>
+            <vvtk-share [mailTitle]="_Content.title" [categoryId]="collection.Cases" [pageId]="id"></vvtk-share>
+          </div>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="wrap">
+          <div class="page-info">
+            <div class="table">
+              <div class="row">
+                <div class="col name">{{'Vertical'|i18n}}</div>
+                <div class="col name">{{'Country'|i18n}}</div>
+                <div class="col name">{{'Solutions'|i18n}}</div>
+                <div class="col name">{{'Software'|i18n}}</div>
+                <div class="col name">{{'Partners'|i18n}}</div>
+              </div>
+              <div class="row">
+                <div class="col text" [attr.data-name]="'Vertical'">{{_Content.vertical}}</div>
+                <div class="col text" [attr.data-name]="'Country'">{{_Content.country.name}}</div>
+                <div class="col text" [class.link-group]="_Content.solutions && _Content.solutions.length > 1" [attr.data-name]="'Solutions'">
+                  <ng-container *ngIf="_Content.solutions && _Content.solutions[0]?.url; else elseSolutionsTemplate">
+                    <a [href]="_Content.solutions[0].url" class="btn" [target]="'_blank'">
+                      {{ _Content.solutions[0]?.title||'' }}
+                    </a>
+                  </ng-container>
+                  <ng-template #elseSolutionsTemplate>
+                    <p>
+                      {{ _Content.solutions[0]?.title||'' }}
+                    </p>
+                  </ng-template>
+                  <div class="sub" *ngIf="_Content.solutions && _Content.solutions.length > 1">
+                    <ng-container *ngFor="let _solution of _Content.solutions | slice:1">
+                      <ng-container *ngIf="_solution.url; else elseSubSolutionTemplate">
+                        <a [href]="_solution.url" class="btn" [target]="'_blank'">
+                          {{_solution.title}}
+                        </a>
+                      </ng-container>
+                      <ng-template #elseSubSolutionTemplate>
+                        <p>
+                          {{_solution.title}}
+                        </p>
+                      </ng-template>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col text" [class.link-group]="_Content.software && _Content.software.length > 1" [attr.data-name]="'Software'">
+                  <ng-container *ngIf="_Content.software && _Content.software[0]?.url; else elseSoftwareTemplate">
+                    <a [href]="_Content.software[0].url" class="btn" [target]="'_blank'">
+                      {{ _Content.software[0]?.title||'' }}
+                    </a>
+                  </ng-container>
+                  <ng-template #elseSoftwareTemplate>
+                    <p>
+                      {{ _Content.software[0]?.title||'' }}
+                    </p>
+                  </ng-template>
+                  <div class="sub" *ngIf="_Content.software && _Content.software.length > 1">
+                    <ng-container *ngFor="let _software of _Content.software | slice:1">
+                      <ng-container *ngIf="_software.url; else elseSubSoftwareTemplate">
+                        <a [href]="_software.url" class="btn" [target]="'_blank'">
+                          {{_software.title}}
+                        </a>
+                      </ng-container>
+                      <ng-template #elseSubSoftwareTemplate>
+                        <p>
+                          {{_software.title}}
+                        </p>
+                      </ng-template>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col text" [class.link-group]="_Content.partners && _Content.partners.length > 1" [attr.data-name]="'Partners'">
+                  <ng-container *ngIf="_Content.partners && _Content.partners[0]?.url; else elsePartnersTemplate">
+                    <a [href]="_Content.partners[0].url" class="btn" [target]="'_blank'">
+                      {{ _Content.partners[0]?.title||'' }}
+                    </a>
+                  </ng-container>
+                  <ng-template #elsePartnersTemplate>
+                    <p>
+                      {{ _Content.partners[0]?.title||'' }}
+                    </p>
+                  </ng-template>
+                  <div class="sub" *ngIf="_Content.partners && _Content.partners.length > 1">
+                    <ng-container *ngFor="let _partner of _Content.partners | slice:1">
+                      <ng-container *ngIf="_partner.url; else elseSubPartnerTemplate">
+                        <a [href]="_partner.url" class="btn" [target]="'_blank'">
+                          {{_partner.title}}
+                        </a>
+                      </ng-container>
+                      <ng-template #elseSubPartnerTemplate>
+                        <p>
+                          {{_partner.title}}
+                        </p>
+                      </ng-template>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <vvtk-model-selector #f [templates]="f.setTemplates(_Content.templates)"></vvtk-model-selector>
+    </section>
+    <section class="sp-model model section" *ngIf="_Content.specialThanksList">
+      <div class="wrap">
+        <h2>{{'Special Thanks'|i18n}}</h2>
+        <div class="row text-center">
+          <div *ngFor="let thanks of _Content.specialThanksList" class="col col3">
+            <ng-container *ngIf="thanks.url; else elseThanksTemplate">
+              <a href="{{thanks.url}}" [target]="'_blank'">{{thanks.title}}</a>
+            </ng-container>
+            <ng-template #elseThanksTemplate>
+              <p>{{thanks.title}}</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </section>
+    <vvtk-three-cards *ngIf="_Content.relatedList" [sectionBgColor]="'odd'">
+      <div class="wrap" vvtkHomeCard>
+        <h2>{{'Related Information'|i18n}}</h2>
+        <div class="list-row">
+          <vvtk-card *ngFor="let card of _Content.relatedList;" [card]="card">
+            <div vvtkThreeCard>
+              <div class="text limit">
+                <p>{{card.description}}</p>
+              </div>
+              <div class="col-link text-right afterClear">
+                <a *ngIf="card.url" [href]="[card.url]" class="link" [target]="'_blank'">{{'More Info'|i18n}}</a>
+              </div>
+            </div>
+          </vvtk-card>
+        </div>
+      </div>
+    </vvtk-three-cards>
+    <div class="page-footer">
+      <div class="wrap">
+        <div class="text-center">
+          <a [routerLink]="'/news/successful-cases' | customPath" class="btn btn-b">{{"Back"|i18n}}</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

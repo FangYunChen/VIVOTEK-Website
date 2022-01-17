@@ -1,0 +1,45 @@
+@import '_var.scss';
+.ossTableContainer {
+  font-size: 10px;
+  // * {outline:  1px solid black;}
+  &__body{
+    width: 85%;
+    margin: 0 auto;
+    &_filterArea {
+      margin:3em 0 1em 0;
+      & .mat-form-field{
+        font-size: 1.5em;
+        margin-right: .6em;
+        input:focus{
+          border-bottom: none;
+        }
+      }
+    }
+    &_table {
+      margin-bottom: 8em;
+      &_header {
+        margin-bottom: 2em;
+        font-weight: 400;
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  .ossTableContainer {
+    font-size: 10px;
+    // * {outline:  1px solid black;}
+    &__body{
+      width: 85%;
+      margin: 0 auto;
+      &_filterArea {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin:3em 0 1em 0;
+        .mat-form-field {
+          flex-basis: 80%;
+        }
+      }
+    }
+  }
+}

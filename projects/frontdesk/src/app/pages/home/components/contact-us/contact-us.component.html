@@ -1,0 +1,451 @@
+<div id="contact" class="container">
+  <vvtk-top-banner [contentPageTitle]="('Contact Us' | i18n)"></vvtk-top-banner>
+  <section class="model section">
+    <div class="wrap">
+      <h2 class="line text-center">{{'Contact Us'|i18n}}</h2>
+      <section class="model-form section">
+        <div class="list-row">
+          <!-- <div>
+            <form>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <select name="" id="" (change)="changeSubjects(subject.value)" #subject [formControl]="form.controls['subject']">
+                      <option value="">{{'Please select'|i18n}}</option>
+                      <option *ngFor="let sub of _Subjects" [value]="sub.id">{{sub.subject}}</option>
+                    </select>
+                    <label for="">{{'Select reason for your request'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['subject'].hasError('required') && (form.controls['subject'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <input type="text" maxlength="128" [formControl]="form.controls['firstName']">
+                    <label for="">{{'First Name'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['firstName'].hasError('required') && (form.controls['firstName'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <input type="text" maxlength="128" [formControl]="form.controls['lastName']">
+                    <label for="">{{'Last Name'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['lastName'].hasError('required') && (form.controls['lastName'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['email']">
+                    <label for="">{{'Email'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['email'].hasError('required') && (form.controls['email'].touched || showAllRequired); else patternElseTemplate"
+                      class="alert alert-danger">{{'Required'|i18n}}</div>
+                    <ng-template #patternElseTemplate>
+                      <div *ngIf="form.controls['email'].hasError('pattern') && (form.controls['email'].touched || showAllRequired)" class="alert alert-danger">{{'Wrong format'|i18n}}</div>
+                    </ng-template>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <input type="text" class="form-control" maxlength="256" [formControl]="form.controls['company']">
+                    <label for="">{{'Company'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['company'].hasError('required') && (form.controls['company'].touched || showAllRequired);" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <input type="tel" class="form-control" maxlength="256" [formControl]="form.controls['phone']">
+                    <label for="">{{'Phone Number'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['phone'].hasError('required') && (form.controls['phone'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12">
+                  <div class="input-box form-label">
+                    <select name="" id="" [formControl]="form.controls['country']">
+                      <option value="">{{'Please select'|i18n}}</option>
+                      <option *ngFor="let country of _Countries" [value]="country.id">{{country.name}}</option>
+                    </select>
+                    <label for="">{{'Country'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['country'].hasError('required') && (form.controls['country'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12 input-box">
+                  <div class="input-box form-label">
+                    <textarea name="" class="form-control" [formControl]="form.controls['comment']"></textarea>
+                    <label for="">{{'Enter your comments here'|i18n}}
+                      <span class="colorR">*</span>
+                    </label>
+
+                    <div *ngIf="form.controls['comment'].hasError('required') && (form.controls['comment'].touched || showAllRequired)" class="alert alert-danger">{{'Required'|i18n}}</div>
+
+                    <p class="ps" [innerHTML]="('Fields marked with an asterisk (%s} are mandatory.'|i18n:'<span class=\'colorR\'>*</span>')"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="list-row">
+                <div class="list-col list-col12 btn-box text-center">
+                  <button type="submit" class="btn btn-b" *ngIf="!loadingShow" (click)="SendSuggest()">{{'Send'|i18n}}</button>
+                  <div class="btn-loading" *ngIf="loadingShow">
+                    <i class="fa fa-spinner fa-spin fa-fw"></i>
+                    <span class="sr-only">{{'Loading...'|i18n}}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div> -->
+          <div class="list-col list-col6">
+            <ul class="company-info">
+              <li *ngIf="_Office.vivotekInc.title">
+                <h3 class="title">{{_Office.vivotekInc.title}}</h3>
+              </li>
+              <!--
+              <li *ngIf="_Office.vivotekInc.name">
+                <h3 class="name">{{_Office.vivotekInc.name}}</h3>
+              </li>
+              -->
+              <li *ngIf="_Office.vivotekInc.address">
+                <span class="icon">
+                  <i class="fa fa-map-marker"></i>
+                </span>
+                <a href="javascript:;" class="link" (click)="mapOpen(_Office.vivotekInc.map)">{{
+                  _Office.vivotekInc.address }}</a>
+              </li>
+              <li *ngIf="_Office.vivotekInc.phone">
+                <span class="icon">
+                  <i class="fa fa-phone"></i>
+                </span>
+                <a [href]="'https://www.vivotek.com/website/sales-inquiry/'" target="'_blank'">{{_Office.vivotekInc.phone}}</a>
+              </li>
+              <li *ngIf="_Office.vivotekInc.fax">
+                <span class="icon">
+                  <i class="fa fa-fax"></i>
+                </span>
+                <a [href]="'tel:' + _Office.vivotekInc.fax | safe:'url'">{{_Office.vivotekInc.fax}}</a>
+              </li>
+              <li *ngIf="_Office.vivotekInc.email">
+                <span class="icon">
+                  <i class="fa fa-envelope"></i>
+                </span>
+                <a [href]="'mailto:' + _Office.vivotekInc.email | safe:'url'">{{_Office.vivotekInc.email}}</a>
+              </li>
+              <li *ngIf="_Office.vivotekInc.name">
+                <span class="icon">
+                  <i class="fa fa-question-circle"></i>
+                </span>
+                <a [href]="_Office.vivotekInc.name | safe:'url'" target="_blank">Sales Inquiry</a>
+              </li>
+              <!-- 目前寫死，之後可能要加欄位。 -->
+              <li *ngIf="_Office.vivotekInc.name">
+                <span class="icon">
+                  <i class="fa fa-question-circle"></i>
+                </span>
+                <a href="https://www.vivotek.com/website/usa/sales-inquiry-usa/" target="_blank">Sales Inquiry (for USA and Canada)</a>
+              </li>
+            </ul>
+          </div>
+          <div class="list-col list-col6">
+            <ul class="company-info">
+              <li *ngIf="_Office.technicalCenter.title">
+                <h3 class="title">{{_Office.technicalCenter.title}}</h3>
+              </li>
+              <!--
+              <li *ngIf="_Office.technicalCenter.name">
+                <h3 class="name">{{_Office.technicalCenter.name}}</h3>
+              </li>
+              -->
+              <li *ngIf="_Office.technicalCenter.address">
+                <span class="icon">
+                  <i class="fa fa-map-marker"></i>
+                </span>
+                <a href="javascript:;" class="link" (click)="mapOpen(_Office.technicalCenter.map)">{{
+                  _Office.technicalCenter.address }}</a>
+              </li>
+              <li *ngIf="_Office.technicalCenter.phone">
+                <span class="icon">
+                  <i class="fa fa-phone"></i>
+                </span>
+                <a [href]="'https://www.vivotek.com/website/support/'" target="'_blank'">{{_Office.technicalCenter.phone}}</a>
+              </li>
+              <li *ngIf="_Office.technicalCenter.fax">
+                <span class="icon">
+                  <i class="fa fa-fax"></i>
+                </span>
+                <a [href]="'tel:' + _Office.technicalCenter.fax | safe:'url'">{{_Office.technicalCenter.fax}}</a>
+              </li>
+              <li *ngIf="_Office.technicalCenter.email">
+                <span class="icon">
+                  <i class="fa fa-envelope"></i>
+                </span>
+                <a [href]="'mailto:' + _Office.technicalCenter.email | safe:'url'">{{_Office.technicalCenter.email}}</a>
+              </li>
+              <li *ngIf="_Office.technicalCenter.name">
+                <span class="icon">
+                  <i class="fa fa-wrench"></i>
+                </span>
+                <a [href]="_Office.technicalCenter.name | safe:'url'" target="_blank">Technical Support</a>
+              </li>
+              <li *ngIf="_Office.technicalCenter.name">
+                <span class="icon">
+                  <i class="fa fa-align-justify"></i>
+                </span>
+                <p>For Technical Support or RMA service in the USA and Canada, please contact 
+                  <a href='mailto:technicalusa@vivotek.com'>technicalusa@vivotek.com</a> or call <a href='tel:+1-408-773-8686'>+1-408-773-8686</a> and press 2 if you are in USA. And if you are in Canada, please call <a href='tel:+1-519-512-0458'>+1-519-512-0458</a> and press 2.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+  <section class="model model-threeCard section odd">
+    <div class="wrap">
+      <h2 class="text-center">{{'Global Offices'|i18n}}</h2>
+      <div class="block list-row">
+        <ng-container *ngFor="let offices of _GlobalOffices">
+          <div *ngFor="let office of offices.list" class="list-col list-col4">
+            <h3>{{offices.countryName}}</h3>
+            <div class="shadow">
+              <div class="col-text cardHide">
+                <div class="title">{{office.title}}</div>
+                <ul class="text">
+                  <li *ngIf="office.address">
+                    <p>
+                      <i class="fa fa-map-marker"></i>
+                      <span>
+                        <a href="javascript:;" class="link" (click)="mapOpen(office.map)">{{ office.address }}</a>
+                      </span>
+                    </p>
+                  </li>
+                  <li *ngIf="office.phones.length > 0">
+                    <p>
+                      <i class="fa fa-phone"></i>
+                      <span *ngFor="let phone of office.phones;let last = last">
+                        <a [href]="'tel:' + phone | safe:'url'">{{phone}}</a>
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </span>
+                    </p>
+                  </li>
+                  <li *ngIf="office.faxes.length > 0">
+                    <p>
+                      <i class="fa fa-fax"></i>
+                      <span *ngFor="let fax of office.faxes;let last = last">
+                        <a [href]="'tel:' + fax | safe:'url'">{{fax}}</a>
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </span>
+                    </p>
+                  </li>
+                  <li *ngIf="office.webs.length > 0">
+                    <p>
+                      <i class="fa fa-link"></i>
+                      <span *ngFor="let web of office.webs;let last = last">
+                        <a [href]="web.url" target="_blank">{{web.urlName || web.url}}</a>
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </span>
+                    </p>
+                  </li>
+                  <li *ngIf="office.emails.length > 0">
+                    <p>
+                      <i class="fa fa-envelope"></i>
+                      <span *ngFor="let email of office.emails;let last = last">
+                        <a [href]="'mailto:' + email | safe:'url'">{{email}}</a>
+                        <ng-container *ngIf="!last">,</ng-container>
+                      </span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <i class="fa fa-question-circle"></i>
+                      <ng-container *ngIf="offices.countryName === 'United States'; else salesElseTemplate">
+                        <span>
+                          <a [href]="'https://www.vivotek.com/website/usa/sales-inquiry-usa/' | safe:'url'" target="_blank">Sales
+                            Inquiry</a>
+                        </span>
+                      </ng-container>
+                      <ng-template #salesElseTemplate>
+                        <span>
+                          <a [href]="'https://www.vivotek.com/website/sales-inquiry/' | safe:'url'" target="_blank">Sales
+                            Inquiry</a>
+                        </span>
+                      </ng-template>
+                    </p>
+                  </li>
+                  <li *ngIf="offices.countryName === 'United States'">
+                    <p>
+                      <span class="icon">
+                        <i class="fa fa-align-justify"></i>
+                      </span>
+                      For Technical Support or RMA service in the USA and Canada, please contact 
+                        <a href='mailto:technicalusa@vivotek.com'>technicalusa@vivotek.com</a> or call <a href='tel:+1-408-773-8686'>+1-408-773-8686</a> and press 2 if you are in USA. And if you are in Canada, please call <a href='tel:+1-519-512-0458'>+1-519-512-0458</a> and press 2.        
+                    </p>
+                  </li>
+                  <li *ngIf="office.contentText">
+                    <p>
+                      <i class="fa fa-align-justify"></i>
+                      <span>
+                        {{office.contentText}}
+                      </span>
+                    </p>
+                  </li>
+                </ul>
+                <a [href]="('javascript:;' | safe:'url')" class="ex show" (click)="openCard(office, cardMask,offices.countryName)">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<vvtk-popup *ngIf="cardMask" [id]="'contactPopup'" [popupStyle]="'cardStyle'" (windowPopup)="cardPopup($event)">
+  <div class="card-wrap" vvtkPopup>
+    <vvtk-card [card]="openItem" [coverElementA]="false">
+      <div vvtkThreeCard>
+        <div class="text">
+          <div class="item" *ngIf="openItem.address && openItem.address.length > 0">
+            <p>
+              <i class="fa fa-map-marker"></i>
+              <span>
+                <a href="javascript:;" class="link" (click)="mapOpen(openItem.map)">{{ openItem.address }}</a>
+              </span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.phones && openItem.phones.length > 0">
+            <p>
+              <i class="fa fa-phone"></i>
+              <span *ngFor="let phone of openItem.phones">
+                <a [href]="'tel:' + phone | safe:'url'">{{phone}}</a>
+              </span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.faxes && openItem.faxes.length > 0">
+            <p>
+              <i class="fa fa-fax"></i>
+              <span *ngFor="let fax of openItem.faxes">
+                <a [href]="'tel:' + fax | safe:'url'">{{fax}}</a>
+              </span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.webs && openItem.webs.length > 0">
+            <p>
+              <i class="fa fa-link"></i>
+              <span *ngFor="let web of openItem.webs">
+                <a [href]="web.url" target="_blank">{{web.urlName || web.url}}</a>
+              </span>
+            </p>
+          </div>
+          <div class="item" *ngIf="openItem.emails && openItem.emails.length > 0">
+            <p>
+              <i class="fa fa-envelope"></i>
+              <span *ngFor="let email of openItem.emails">
+                <a [href]="'mailto:' + email | safe:'url'">{{email}}</a>
+              </span>
+            </p>
+          </div>
+          <div class="item">
+            <p>
+              <i class="fa fa-question-circle"></i>
+              <ng-container *ngIf="countryName === 'United States'; else salesPopElseTemplate">
+                <span>
+                  <a [href]="'https://www.vivotek.com/website/usa/sales-inquiry-usa/' | safe:'url'" target="_blank">Sales
+                    Inquiry</a>
+                </span>
+              </ng-container>
+              <ng-template #salesPopElseTemplate>
+                <span>
+                  <a [href]="'https://www.vivotek.com/website/sales-inquiry/' | safe:'url'" target="_blank">Sales
+                    Inquiry</a>
+                </span>
+              </ng-template>
+            </p>
+          </div>
+          <div class="item" *ngIf="countryName === 'United States'">
+              <span class="icon">
+                <i class="fa fa-align-justify"></i>
+              </span>
+              For Technical Support or RMA service in the USA and Canada, please contact 
+                <a href='mailto:technicalusa@vivotek.com'>technicalusa@vivotek.com</a> or call <a href='tel:+1-408-773-8686'>+1-408-773-8686</a> and press 2
+                if you are in USA. And if you are in Canada, please call <a href='tel:+1-519-512-0458'>+1-519-512-0458</a> and press 2.
+          </div>
+          <div class="item" *ngIf="openItem.contentText">
+            <p>
+              <i class="fa fa-align-justify"></i>
+              <span>
+                {{openItem.contentText}}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </vvtk-card>
+  </div>
+</vvtk-popup>
+
+<!-- <vvtk-popup *ngIf="openPopup" [id]="'alertPopup'" [popupStyle]="'alertStyle'" (windowPopup)="windowPopup($event)">
+  <div class="alert-wrap" vvtkPopup>
+    <div class="text-center" *ngIf="doSuccess">
+      <p class="lg">
+        <span class="icon colorG">
+          <i class="fa fa-check-circle-o"></i>
+        </span> {{'Sent successfully'|i18n}}</p>
+    </div>
+    <div class="text-center" *ngIf="doFail">
+      <p class="lg">
+        <span class="icon colorR">
+          <i class="fa fa-times-circle-o"></i>
+        </span> {{'Failed. Please try again.'|i18n}}</p>
+    </div>
+  </div>
+</vvtk-popup> -->
+
+
+<vvtk-popup *ngIf="mapMask" [id]="'mapPopup'" [popupStyle]="'mapStyle'" (windowPopup)="mapPopup($event)">
+  <div class="map-wrap" vvtkPopup>
+    <iframe [src]="mapUrl" frameborder="0" width="600" height="450" allowfullscreen></iframe>
+  </div>
+</vvtk-popup>

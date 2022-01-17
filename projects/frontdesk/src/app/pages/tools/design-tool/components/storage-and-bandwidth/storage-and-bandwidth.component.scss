@@ -1,0 +1,44 @@
+@import '../../../../../../styles/var';
+.container {
+  margin: 0 auto;
+  max-width: 375px;
+}
+
+.selector {
+  margin-bottom: 50px;
+}
+
+.item {
+  margin-top: 30px;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.result__title {
+  flex: none;
+  width: 50%;
+}
+
+.result__content {
+  flex-grow: 1;
+  margin-left: 15px;
+  color: $colorY;
+
+  span {
+    margin-left: 15px;
+    font-weight: 100;
+    color: $colorFont;
+  }
+}
+
+.highlight {
+  font-weight: 700;
+}
+
+h2 {
+  margin-top: 0px !important;
+}

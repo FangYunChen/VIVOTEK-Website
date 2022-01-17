@@ -1,0 +1,16 @@
+.tableBox {
+    width: 100%;
+    overflow: auto;
+}
+
+table {
+    border: #666 solid thin;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 2px;
+    border: #666 solid thin;
+}

@@ -1,0 +1,24 @@
+<section class="model section">
+  <div class="model-collapse wrap">
+    <div class="collapse-sidebar">
+      <ng-container *ngFor="let item of collapseList; let idx = index;">
+        <a [href]="('javascript:;' | safe:'url')" (click)="collapseTabs('#collapse_'+idx,idx)">{{ item.title }}</a>
+      </ng-container>
+    </div>
+    <div class="collapse">
+      <ng-container *ngFor="let item of collapseList; let idx = index;">
+        <div [id]="'collapse_'+idx" class="collapse-block" [class.open]="idx === collapseIndex">
+          <h3 class="collapse-name">{{ item.title }}</h3>
+          <div class="collapse-limit">
+            <div class="collapse-content" [innerHtml]="item.content"></div>
+          </div>
+          <div class="btn-block afterClear">
+            <a [href]="('javascript:;' | safe:'url')" class="btn-more float-left" (click)="collapseOpen(idx)">{{'More Info'|i18n}}</a>
+            <a [href]="('javascript:;' | safe:'url')" class="btn-top float-right" (click)="goTop($event)">
+              <i class="fa fa-arrow-circle-up"></i> {{'Top of page'|i18n}}</a>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+#sia-partner-content {
+  .section {
+    .wrap {
+      max-width: 1600px;
+
+      .partner-information {
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: 1024px) {
+          flex-direction: column;
+        }
+
+        >div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex-basis: 45%;
+          margin: 20px;
+        }
+
+        .logo-container {
+          .logo-image {
+            width: 300px;
+            height: 300px;
+          }
+
+          .button-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .general-button {
+              margin: 20px;
+            }
+          }
+        }
+
+        .contact-container {
+          align-items: flex-start;
+
+          >* {
+            margin-bottom: 15px;
+
+            i {
+              color: #0091d2;
+              margin-right: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#sia-partner-content ::ng-deep {
+  vvtk-model-rich-text {
+    .model-text {
+      .wrap {
+        max-width: 880px;
+      }
+    }
+  }
+}

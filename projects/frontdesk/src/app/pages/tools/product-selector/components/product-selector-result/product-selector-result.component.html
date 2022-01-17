@@ -1,0 +1,36 @@
+<ng-container *ngIf="hasFilteredProduct; else noFilterResult">
+  <ng-container *ngFor="let category of categories">
+    <ng-container *ngIf="category.filteredProducts?.length">
+      <h4 class="category-name">{{ category.displayName }}</h4>
+      <div class="product-list">
+        <div class="product" *ngFor="let product of category.filteredProducts; trackBy: trackById; index as i">
+          <vvtk-link class="product__img" [href]="product.url" [useHref]="true" target="_blank">
+            <ng-container *ngIf="product.imagePath;else defaultImg">
+              <img [src]="product.imagePath" [alt]="product.imageName">
+            </ng-container>
+            <ng-template #defaultImg>
+              <img src="/assets/img/default/default-product.png">
+            </ng-template>
+          </vvtk-link>
+          <vvtk-link [cName]="'product_link'" [href]="product.url" [useHref]="true" target="_blank">{{ product.name }}</vvtk-link>
+          <div class="button-list">
+            <button mat-flat-button class="compare-add" *ngIf="!isInCompare(product)" (click)="addToCompare(product)">{{'Compare'|i18n}}</button>
+            <button mat-flat-button class="compare-remove" *ngIf="isInCompare(product)" (click)="removeFromCompare(product)">{{'Remove'|i18n}}</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #noFilterResult>
+  <div class="no-result-message">
+    <h4>{{'No results matching'|i18n}}</h4>
+  </div>
+</ng-template>
+
+<div class="btn-container">
+  <a [href]="('javascript:;' | safe:'url')" class="btn-top" vvtkGoTop>
+    <i class="fa fa-arrow-circle-up"></i> {{'Top of page'|i18n}}
+  </a>
+</div>

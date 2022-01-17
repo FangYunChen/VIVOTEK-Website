@@ -1,0 +1,62 @@
+<h2>2.1 {{ "Storage and Bandwidth" | i18n }}</h2>
+
+<div class="section-content">
+  <div class="container">
+    <mat-select [(value)]="designToolService.vmsSelector" class="selector">
+      <mat-option [value]="1">How much storage space is need?</mat-option>
+      <mat-option [value]="2">How many days can video be stored?</mat-option>
+    </mat-select>
+    <vvtk-vms-per-disk-capacity
+      *ngIf="designToolService.vmsSelector === 1"
+    ></vvtk-vms-per-disk-capacity>
+    <vvtk-vms-total-storage-capacity
+      *ngIf="designToolService.vmsSelector === 2"
+    ></vvtk-vms-total-storage-capacity>
+    <div class="item">
+      <div class="result">
+        <div class="result__title">{{ "Live bandwidth" | i18n }}:</div>
+        <div class="result__content">
+          {{
+            getTotalLiveviewBandwidth() | number: "1.0-2" | nullToDash: " Mbps"
+          }}
+        </div>
+      </div>
+      <div class="result">
+        <div class="result__title">{{ "Continuous Recording" | i18n }}:</div>
+        <div class="result__content">
+          {{
+            getTotalContinuousRecordingBandwidth()
+              | number: "1.0-2"
+              | nullToDash: " Mbps"
+          }}
+        </div>
+      </div>
+      <div class="result">
+        <div class="result__title">{{ "Event Recording" | i18n }}:</div>
+        <div class="result__content">
+          {{
+            getTotalEventRecordingBandwidth()
+              | number: "1.0-2"
+              | nullToDash: " Mbps"
+          }}
+        </div>
+      </div>
+      <div class="result">
+        <div class="result__title">{{ "Hybrid Recording" | i18n }}:</div>
+        <div class="result__content">
+          {{
+            getTotalHybridRecordingBandwidth()
+              | number: "1.0-2"
+              | nullToDash: " Mbps"
+          }}
+        </div>
+      </div>
+      <div class="result">
+        <div class="result__title highlight">{{ "Total" | i18n }}:</div>
+        <div class="result__content highlight">
+          {{ getTotalBandwidth() | number: "1.0-2" | nullToDash: " Mbps" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

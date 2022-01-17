@@ -1,0 +1,57 @@
+.knowledge-container ::ng-deep {
+  margin: auto;
+  margin-top: 40px;
+  max-width: 1140px;
+
+  > h5 {
+    margin-bottom: 20px;
+  }
+
+  .search-result-container {
+    .search-result-list {
+      margin: 30px;
+
+      .search-result-content {
+        .search-result-article {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .article-title {
+            font-weight: bold;
+            color: #f79433;
+          }
+
+          .article-description {
+            align-self: stretch;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 20px;
+          }
+        }
+      }
+
+      .search-result-more-info > a {
+        color: #626262;
+      }
+    }
+  }
+
+  .knowledge-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .p-medium {
+      line-height: 40px;
+    }
+  }
+
+  .general-button {
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}

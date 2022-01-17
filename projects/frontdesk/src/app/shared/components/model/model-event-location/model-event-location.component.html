@@ -1,0 +1,54 @@
+<section class="model-event-location model section">
+  <div class="wrap">
+    <h3 class="title-text text-center" *ngIf="template.title">{{template.title}}</h3>
+
+    <div class="event-location-container">
+      <div class="event-location-content" *ngFor="let eventLocation of template.eventLocations;let idx = index">
+        <!-- <img class="event-location-img" [src]="eventLocation.image?.src" [alt]="eventLocation.image?.alt" [title]="eventLocation.image?.title">
+         -->
+        <div class="event-date-time">
+          <h3 class="event-date">{{eventLocation.eventDate}}</h3>
+          <h6 class="event-time">{{eventLocation.eventTime}}</h6>
+        </div>
+        <h4 class="event-location-name icon-name">{{eventLocation.title}} </h4>
+        <p class="p-medium text-center">{{eventLocation.subtitle}}</p>
+        <div class="event-place">
+          <mat-icon>location_city</mat-icon>
+          <p class="p-medium" style="font-weight: bold;">{{eventLocation.placeName}}</p>
+        </div>
+        <div class="event-address">
+          <mat-icon>location_on</mat-icon>
+          <a href="javascript:;" class="link" (click)="mapOpen(eventLocation.address)">{{ eventLocation.address }}</a>
+        </div>
+        <div *ngIf="eventLocation.urlEnabled" style="margin-bottom:20px">
+          <vvtk-a [url]="eventLocation.urlEnabled?eventLocation.url:''" [cName]="'btn btn-b'">
+            <ng-container HtmlContent>
+              <div class="icon-text">
+                <mat-icon>input</mat-icon>
+                <span> {{'Register'|i18n}}</span>
+              </div>
+            </ng-container>
+          </vvtk-a>
+        </div>
+        <div *ngIf="eventLocation.calendarUrl">
+          <vvtk-a [url]="eventLocation.calendarUrl" [cName]="'btn btn-y'">
+            <ng-container HtmlContent>
+              <div class="icon-text">
+                <mat-icon>today</mat-icon>
+                <span>{{'Add to Calendar'|i18n}}</span>
+              </div>
+
+            </ng-container>
+          </vvtk-a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <vvtk-popup *ngIf="mapMask" [id]="'mapPopup'" [popupStyle]="'mapStyle'" (windowPopup)="mapPopup($event)">
+    <div class="map-wrap" vvtkPopup>
+      <iframe [src]="mapUrl" frameborder="0" width="600" height="450" allowfullscreen></iframe>
+    </div>
+  </vvtk-popup>
+
+</section>

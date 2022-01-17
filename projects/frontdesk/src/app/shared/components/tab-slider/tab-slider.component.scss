@@ -1,0 +1,57 @@
+@import '../../../../styles/_var.scss';
+.tabs-slider-nav {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 25px;
+  a {
+    display: inline-block;
+    padding: 5px 12px 10px;
+    color: $colorFont;
+    position: relative;
+    font-size: $sizeNler;
+    &:before {
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      content: '';
+      background-color: $colorGy5;
+    }
+    &:after {
+      border-width: 8px;
+      border-style: solid;
+      border-color: transparent;
+      position: absolute;
+      left: 50%;
+      bottom: -14px;
+      margin-left: -8px;
+      content: '';
+      display: none;
+    }
+    &:hover {
+      color: $colorB1;
+      text-decoration: none;
+    }
+    &.active {
+      &:before {
+        background-color: $colorB1;
+        @include transition(all, .3s);
+        display: block;
+      }
+      &:after {
+        border-top-color: $colorB1;
+        @include transition(all, .3s);
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (max-width:$widthWebTable) {}
+
+@media screen and (max-width:$widthTable) {}
+
+@media screen and (max-width:$widthTableApp) {}
+
+@media screen and (max-width:$widthApp) {}

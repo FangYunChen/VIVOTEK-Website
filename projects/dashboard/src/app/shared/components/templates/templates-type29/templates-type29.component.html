@@ -1,0 +1,79 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-form-field fxFlex>
+    <input matInput maxlength="255" placeholder="Title" [name]="'templateTitle'+templateIndex" [(ngModel)]="template.title"
+      [readOnly]="readOnly">
+  </mat-form-field>
+  <button type="button" mat-button (click)="addTab(0)" *ngIf="!readOnly">Add Tab</button>
+  <div [sortablejs]="template.tabs" [sortablejsOptions]="groupOptionsTab">
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let tab of template.tabs; let i = index">
+      <mat-card-title>
+        <mat-icon class="drag-handle-tab" *ngIf="!readOnly">drag_handle</mat-icon>
+        <h4>Tab {{i+1}}</h4>
+        <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Tab" matTooltipPosition="above" (click)="addTab(i+1)"
+          *ngIf="!readOnly">
+          <mat-icon>add</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Tab" matTooltipPosition="above" (click)="deleteTab(i)"
+          *ngIf="!readOnly">
+          <mat-icon>delete</mat-icon>
+        </a>
+        <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="tab.hideContent?'展開':'收合'" matTooltipPosition="above"
+          (click)="tab.hideContent = !tab.hideContent">
+          <mat-icon *ngIf="tab.hideContent">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="!tab.hideContent">keyboard_arrow_up</mat-icon>
+        </a>
+      </mat-card-title>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" [hidden]="tab.hideContent">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Tab Name" [name]="'templateTabName'+templateIndex+'_'+i" [(ngModel)]="tab.tabName"
+            [readOnly]="readOnly">
+        </mat-form-field>
+        <button type="button" mat-button (click)="addVideo(i,0)" *ngIf="!readOnly">Add Video</button>
+        <div [sortablejs]="tab.videos" [sortablejsOptions]="groupOptionsVideo">
+          <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let video of tab.videos; let j = index">
+            <mat-card-title>
+              <mat-icon class="drag-handle-video" *ngIf="!readOnly">drag_handle</mat-icon>
+              <h4>Video {{j+1}}</h4>
+              <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Video" matTooltipPosition="above" (click)="addVideo(i,j+1)"
+                *ngIf="!readOnly">
+                <mat-icon>add</mat-icon>
+              </a>
+              <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Video" matTooltipPosition="above"
+                (click)="deleteVideo(i,j)" *ngIf="!readOnly">
+                <mat-icon>delete</mat-icon>
+              </a>
+              <a mat-mini-fab class="action-btn" color="primary" [matTooltip]="video.hideContent?'展開':'收合'"
+                matTooltipPosition="above" (click)="video.hideContent = !video.hideContent">
+                <mat-icon *ngIf="video.hideContent">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="!video.hideContent">keyboard_arrow_up</mat-icon>
+              </a>
+            </mat-card-title>
+            <mat-card-content fxLayout="column" [hidden]="!video.hideContent">
+              {{video.title}}
+            </mat-card-content>
+            <mat-card-content fxLayout="column" [hidden]="video.hideContent">
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Title" [name]="'templateVideosTitle'+templateIndex+'_'+i+'_'+j"
+                  [(ngModel)]="video.title" [readOnly]="readOnly">
+              </mat-form-field>
+              <vvtk-input-container>
+                <mat-slide-toggle color="primary" [name]="'templateVideosUrlEnabled'+templateIndex+'_'+i+'_'+j"
+                  [(ngModel)]="video.urlEnabled" vvtkhtml [disabled]="readOnly">
+                  {{video.urlEnabled?'Enabled Url':'Disabled Url'}}
+                </mat-slide-toggle>
+              </vvtk-input-container>
+              <mat-form-field fxFlex *ngIf="video.urlEnabled">
+                <input matInput placeholder="Url" [name]="'templateVideosUrl'+templateIndex+'_'+i+'_'+j" [(ngModel)]="video.url"
+                  [readOnly]="readOnly">
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Video (Youtube code)" [name]="'templateVideosVideoUrl'+templateIndex+'_'+i+'_'+j"
+                  [(ngModel)]="video.videoUrl" [readOnly]="readOnly">
+              </mat-form-field>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</div>

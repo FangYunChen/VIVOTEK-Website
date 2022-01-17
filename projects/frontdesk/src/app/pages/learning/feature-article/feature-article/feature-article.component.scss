@@ -1,0 +1,82 @@
+@import '_var.scss';
+
+.model-text {
+  padding: 65px 0;
+
+  .wrap {
+    max-width: 960px;
+
+    .model-content {
+      padding: 0;
+    }
+  }
+}
+h6 {
+  font-size: 18px;
+  letter-spacing: 1px;
+  color:$colorB6;
+}
+
+@media screen and (max-width: $widthTableApp) {
+  .model-text {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// .wrap {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+
+//   .link-text {
+//     font-size: 24px;
+//     font-weight: 500;
+//     color: white;
+//     a:link {
+//       color: white;
+//     }
+//     a:visited {
+//       color: white;
+//     }
+//   }
+// }
+
+.model-banner {
+  padding-bottom: 60px;
+
+  img {
+    width: 100vw;
+    height: auto;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-bottom: 30px;
+}
+
+.content-title {
+  color: #0093d5;
+  align-self: flex-start;
+  padding-bottom: 10px;
+}
+
+.bold-text {
+  font-weight: 600;
+  max-width: 880px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.content-text {
+  color: #727272;
+  align-self: flex-start;
+  white-space: normal;
+}

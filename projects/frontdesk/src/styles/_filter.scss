@@ -1,0 +1,35 @@
+@mixin filter-box {
+  .filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-bottom: 30px;
+
+    div {
+      margin: 5px 20px;
+    }
+
+    .filter-dropdown,
+    .filter-search-box {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .filter-search-box {
+      border-bottom: 1px solid darkgrey;
+
+      &:focus-within {
+        border-bottom: 1px solid #0093d5;
+      }
+
+      input {
+        border-bottom: 0px;
+      }
+
+      .filter-search-icon {
+        color: darkgrey;
+        vertical-align: bottom;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<ng-container *ngFor="let item of data">
+  <ng-container *ngIf="item.isAttribute;else subLayerTemplate">
+    <dl class="compare-length-{{ item.products.length }}">
+      <dt>{{ item.name }}</dt>
+      <dd>
+        <div class="content" *ngFor="let product of item.products">
+          <div *ngIf="product.content" [innerHTML]="product.content | breakLineTag"></div>
+        </div>
+      </dd>
+    </dl>
+  </ng-container>
+  <ng-template #subLayerTemplate>
+    <div class="spec-layer spec-layer-{{ layer }}">
+      <ng-container [ngSwitch]="layer">
+        <h4 class="spec-title" *ngSwitchCase="1">{{ item.name }}</h4>
+        <h5 class="spec-title" *ngSwitchCase="2">{{ item.name }}</h5>
+        <h6 class="spec-title" *ngSwitchCase="3">{{ item.name }}</h6>
+        <h6 class="spec-title" *ngSwitchDefault>{{ item.name }}</h6>
+      </ng-container>
+      <vvtk-nested-specification-compare [layer]="layer + 1" [data]="item.children">
+      </vvtk-nested-specification-compare>
+    </div>
+  </ng-template>
+</ng-container>

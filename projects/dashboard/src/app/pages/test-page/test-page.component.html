@@ -1,0 +1,4 @@
+<button (click)="downloadPDF()">Download PDF</button>
+<ul *ngFor="let q of diceText" [sortablejs]="q">
+    <li *ngFor="let a of q">{{a}}</li>
+</ul>

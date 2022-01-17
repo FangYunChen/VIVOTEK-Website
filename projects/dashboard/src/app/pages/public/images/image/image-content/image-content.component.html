@@ -1,0 +1,52 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id===0)?'Add':'Edit'}} Image</span>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-card-title>
+              <h3>Image Image</h3>
+            </mat-card-title>
+            <mat-card-content fxLayout="column">
+              <div fxLayout="row" fxLayoutAlign="center" *ngIf="image.imagePath">
+                <div class="text-center">
+                  <img [src]="image.imagePath | safeUrl">
+                </div>
+              </div>
+              <button type="button" mat-button (click)="imgFileInput.click()" [disabled]="isLoading" *ngIf="pageIsEditable">
+                Upload a image
+              </button>
+              <input hidden type="file" #imgFileInput accept="image/*" (change)="uploadModelImage($event)" />
+              <mat-form-field fxFlex>
+                <input matInput placeholder="Image Path" name="imagePath" [(ngModel)]="image.imagePath" [readOnly]="!pageIsEditable"
+                  required>
+              </mat-form-field>
+            </mat-card-content>
+
+            <mat-form-field>
+              <mat-select name="typeId" placeholder="Image Type" [(ngModel)]="image.typeId" required [disabled]="!pageIsEditable">
+                <mat-option *ngFor="let type of types" [value]="type.value">{{type.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Image Name" name="imageName" [(ngModel)]="image.name" [readOnly]="!pageIsEditable"
+                required>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/public/images/image']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,67 @@
+<div id="careers" class="container">
+  <vvtk-top-banner [rootPath]="'/careers-list' | customPath" [contentPageTitle]="('careers-dice' | i18n)"></vvtk-top-banner>
+  <section class="model section dice-questions">
+    <div class="wrap">
+      <h2 class="line text-center">DICE 量表</h2>
+      <div class="block">
+        <div class="ps">
+          <p>下列性向測驗共有16題，每題各有4個形容詞，請您憑您的直覺分別填入代表您的形容詞強弱程度，請依代表性強弱填入1-4分，4分代表性相對最強，1分相對代表性最弱。</p>
+          <p>例: 我覺得我是個有耐心，心胸開放，果斷，精確的人。由
+            <span class="text-web">左至右</span>
+            <span class="text-app">上至下</span>排入：
+            <span class="colorB">耐心，心胸開放，果斷，精確的人</span>
+          </p>
+        </div>
+      </div>
+      <div class="block sortingList-wrap">
+
+        <div class="sortingList-block app-hide">
+          <h3 class="num"></h3>
+          <ul class="sortingTitle">
+            <li class="list">
+              <p>4分</p>
+            </li>
+            <li class="list">
+              <p>3分</p>
+            </li>
+            <li class="list">
+              <p>2分</p>
+            </li>
+            <li class="list">
+              <p>1分</p>
+            </li>
+          </ul>
+        </div>
+        <div *ngFor="let item of items" class="sortingList-block">
+          <h3 class="num">{{ item.id }}.</h3>
+          <ul class="sortingList" *ngIf="isBrowser" [sortablejs]="item.topic" [sortablejsOptions]="options">
+            <li class="list" *ngFor="let topic of item.topic;" [value]="topic[1]">
+              <p class="drag-handle">{{ topic[0] }}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="sortingList-block app-hide">
+          <h3 class="num"></h3>
+          <ul class="sortingTitle">
+            <li class="list">
+              <p>4分</p>
+            </li>
+            <li class="list">
+              <p>3分</p>
+            </li>
+            <li class="list">
+              <p>2分</p>
+            </li>
+            <li class="list">
+              <p>1分</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="input-box btn-box text-center">
+        <a [href]="('javascript:;' | safe:'url')" class="btn btn-gy" (click)="prev($event)">上一步</a>
+        <a [href]="('javascript:;' | safe:'url')" class="btn btn-b" (click)="diceResult($event)">送出所有資料</a>
+      </div>
+    </div>
+  </section>
+</div>

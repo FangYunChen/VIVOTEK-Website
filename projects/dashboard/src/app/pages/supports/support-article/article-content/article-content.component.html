@@ -1,0 +1,175 @@
+<div fxLayout="row">
+  <mat-card fxFlex="100%">
+    <mat-card-title fxLayout>
+      <span>{{(id==0)?'Add':'Edit'}} Support Article</span>
+      <span fxFlex></span>
+      <vvtk-language-selector></vvtk-language-selector>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column">
+      <form #form="ngForm">
+        <mat-card fxFlex="100%">
+          <mat-card-content fxLayout="column">
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Title" name="headline" [(ngModel)]="article.headline" [disabled]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Route" name="subRoute" [(ngModel)]="article.subRoute" [disabled]="!pageIsEditable"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-datepicker-toggle matPrefix [for]="publishAtPicker"></mat-datepicker-toggle>
+              <input matInput placeholder="Publish At" name="publishedAt" [matDatepicker]="publishAtPicker" [(ngModel)]="article.publishedAt"
+                [disabled]="!pageIsEditable" required>
+              <mat-datepicker #publishAtPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Support Tags" name="supportTags" [(ngModel)]="article.selectedTagsArray"
+                [disabled]="!pageIsEditable" multiple>
+                <mat-option *ngFor="let tag of tagsOptions" [value]="tag.value">{{tag.optionText}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Article Type" name="articleType" [(ngModel)]="article.type" [disabled]="!pageIsEditable || id !== 0" required>
+                <mat-option [value]="1">Article</mat-option>
+                <mat-option [value]="2">Video</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <mat-card-title>
+                <h4>Product Type</h4>
+                <button mat-mini-fab class="action-btn" color="primary" matTooltip="Add" matTooltipPosition="above"
+                  *ngIf="pageIsEditable" (click)="addProductType()">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-card-title>
+              <mat-card-content fxLayout="column">
+                <mat-card fxFlex="100%" *ngFor="let productType of productTypes; index as prodIdx">
+                  <mat-card-content>
+                    <button mat-mini-fab class="action-btn" color="warn" matTooltip="Delete" matTooltipPosition="above"
+                      *ngIf="pageIsEditable" (click)="deleteProductType(productType)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <mat-form-field>
+                      <mat-select placeholder="product Type" [(ngModel)]="productType.id" [disabled]="!pageIsEditable"
+                        name="productType[{{prodIdx}}]" (selectionChange)="productTypeChanged(productType.id)">
+                        <mat-option *ngFor="let productTypeOption of productTypeOptions" [value]="productTypeOption.value">{{productTypeOption.optionText}}</mat-option>
+                      </mat-select>
+                    </mat-form-field> &nbsp;
+                    <mat-form-field>
+                      <mat-select placeholder="category" [(ngModel)]="productType.selectedCategories" [disabled]="!pageIsEditable"
+                        name="categories[{{prodIdx}}]" multiple>
+                        <mat-option *ngFor="let category of ProdIdCategoriesMap.get(productType.id) || []" [value]="category.value">{{category.optionText}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </mat-card-content>
+                </mat-card>
+              </mat-card-content>
+            </div>
+            <br>
+            <div *ngIf="article.type == 1">
+              <h4>Article Lead</h4>
+              <mat-card-content fxLayout="column">
+                <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                  <mat-card-content>
+                    <div [innerHTML]="article.lead | safeHtml"></div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-tab-group [hidden]="!pageIsEditable">
+                  <mat-tab label="Editor">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <vvtk-wysiwyg [(html)]="article.lead" [path]="path"></vvtk-wysiwyg>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Preview">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <div [innerHTML]="article.lead | safeHtml"></div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-card-content>
+              <br>
+              <h4>Article Content</h4>
+              <mat-card-content fxLayout="column">
+                <mat-card fxFlex="100%" [hidden]="pageIsEditable">
+                  <mat-card-content>
+                    <div [innerHTML]="article.content | safeHtml"></div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-tab-group [hidden]="!pageIsEditable">
+                  <mat-tab label="Editor">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <vvtk-wysiwyg [(html)]="article.content" [path]="path"></vvtk-wysiwyg>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Preview">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-card fxFlex="100%">
+                        <mat-card-content fxLayout="column">
+                          <div [innerHTML]="article.content | safeHtml"></div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-card-content>
+            </div>
+            <div *ngIf="article.type == 2">
+              <button type="button" mat-button (click)="addVideo()" *ngIf="article.videos == null || article.videos.length == 0">Add Video</button>
+              <mat-card-content>
+                <div [sortablejs]="article.videos" [sortablejsOptions]="groupOptionsVideo">
+                  <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let video of article.videos; let videoIdx = index">
+                    <mat-card-title>
+                      <mat-icon class="drag-handle">drag_handle</mat-icon>
+                      <h4>Video {{videoIdx + 1}}</h4>
+                      <a mat-mini-fab class="action-btn" color="warn" matTooltip="Add Video" matTooltipPosition="above"
+                        *ngIf="pageIsEditable" (click)="addVideo()">
+                        <mat-icon>add</mat-icon>
+                      </a>
+                      <a mat-mini-fab class="action-btn" color="accent" matTooltip="Delete Video" matTooltipPosition="above"
+                        *ngIf="pageIsEditable" (click)="deleteVideo(video)">
+                        <mat-icon>delete</mat-icon>
+                      </a>
+                    </mat-card-title>
+                    <mat-card-content fxLayout="column" [hidden]="!video.hideContent">
+                      {{video.title}}
+                    </mat-card-content>
+                    <mat-card-content fxLayout="column" [hidden]="video.hideContent">
+                      <mat-form-field fxFlex>
+                        <input matInput placeholder="Title" [name]="'VideoTitle' + videoIdx" [(ngModel)]="video.title">
+                      </mat-form-field>
+                      <mat-form-field fxFlex>
+                        <input matInput placeholder="Link" [name]="'VideoLink' + videoIdx" [(ngModel)]="video.link">
+                      </mat-form-field>
+                    </mat-card-content>
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+      <vvtk-loader *ngIf="isLoading"></vvtk-loader>
+    </mat-card-content>
+    <mat-card-content fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [routerLink]="['/supports/article']">Cancel</button>
+        <span fxFlex></span>
+        <button mat-button color="primary" (click)="save()" [disabled]="!form.valid || isLoading" *ngIf="pageIsEditable">Save</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

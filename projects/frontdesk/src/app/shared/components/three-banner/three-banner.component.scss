@@ -1,0 +1,126 @@
+@import '../../../../styles/_var.scss';
+.three-banner {
+  padding-bottom: 0;
+  a {
+    display: block;
+    float: left;
+    background-size: cover;
+    position: relative;
+    width: 32.33%;
+    margin-left: 1%;
+    padding-top: 15%;
+    overflow: hidden;
+    &:first-child {
+      width: 65.66%;
+      margin-right: 1%;
+      margin-left: 0;
+      padding-top: 32%;
+      .img-logo {
+        height: 120px;
+        margin-top: -60px;
+        padding: 15px;
+        img {
+          height: 90px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      margin-bottom: 2%;
+    }
+    .img-v {
+      position: absolute;
+      width: 101%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      text-align: center;
+      z-index: 5;
+      &:before {
+        content: '';
+        width: 0;
+        height: 100%;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+      }
+      img {
+        display: inline-block;
+        vertical-align: middle;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        margin-left: -6px;
+      }
+    }
+    .img-logo {
+      z-index: 10;
+      height: 80px;
+      top: 50%;
+      margin-top: -40px;
+      background-color: rgba($colorW, .5);
+      padding: 10px;
+      img {
+        height: 60px;
+        width: auto;
+      }
+    }
+    .text {
+      position: absolute;
+      width: 100%;
+      display: block;
+      background-color: rgba($colorBk, .5);
+      color: $colorW;
+      padding: 5px 8px 4px;
+      left: 0;
+      bottom: -28px;
+      z-index: 10;
+      @include transition(all .3s);
+    }
+    .title {
+      max-height: 44px;
+      overflow: hidden;
+      display: block;
+      &.limit {
+        position: relative;
+        &.limitAfter {
+          position: relative;
+          padding-right: 15px;
+          &:after {
+            position: absolute;
+            content: '...';
+            right: 0;
+            top: 18px;
+            z-index: 10;
+          }
+        }
+      }
+    }
+    .date {
+      display: block;
+      font-size: $sizeSl;
+      padding: 5px 0;
+      i {
+        color: $colorGy1;
+      }
+    }
+    &:hover {
+      .text {
+        bottom: 0;
+        @include transition(all .3s);
+      }
+    }
+  }
+}
+
+@media screen and (max-width:$widthTableApp) {
+  .three-banner {
+    a {
+      float: none;
+      width: 100% !important;
+      margin: 0 !important;
+      padding-top: 50% !important;
+      margin-bottom: 20px !important;
+    }
+  }
+}

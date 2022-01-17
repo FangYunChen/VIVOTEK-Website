@@ -1,0 +1,27 @@
+<div class="panel">
+  <mat-checkbox [(ngModel)]="designToolService.isBasicNvr">{{
+    "Basic: Single NVR" | i18n
+  }}</mat-checkbox>
+  <mat-card class="mat-elevation-z4" style="width: 450px; margin-right: 10px;">
+    <div class="card__header">
+      <label class="field">
+        <div class="field__title">{{ "NVR" | i18n }}</div>
+        <div class="field__content">
+          <mat-select
+            class="model-select"
+            [(ngModel)]="designToolService.basicNvr.model"
+            (selectionChange)="ChangeNvr()"
+          >
+            <mat-option *ngFor="let nvr of nvrList" [value]="nvr.Name">
+              {{ nvr.Name }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </label>
+    </div>
+    <vvtk-nvr-model [nvr]="designToolService.basicNvr"></vvtk-nvr-model>
+    <vvtk-nvr-footer
+      [nvrRecommendations]="nvrRecommendations"
+    ></vvtk-nvr-footer>
+  </mat-card>
+</div>

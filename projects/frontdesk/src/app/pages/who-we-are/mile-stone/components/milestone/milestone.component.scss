@@ -1,0 +1,109 @@
+@import '_var.scss';
+.model-text-img {
+  &:nth-child(2n) {
+    background-color: $colorGy2;
+  }
+  .text {
+    margin: 0 auto;
+    width: 65%;
+    padding: 0 15px;
+    .date {
+      margin-top: 5px;
+      margin-bottom: -5px;
+      color: $colorGy6;
+    }
+  }
+}
+
+.tabs-slider {
+  .milestone-slider-block {
+    text-align: left;
+    display: block;
+  }
+}
+
+.tabs-slider-nav {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 25px;
+  a {
+    display: inline-block;
+    padding: 5px 12px 10px;
+    color: $colorFont;
+    position: relative;
+    font-size: $sizeNler;
+    background: url(/assets/img/title-line.png) repeat-x left 106%;
+    &:before {
+      width: 90%;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      margin-left: -45%;
+      height: 3px;
+      content: '';
+      display: none;
+    }
+    &:after {
+      border-width: 8px;
+      border-style: solid;
+      border-color: transparent;
+      position: absolute;
+      left: 50%;
+      bottom: -14px;
+      margin-left: -8px;
+      content: '';
+      display: none;
+    }
+    &:hover {
+      color: $colorB1;
+      text-decoration: none;
+    }
+    &.active {
+      &:before {
+        background-color: $colorB1;
+        @include transition(all, 0.3s);
+        display: block;
+      }
+      &:after {
+        border-top-color: $colorB1;
+        @include transition(all, 0.3s);
+        display: block;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $widthTable) {
+  .model-text-img {
+    .img {
+      width: 45%;
+    }
+    .text {
+      width: 55%;
+    }
+  }
+}
+
+@media screen and (max-width: $widthTableApp) {
+  .model-text-img {
+    padding: 15px;
+    .img {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .text {
+      display: block;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      font-size: $sizeSler;
+      h2 {
+        font-size: $sizeLg;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}

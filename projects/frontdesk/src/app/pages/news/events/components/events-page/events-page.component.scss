@@ -1,0 +1,106 @@
+@import '_var.scss';
+.page-content {
+  h2 {
+    color: $colorB1;
+  }
+  .img {
+    margin-bottom: 15px;
+  }
+}
+.page-info {
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  .table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .row {
+    display: table-row;
+  }
+  .col {
+    display: table-cell;
+    vertical-align: middle;
+    border-left: 10px solid $colorW;
+    border-right: 10px solid $colorW;
+  }
+  .name {
+    padding: 5px 10px;
+    color: $colorB1;
+    font-size: $sizeNl;
+    font-weight: bold;
+    border-bottom: 2px solid $colorB1;
+    width: 25%;
+  }
+  .text {
+    font-size: $sizeSler;
+    padding: 6px 10px;
+    line-height: 1.4;
+    a {
+      display: block;
+      i {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+h2 {
+  font-size: $sizeLger;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: $widthTableApp) {
+  h2 {
+    font-size: $sizeLger;
+  }
+  .page-box {
+    .img {
+      width: 100%;
+      padding-right: 0;
+      float: none;
+      margin-bottom: 10px;
+    }
+    .text {
+      width: 100%;
+      padding-left: 0;
+      float: none;
+    }
+  }
+
+  .page-info {
+    padding: 0;
+    .name {
+      display: none;
+    }
+    .col {
+      border: none;
+    }
+    .text {
+      display: block;
+      position: relative;
+      text-align: left;
+      padding-left: 100px;
+      overflow: hidden;
+      border-top: 1px solid $colorW;
+      border-bottom: 1px solid $colorW;
+      &:before {
+        position: absolute;
+        height: 100%;
+        content: attr(data-name);
+        left: 0;
+        top: 0;
+        width: 70px;
+        display: block;
+        padding: 6px 10px;
+        background-color: $colorB1;
+        color: $colorW;
+      }
+    }
+  }
+}
+@media screen and (max-width: $widthApp) {
+  h2 {
+    font-size: $sizeNler;
+  }
+}

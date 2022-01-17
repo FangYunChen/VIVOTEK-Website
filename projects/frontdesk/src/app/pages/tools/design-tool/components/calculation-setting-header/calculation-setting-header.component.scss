@@ -1,0 +1,51 @@
+@import '../../../../../../styles/var';
+$headerInputHeight: 38px;
+$headerFontColor: #fff;
+
+.font-gothic ::ng-deep {
+  font-family: $fontFamily !important;
+}
+
+.calculation-settings__header {
+  display: flex;
+  background-color: $colorB6;
+  .form-item {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 30px 20px;
+    &.form-item--large {
+      width: 20%;
+    }
+    &.form-item--small {
+      width: 10%;
+    }
+  }
+  .form-item__title {
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: $headerFontColor;
+  }
+  ::ng-deep {
+    .mat-select {
+      background-color: $headerFontColor;
+    }
+    .mat-select-value {
+      padding: 1px 6px;
+    }
+  }
+  .mat-icon-button {
+    display: flex;
+  }
+  .mat-icon {
+    font-size: $headerInputHeight;
+    color: $headerFontColor;
+  }
+}
+
+.pop ::ng-deep {
+  i {
+    font-family: FontAwesome !important;
+  }
+}
